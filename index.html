@@ -17,6 +17,8 @@
 
 <style>
 
+/* (YOUR FULL CSS SAME AS YOU SENT — NO CHANGE) */
+
 *{
 margin:0;
 padding:0;
@@ -25,22 +27,18 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-
 background:#000814;
 color:white;
 overflow-x:hidden;
-
 }
 
 .container{
-
 max-width:500px;
 margin:auto;
 padding-bottom:40px;
-
 }
 
-/* Top Bar */
+  /* Top Bar */
 
 .topbar{
 
@@ -261,6 +259,8 @@ font-size:30px;
 
 }
 
+/* --- KEEP ALL YOUR CSS AS IT IS (UNCHANGED) --- */
+
 </style>
 
 </head>
@@ -270,15 +270,14 @@ font-size:30px;
 <div class="container">
 
 <!-- Topbar -->
-
 <div class="topbar">
 
 <div class="left-top">
 
 <i class="ph ph-plus top-icon"></i>
 
-<div class="username-top">
-goruraiii54
+<div class="username-top" id="usernameTop">
+loading...
 </div>
 
 <i class="ph-fill ph-caret-down"></i>
@@ -290,11 +289,8 @@ goruraiii54
 <div class="right-top">
 
 <div class="icon-wrap">
-
 <i class="ph ph-threads-logo top-icon"></i>
-
 <div class="badge">7</div>
-
 </div>
 
 <i class="ph ph-list top-icon"></i>
@@ -304,29 +300,25 @@ goruraiii54
 </div>
 
 <!-- Profile -->
-
 <div class="profile-header">
 
 <div class="profile-left">
 
-<img class="profile-image"
-src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop">
+<img class="profile-image" id="profileImg"
+src="https://via.placeholder.com/120">
 
 <div class="add-btn">
-
 <i class="ph-bold ph-plus"></i>
-
 </div>
 
 </div>
 
-<div class="name">
-Goru ✨🫀
+<div class="name" id="name">
+Loading...
 </div>
 
-<div class="bio">
-Software<br>
-Med student 📖🫀 @prinkaa__99
+<div class="bio" id="bio">
+Please wait...
 </div>
 
 <div class="link">
@@ -338,45 +330,31 @@ Med student 📖🫀 @prinkaa__99
 </div>
 
 <!-- Stats -->
-
 <div class="stats">
 
 <div class="stat">
-
-<h2>5</h2>
-
+<h2 id="posts">0</h2>
 <p>posts</p>
-
 </div>
 
 <div class="stat">
-
-<h2>225</h2>
-
+<h2 id="followers">0</h2>
 <p>followers</p>
-
 </div>
 
 <div class="stat">
-
-<h2>162</h2>
-
+<h2 id="following">0</h2>
 <p>following</p>
-
 </div>
 
 </div>
 
 <!-- Open App -->
-
 <div class="open-app">
 
 <button class="open-btn">
-
 <span>Open in App</span>
-
 <i class="ph ph-arrow-up-right"></i>
-
 </button>
 
 </div>
@@ -384,6 +362,67 @@ Med student 📖🫀 @prinkaa__99
 </div>
 
 </div>
+
+<script type="module">
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  get
+} 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "users-f0dd7.firebaseapp.com",
+  databaseURL: "https://users-f0dd7-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-f0dd7",
+  storageBucket: "users-f0dd7.appspot.com",
+  messagingSenderId: "747543481819",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* UID FROM URL */
+/* /profile/:uid */
+const path = window.location.pathname.split("/");
+const uid = path[2];
+
+async function loadProfile() {
+
+  if (!uid) return;
+
+  const snap = await get(ref(db, "users/" + uid));
+
+  if (snap.exists()) {
+
+    const data = snap.val();
+
+    document.getElementById("name").innerText = data.name || "No Name";
+    document.getElementById("bio").innerText = data.bio || "";
+    document.getElementById("usernameTop").innerText = data.username || "user";
+
+    document.getElementById("profileImg").src =
+      data.profilePic || "https://via.placeholder.com/120";
+
+    document.getElementById("posts").innerText = data.posts || 0;
+    document.getElementById("followers").innerText = data.followers || 0;
+    document.getElementById("following").innerText = data.following || 0;
+
+  } else {
+    document.getElementById("name").innerText = "User Not Found";
+  }
+}
+
+loadProfile();
+
+</script>
 
 </body>
 
