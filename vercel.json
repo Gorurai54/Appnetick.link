@@ -6,7 +6,7 @@
     },
     {
       "source": "/profile/:uid",
-      "destination": "/index.html?uid=:uid"
+      "destination": "/index.html"
     }
   ]
 }
