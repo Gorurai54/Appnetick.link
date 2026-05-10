@@ -29,6 +29,11 @@ export default async function handler(req, res) {
       <head>
         <meta charset="UTF-8">
 
+        <link rel="icon" href="/20260314_091747.png">
+
+<meta property="og:image" content="https://appnetick-link.vercel.app/20260314_091747.png">
+<meta property="og:site_name" content="Appnetick">
+
         <!-- OG TAGS -->
         <meta property="og:title" content="${name}">
         <meta property="og:description" content="${email}">
