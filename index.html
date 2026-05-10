@@ -217,8 +217,7 @@ document.getElementById("name").innerText = data.full_name || "No Name";
 document.getElementById("usernameTop").innerText = data.Username || "user";
 document.getElementById("bio").innerText = data.email || "";
 
-document.getElementById("profileImg").src =
-"https://via.placeholder.com/120";
+document.getElementById("profileImg").innerText = data.avatar || "";
 
 /* stats (optional) */
 document.getElementById("posts").innerText = 0;
