@@ -1,13 +1,431 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Appnetick</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
+min-height:100vh;
+overflow-x:hidden;
+color:white;
+}
+
+/* Background Blur */
+
+.blur-bg{
+position:fixed;
+width:300px;
+height:300px;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+opacity:0.5;
+}
+
+.blur1{
+background:#00bfff;
+top:-100px;
+left:-100px;
+}
+
+.blur2{
+background:#8b5cf6;
+bottom:-100px;
+right:-100px;
+}
+
+/* Toolbar */
+
+.toolbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+z-index:100;
+}
+
+.app-name{
+font-size:24px;
+font-weight:700;
+}
+
+.toolbar-right{
+display:flex;
+gap:10px;
+}
+
+.icon{
+width:42px;
+height:42px;
+border-radius:14px;
+background:rgba(255,255,255,0.08);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+backdrop-filter:blur(10px);
+cursor:pointer;
+transition:0.3s;
+}
+
+.icon:hover{
+transform:scale(1.08);
+background:rgba(255,255,255,0.14);
+}
+
+/* Main */
+
+.container{
+width:100%;
+max-width:500px;
+margin:auto;
+padding:100px 18px 40px;
+}
+
+/* Card */
+
+.profile-card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:30px;
+padding:28px 22px;
+box-shadow:0 8px 40px rgba(0,0,0,0.25);
+}
+
+/* Profile */
+
+.profile-top{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.profile-image{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid rgba(255,255,255,0.2);
+box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+
+.verify{
+margin-top:12px;
+padding:5px 14px;
+background:rgba(0,255,170,0.15);
+color:#7fffd4;
+border-radius:30px;
+font-size:12px;
+}
+
+.username{
+margin-top:18px;
+font-size:30px;
+font-weight:700;
+}
+
+.group{
+margin-top:6px;
+font-size:16px;
+color:#cbd5e1;
+}
+
+.description{
+margin-top:18px;
+font-size:15px;
+line-height:1.8;
+color:#e2e8f0;
+}
+
+/* Info Boxes */
+
+.info-grid{
+margin-top:28px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
+
+.info-box{
+background:rgba(255,255,255,0.06);
+padding:18px;
+border-radius:22px;
+text-align:center;
+}
+
+.info-title{
+font-size:13px;
+color:#cbd5e1;
+}
+
+.info-value{
+margin-top:8px;
+font-size:20px;
+font-weight:700;
+}
+
+/* Buttons */
+
+.buttons{
+display:flex;
+gap:14px;
+margin-top:28px;
+}
+
+.btn{
+flex:1;
+height:52px;
+border:none;
+border-radius:18px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.follow{
+background:linear-gradient(135deg,#00bfff,#2563eb);
+color:white;
+}
+
+.message{
+background:rgba(255,255,255,0.08);
+color:white;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.btn:hover{
+transform:translateY(-2px);
+}
+
+/* Post */
+
+.section{
+margin-top:30px;
+}
+
+.section-title{
+font-size:20px;
+font-weight:600;
+margin-bottom:16px;
+}
+
+.post-card{
+background:rgba(255,255,255,0.06);
+border-radius:24px;
+overflow:hidden;
+}
+
+.post-image{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.post-content{
+padding:18px;
+}
+
+.post-title{
+font-size:18px;
+font-weight:600;
+}
+
+.post-desc{
+margin-top:10px;
+font-size:14px;
+line-height:1.7;
+color:#dbe4ee;
+}
+
+.post-footer{
+margin-top:18px;
+display:flex;
+justify-content:space-between;
+font-size:14px;
+color:#cbd5e1;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>Appnetick Working</h1>
+<div class="blur-bg blur1"></div>
+
+<div class="blur-bg blur2"></div>
+
+<!-- Toolbar -->
+
+<div class="toolbar">
+
+<div class="app-name">
+Appnetick
+</div>
+
+<div class="toolbar-right">
+
+<div class="icon">🔍</div>
+
+<div class="icon">🔔</div>
+
+<div class="icon">⚙️</div>
+
+</div>
+
+</div>
+
+<!-- Main -->
+
+<div class="container">
+
+<div class="profile-card">
+
+<div class="profile-top">
+
+<img
+class="profile-image"
+src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop"
+>
+
+<div class="verify">
+Verified Community
+</div>
+
+<div class="username">
+Appnetick
+</div>
+
+<div class="group">
+Official Social Group
+</div>
+
+<div class="description">
+Welcome to Appnetick 🚀<br>
+Connect with people, share moments,
+create communities and enjoy modern social networking.
+</div>
+
+</div>
+
+<!-- Info -->
+
+<div class="info-grid">
+
+<div class="info-box">
+<div class="info-title">Followers</div>
+<div class="info-value">125K</div>
+</div>
+
+<div class="info-box">
+<div class="info-title">Posts</div>
+<div class="info-value">980</div>
+</div>
+
+<div class="info-box">
+<div class="info-title">Likes</div>
+<div class="info-value">2.1M</div>
+</div>
+
+<div class="info-box">
+<div class="info-title">Joined</div>
+<div class="info-value">2026</div>
+</div>
+
+</div>
+
+<!-- Buttons -->
+
+<div class="buttons">
+
+<button class="btn follow">
+Follow
+</button>
+
+<button class="btn message">
+Message
+</button>
+
+</div>
+
+<!-- Post -->
+
+<div class="section">
+
+<div class="section-title">
+Latest Post
+</div>
+
+<div class="post-card">
+
+<img
+class="post-image"
+src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+>
+
+<div class="post-content">
+
+<div class="post-title">
+New Features Released 🎉
+</div>
+
+<div class="post-desc">
+Experience modern UI, smooth profile pages,
+real sharing links and fast performance with Appnetick.
+</div>
+
+<div class="post-footer">
+
+<span>❤️ 12.4K Likes</span>
+
+<span>💬 2.3K Comments</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 
