@@ -17,8 +17,6 @@
 
 <style>
 
-/* (YOUR FULL CSS SAME AS YOU SENT — NO CHANGE) */
-
 *{
 margin:0;
 padding:0;
@@ -38,10 +36,8 @@ margin:auto;
 padding-bottom:40px;
 }
 
-  /* Top Bar */
-
+/* TOP BAR */
 .topbar{
-
 height:70px;
 display:flex;
 align-items:center;
@@ -52,214 +48,71 @@ top:0;
 z-index:100;
 background:rgba(0,0,0,0.6);
 backdrop-filter:blur(20px);
-
 }
 
 .left-top{
-
 display:flex;
 align-items:center;
 gap:14px;
-
 }
 
 .top-icon{
-
 font-size:34px;
 color:white;
-
 }
 
 .username-top{
-
 font-size:22px;
 font-weight:700;
-
 }
 
-.right-top{
-
-display:flex;
-align-items:center;
-gap:18px;
-
-}
-
-.icon-wrap{
-
-position:relative;
-
-}
-
-.badge{
-
-position:absolute;
-top:-8px;
-right:-8px;
-background:#ff3040;
-width:22px;
-height:22px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:12px;
-font-weight:700;
-
-}
-
-/* Profile */
-
+/* PROFILE */
 .profile-header{
-
 padding:30px 22px 0;
 text-align:center;
-
-}
-
-.profile-left{
-
-position:relative;
-width:120px;
-margin:auto;
-
 }
 
 .profile-image{
-
 width:120px;
 height:120px;
 border-radius:50%;
 object-fit:cover;
 border:3px solid #222;
-
 }
-
-.add-btn{
-
-position:absolute;
-right:0;
-bottom:4px;
-width:36px;
-height:36px;
-border-radius:50%;
-background:white;
-display:flex;
-justify-content:center;
-align-items:center;
-border:4px solid #000814;
-
-}
-
-.add-btn i{
-
-color:black;
-font-size:20px;
-
-}
-
-/* Name */
 
 .name{
-
 margin-top:18px;
 font-size:28px;
 font-weight:700;
-
 }
 
 .bio{
-
 margin-top:10px;
 font-size:18px;
 line-height:1.7;
 color:#f0f0f0;
-
 }
-
-.link{
-
-margin-top:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-color:#8ea7ff;
-font-size:19px;
-font-weight:500;
-
-}
-
-.link i{
-
-font-size:22px;
-
-}
-
-/* Stats */
 
 .stats{
-
 display:flex;
 justify-content:space-around;
 margin-top:34px;
-
-}
-
-.stat{
-
-text-align:center;
-
 }
 
 .stat h2{
-
 font-size:30px;
 font-weight:700;
-
 }
 
 .stat p{
-
 margin-top:4px;
 font-size:18px;
 color:#cfcfcf;
-
 }
 
-/* Open App Button */
-
-.open-app{
-
-margin-top:34px;
-
+.loading{
+opacity:0.6;
 }
-
-.open-btn{
-
-width:100%;
-height:62px;
-border-radius:22px;
-border:2px solid rgba(255,255,255,0.2);
-background:rgba(255,255,255,0.04);
-backdrop-filter:blur(10px);
-color:white;
-font-size:24px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:12px;
-
-}
-
-.open-btn i{
-
-font-size:30px;
-
-}
-
-/* --- KEEP ALL YOUR CSS AS IT IS (UNCHANGED) --- */
 
 </style>
 
@@ -269,67 +122,29 @@ font-size:30px;
 
 <div class="container">
 
-<!-- Topbar -->
+<!-- TOP BAR -->
 <div class="topbar">
 
 <div class="left-top">
-
 <i class="ph ph-plus top-icon"></i>
-
-<div class="username-top" id="usernameTop">
-loading...
-</div>
-
-<i class="ph-fill ph-caret-down"></i>
-
-<div style="width:12px;height:12px;background:red;border-radius:50%;"></div>
-
-</div>
-
-<div class="right-top">
-
-<div class="icon-wrap">
-<i class="ph ph-threads-logo top-icon"></i>
-<div class="badge">7</div>
+<div class="username-top" id="usernameTop">loading...</div>
 </div>
 
 <i class="ph ph-list top-icon"></i>
 
 </div>
 
-</div>
-
-<!-- Profile -->
+<!-- PROFILE -->
 <div class="profile-header">
-
-<div class="profile-left">
 
 <img class="profile-image" id="profileImg"
 src="https://via.placeholder.com/120">
 
-<div class="add-btn">
-<i class="ph-bold ph-plus"></i>
-</div>
+<div class="name" id="name">Loading...</div>
 
-</div>
+<div class="bio" id="bio">Please wait...</div>
 
-<div class="name" id="name">
-Loading...
-</div>
-
-<div class="bio" id="bio">
-Please wait...
-</div>
-
-<div class="link">
-
-<i class="ph ph-link-simple"></i>
-
-<span>appnetick.com</span>
-
-</div>
-
-<!-- Stats -->
+<!-- STATS -->
 <div class="stats">
 
 <div class="stat">
@@ -349,78 +164,74 @@ Please wait...
 
 </div>
 
-<!-- Open App -->
-<div class="open-app">
-
-<button class="open-btn">
-<span>Open in App</span>
-<i class="ph ph-arrow-up-right"></i>
-</button>
-
 </div>
 
 </div>
 
-</div>
-
+<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getDatabase,
-  ref,
-  get
+getDatabase,
+ref,
+get
 } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-/* FIREBASE */
-/* Firebase Config */
+/* YOUR EXACT FIREBASE CONFIG (NO CHANGE) */
 const firebaseConfig = {
-  apiKey: "AIzaSyBGIQFj6syU2231sov7c_vQB5deyKIud0E",
-  authDomain: "appnetick.firebaseapp.com",
-  databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
-  projectId: "appnetick",
-  storageBucket: "appnetick.firebasestorage.app",
-  messagingSenderId: "816276009696",
-  appId: "1:816276009696:web:db763c2ae70d2b944c9685",
-  measurementId: "G-Q3VVKLXL3S"
+apiKey: "AIzaSyBGIQFj6syU2231sov7c5i_90O0s6olCxlM",
+authDomain: "appnetick.firebaseapp.com",
+databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
+projectId: "appnetick",
+storageBucket: "appnetick.firebasestorage.app",
+messagingSenderId: "816276009696",
+appId: "1:816276009696:web:db763c2ae70d2b944c9685"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 /* UID FROM URL */
-/* /profile/:uid */
 const path = window.location.pathname.split("/");
 const uid = path[2];
 
-async function loadProfile() {
+async function loadProfile(){
 
-  if (!uid) return;
+if(!uid){
+document.getElementById("name").innerText = "No UID";
+return;
+}
 
-  const snap = await get(ref(db, "Users/" + uid));
+const snap = await get(ref(db, "Users/" + uid));
 
-  if (snap.exists()) {
+if(snap.exists()){
 
-    const data = snap.val();
+const data = snap.val();
 
-    document.getElementById("full_name").innerText = data.name || "Name";
-    document.getElementById("bio").innerText = data.bio || "";
-    document.getElementById("usernameTop").innerText = data.username || "user";
+/* 🔥 EXACT YOUR FIREBASE FIELDS */
+document.getElementById("name").innerText = data.full_name || "No Name";
+document.getElementById("usernameTop").innerText = data.Username || "user";
+document.getElementById("bio").innerText = data.email || "";
 
-    document.getElementById("profileImg").src =
-      data.profilePic || "https://via.placeholder.com/120";
+document.getElementById("profileImg").src =
+"https://via.placeholder.com/120";
 
-    document.getElementById("posts").innerText = data.posts || 0;
-    document.getElementById("followers").innerText = data.followers || 0;
-    document.getElementById("following").innerText = data.following || 0;
+/* stats (optional) */
+document.getElementById("posts").innerText = 0;
+document.getElementById("followers").innerText = 0;
+document.getElementById("following").innerText = 0;
 
-  } else {
-    document.getElementById("name").innerText = "User Not Found";
-  }
+}else{
+
+document.getElementById("name").innerText = "User Not Found";
+document.getElementById("bio").innerText = "";
+
+}
+
 }
 
 loadProfile();
@@ -428,5 +239,4 @@ loadProfile();
 </script>
 
 </body>
-
 </html>
