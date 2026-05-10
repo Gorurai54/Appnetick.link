@@ -6,10 +6,6 @@
     },
     {
       "source": "/profile/:uid",
-      "destination": "/index.html"
-    }
-    {
-      "source": "/profile/:uid",
       "destination": "/api/profile?uid=:uid"
     }
   ]
