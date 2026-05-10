@@ -217,7 +217,13 @@ document.getElementById("name").innerText = data.full_name || "No Name";
 document.getElementById("usernameTop").innerText = data.Username || "user";
 document.getElementById("bio").innerText = data.email || "";
 
-document.getElementById("profileImg").innerText = data.avatar || "";
+// ✅ PROFILE IMAGE FIX
+  document.getElementById("profileImg").src =
+    data.avatar ||
+    data.profilePic ||
+    data.photo ||
+    "https://via.placeholder.com/120";
+
 
 /* stats (optional) */
 document.getElementById("posts").innerText = 0;
