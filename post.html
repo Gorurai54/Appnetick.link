@@ -5,15 +5,14 @@
 <title>Post</title>
 </head>
 
-<body>
+<body style="background:black;color:white;text-align:center">
 
 <h1 id="post">Loading...</h1>
 
 <script>
 
-const path = window.location.pathname;
-
-const postId = path.split("/").pop();
+const path = window.location.pathname.split("/");
+const postId = path[2];
 
 document.getElementById("post").innerHTML =
 "Post ID: " + postId;
@@ -21,5 +20,4 @@ document.getElementById("post").innerHTML =
 </script>
 
 </body>
-
 </html>
