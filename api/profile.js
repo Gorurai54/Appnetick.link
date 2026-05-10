@@ -1,3 +1,4 @@
+
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, get } from "firebase/database";
 
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
 
     const data = snap.val();
 
-    res.status(200).send(`
+    return res.status(200).send(`
       <!DOCTYPE html>
       <html>
       <head>
@@ -40,18 +41,13 @@ export default async function handler(req, res) {
         <meta property="og:description" content="${data.email || ""}">
       </head>
       <body style="background:black;color:white">
-        Redirecting...
-        <script>
-          setTimeout(()=>{
-            window.location.href="/";
-          },1000);
-        </script>
+        Profile Loaded
       </body>
       </html>
     `);
 
   } catch (err) {
-    console.log(err);
-    res.status(500).send(err.toString());
+    console.log("API ERROR:", err);
+    return res.status(500).send("Server Error: " + err.message);
   }
 }
