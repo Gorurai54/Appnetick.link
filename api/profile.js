@@ -1,17 +1,18 @@
-import admin from "firebase-admin";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, get } from "firebase/database";
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: "users-f0dd7",
-      clientEmail: "firebase-adminsdk-fbsvc@users-f0dd7.iam.gserviceaccount.com",
-      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
-    }),
-    databaseURL: "https://users-f0dd7-default-rtdb.asia-southeast1.firebasedatabase.app"
-  });
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyBGIQFj6syU2231sov7c5i_90O0s6olCxlM",
+  authDomain: "appnetick.firebaseapp.com",
+  databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
+  projectId: "appnetick",
+  storageBucket: "appnetick.firebasestorage.app",
+  messagingSenderId: "816276009696",
+  appId: "1:816276009696:web:db763c2ae70d2b944c9685"
+};
 
-const db = admin.database();
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 export default async function handler(req, res) {
   try {
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
       return res.status(400).send("UID missing");
     }
 
-    const snap = await db.ref("Users/" + uid).get();
+    const snap = await get(ref(db, "Users/" + uid));
 
     if (!snap.exists()) {
       return res.status(404).send("User not found");
