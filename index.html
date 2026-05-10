@@ -398,7 +398,7 @@ async function loadProfile() {
 
   if (!uid) return;
 
-  const snap = await get(ref(db, "users/" + uid));
+  const snap = await get(ref(db, "Users/" + uid));
 
   if (snap.exists()) {
 
