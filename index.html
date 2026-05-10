@@ -407,7 +407,7 @@ async function loadProfile() {
 
     const data = snap.val();
 
-    document.getElementById("full_name").innerText = data.name || "No Name";
+    document.getElementById("full_name").innerText = data.name || "Name";
     document.getElementById("bio").innerText = data.bio || "";
     document.getElementById("usernameTop").innerText = data.username || "user";
 
