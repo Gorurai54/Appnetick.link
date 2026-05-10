@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Post</title>
+</head>
+
+<body>
+
+<h1 id="post">Loading...</h1>
+
+<script>
+
+const path = window.location.pathname;
+
+const postId = path.split("/").pop();
+
+document.getElementById("post").innerHTML =
+"Post ID: " + postId;
+
+</script>
+
+</body>
+
+</html>
