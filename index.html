@@ -36,7 +36,7 @@ overflow-x:hidden;
 
 max-width:500px;
 margin:auto;
-padding-bottom:100px;
+padding-bottom:40px;
 
 }
 
@@ -110,32 +110,27 @@ font-weight:700;
 
 }
 
-/* Profile Header */
+/* Profile */
 
 .profile-header{
 
-padding:20px 18px 0;
-
-}
-
-.profile-row{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
+padding:30px 22px 0;
+text-align:center;
 
 }
 
 .profile-left{
 
 position:relative;
+width:120px;
+margin:auto;
 
 }
 
 .profile-image{
 
-width:105px;
-height:105px;
+width:120px;
+height:120px;
 border-radius:50%;
 object-fit:cover;
 border:3px solid #222;
@@ -147,8 +142,8 @@ border:3px solid #222;
 position:absolute;
 right:0;
 bottom:4px;
-width:34px;
-height:34px;
+width:36px;
+height:36px;
 border-radius:50%;
 background:white;
 display:flex;
@@ -165,12 +160,51 @@ font-size:20px;
 
 }
 
+/* Name */
+
+.name{
+
+margin-top:18px;
+font-size:28px;
+font-weight:700;
+
+}
+
+.bio{
+
+margin-top:10px;
+font-size:18px;
+line-height:1.7;
+color:#f0f0f0;
+
+}
+
+.link{
+
+margin-top:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+color:#8ea7ff;
+font-size:19px;
+font-weight:500;
+
+}
+
+.link i{
+
+font-size:22px;
+
+}
+
 /* Stats */
 
 .stats{
 
 display:flex;
-gap:35px;
+justify-content:space-around;
+margin-top:34px;
 
 }
 
@@ -182,294 +216,48 @@ text-align:center;
 
 .stat h2{
 
-font-size:26px;
+font-size:30px;
 font-weight:700;
 
 }
 
 .stat p{
 
-margin-top:2px;
-font-size:17px;
-color:#d0d0d0;
-
-}
-
-/* Name */
-
-.name{
-
-margin-top:18px;
-font-size:22px;
-font-weight:700;
-
-}
-
-.bio{
-
-margin-top:8px;
-font-size:17px;
-line-height:1.6;
-color:#f0f0f0;
-
-}
-
-.link{
-
-margin-top:8px;
-display:flex;
-align-items:center;
-gap:8px;
-color:#70a7ff;
+margin-top:4px;
 font-size:18px;
-font-weight:500;
-
-}
-
-.link i{
-
-font-size:20px;
-
-}
-
-/* Buttons */
-
-.buttons{
-
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:12px;
-margin-top:18px;
-
-}
-
-.btn{
-
-height:48px;
-border-radius:14px;
-border:1px solid #262626;
-background:#111827;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-font-size:17px;
-font-weight:600;
-color:white;
-
-}
-
-.btn i{
-
-font-size:20px;
-
-}
-
-/* Dashboard */
-
-.dashboard{
-
-margin-top:20px;
-background:#1f2937;
-padding:18px;
-border-radius:18px;
-
-}
-
-.dashboard h3{
-
-font-size:24px;
-font-weight:700;
-
-}
-
-.dashboard p{
-
-margin-top:8px;
-font-size:17px;
-color:#b0b0b0;
-
-}
-
-/* Story */
-
-.story-wrap{
-
-display:flex;
-gap:18px;
-overflow-x:auto;
-padding:24px 18px 0;
-
-}
-
-.story-wrap::-webkit-scrollbar{
-display:none;
-}
-
-.story{
-
-min-width:90px;
-text-align:center;
-
-}
-
-.story-circle{
-
-width:90px;
-height:90px;
-border-radius:50%;
-padding:3px;
-background:linear-gradient(45deg,#444,#888);
-
-}
-
-.story-circle img{
-
-width:100%;
-height:100%;
-border-radius:50%;
-object-fit:cover;
-border:3px solid #000814;
-
-}
-
-.story-add{
-
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:42px;
-background:#000814;
-border:2px solid white;
-
-}
-
-.story p{
-
-margin-top:10px;
-font-size:16px;
-white-space:nowrap;
-
-}
-
-/* Tabs */
-
-.tabs{
-
-margin-top:26px;
-display:flex;
-justify-content:space-around;
-border-top:1px solid #222;
-padding-top:14px;
-
-}
-
-.tab{
-
-font-size:32px;
 color:#cfcfcf;
 
 }
 
-.active{
+/* Open App Button */
 
-color:white;
+.open-app{
 
-}
-
-/* Posts */
-
-.posts{
-
-margin-top:14px;
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:3px;
+margin-top:34px;
 
 }
 
-.post{
-
-position:relative;
-aspect-ratio:1/1;
-overflow:hidden;
-
-}
-
-.post img{
+.open-btn{
 
 width:100%;
-height:100%;
-object-fit:cover;
-
-}
-
-.reel-icon{
-
-position:absolute;
-top:10px;
-right:10px;
-font-size:26px;
+height:62px;
+border-radius:22px;
+border:2px solid rgba(255,255,255,0.2);
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(10px);
 color:white;
-
-}
-
-/* Bottom Nav */
-
-.bottom-nav{
-
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-height:74px;
-background:#000814;
-border-top:1px solid #1f2937;
-display:flex;
-justify-content:space-around;
-align-items:center;
-z-index:100;
-
-}
-
-.bottom-nav i{
-
-font-size:34px;
-color:white;
-
-}
-
-.profile-mini{
-
-width:38px;
-height:38px;
-border-radius:50%;
-overflow:hidden;
-
-}
-
-.profile-mini img{
-
-width:100%;
-height:100%;
-object-fit:cover;
-
-}
-
-.notification-dot{
-
-position:absolute;
-top:-2px;
-right:-4px;
-background:red;
-width:22px;
-height:22px;
-border-radius:50%;
+font-size:24px;
+font-weight:700;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:12px;
-font-weight:700;
+gap:12px;
+
+}
+
+.open-btn i{
+
+font-size:30px;
 
 }
 
@@ -519,8 +307,6 @@ goruraiii54
 
 <div class="profile-header">
 
-<div class="profile-row">
-
 <div class="profile-left">
 
 <img class="profile-image"
@@ -533,6 +319,25 @@ src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&aut
 </div>
 
 </div>
+
+<div class="name">
+Goru ✨🫀
+</div>
+
+<div class="bio">
+Software<br>
+Med student 📖🫀 @prinkaa__99
+</div>
+
+<div class="link">
+
+<i class="ph ph-link-simple"></i>
+
+<span>appnetick.com</span>
+
+</div>
+
+<!-- Stats -->
 
 <div class="stats">
 
@@ -562,202 +367,19 @@ src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&aut
 
 </div>
 
-</div>
+<!-- Open App -->
 
-<div class="name">
-Goru ✨🫀
-</div>
+<div class="open-app">
 
-<div class="bio">
-Software<br>
-Med student 📖🫀 @prinkaa__99
-</div>
+<button class="open-btn">
 
-<div class="link">
+<span>Open in App</span>
 
-<i class="ph ph-link-simple"></i>
+<i class="ph ph-arrow-up-right"></i>
 
-<span>appnetick.com</span>
+</button>
 
 </div>
-
-<!-- Buttons -->
-
-<div class="buttons">
-
-<div class="btn">
-
-<i class="ph ph-play-circle"></i>
-
-<span>Built Different</span>
-
-</div>
-
-<div class="btn">
-
-<i class="ph ph-facebook-logo"></i>
-
-<span>Goru Rai</span>
-
-</div>
-
-<div class="btn">
-
-<i class="ph ph-plus"></i>
-
-<span>Add</span>
-
-</div>
-
-</div>
-
-<!-- Dashboard -->
-
-<div class="dashboard">
-
-<h3>Professional dashboard</h3>
-
-<p>404 views in the last 30 days.</p>
-
-</div>
-
-<!-- Story -->
-
-<div class="story-wrap">
-
-<div class="story">
-
-<div class="story-circle story-add">
-
-+
-
-</div>
-
-<p>New</p>
-
-</div>
-
-<div class="story">
-
-<div class="story-circle">
-
-<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<p>Dream ❤️</p>
-
-</div>
-
-<div class="story">
-
-<div class="story-circle">
-
-<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<p>Festival 🎉</p>
-
-</div>
-
-<div class="story">
-
-<div class="story-circle">
-
-<img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<p>Happy</p>
-
-</div>
-
-</div>
-
-<!-- Tabs -->
-
-<div class="tabs">
-
-<i class="ph-fill ph-squares-four tab active"></i>
-
-<i class="ph ph-play-square tab"></i>
-
-<i class="ph ph-arrows-clockwise tab"></i>
-
-<i class="ph ph-user-circle tab"></i>
-
-</div>
-
-<!-- Posts -->
-
-<div class="posts">
-
-<div class="post">
-
-<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="post">
-
-<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="post">
-
-<img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=1200&auto=format&fit=crop">
-
-<i class="ph-fill ph-play reel-icon"></i>
-
-</div>
-
-<div class="post">
-
-<img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="post">
-
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="post">
-
-<img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- Bottom Nav -->
-
-<div class="bottom-nav">
-
-<i class="ph ph-house"></i>
-
-<i class="ph ph-play-square"></i>
-
-<div class="icon-wrap">
-
-<i class="ph ph-paper-plane-tilt"></i>
-
-<div class="notification-dot">1</div>
-
-</div>
-
-<i class="ph ph-magnifying-glass"></i>
-
-<div class="profile-mini">
-
-<img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop">
 
 </div>
 
