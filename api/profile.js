@@ -32,18 +32,26 @@ export default async function handler(req, res) {
     const data = snap.val();
 
     res.status(200).send(`
+      <!DOCTYPE html>
       <html>
       <head>
         <meta property="og:title" content="${data.full_name || "User"}">
         <meta property="og:image" content="${data.avatar || ""}">
         <meta property="og:description" content="${data.email || ""}">
       </head>
-      <body>OK</body>
+      <body style="background:black;color:white">
+        Redirecting...
+        <script>
+          setTimeout(()=>{
+            window.location.href="/";
+          },1000);
+        </script>
+      </body>
       </html>
     `);
 
-  } catch (e) {
-    console.log(e);
-    res.status(500).send(e.toString());
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.toString());
   }
 }
