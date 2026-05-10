@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/post/:id",
+      "destination": "/post.html"
+    }
+  ]
+}
