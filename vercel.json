@@ -3,6 +3,10 @@
     {
       "source": "/post/:id",
       "destination": "/post.html"
+    },
+    {
+      "source": "/profile/:uid",
+      "destination": "/index.html"
     }
   ]
 }
