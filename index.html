@@ -199,8 +199,8 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 /* UID FROM URL */
-const params = new URLSearchParams(window.location.search);
-const uid = params.get("uid");
+const pathParts = window.location.pathname.split("/");
+const uid = pathParts[pathParts.length - 1];
 async function loadProfile(){
 
 if(!uid){
