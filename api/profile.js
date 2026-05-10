@@ -1,53 +1,61 @@
-
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get } from "firebase/database";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBGIQFj6syU2231sov7c5i_90O0s6olCxlM",
-  authDomain: "appnetick.firebaseapp.com",
-  databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
-  projectId: "appnetick",
-  storageBucket: "appnetick.firebasestorage.app",
-  messagingSenderId: "816276009696",
-  appId: "1:816276009696:web:db763c2ae70d2b944c9685"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
 export default async function handler(req, res) {
   try {
-
     const uid = req.query.uid;
 
     if (!uid) {
       return res.status(400).send("UID missing");
     }
 
-    const snap = await get(ref(db, "Users/" + uid));
+    // Firebase REST API (SAFE FOR VERCEL)
+    const url = `https://appnetick-default-rtdb.firebaseio.com/Users/${uid}.json`;
 
-    if (!snap.exists()) {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!data) {
       return res.status(404).send("User not found");
     }
 
-    const data = snap.val();
+    const name = data.full_name || "User";
+    const username = data.Username || "user";
+    const email = data.email || "";
+    const avatar = data.avatar || data.profilePic || "";
+
+    res.setHeader("Content-Type", "text/html");
 
     return res.status(200).send(`
       <!DOCTYPE html>
-      <html>
+      <html lang="en">
       <head>
-        <meta property="og:title" content="${data.full_name || "User"}">
-        <meta property="og:image" content="${data.avatar || ""}">
-        <meta property="og:description" content="${data.email || ""}">
+        <meta charset="UTF-8">
+
+        <!-- OG TAGS -->
+        <meta property="og:title" content="${name}">
+        <meta property="og:description" content="${email}">
+        <meta property="og:image" content="${avatar}">
+        <meta property="og:type" content="profile">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${name}</title>
       </head>
-      <body style="background:black;color:white">
-        Profile Loaded
+
+      <body style="background:#000;color:white;font-family:Arial;display:flex;align-items:center;justify-content:center;height:100vh;">
+        <div style="text-align:center">
+          <img src="${avatar}" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:2px solid #444"/>
+          <h2>${name}</h2>
+          <p>@${username}</p>
+        </div>
+
+        <script>
+          // optional redirect to frontend app
+          // setTimeout(()=> window.location.href="/", 2000);
+        </script>
       </body>
       </html>
     `);
 
   } catch (err) {
-    console.log("API ERROR:", err);
+    console.error("API ERROR:", err);
     return res.status(500).send("Server Error: " + err.message);
   }
 }
