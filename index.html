@@ -10,10 +10,13 @@
 <title>Appnetick</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Phosphor Icons -->
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 <style>
 
@@ -25,259 +28,319 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
+
+background:linear-gradient(135deg,#2753ff,#2d46ff,#3f63ff);
 min-height:100vh;
-overflow-x:hidden;
-color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+position:relative;
+padding:20px;
+
 }
 
-/* Background Blur */
+/* Background Curves */
 
-.blur-bg{
-position:fixed;
-width:300px;
-height:300px;
+.curve1{
+
+position:absolute;
+width:900px;
+height:900px;
+border:12px solid rgba(255,255,255,0.9);
 border-radius:50%;
-filter:blur(120px);
-z-index:-1;
-opacity:0.5;
+top:-600px;
+left:-200px;
+
 }
 
-.blur1{
-background:#00bfff;
-top:-100px;
-left:-100px;
+.curve2{
+
+position:absolute;
+width:800px;
+height:800px;
+border:12px solid rgba(255,255,255,0.9);
+border-radius:50%;
+bottom:-520px;
+right:-250px;
+
 }
 
-.blur2{
-background:#8b5cf6;
-bottom:-100px;
-right:-100px;
+/* Main Wrapper */
+
+.wrapper{
+
+display:flex;
+gap:30px;
+z-index:10;
+flex-wrap:wrap;
+justify-content:center;
+
 }
 
-/* Toolbar */
+/* Cards */
 
-.toolbar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:70px;
+.card{
+
+width:340px;
+background:rgba(255,255,255,0.92);
+backdrop-filter:blur(20px);
+border-radius:36px;
+padding:28px;
+box-shadow:0 20px 60px rgba(0,0,0,0.18);
+position:relative;
+overflow:hidden;
+
+}
+
+/* Left Menu Card */
+
+.left-card::before{
+
+content:"";
+position:absolute;
+width:240px;
+height:240px;
+background:rgba(255,255,255,0.7);
+border-radius:50%;
+top:-80px;
+left:-90px;
+
+}
+
+/* Top User */
+
+.mini-user{
+
+display:flex;
+align-items:center;
+gap:18px;
+margin-top:70px;
+margin-bottom:80px;
+position:relative;
+z-index:2;
+
+}
+
+.mini-user img{
+
+width:62px;
+height:62px;
+border-radius:50%;
+object-fit:cover;
+
+}
+
+.mini-user h2{
+
+font-size:20px;
+font-weight:500;
+color:#111;
+
+}
+
+/* Menu */
+
+.menu{
+
+display:flex;
+flex-direction:column;
+gap:32px;
+
+}
+
+.menu-item{
+
+display:flex;
+align-items:center;
+gap:18px;
+font-size:20px;
+color:#222;
+font-weight:500;
+
+}
+
+.menu-item i{
+
+font-size:28px;
+color:#5b45ff;
+
+}
+
+/* Right Card */
+
+.topbar{
+
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 18px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-border-bottom:1px solid rgba(255,255,255,0.08);
-z-index:100;
+
 }
 
-.app-name{
+.topbar i{
+
+font-size:30px;
+color:#111;
+
+}
+
+.topbar h1{
+
 font-size:24px;
-font-weight:700;
-}
+font-weight:600;
+color:#111;
 
-.toolbar-right{
-display:flex;
-gap:10px;
-}
-
-.icon{
-width:42px;
-height:42px;
-border-radius:14px;
-background:rgba(255,255,255,0.08);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:20px;
-backdrop-filter:blur(10px);
-cursor:pointer;
-transition:0.3s;
-}
-
-.icon:hover{
-transform:scale(1.08);
-background:rgba(255,255,255,0.14);
-}
-
-/* Main */
-
-.container{
-width:100%;
-max-width:500px;
-margin:auto;
-padding:100px 18px 40px;
-}
-
-/* Card */
-
-.profile-card{
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(25px);
--webkit-backdrop-filter:blur(25px);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:30px;
-padding:28px 22px;
-box-shadow:0 8px 40px rgba(0,0,0,0.25);
 }
 
 /* Profile */
 
-.profile-top{
+.profile{
+
 display:flex;
 flex-direction:column;
 align-items:center;
-text-align:center;
+margin-top:28px;
+
 }
 
-.profile-image{
-width:120px;
-height:120px;
+.profile img{
+
+width:150px;
+height:150px;
 border-radius:50%;
 object-fit:cover;
-border:4px solid rgba(255,255,255,0.2);
-box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
 }
 
-.verify{
-margin-top:12px;
-padding:5px 14px;
-background:rgba(0,255,170,0.15);
-color:#7fffd4;
-border-radius:30px;
-font-size:12px;
-}
+.profile-name{
 
-.username{
-margin-top:18px;
-font-size:30px;
-font-weight:700;
-}
-
-.group{
-margin-top:6px;
-font-size:16px;
-color:#cbd5e1;
-}
-
-.description{
-margin-top:18px;
-font-size:15px;
-line-height:1.8;
-color:#e2e8f0;
-}
-
-/* Info Boxes */
-
-.info-grid{
-margin-top:28px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.info-box{
-background:rgba(255,255,255,0.06);
-padding:18px;
-border-radius:22px;
-text-align:center;
-}
-
-.info-title{
-font-size:13px;
-color:#cbd5e1;
-}
-
-.info-value{
-margin-top:8px;
-font-size:20px;
-font-weight:700;
-}
-
-/* Buttons */
-
-.buttons{
-display:flex;
-gap:14px;
-margin-top:28px;
-}
-
-.btn{
-flex:1;
-height:52px;
-border:none;
-border-radius:18px;
-font-size:16px;
+margin-top:22px;
+font-size:24px;
 font-weight:600;
-cursor:pointer;
-transition:0.3s;
+color:#111;
+
 }
 
-.follow{
-background:linear-gradient(135deg,#00bfff,#2563eb);
-color:white;
+.location{
+
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:8px;
+font-size:15px;
+color:#555;
+
 }
 
-.message{
-background:rgba(255,255,255,0.08);
-color:white;
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.08);
+.location i{
+
+color:#5b45ff;
+font-size:18px;
+
 }
 
-.btn:hover{
-transform:translateY(-2px);
+/* Stats */
+
+.stats{
+
+margin-top:38px;
+display:flex;
+justify-content:space-around;
+text-align:center;
+
 }
 
-/* Post */
+.stat h2{
 
-.section{
-margin-top:30px;
+font-size:34px;
+font-weight:700;
+color:#111;
+
 }
+
+.stat p{
+
+margin-top:6px;
+font-size:17px;
+color:#444;
+
+}
+
+/* Recent Work */
 
 .section-title{
-font-size:20px;
+
+margin-top:40px;
+font-size:22px;
 font-weight:600;
-margin-bottom:16px;
+color:#111;
+
 }
 
-.post-card{
-background:rgba(255,255,255,0.06);
-border-radius:24px;
+.work-card{
+
+margin-top:20px;
+border-radius:28px;
 overflow:hidden;
+position:relative;
+
 }
 
-.post-image{
+.work-card img{
+
 width:100%;
 height:220px;
 object-fit:cover;
+
 }
 
-.post-content{
-padding:18px;
+/* Overlay */
+
+.overlay{
+
+position:absolute;
+inset:0;
+background:linear-gradient(
+to right,
+rgba(112,72,255,0.55),
+rgba(255,255,255,0.1)
+);
+
 }
 
-.post-title{
-font-size:18px;
-font-weight:600;
-}
+.play-btn{
 
-.post-desc{
-margin-top:10px;
-font-size:14px;
-line-height:1.7;
-color:#dbe4ee;
-}
-
-.post-footer{
-margin-top:18px;
+position:absolute;
+right:24px;
+bottom:24px;
+width:78px;
+height:78px;
+border-radius:50%;
+background:white;
 display:flex;
-justify-content:space-between;
-font-size:14px;
-color:#cbd5e1;
+justify-content:center;
+align-items:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.18);
+
+}
+
+.play-btn i{
+
+font-size:34px;
+color:#5b45ff;
+
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+.wrapper{
+
+flex-direction:column;
+
+}
+
 }
 
 </style>
@@ -286,138 +349,130 @@ color:#cbd5e1;
 
 <body>
 
-<div class="blur-bg blur1"></div>
+<div class="curve1"></div>
+<div class="curve2"></div>
 
-<div class="blur-bg blur2"></div>
+<div class="wrapper">
 
-<!-- Toolbar -->
+<!-- LEFT CARD -->
 
-<div class="toolbar">
+<div class="card left-card">
 
-<div class="app-name">
-Appnetick
-</div>
+<div class="mini-user">
 
-<div class="toolbar-right">
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop">
 
-<div class="icon">🔍</div>
-
-<div class="icon">🔔</div>
-
-<div class="icon">⚙️</div>
+<h2>Shreya Ghosal</h2>
 
 </div>
 
+<div class="menu">
+
+<div class="menu-item">
+
+<i class="ph ph-user"></i>
+
+<span>Profile</span>
+
 </div>
 
-<!-- Main -->
+<div class="menu-item">
 
-<div class="container">
+<i class="ph ph-bell"></i>
 
-<div class="profile-card">
+<span>Notification</span>
 
-<div class="profile-top">
-
-<img
-class="profile-image"
-src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop"
->
-
-<div class="verify">
-Verified Community
 </div>
 
-<div class="username">
-Appnetick
+<div class="menu-item">
+
+<i class="ph ph-gear"></i>
+
+<span>Settings</span>
+
 </div>
 
-<div class="group">
-Official Social Group
-</div>
+<div class="menu-item">
 
-<div class="description">
-Welcome to Appnetick 🚀<br>
-Connect with people, share moments,
-create communities and enjoy modern social networking.
+<i class="ph ph-lifebuoy"></i>
+
+<span>Help & Support</span>
+
 </div>
 
 </div>
 
-<!-- Info -->
-
-<div class="info-grid">
-
-<div class="info-box">
-<div class="info-title">Followers</div>
-<div class="info-value">125K</div>
 </div>
 
-<div class="info-box">
-<div class="info-title">Posts</div>
-<div class="info-value">980</div>
-</div>
+<!-- RIGHT CARD -->
 
-<div class="info-box">
-<div class="info-title">Likes</div>
-<div class="info-value">2.1M</div>
-</div>
+<div class="card">
 
-<div class="info-box">
-<div class="info-title">Joined</div>
-<div class="info-value">2026</div>
-</div>
+<div class="topbar">
+
+<i class="ph ph-caret-left"></i>
+
+<h1>Profile</h1>
+
+<div></div>
 
 </div>
 
-<!-- Buttons -->
+<div class="profile">
 
-<div class="buttons">
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop">
 
-<button class="btn follow">
-Follow
-</button>
+<div class="profile-name">
 
-<button class="btn message">
-Message
-</button>
+Shreya Ghosal
 
 </div>
 
-<!-- Post -->
+<div class="location">
 
-<div class="section">
+<i class="ph ph-paper-plane-tilt-fill"></i>
+
+<span>London</span>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+
+<h2>1167</h2>
+
+<p>Following</p>
+
+</div>
+
+<div class="stat">
+
+<h2>1227</h2>
+
+<p>Followers</p>
+
+</div>
+
+</div>
 
 <div class="section-title">
-Latest Post
-</div>
 
-<div class="post-card">
-
-<img
-class="post-image"
-src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
->
-
-<div class="post-content">
-
-<div class="post-title">
-New Features Released 🎉
-</div>
-
-<div class="post-desc">
-Experience modern UI, smooth profile pages,
-real sharing links and fast performance with Appnetick.
-</div>
-
-<div class="post-footer">
-
-<span>❤️ 12.4K Likes</span>
-
-<span>💬 2.3K Comments</span>
+Recent Work
 
 </div>
 
-</div>
+<div class="work-card">
+
+<img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200&auto=format&fit=crop">
+
+<div class="overlay"></div>
+
+<div class="play-btn">
+
+<i class="ph-fill ph-play"></i>
 
 </div>
 
