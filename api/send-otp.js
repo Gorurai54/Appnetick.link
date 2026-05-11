@@ -39,7 +39,7 @@ export default async function handler(req, res) {
       Math.floor(100000 + Math.random() * 900000).toString();
 
     const safeEmail =
-      email.replace(/[.#$\[\]@]/g, "_");
+      email.replace(/[#$\[\]]/g, "_");
 
     // SAVE OTP
     await fetch(
