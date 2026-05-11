@@ -15,9 +15,10 @@ export default async function handler(req, res) {
 
   try {
 
-    const body = typeof req.body === "string"
-      ? JSON.parse(req.body)
-      : req.body;
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body || {};
 
     let { email, otp } = body;
 
@@ -34,7 +35,8 @@ export default async function handler(req, res) {
       });
     }
 
-    const safeEmail = email.replace(/[.#$\[\]@]/g, "_");
+    const safeEmail =
+      email.replace(/[.#$\[\]@]/g, "_");
 
     const url =
       `https://appnetick-default-rtdb.firebaseio.com/OTPs/${safeEmail}.json`;
@@ -66,7 +68,7 @@ export default async function handler(req, res) {
       return res.status(200).json({
         success: true,
         verified: true,
-        message: "OTP verified"
+        message: "OTP verified successfully"
       });
 
     }
