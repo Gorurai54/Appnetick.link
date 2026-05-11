@@ -19,6 +19,7 @@ export default async function handler(req, res) {
       typeof req.body === "string"
         ? JSON.parse(req.body)
         : req.body || {};
+    console.log("RAW BODY:", req.body);
 
     let { email, otp } = body;
 
