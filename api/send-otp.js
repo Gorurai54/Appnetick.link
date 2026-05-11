@@ -42,19 +42,23 @@ export default async function handler(req, res) {
       email.replace(/[#$\[\]]/g, "_");
 
     // SAVE OTP
-    await fetch(
-      `https://appnetick-default-rtdb.firebaseio.com/OTPs/${safeEmail}.json`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          otp,
-          createdAt: Date.now()
-        })
-      }
-    );
+    const firebaseRes = await fetch(
+  `https://appnetick-default-rtdb.firebaseio.com/OTPs/${safeEmail}.json`,
+  {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      otp,
+      createdAt: Date.now()
+    })
+  }
+);
+
+const firebaseData = await firebaseRes.json();
+
+console.log("Firebase response:", firebaseData);
 
     // SMTP
     const transporter = nodemailer.createTransport({
