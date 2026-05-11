@@ -17,9 +17,10 @@ export default async function handler(req, res) {
 
   try {
 
-    const body = typeof req.body === "string"
-      ? JSON.parse(req.body)
-      : req.body;
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body || {};
 
     let { email } = body;
 
@@ -34,14 +35,20 @@ export default async function handler(req, res) {
       });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp =
+      Math.floor(100000 + Math.random() * 900000).toString();
 
-    const safeEmail = email.replace(/[.#$\[\]@]/g, "_");
+    const safeEmail =
+      email.replace(/[.#$\[\]@]/g, "_");
 
+    // SAVE OTP
     await fetch(
       `https://appnetick-default-rtdb.firebaseio.com/OTPs/${safeEmail}.json`,
       {
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           otp,
           createdAt: Date.now()
@@ -49,6 +56,7 @@ export default async function handler(req, res) {
       }
     );
 
+    // SMTP
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -61,12 +69,12 @@ export default async function handler(req, res) {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "OTP Verification",
-      html: `<h2>Your OTP is ${otp}</h2>`
+      html: `<h2>Your OTP is <b>${otp}</b></h2>`
     });
 
     return res.status(200).json({
       success: true,
-      message: "OTP sent"
+      message: "OTP sent successfully"
     });
 
   } catch (err) {
