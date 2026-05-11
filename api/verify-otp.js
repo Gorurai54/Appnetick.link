@@ -1,11 +1,8 @@
-export const config = {
-  api: {
-    bodyParser: true
-  }
-};
-
 export default async function handler(req, res) {
 
+  // =========================
+  // METHOD CHECK
+  // =========================
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -15,20 +12,37 @@ export default async function handler(req, res) {
 
   try {
 
-    const body =
-      typeof req.body === "string"
-        ? JSON.parse(req.body)
-        : req.body || {};
-    console.log("RAW BODY:", req.body);
+    // =========================
+    // SAFE BODY PARSING (VERY IMPORTANT)
+    // =========================
+    let body = req.body;
+
+    if (!body || typeof body === "string") {
+      try {
+        body = JSON.parse(body || "{}");
+      } catch (e) {
+        body = {};
+      }
+    }
+
+    console.log("📦 HEADERS:", req.headers);
+    console.log("📦 RAW BODY:", req.body);
+    console.log("📦 PARSED BODY:", body);
 
     let { email, otp } = body;
 
+    // =========================
+    // CLEAN INPUT
+    // =========================
     email = String(email || "")
       .trim()
       .toLowerCase();
 
     otp = String(otp || "").trim();
 
+    // =========================
+    // VALIDATION
+    // =========================
     if (!email || !otp) {
       return res.status(400).json({
         success: false,
@@ -36,15 +50,26 @@ export default async function handler(req, res) {
       });
     }
 
+    // =========================
+    // FIREBASE SAFE KEY
+    // =========================
     const safeEmail =
-      email.replace(/[.#$\[\]@]/g, "_");
+      email.replace(/[.#$\[\]@]/g, "_").toLowerCase();
 
-    const url =
+    const firebaseUrl =
       `https://appnetick-default-rtdb.firebaseio.com/OTPs/${safeEmail}.json`;
 
-    const response = await fetch(url);
+    // =========================
+    // GET OTP FROM FIREBASE
+    // =========================
+    const response = await fetch(firebaseUrl);
     const data = await response.json();
 
+    console.log("🔥 FIREBASE DATA:", data);
+
+    // =========================
+    // NOT FOUND
+    // =========================
     if (!data) {
       return res.status(404).json({
         success: false,
@@ -52,28 +77,52 @@ export default async function handler(req, res) {
       });
     }
 
-    const isExpired =
-      Date.now() - data.createdAt > 5 * 60 * 1000;
+    // =========================
+    // EXPIRE CHECK (5 MIN)
+    // =========================
+    const now = Date.now();
+    const createdAt = Number(data.createdAt || 0);
+
+    const isExpired = (now - createdAt) > 5 * 60 * 1000;
 
     if (isExpired) {
+
+      // optional cleanup
+      await fetch(firebaseUrl, { method: "DELETE" });
+
       return res.status(400).json({
         success: false,
         message: "OTP expired"
       });
     }
 
-    if (String(data.otp) === otp) {
+    // =========================
+    // CLEAN STORED OTP
+    // =========================
+    const savedOtp = String(data.otp || "").trim();
+    const enteredOtp = String(otp || "").trim();
 
-      await fetch(url, { method: "DELETE" });
+    console.log("🔐 ENTERED OTP:", enteredOtp);
+    console.log("🔐 SAVED OTP:", savedOtp);
+
+    // =========================
+    // VERIFY OTP
+    // =========================
+    if (savedOtp === enteredOtp) {
+
+      // DELETE AFTER SUCCESS
+      await fetch(firebaseUrl, { method: "DELETE" });
 
       return res.status(200).json({
         success: true,
         verified: true,
         message: "OTP verified successfully"
       });
-
     }
 
+    // =========================
+    // INVALID OTP
+    // =========================
     return res.status(400).json({
       success: false,
       message: "Invalid OTP"
@@ -81,10 +130,11 @@ export default async function handler(req, res) {
 
   } catch (err) {
 
+    console.error("❌ VERIFY ERROR:", err);
+
     return res.status(500).json({
       success: false,
       message: err.message
     });
-
   }
 }
