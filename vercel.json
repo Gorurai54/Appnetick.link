@@ -5,7 +5,7 @@
       "destination": "/post.html"
     },
     {
-      "source": "/profile/:uid",
+      "source": "/user/profile",
       "destination": "/index.html"
     }
   ]
