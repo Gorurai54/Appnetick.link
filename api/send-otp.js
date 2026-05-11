@@ -53,7 +53,10 @@ export default async function handler(req, res) {
     // =========================
 
     const safeEmail =
-      email.replace(/\./g, "_");
+  email
+    .replace(/[.#$\[\]@]/g, "_")
+    .toLowerCase()
+    .trim();
 
     // =========================
     // SAVE OTP
