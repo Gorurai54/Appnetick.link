@@ -1,47 +1,46 @@
-export default async function handler(req, res) {
-  try {
-    const uid = req.query.uid;
+export const config = { runtime: "nodejs18.x" };
 
-    if (!uid) {
-      return res.status(400).send("UID missing");
-    }
+export default async function handler(req, res) { try { const uid = req.query.uid;
 
-    // Firebase REST API (SAFE FOR VERCEL)
-    const url = `https://appnetick-default-rtdb.firebaseio.com/Users/${uid}.json`;
+if (!uid) {
+  return res.status(400).send("UID missing");
+}
 
-    const response = await fetch(url);
-    const data = await response.json();
+const url = `https://appnetick-default-rtdb.firebaseio.com/Users/${uid}.json`;
+const response = await fetch(url);
 
-    if (!data) {
-      return res.status(404).send("User not found");
-    }
+if (!response.ok) {
+  return res.status(500).send("Firebase fetch failed");
+}
 
-    const name = data.full_name || "User";
-    const username = data.Username || "user";
-    const email = data.email || "";
-    const avatar = data.avatar || data.profilePic || "";
+const data = await response.json();
 
-    res.setHeader("Content-Type", "text/html");
+if (!data) {
+  return res.status(404).send("User not found");
+}
 
-    return res.status(200).send(`
-      <!DOCTYPE html><html lang="en">
+const name = data.full_name || "User";
+const username = data.Username || "user";
+const avatar = data.avatar || data.profilePic || "https://via.placeholder.com/150";
+const bio = data.bio || "No bio available";
+const posts = data.posts || 0;
+const followers = data.followers || 0;
+const following = data.following || 0;
+
+res.setHeader("Content-Type", "text/html");
+
+return res.status(200).send(`
+
+<!DOCTYPE html><html lang="en">
 <head>
-<meta charset="UTF-8" />
-<link rel="icon" href="/20260314_091747.png">
-
-<meta property="og:site_name" content="Appnetick">
-
-        <!-- OG TAGS -->
-        <meta property="og:title" content="${name}">
-        <meta property="og:description" content="${username} is on Appnetick • Find them in Appnetick App">
-        <meta property="og:image" content="${avatar}">
-        <meta property="og:type" content="profile">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Appnetick Profile</title><!-- Phosphor Icons --><script src="https://unpkg.com/@phosphor-icons/web"></script><style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${name}</title><script src="https://unpkg.com/@phosphor-icons/web"></script><meta property="og:title" content="${name}">
+<meta property="og:description" content="${username} is on Appnetick">
+<meta property="og:image" content="${avatar}"><style>
 body{
   margin:0;
-  font-family: Arial, sans-serif;
+  font-family:Arial;
   background:#fafafa;
 }
 
@@ -65,7 +64,7 @@ body{
 }
 .icons{
   display:flex;
-  gap:12px;
+  gap:14px;
   font-size:20px;
 }
 
@@ -73,33 +72,22 @@ body{
 .profile{
   background:white;
   padding:20px;
-  text-align:center;
+}
+.header{
+  display:flex;
+  align-items:center;
+  gap:20px;
 }
 .profile img{
-  width:95px;
-  height:95px;
+  width:90px;
+  height:90px;
   border-radius:50%;
   object-fit:cover;
-  border:2px solid #ddd;
 }
-.username{
-  font-weight:bold;
-  margin-top:10px;
-}
-.bio{
-  color:#555;
-  margin-top:6px;
-  font-size:14px;
-}
-
-/* STATS BAR */
 .stats{
   display:flex;
   justify-content:space-around;
-  padding:15px;
-  background:white;
-  border-top:1px solid #eee;
-  border-bottom:1px solid #eee;
+  margin-top:15px;
 }
 .stats div{
   text-align:center;
@@ -113,11 +101,21 @@ body{
   color:#777;
 }
 
-/* ACTION BUTTONS */
+.username{
+  font-weight:bold;
+  margin-top:5px;
+}
+.bio{
+  color:#555;
+  font-size:13px;
+  margin-top:5px;
+}
+
+/* BUTTONS */
 .actions{
   display:flex;
   gap:10px;
-  padding:15px;
+  padding:10px 20px;
   background:white;
 }
 .btn{
@@ -126,12 +124,16 @@ body{
   border:none;
   border-radius:8px;
   font-weight:bold;
-  cursor:pointer;
 }
-.follow{background:#0095f6;color:white;}
-.message{background:#eee;}
+.follow{
+  background:#0095f6;
+  color:white;
+}
+.message{
+  background:#eee;
+}
 
-/* CONTENT GRID (blank area fill) */
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -139,15 +141,15 @@ body{
   padding:2px;
 }
 .grid div{
-  background:#ddd;
   aspect-ratio:1;
+  background:#ddd;
 }
 
 /* MODAL */
 .modal{
   position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
+  top:0;left:0;
+  width:100%;height:100%;
   background:rgba(0,0,0,0.6);
   display:flex;
   align-items:center;
@@ -165,10 +167,16 @@ body{
   width:80px;
   height:80px;
   border-radius:50%;
-  object-fit:cover;
 }
-.modal-title{font-size:18px;font-weight:bold;margin-top:10px;}
-.modal-desc{font-size:13px;color:#666;margin:10px 0;}
+.modal-title{
+  font-weight:bold;
+  margin-top:10px;
+}
+.modal-desc{
+  font-size:13px;
+  color:#666;
+  margin:10px 0;
+}
 .modal-btn{
   width:100%;
   padding:10px;
@@ -176,96 +184,50 @@ body{
   border:none;
   border-radius:6px;
   font-weight:bold;
-  cursor:pointer;
 }
 .open{background:#0095f6;color:white;}
 .continue{background:#eee;}
-</style></head>
-<body><!-- TOP BAR --><div class="topbar">
-  <div class="logo">
-    <i class="ph ph-instagram-logo"></i> Appnetick
-  </div>
+</style></head><body><div class="topbar">
+  <div class="logo"><i class="ph ph-instagram-logo"></i> Appnetick</div>
   <div class="icons">
     <i class="ph ph-heart"></i>
     <i class="ph ph-chat-circle"></i>
     <i class="ph ph-paper-plane-tilt"></i>
   </div>
-</div><!-- PROFILE --><div class="profile">
-  <img id="avatar" />
-  <div class="username" id="username"></div>
-  <div class="bio" id="bio"></div>
-</div><!-- STATS --><div class="stats">
-  <div><b id="posts">0</b><span>Posts</span></div>
-  <div><b id="followers">0</b><span>Followers</span></div>
-  <div><b id="following">0</b><span>Following</span></div>
-</div><!-- ACTIONS --><div class="actions">
+</div><div class="profile">
+  <div class="header">
+    <img src="${avatar}">
+    <div>
+      <div class="username">@${username}</div>
+      <div class="bio">${bio}</div>
+    </div>
+  </div>  <div class="stats">
+    <div><b>${posts}</b><span>Posts</span></div>
+    <div><b>${followers}</b><span>Followers</span></div>
+    <div><b>${following}</b><span>Following</span></div>
+  </div>
+</div><div class="actions">
   <button class="btn follow"><i class="ph ph-user-plus"></i> Follow</button>
   <button class="btn message"><i class="ph ph-chat-circle"></i> Message</button>
-</div><!-- GRID CONTENT --><div class="grid">
+</div><div class="grid">
   <div></div><div></div><div></div>
   <div></div><div></div><div></div>
   <div></div><div></div><div></div>
-</div><!-- MODAL --><div class="modal" id="modal">
+</div><div class="modal" id="modal">
   <div class="modal-box">
-    <img id="modalAvatar" />
-    <div class="modal-title" id="modalName"></div>
-    <div class="modal-desc">
-      OPEN THIS PROFILE IN APPNETICK FOR BEST EXPERIENCE. ALL FEATURES LIKE CHAT, POSTS AND FOLLOW ARE AVAILABLE INSIDE THE APP.
-    </div><button class="modal-btn open" onclick="openApp()">OPEN IN APP</button>
-<button class="modal-btn continue" onclick="closeModal()">CONTINUE IN BROWSER</button>
-
+    <img src="${avatar}">
+    <div class="modal-title">${name}</div>
+    <div class="modal-desc">OPEN THIS PROFILE IN APPNETICK FOR FULL EXPERIENCE</div>
+    <button class="modal-btn open" onclick="openApp()">OPEN IN APP</button>
+    <button class="modal-btn continue" onclick="closeModal()">CONTINUE</button>
   </div>
 </div><script>
-const params = new URLSearchParams(window.location.search);
-const uid = params.get("uid");
-
-async function loadUser(){
-  if(!uid) return;
-
-  const res = await fetch(`/api/user?uid=${uid}`);
-  const data = await res.json();
-
-  document.getElementById("avatar").src = data.avatar;
-  document.getElementById("username").innerText = "@" + data.Username;
-  document.getElementById("bio").innerText = data.bio || "No bio available";
-
-  document.getElementById("modalAvatar").src = data.avatar;
-  document.getElementById("modalName").innerText = data.full_name;
-
-  // extra stats (fallback)
-  document.getElementById("posts").innerText = data.posts || 0;
-  document.getElementById("followers").innerText = data.followers || 0;
-  document.getElementById("following").innerText = data.following || 0;
-}
-
-loadUser();
-
 function openApp(){
   window.location.href = `intent://profile?uid=${uid}#Intent;scheme=https;package=com.test.app;end;`;
 }
-
 function closeModal(){
-  document.getElementById("modal").style.display="none";
+  document.getElementById('modal').style.display='none';
 }
 </script></body>
-</html><!-- BACKEND (Vercel API) --><!--
-export default async function handler(req,res){
-  const uid = req.query.uid;
-  if(!uid) return res.status(400).json({error:"UID missing"});
-
-  const url = `https://appnetick-default-rtdb.firebaseio.com/Users/${uid}.json`;
-  const response = await fetch(url);
-  const data = await response.json();
-
-  if(!data) return res.status(404).json({error:"User not found"});
-
-  return res.status(200).json(data);
-}
--->
-    `);
-
-  } catch (err) {
-    console.error("API ERROR:", err);
-    return res.status(500).send("Server Error: " + err.message);
-  }
-}
+</html>
+    `);} catch (err) { return res.status(500).send("Server Error: " + err.message); } }
