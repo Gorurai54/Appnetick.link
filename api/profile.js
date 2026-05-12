@@ -134,6 +134,127 @@ body{
   font-weight:bold;
   cursor:pointer;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile</title>
+
+<!-- Phosphor Icons (Regular) -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+}
+
+/* TOP BAR */
+.topbar{
+  height:55px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+}
+
+.logo{
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* ICONS */
+.icons{
+  display:flex;
+  gap:15px;
+  font-size:22px;
+}
+
+.icons i{
+  cursor:pointer;
+  color:#111;
+}
+
+/* PROFILE */
+.profile{
+  background:white;
+  padding:20px;
+  text-align:center;
+}
+
+.profile img{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.username{
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.bio{
+  color:#555;
+  margin-top:5px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-box{
+  background:white;
+  width:85%;
+  max-width:350px;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.modal-box img{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.modal-title{
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.modal-desc{
+  font-size:13px;
+  color:#666;
+  margin:10px 0;
+}
+
+.btn{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
 .open{
   background:#0095f6;
@@ -145,29 +266,34 @@ body{
 }
 </style>
 </head>
+
 <body>
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <div class="logo">Appnetick</div>
+  <div class="logo">
+    <i class="ph ph-instagram-logo"></i> Appnetick
+  </div>
+
   <div class="icons">
-    <span>❤</span>
-    <span>✉</span>
+    <i class="ph ph-heart"></i>
+    <i class="ph ph-chat-circle"></i>
+    <i class="ph ph-paper-plane-tilt"></i>
   </div>
 </div>
 
-<!-- PROFILE PAGE -->
+<!-- PROFILE -->
 <div class="profile">
-  <img src="https://via.placeholder.com/150" />
-  <div class="username">@username</div>
-  <div class="bio">This is a sample Instagram-style profile page built for Appnetick users.</div>
+  <img id="avatar" />
+  <div class="username" id="username"></div>
+  <div class="bio" id="bio"></div>
 </div>
 
-<!-- MODAL POPUP -->
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-box">
-    <img src="https://via.placeholder.com/150" />
-    <div class="modal-title">USERNAME</div>
+    <img id="modalAvatar" />
+    <div class="modal-title" id="modalName"></div>
     <div class="modal-desc">
       Open this profile in Appnetick app for better experience. Full features are available in the app.
     </div>
@@ -178,6 +304,18 @@ body{
 </div>
 
 <script>
+const name = data.full_name || "User";
+const username = data.Username || "user";
+const email = data.email || "";
+const avatar = data.avatar || data.profilePic || "";
+
+document.getElementById("avatar").src = avatar;
+document.getElementById("username").innerText = "@" + username;
+document.getElementById("bio").innerText = email || "No bio available";
+
+document.getElementById("modalAvatar").src = avatar;
+document.getElementById("modalName").innerText = name;
+
 function openApp(){
   window.location.href = "intent://profile#Intent;scheme=https;package=com.test.app;end;";
 }
