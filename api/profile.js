@@ -304,18 +304,6 @@ body{
 </div>
 
 <script>
-const name = data.full_name || "User";
-const username = data.Username || "user";
-const email = data.email || "";
-const avatar = data.avatar || data.profilePic || "";
-
-document.getElementById("avatar").src = avatar;
-document.getElementById("username").innerText = "@" + username;
-document.getElementById("bio").innerText = email || "No bio available";
-
-document.getElementById("modalAvatar").src = avatar;
-document.getElementById("modalName").innerText = name;
-
 function openApp(){
   window.location.href = "intent://profile#Intent;scheme=https;package=com.test.app;end;";
 }
