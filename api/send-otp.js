@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
     // 📧 Send email
     await transporter.sendMail({
-      from: `"Appnetick" <${process.env.EMAIL_USER}>`,,
+      from: `"Appnetick" <${process.env.EMAIL_USER}>`, 
       to: email,
       subject: "Your OTP Code",
       html: `
