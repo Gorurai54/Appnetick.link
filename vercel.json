@@ -1,25 +1,25 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/post/:id",
-      "destination": "/post.html"
-    },
-    {
-      "source": "/user/profile",
-      "destination": "/api/profile.js"
-    },
-    {
-      "source": "/auth/user/login",
-      "destination": "/auth/user/login.html"
-    },
-    {
-      "source": "/auth/user/signup",
-      "destination": "/auth/user/signup.html"
-    }
-     {
-      "source": "/user/terms-and-conditions",
-      "destination": "/user/terms-and-conditions.html"
-     }
-  ]
+"cleanUrls": true,
+"rewrites": [
+{
+"source": "/post/:id",
+"destination": "/post.html"
+},
+{
+"source": "/user/profile",
+"destination": "/api/profile.js"
+},
+{
+"source": "/auth/user/login",
+"destination": "/auth/user/login.html"
+},
+{
+"source": "/auth/user/signup",
+"destination": "/auth/user/signup.html"
+},
+{
+"source": "/user/terms-and-conditions",
+"destination": "/user/terms-and-conditions.html"
+}
+]
 }
