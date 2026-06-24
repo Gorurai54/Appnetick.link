@@ -101,13 +101,37 @@ color:#2196f3;
 cursor:pointer;
 }
 
+  <div id="progress-container"></div>
+
+<script>
+fetch('/components/progress.html')
+.then(res => res.text())
+.then(data => {
+document.getElementById("progress-container").innerHTML = data;
+});
+</script>
+
 </style></head><body><!-- TOOLBAR --><div class="toolbar">
 <div class="title">Appnetick</div>
 <img src="/20260313_121958.jpg">
 </div><div class="container"><div class="heading">Login with your account</div><div class="desc">
 Access your Appnetick account and continue chatting, sharing, and exploring the platform.
 </div><input type="email" placeholder="Email">
-<input type="password" placeholder="Password"><button>Login</button>
+<input type="password" placeholder="Password"><button onclick="startLogin()">Login</button>
+
+<script>
+function startLogin(){
+showProgress("Logging into your account...");
+
+setTimeout(()=>{
+hideProgress();
+
+// 👉 yahan baad me tum Firebase login lagaoge
+alert("Login Success");
+
+},2000);
+}
+</script>
 
 <div class="switch">Use mobile instead</div></div><div class="footer">
 Don't have an account? 
