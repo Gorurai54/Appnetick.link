@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Appnetick - Connect Freely</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Appnetick - Connect Freely</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><!-- PHOSPHOR ICONS --><script src="https://unpkg.com/@phosphor-icons/web"></script><style>
 *{
 margin:0;
 padding:0;
@@ -13,6 +13,7 @@ body{
 background:#0b141a;
 color:#e9edef;
 scroll-behavior:smooth;
+overflow-x:hidden; /* FIX mobile scroll */
 }
 
 /* NAVBAR */
@@ -20,10 +21,9 @@ scroll-behavior:smooth;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 40px;
-height:70px;
+padding:0 20px;
+height:65px;
 
-/* GLASS EFFECT */
 background: rgba(17, 27, 33, 0.5);
 backdrop-filter: blur(20px);
 -webkit-backdrop-filter: blur(20px);
@@ -36,38 +36,38 @@ z-index:1000;
 }
 
 .logo{
-font-size:24px;
+font-size:22px;
 font-weight:700;
-color:#25d366;
+color:#2196f3;
 display:flex;
 align-items:center;
-height:100%;
 }
 
 .nav-links{
 display:flex;
-gap:25px;
+gap:15px;
 align-items:center;
-height:100%;
 }
 
 .nav-links a{
 text-decoration:none;
 color:#ddd;
-font-size:15px;
+font-size:14px;
 display:flex;
 align-items:center;
-height:100%;
+gap:6px;
 }
 
+/* BUTTON */
 .btn{
-background:#25d366;
-color:black;
-padding:10px 18px;
+background:#2196f3;
+color:#fff;
+padding:8px 14px;
 border-radius:8px;
 font-weight:600;
 display:flex;
 align-items:center;
+gap:5px;
 }
 
 /* HERO */
@@ -76,7 +76,8 @@ display:flex;
 flex-wrap:wrap;
 align-items:center;
 justify-content:space-between;
-padding:80px 40px;
+padding:50px 20px;
+gap:30px;
 }
 
 .hero-text{
@@ -84,112 +85,137 @@ max-width:500px;
 }
 
 .hero-text h1{
-font-size:48px;
+font-size:32px;
 font-weight:700;
 }
 
 .hero-text p{
-margin-top:20px;
-font-size:18px;
+margin-top:15px;
+font-size:16px;
 color:#cfcfcf;
 }
 
 .hero-buttons{
-margin-top:30px;
+margin-top:20px;
 display:flex;
-gap:15px;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .hero img{
-width:400px;
-max-width:100%;
+width:100%;
+max-width:320px;
+margin:auto;
+display:block;
 }
 
 /* FEATURES */
 .features{
-padding:80px 40px;
+padding:60px 20px;
 background:#111b21;
 }
 
 .features h2{
 text-align:center;
-font-size:32px;
-margin-bottom:50px;
+font-size:26px;
+margin-bottom:40px;
 }
 
 .feature-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
+grid-template-columns:1fr;
+gap:20px;
 }
 
 .feature{
 background:#1f2c33;
-padding:25px;
+padding:20px;
 border-radius:12px;
 }
 
 /* SECTION */
 .section{
-padding:70px 40px;
+padding:50px 20px;
 max-width:900px;
 margin:auto;
 }
 
 .section h2{
-font-size:30px;
-margin-bottom:20px;
+font-size:24px;
+margin-bottom:15px;
 }
 
 .section p{
-line-height:1.7;
+line-height:1.6;
+font-size:15px;
 color:#cfcfcf;
 }
 
 /* FOOTER */
 .footer{
-padding:40px;
+padding:30px;
 background:#111b21;
 text-align:center;
-margin-top:60px;
+margin-top:40px;
 }
 
 .footer p{
 color:#aaa;
-font-size:14px;
+font-size:13px;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
+/* DOWNLOAD BUTTON */
+.download-fixed{
+position:fixed;
+bottom:15px;
+left:50%;
+transform:translateX(-50%);
+background:#2196f3;
+color:white;
+padding:10px 25px;
+border-radius:100px;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:8px;
+z-index:2000;
+box-shadow:0 5px 20px rgba(0,0,0,0.4);
+}
+
+/* DESKTOP */
+@media(min-width:768px){
 
 .hero{
-flex-direction:column;
-text-align:center;
+padding:80px 40px;
 }
 
 .hero-text h1{
-font-size:34px;
+font-size:48px;
+}
+
+.feature-grid{
+grid-template-columns:repeat(2,1fr);
 }
 
 .navbar{
-padding:0 15px;
+padding:0 40px;
 }
 
 }
 </style></head><body><!-- NAVBAR --><div class="navbar">
 <div class="logo">Appnetick</div><div class="nav-links">
-<a href="#features">Features</a>
-<a href="#privacy">Privacy</a>
-<a href="#terms">Terms</a>
-<a href="#" class="btn">Download</a>
+<a href="#features"><i class="ph ph-star"></i>Features</a>
+<a href="#privacy"><i class="ph ph-lock"></i>Privacy</a>
+<a href="#terms"><i class="ph ph-file-text"></i>Terms</a>
+<a href="#" class="btn"><i class="ph ph-download"></i>Download</a>
 </div>
 </div><!-- HERO --><div class="hero"><div class="hero-text">
 <h1>Simple. Secure. Social.</h1><p>
 Appnetick helps you connect with friends, share moments, and chat privately —
 all in one powerful platform.
 </p><div class="hero-buttons">
-<a href="#" class="btn">Get Started</a>
-<a href="#" style="color:#25d366;">Open Web</a>
+<a href="#" class="btn"><i class="ph ph-user"></i>Get Started</a>
+<a href="#" style="color:#2196f3;">Open Web</a>
 </div>
 </div><img src="https://via.placeholder.com/400" alt="app">
 </div><!-- FEATURES --><div class="features" id="features"><h2>Why Choose Appnetick?</h2><div class="feature-grid"><div class="feature">
@@ -205,20 +231,33 @@ all in one powerful platform.
 <h3>📱 Cross Platform</h3>
 <p>Works on mobile, web, and desktop.</p>
 </div></div>
-</div><!-- PRIVACY --><div class="section" id="privacy"><h2>Privacy Policy</h2><p>
+</div><!-- PRIVACY --><div class="section" id="privacy">
+<h2>Privacy Policy</h2>
+<p>
 We value your privacy. Appnetick ensures that your personal data is never shared
 without your consent. Messages are encrypted and stored securely.
-</p><p>
+</p>
+<p>
 We collect minimal data required to improve user experience, such as login
 information and usage analytics.
-</p></div><!-- TERMS --><div class="section" id="terms"><h2>Terms & Conditions</h2><p>
+</p>
+</div><!-- TERMS --><div class="section" id="terms">
+<h2>Terms & Conditions</h2>
+<p>
 By using Appnetick, you agree not to misuse the platform or engage in harmful
 activities. Users must respect community guidelines and privacy rules.
-</p><p>
+</p>
+<p>
 We reserve the right to suspend accounts that violate our policies.
-</p></div><!-- CONTACT --><div class="section"><h2>Contact Us</h2><p>Email: support@appnetick.com</p>
-<p>Website: appnetick.com</p></div><!-- FOOTER --><div class="footer">
+</p>
+</div><!-- CONTACT --><div class="section">
+<h2>Contact Us</h2>
+<p>Email: support@appnetick.com</p>
+<p>Website: appnetick.com</p>
+</div><!-- FOOTER --><div class="footer">
 <p>© 2026 Appnetick. All rights reserved.</p>
+</div><!-- FIXED DOWNLOAD BUTTON --><div class="download-fixed">
+<i class="ph ph-download"></i> Download App
 </div><script>
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 anchor.addEventListener('click', function (e) {
