@@ -1,7 +1,29 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Appnetick - Connect Freely</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Appnetick Profile</title>
+  <link rel="icon" href="/20260314_091747.png">
+
+
+<meta property="og:site_name" content="Appnetick">
+  <meta property="og:image" content="IMAGE_URL">
+<meta property="og:title" content="User Profile">
+<meta property="og:description" content="View profile on Appnetick">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+
 *{
 margin:0;
 padding:0;
@@ -10,205 +32,222 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#0b141a;
-color:#e9edef;
+background:#000814;
+color:white;
+overflow-x:hidden;
 }
 
-/* NAVBAR */
-.navbar{
+.container{
+max-width:500px;
+margin:auto;
+padding-bottom:40px;
+}
+
+/* TOP BAR */
+.topbar{
+height:70px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:18px 40px;
-background:#111b21;
+justify-content:space-between;
+padding:0 18px;
 position:sticky;
 top:0;
 z-index:100;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(20px);
 }
 
-.logo{
-font-size:24px;
-font-weight:700;
-color:#25d366;
-}
-
-.nav-links{
+.left-top{
 display:flex;
-gap:25px;
-}
-
-.nav-links a{
-text-decoration:none;
-color:#ddd;
-font-size:15px;
-}
-
-.btn{
-background:#25d366;
-color:black;
-padding:10px 18px;
-border-radius:8px;
-font-weight:600;
-}
-
-/* HERO */
-.hero{
-display:flex;
-flex-wrap:wrap;
 align-items:center;
-justify-content:space-between;
-padding:80px 40px;
+gap:14px;
 }
 
-.hero-text{
-max-width:500px;
+.top-icon{
+font-size:34px;
+color:white;
 }
 
-.hero-text h1{
-font-size:48px;
+.username-top{
+font-size:22px;
 font-weight:700;
 }
 
-.hero-text p{
-margin-top:20px;
+/* PROFILE */
+.profile-header{
+padding:30px 22px 0;
+text-align:center;
+}
+
+.profile-image{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #222;
+}
+
+.name{
+margin-top:18px;
+font-size:28px;
+font-weight:700;
+}
+
+.bio{
+margin-top:10px;
+font-size:18px;
+line-height:1.7;
+color:#f0f0f0;
+}
+
+.stats{
+display:flex;
+justify-content:space-around;
+margin-top:34px;
+}
+
+.stat h2{
+font-size:30px;
+font-weight:700;
+}
+
+.stat p{
+margin-top:4px;
 font-size:18px;
 color:#cfcfcf;
 }
 
-.hero-buttons{
-margin-top:30px;
-display:flex;
-gap:15px;
+.loading{
+opacity:0.6;
 }
 
-.hero img{
-width:400px;
-max-width:100%;
-}
+</style>
 
-/* FEATURES */
-.features{
-padding:80px 40px;
-background:#111b21;
-}
+</head>
 
-.features h2{
-text-align:center;
-font-size:32px;
-margin-bottom:50px;
-}
+<body>
 
-.feature-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-}
+<div class="container">
 
-.feature{
-background:#1f2c33;
-padding:25px;
-border-radius:12px;
-}
+<!-- TOP BAR -->
+<div class="topbar">
 
-/* SECTION */
-.section{
-padding:70px 40px;
-max-width:900px;
-margin:auto;
-}
-
-.section h2{
-font-size:30px;
-margin-bottom:20px;
-}
-
-.section p{
-line-height:1.7;
-color:#cfcfcf;
-}
-
-/* FOOTER */
-.footer{
-padding:40px;
-background:#111b21;
-text-align:center;
-margin-top:60px;
-}
-
-.footer p{
-color:#aaa;
-font-size:14px;
-}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-
-.hero{
-flex-direction:column;
-text-align:center;
-}
-
-.hero-text h1{
-font-size:34px;
-}
-
-.navbar{
-padding:15px;
-}
-
-}
-</style></head><body><!-- NAVBAR --><div class="navbar">
-<div class="logo">Appnetick</div><div class="nav-links">
-<a href="#features">Features</a>
-<a href="#privacy">Privacy</a>
-<a href="#terms">Terms</a>
-<a href="#" class="btn">Download</a>
+<div class="left-top">
+<i class="ph ph-plus top-icon"></i>
+<div class="username-top" id="usernameTop">loading...</div>
 </div>
-</div><!-- HERO --><div class="hero"><div class="hero-text">
-<h1>Simple. Secure. Social.</h1><p>
-Appnetick helps you connect with friends, share moments, and chat privately —
-all in one powerful platform.
-</p><div class="hero-buttons">
-<a href="#" class="btn">Get Started</a>
-<a href="#" style="color:#25d366;">Open Web</a>
+
+<i class="ph ph-list top-icon"></i>
+
 </div>
-</div><img src="https://via.placeholder.com/400" alt="app">
-</div><!-- FEATURES --><div class="features" id="features"><h2>Why Choose Appnetick?</h2><div class="feature-grid"><div class="feature">
-<h3>🔒 Privacy First</h3>
-<p>Your data is encrypted and safe.</p>
-</div><div class="feature">
-<h3>⚡ Fast Messaging</h3>
-<p>Instant messaging with real-time sync.</p>
-</div><div class="feature">
-<h3>🌍 Connect Globally</h3>
-<p>Chat with anyone, anywhere.</p>
-</div><div class="feature">
-<h3>📱 Cross Platform</h3>
-<p>Works on mobile, web, and desktop.</p>
-</div></div>
-</div><!-- PRIVACY --><div class="section" id="privacy"><h2>Privacy Policy</h2><p>
-We value your privacy. Appnetick ensures that your personal data is never shared
-without your consent. Messages are encrypted and stored securely.
-</p><p>
-We collect minimal data required to improve user experience, such as login
-information and usage analytics.
-</p></div><!-- TERMS --><div class="section" id="terms"><h2>Terms & Conditions</h2><p>
-By using Appnetick, you agree not to misuse the platform or engage in harmful
-activities. Users must respect community guidelines and privacy rules.
-</p><p>
-We reserve the right to suspend accounts that violate our policies.
-</p></div><!-- CONTACT --><div class="section"><h2>Contact Us</h2><p>Email: support@appnetick.com</p>
-<p>Website: appnetick.com</p></div><!-- FOOTER --><div class="footer">
-<p>© 2026 Appnetick. All rights reserved.</p>
-</div><script>
-// simple smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-document.querySelector(this.getAttribute('href')).scrollIntoView({
-behavior: 'smooth'
-});
-});
-});
-</script></body>
+
+<!-- PROFILE -->
+<div class="profile-header">
+
+<img class="profile-image" id="profileImg"
+src="https://via.placeholder.com/120">
+
+<div class="name" id="name">Loading...</div>
+
+<div class="bio" id="bio">Please wait...</div>
+
+<!-- STATS -->
+<div class="stats">
+
+<div class="stat">
+<h2 id="posts">0</h2>
+<p>posts</p>
+</div>
+
+<div class="stat">
+<h2 id="followers">0</h2>
+<p>followers</p>
+</div>
+
+<div class="stat">
+<h2 id="following">0</h2>
+<p>following</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get
+} 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* YOUR EXACT FIREBASE CONFIG (NO CHANGE) */
+const firebaseConfig = {
+apiKey: "AIzaSyBGIQFj6syU2231sov7c5i_90O0s6olCxlM",
+authDomain: "appnetick.firebaseapp.com",
+databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
+projectId: "appnetick",
+storageBucket: "appnetick.firebasestorage.app",
+messagingSenderId: "816276009696",
+appId: "1:816276009696:web:db763c2ae70d2b944c9685"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* UID FROM URL */
+const params = new URLSearchParams(window.location.search);
+const uid = params.get("uid");;
+async function loadProfile(){
+
+if(!uid){
+document.getElementById("name").innerText = "No UID";
+return;
+}
+
+const snap = await get(ref(db, "Users/" + uid));
+
+if(snap.exists()){
+
+const data = snap.val();
+
+/* 🔥 EXACT YOUR FIREBASE FIELDS */
+document.getElementById("name").innerText = data.full_name || "No Name";
+document.getElementById("usernameTop").innerText = data.Username || "user";
+document.getElementById("bio").innerText = data.email || "";
+
+// ✅ PROFILE IMAGE FIX
+  document.getElementById("profileImg").src =
+    data.avatar ||
+    data.profilePic ||
+    data.photo ||
+    "https://via.placeholder.com/120";
+
+
+/* stats (optional) */
+document.getElementById("posts").innerText = 0;
+document.getElementById("followers").innerText = 0;
+document.getElementById("following").innerText = 0;
+
+}else{
+
+document.getElementById("name").innerText = "User Not Found";
+document.getElementById("bio").innerText = "";
+
+}
+
+}
+
+loadProfile().catch(console.error);
+
+</script>
+
+</body>
 </html>
