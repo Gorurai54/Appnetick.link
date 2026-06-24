@@ -34,8 +34,14 @@ text-align:center;
 /* LOGO */
 .logo img{
 width:80px;
-margin:5px 0 10px 0; /* upar kam, niche controlled gap */
+margin:5px 0 10px 0;
 border-radius:20px;
+}
+
+/* TEXT */
+h2{
+margin-top:10px;
+margin-bottom:30px;
 }
 
 /* INPUT */
@@ -69,7 +75,7 @@ color:#2196f3;
 cursor:pointer;
 }
 
-/* BOTTOM SHEET */
+/* SHEET */
 .sheet{
 position:fixed;
 bottom:-100%;
@@ -79,20 +85,15 @@ background:#111;
 padding:20px;
 border-radius:20px 20px 0 0;
 transition:0.3s;
+max-height:70%;
+overflow:auto;
 }
-
 .sheet.active{bottom:0;}
-
 .sheet div{
 padding:12px;
 border-bottom:1px solid #333;
 cursor:pointer;
 }
-  h2{
-margin-top:10px;
-margin-bottom:30px; /* 👈 ye gap input se door karega */
-  }
-
 </style></head><body><div class="lang" onclick="toggleSheet()">English ▼</div><div class="container"><div class="logo">
 <img src="/20260313_121958.jpg">
 </div><h2>Welcome Back</h2><input type="email" placeholder="Email">
@@ -100,39 +101,35 @@ margin-bottom:30px; /* 👈 ye gap input se door karega */
 
 <span class="link" onclick="location.href='/auth/user/signup'">
 Create new account
-</span></div><!-- LANGUAGE SHEET --><div class="sheet" id="sheet">
-<div class="sheet" id="sheet">
+</span></div><div class="sheet" id="sheet">
 <div onclick="setLang('English')">English</div>
 <div onclick="setLang('Hindi')">Hindi</div>
 <div onclick="setLang('Spanish')">Spanish</div>
 <div onclick="setLang('French')">French</div>
 <div onclick="setLang('German')">German</div>
-<div onclick="setLang('Portuguese')">Portuguese</div>
-<div onclick="setLang('Russian')">Russian</div>
 <div onclick="setLang('Chinese')">Chinese</div>
 <div onclick="setLang('Japanese')">Japanese</div>
-<div onclick="setLang('Korean')">Korean</div>
 <div onclick="setLang('Arabic')">Arabic</div>
+<div onclick="setLang('Russian')">Russian</div>
+<div onclick="setLang('Portuguese')">Portuguese</div>
+<div onclick="setLang('Bengali')">Bengali</div>
+<div onclick="setLang('Tamil')">Tamil</div>
+<div onclick="setLang('Telugu')">Telugu</div>
+<div onclick="setLang('Marathi')">Marathi</div>
+<div onclick="setLang('Gujarati')">Gujarati</div>
+<div onclick="setLang('Punjabi')">Punjabi</div>
+<div onclick="setLang('Urdu')">Urdu</div>
+<div onclick="setLang('Malayalam')">Malayalam</div>
+<div onclick="setLang('Kannada')">Kannada</div>
+<div onclick="setLang('Nepali')">Nepali</div>
+<div onclick="setLang('Thai')">Thai</div>
+<div onclick="setLang('Vietnamese')">Vietnamese</div>
+<div onclick="setLang('Indonesian')">Indonesian</div>
 <div onclick="setLang('Turkish')">Turkish</div>
 <div onclick="setLang('Italian')">Italian</div>
 <div onclick="setLang('Dutch')">Dutch</div>
 <div onclick="setLang('Swedish')">Swedish</div>
 <div onclick="setLang('Polish')">Polish</div>
-<div onclick="setLang('Thai')">Thai</div>
-<div onclick="setLang('Vietnamese')">Vietnamese</div>
-<div onclick="setLang('Indonesian')">Indonesian</div>
-<div onclick="setLang('Malay')">Malay</div>
-<div onclick="setLang('Bengali')">Bengali</div>
-<div onclick="setLang('Punjabi')">Punjabi</div>
-<div onclick="setLang('Gujarati')">Gujarati</div>
-<div onclick="setLang('Marathi')">Marathi</div>
-<div onclick="setLang('Tamil')">Tamil</div>
-<div onclick="setLang('Telugu')">Telugu</div>
-<div onclick="setLang('Kannada')">Kannada</div>
-<div onclick="setLang('Malayalam')">Malayalam</div>
-<div onclick="setLang('Urdu')">Urdu</div>
-<div onclick="setLang('Persian')">Persian</div>
-<div onclick="setLang('Hebrew')">Hebrew</div>
 <div onclick="setLang('Greek')">Greek</div>
 <div onclick="setLang('Czech')">Czech</div>
 <div onclick="setLang('Romanian')">Romanian</div>
@@ -141,45 +138,9 @@ Create new account
 <div onclick="setLang('Norwegian')">Norwegian</div>
 <div onclick="setLang('Danish')">Danish</div>
 <div onclick="setLang('Ukrainian')">Ukrainian</div>
-<div onclick="setLang('Slovak')">Slovak</div>
-<div onclick="setLang('Serbian')">Serbian</div>
-<div onclick="setLang('Croatian')">Croatian</div>
-<div onclick="setLang('Bulgarian')">Bulgarian</div>
-<div onclick="setLang('Lithuanian')">Lithuanian</div>
-<div onclick="setLang('Latvian')">Latvian</div>
-<div onclick="setLang('Estonian')">Estonian</div>
 <div onclick="setLang('Filipino')">Filipino</div>
 <div onclick="setLang('Swahili')">Swahili</div>
-<div onclick="setLang('Zulu')">Zulu</div>
 <div onclick="setLang('Afrikaans')">Afrikaans</div>
-<div onclick="setLang('Amharic')">Amharic</div>
-<div onclick="setLang('Nepali')">Nepali</div>
-<div onclick="setLang('Sinhala')">Sinhala</div>
-<div onclick="setLang('Khmer')">Khmer</div>
-<div onclick="setLang('Lao')">Lao</div>
-<div onclick="setLang('Mongolian')">Mongolian</div>
-<div onclick="setLang('Icelandic')">Icelandic</div>
-<div onclick="setLang('Irish')">Irish</div>
-<div onclick="setLang('Welsh')">Welsh</div>
-<div onclick="setLang('Albanian')">Albanian</div>
-<div onclick="setLang('Macedonian')">Macedonian</div>
-<div onclick="setLang('Bosnian')">Bosnian</div>
-<div onclick="setLang('Armenian')">Armenian</div>
-<div onclick="setLang('Georgian')">Georgian</div>
-<div onclick="setLang('Azerbaijani')">Azerbaijani</div>
-<div onclick="setLang('Kazakh')">Kazakh</div>
-<div onclick="setLang('Uzbek')">Uzbek</div>
-<div onclick="setLang('Tajik')">Tajik</div>
-<div onclick="setLang('Pashto')">Pashto</div>
-<div onclick="setLang('Kurdish')">Kurdish</div>
-<div onclick="setLang('Somali')">Somali</div>
-<div onclick="setLang('Haitian Creole')">Haitian Creole</div>
-<div onclick="setLang('Luxembourgish')">Luxembourgish</div>
-<div onclick="setLang('Malagasy')">Malagasy</div>
-<div onclick="setLang('Yoruba')">Yoruba</div>
-<div onclick="setLang('Igbo')">Igbo</div>
-<div onclick="setLang('Hausa')">Hausa</div>
-</div>
 </div><script>
 function toggleSheet(){
 document.getElementById("sheet").classList.toggle("active");
