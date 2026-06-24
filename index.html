@@ -21,6 +21,32 @@ color:#fff;
 overflow-x:hidden;
 }
 
+    .social-row{
+display:flex;
+gap:15px;
+overflow-x:auto;
+padding:20px 15px;
+scrollbar-width:none;
+}
+
+.social-row::-webkit-scrollbar{
+display:none;
+}
+
+.social-icon{
+min-width:60px;
+height:60px;
+background:#fff;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+color:#000;
+flex-shrink:0;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+
 h1{
 font-size:27px;
 font-weight:700;
@@ -271,6 +297,18 @@ Login
 </button><button class="auth-btn" onclick="location.href='/auth/user/signup'">
 Sign Up
 </button></div>
+<div class="social-row">
+  <div class="social-icon"><i class="ph ph-facebook-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-instagram-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-twitter-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-youtube-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-linkedin-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-whatsapp-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-telegram-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-github-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-discord-logo"></i></div>
+  <div class="social-icon"><i class="ph ph-reddit-logo"></i></div>
+</div>
   
 </div><!-- BOTTOM FEATURES TEXT --><div class="bottom-features">
 <div>Chats</div>
