@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/post/:id",
@@ -7,6 +8,14 @@
     {
       "source": "/user/profile",
       "destination": "/api/profile.js"
+    },
+    {
+      "source": "/auth/user/login",
+      "destination": "/auth/user/login.html"
+    },
+    {
+      "source": "/auth/user/signup",
+      "destination": "/auth/user/signup.html"
     }
   ]
 }
