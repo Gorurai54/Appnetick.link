@@ -17,5 +17,9 @@
       "source": "/auth/user/signup",
       "destination": "/auth/user/signup.html"
     }
+     {
+      "source": "/conditions/user/terms-and-conditions",
+      "destination": "/conditions/user/terms-and-conditions.html"
+     }
   ]
 }
