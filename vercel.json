@@ -18,8 +18,8 @@
       "destination": "/auth/user/signup.html"
     }
      {
-      "source": "/conditions/user/terms-and-conditions",
-      "destination": "/conditions/user/terms-and-conditions.html"
+      "source": "/user/terms-and-conditions",
+      "destination": "/user/terms-and-conditions.html"
      }
   ]
 }
