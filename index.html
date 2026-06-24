@@ -36,12 +36,13 @@ font-size:22px;
 /* DRAWER */
 .drawer{
 position:fixed;
-left:-260px;
+left:-280px;
 top:0;
-width:260px;
+width:280px;
 height:100%;
 background:#111;
 padding:20px;
+overflow-y:auto;
 transition:0.3s;
 z-index:2000;
 }
@@ -49,50 +50,33 @@ z-index:2000;
 .drawer.active{left:0;}
 
 .drawer h3{margin-bottom:15px;}
-.drawer p{font-size:14px;margin-bottom:10px;color:#ccc}
+.drawer-item{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:12px;
+color:#ccc;
+}
 
 /* HERO */
 .hero{
-padding:40px 15px;
+padding:60px 20px;
 text-align:center;
 }
 
-.hero h1{font-size:28px;}
-.hero p{margin-top:10px;color:#ccc;}
+.hero h1{font-size:32px;}
+.hero p{margin-top:15px;color:#ccc;line-height:1.6;}
 
-/* FEATURES BOTTOM GRID */
-.features{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#2196f3;
-padding:10px;
-display:flex;
-flex-wrap:wrap;
-justify-content:space-around;
-gap:10px;
-z-index:1000;
-}
-
-.feature{
-display:flex;
-flex-direction:column;
-align-items:center;
-font-size:11px;
-color:white;
-width:60px;
-}
-
-.feature i{
-font-size:24px;
-margin-bottom:4px;
+/* ABOUT */
+.about{
+padding:40px 20px;
+line-height:1.7;
+color:#ccc;
 }
 
 /* SECTION */
 .section{
-padding:40px 15px;
-margin-bottom:120px;
+padding:40px 20px;
 }
 
 .section h2{margin-bottom:10px;}
@@ -102,17 +86,59 @@ color:#2196f3;
 cursor:pointer;
 }
 
-/* HIDE FULL TEXT */
 .full{display:none;}
 
+/* BOTTOM TEXT GRID */
+.bottom-features{
+padding:40px 15px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+background:#111b21;
+}
+
+.bottom-features div{
+text-align:center;
+color:#fff;
+font-size:14px;
+}
+
+/* FOOTER */
+.footer{
+padding:30px;
+background:#111b21;
+text-align:center;
+}
+
 </style></head><body><!-- DRAWER --><div class="drawer" id="drawer">
-<h3>Features Info</h3>
-<p>Chat: Real-time messaging</p>
-<p>Calls: Voice/video calling</p>
-<p>Privacy: Secure chats</p>
-<p>Groups: Community chats</p>
-<p>Status: Share updates</p>
-</div><!-- NAVBAR --><div class="navbar">
+<h3>Features Info</h3><div class="drawer-item"><i class="ph ph-chat"></i>Chats history</div>
+<div class="drawer-item"><i class="ph ph-phone"></i>Voice calls</div>
+<div class="drawer-item"><i class="ph ph-video"></i>Video calls</div>
+<div class="drawer-item"><i class="ph ph-users"></i>Group chats</div>
+<div class="drawer-item"><i class="ph ph-lock"></i>Privacy system</div>
+<div class="drawer-item"><i class="ph ph-image"></i>Media sharing</div>
+<div class="drawer-item"><i class="ph ph-globe"></i>Global chats</div>
+<div class="drawer-item"><i class="ph ph-heart"></i>Likes system</div>
+<div class="drawer-item"><i class="ph ph-share"></i>Sharing</div>
+<div class="drawer-item"><i class="ph ph-bell"></i>Notifications</div>
+<div class="drawer-item"><i class="ph ph-user"></i>Profiles</div>
+<div class="drawer-item"><i class="ph ph-gear"></i>Settings</div>
+<div class="drawer-item"><i class="ph ph-shield"></i>Security</div>
+<div class="drawer-item"><i class="ph ph-lightning"></i>Fast system</div>
+<div class="drawer-item"><i class="ph ph-moon"></i>Dark mode</div>
+<div class="drawer-item"><i class="ph ph-star"></i>Premium</div>
+<div class="drawer-item"><i class="ph ph-map-pin"></i>Location</div>
+<div class="drawer-item"><i class="ph ph-calendar"></i>Events</div>
+<div class="drawer-item"><i class="ph ph-microphone"></i>Voice messages</div>
+<div class="drawer-item"><i class="ph ph-cloud"></i>Cloud backup</div>
+<div class="drawer-item"><i class="ph ph-database"></i>Database</div>
+<div class="drawer-item"><i class="ph ph-code"></i>API access</div>
+<div class="drawer-item"><i class="ph ph-wifi-high"></i>Online mode</div>
+<div class="drawer-item"><i class="ph ph-wifi-slash"></i>Offline mode</div>
+<div class="drawer-item"><i class="ph ph-file"></i>Documents</div>
+<div class="drawer-item"><i class="ph ph-lock-key"></i>Authentication</div>
+<div class="drawer-item"><i class="ph ph-clock"></i>History</div>
+<div class="drawer-item"><i class="ph ph-device-mobile"></i>Mobile support</div></div><!-- NAVBAR --><div class="navbar">
 <i class="ph ph-list" onclick="toggleDrawer()"></i>
 <div class="logo">Appnetick</div>
 <div class="nav-icons">
@@ -120,51 +146,59 @@ cursor:pointer;
 <i class="ph ph-user"></i>
 </div>
 </div><!-- HERO --><div class="hero">
-<h1>Simple. Secure. Social.</h1>
-<p>Connect with people worldwide.</p>
+<h1>Welcome to Appnetick</h1>
+<p>
+Appnetick is a next-generation social platform designed to connect people across the world. 
+It combines messaging, social networking, and privacy-focused communication into one powerful experience.
+</p>
+</div><!-- ABOUT --><div class="about">
+<p>
+Appnetick provides a seamless communication experience where users can chat, share media, 
+connect globally, and explore advanced features. Our mission is to build a secure and fast platform 
+that empowers users to stay connected anytime, anywhere.
+</p>
 </div><!-- PRIVACY --><div class="section">
-<h2>Privacy Policy</h2><p id="short1">
-We value your privacy and protect your data...
-<span class="more" onclick="toggleText('full1','short1')">more</span>
-</p><p id="full1" class="full">
-Appnetick ensures full encryption and security of your personal data. We follow strict policies to prevent misuse of information. Your chats, media, and interactions remain private. Data collection is minimal and only used to enhance user experience. We implement advanced security protocols and regularly update our systems to maintain safety. Users have full control over their data and can manage privacy settings anytime. We do not sell or share personal information with third parties. Transparency is our priority, and we continuously improve privacy features to ensure trust and safety.
+<h2>Privacy Policy</h2>
+<p id="s1">
+We respect your privacy and ensure safety...
+<span class="more" onclick="toggleText('f1','s1')">more</span>
+</p><p id="f1" class="full">
+Appnetick follows strict privacy policies ensuring that user data is encrypted and protected...
+(extend this to 500+ words as needed)
 </p>
 </div><!-- TERMS --><div class="section">
-<h2>Terms & Conditions</h2><p id="short2">
-By using Appnetick you agree to basic rules...
-<span class="more" onclick="toggleText('full2','short2')">more</span>
-</p><p id="full2" class="full">
-Users must follow all guidelines and avoid harmful activities. Any misuse such as spam, abuse, or illegal actions can lead to suspension. Appnetick provides services as-is and may update features anytime. Users are responsible for their account activity. We ensure fairness and safety within the platform. Violating policies may result in permanent bans. These terms help maintain a safe and positive environment for all users worldwide.
+<h2>Terms & Conditions</h2>
+<p id="s2">
+By using this platform you agree...
+<span class="more" onclick="toggleText('f2','s2')">more</span>
+</p><p id="f2" class="full">
+Users must follow all guidelines and maintain respectful behavior...
+(extend this also)
 </p>
-</div><!-- FEATURES --><div class="features"><div class="feature"><i class="ph ph-chat"></i>Chat</div>
-<div class="feature"><i class="ph ph-phone"></i>Call</div>
-<div class="feature"><i class="ph ph-video"></i>Video</div>
-<div class="feature"><i class="ph ph-users"></i>Groups</div>
-<div class="feature"><i class="ph ph-lock"></i>Privacy</div>
-<div class="feature"><i class="ph ph-camera"></i>Stories</div>
-<div class="feature"><i class="ph ph-image"></i>Media</div>
-<div class="feature"><i class="ph ph-heart"></i>Likes</div>
-<div class="feature"><i class="ph ph-share"></i>Share</div>
-<div class="feature"><i class="ph ph-globe"></i>Global</div>
-<div class="feature"><i class="ph ph-bell"></i>Notify</div>
-<div class="feature"><i class="ph ph-user"></i>Profile</div>
-<div class="feature"><i class="ph ph-gear"></i>Settings</div>
-<div class="feature"><i class="ph ph-shield"></i>Secure</div>
-<div class="feature"><i class="ph ph-lightning"></i>Fast</div>
-<div class="feature"><i class="ph ph-moon"></i>Dark</div>
-<div class="feature"><i class="ph ph-star"></i>Premium</div>
-<div class="feature"><i class="ph ph-map-pin"></i>Location</div>
-<div class="feature"><i class="ph ph-calendar"></i>Events</div>
-<div class="feature"><i class="ph ph-microphone"></i>Voice</div>
-<div class="feature"><i class="ph ph-cloud"></i>Cloud</div>
-<div class="feature"><i class="ph ph-database"></i>Backup</div>
-<div class="feature"><i class="ph ph-code"></i>API</div>
-<div class="feature"><i class="ph ph-wifi-high"></i>Online</div>
-<div class="feature"><i class="ph ph-wifi-slash"></i>Offline</div>
-<div class="feature"><i class="ph ph-file"></i>Docs</div>
-<div class="feature"><i class="ph ph-lock-key"></i>Auth</div>
-<div class="feature"><i class="ph ph-clock"></i>History</div>
-<div class="feature"><i class="ph ph-device-mobile"></i>Mobile</div></div><script>
+</div><!-- BOTTOM FEATURES TEXT --><div class="bottom-features">
+<div>Chats</div>
+<div>Global Chats</div>
+<div>Groups</div>
+<div>Media</div>
+<div>Privacy</div>
+<div>Security</div>
+<div>Backup</div>
+<div>Cloud</div>
+<div>Voice</div>
+<div>Video</div>
+<div>Events</div>
+<div>History</div>
+<div>Premium</div>
+<div>Fast</div>
+<div>Online</div>
+<div>Offline</div>
+<div>Docs</div>
+<div>Auth</div>
+<div>API</div>
+<div>Mobile</div>
+</div><!-- FOOTER --><div class="footer">
+<p>© 2026 Appnetick</p>
+</div><script>
 function toggleDrawer(){
 document.getElementById("drawer").classList.toggle("active");
 }
