@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       <head>
         <meta charset="UTF-8">
 
-        <link rel="icon" href="/20260314_091747.png">
+        <link rel="icon" href="/20260313_121958.jpg">
 
         <meta property="og:site_name" content="Appnetick">
 
