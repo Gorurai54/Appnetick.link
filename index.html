@@ -12,6 +12,7 @@ font-family:'Inter',sans-serif;
 body{
 background:#0b141a;
 color:#e9edef;
+scroll-behavior:smooth;
 }
 
 /* NAVBAR */
@@ -19,28 +20,44 @@ color:#e9edef;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 40px;
-background:#111b21;
+padding:0 40px;
+height:70px;
+
+/* GLASS EFFECT */
+background: rgba(17, 27, 33, 0.5);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+
+border-bottom: 1px solid rgba(255,255,255,0.08);
+
 position:sticky;
 top:0;
-z-index:100;
+z-index:1000;
 }
 
 .logo{
 font-size:24px;
 font-weight:700;
 color:#25d366;
+display:flex;
+align-items:center;
+height:100%;
 }
 
 .nav-links{
 display:flex;
 gap:25px;
+align-items:center;
+height:100%;
 }
 
 .nav-links a{
 text-decoration:none;
 color:#ddd;
 font-size:15px;
+display:flex;
+align-items:center;
+height:100%;
 }
 
 .btn{
@@ -49,6 +66,8 @@ color:black;
 padding:10px 18px;
 border-radius:8px;
 font-weight:600;
+display:flex;
+align-items:center;
 }
 
 /* HERO */
@@ -153,7 +172,7 @@ font-size:34px;
 }
 
 .navbar{
-padding:15px;
+padding:0 15px;
 }
 
 }
@@ -201,7 +220,6 @@ We reserve the right to suspend accounts that violate our policies.
 <p>Website: appnetick.com</p></div><!-- FOOTER --><div class="footer">
 <p>© 2026 Appnetick. All rights reserved.</p>
 </div><script>
-// simple smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 anchor.addEventListener('click', function (e) {
 e.preventDefault();
