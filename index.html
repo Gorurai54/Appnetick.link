@@ -1,19 +1,14 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Appnetick - Connect Freely</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><!-- PHOSPHOR ICONS --><script src="https://unpkg.com/@phosphor-icons/web"></script><style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Appnetick</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
 background:#0b141a;
-color:#e9edef;
-scroll-behavior:smooth;
-overflow-x:hidden; /* FIX mobile scroll */
+color:#fff;
+overflow-x:hidden;
 }
 
 /* NAVBAR */
@@ -21,251 +16,162 @@ overflow-x:hidden; /* FIX mobile scroll */
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 20px;
-height:65px;
-
-background: rgba(17, 27, 33, 0.5);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-
-border-bottom: 1px solid rgba(255,255,255,0.08);
-
+padding:0 15px;
+height:60px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(20px);
 position:sticky;
 top:0;
 z-index:1000;
 }
 
-.logo{
-font-size:22px;
-font-weight:700;
-color:#2196f3;
-display:flex;
-align-items:center;
-}
+.logo{color:#2196f3;font-weight:700;font-size:20px;}
 
-.nav-links{
+.nav-icons{
 display:flex;
 gap:15px;
-align-items:center;
+font-size:22px;
 }
 
-.nav-links a{
-text-decoration:none;
-color:#ddd;
-font-size:14px;
-display:flex;
-align-items:center;
-gap:6px;
+/* DRAWER */
+.drawer{
+position:fixed;
+left:-260px;
+top:0;
+width:260px;
+height:100%;
+background:#111;
+padding:20px;
+transition:0.3s;
+z-index:2000;
 }
 
-/* BUTTON */
-.btn{
-background:#2196f3;
-color:#fff;
-padding:8px 14px;
-border-radius:8px;
-font-weight:600;
-display:flex;
-align-items:center;
-gap:5px;
-}
+.drawer.active{left:0;}
+
+.drawer h3{margin-bottom:15px;}
+.drawer p{font-size:14px;margin-bottom:10px;color:#ccc}
 
 /* HERO */
 .hero{
-display:flex;
-flex-wrap:wrap;
-align-items:center;
-justify-content:space-between;
-padding:50px 20px;
-gap:30px;
-}
-
-.hero-text{
-max-width:500px;
-}
-
-.hero-text h1{
-font-size:32px;
-font-weight:700;
-}
-
-.hero-text p{
-margin-top:15px;
-font-size:16px;
-color:#cfcfcf;
-}
-
-.hero-buttons{
-margin-top:20px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.hero img{
-width:100%;
-max-width:320px;
-margin:auto;
-display:block;
-}
-
-/* FEATURES */
-.features{
-padding:60px 20px;
-background:#111b21;
-}
-
-.features h2{
+padding:40px 15px;
 text-align:center;
-font-size:26px;
-margin-bottom:40px;
 }
 
-.feature-grid{
-display:grid;
-grid-template-columns:1fr;
-gap:20px;
+.hero h1{font-size:28px;}
+.hero p{margin-top:10px;color:#ccc;}
+
+/* FEATURES BOTTOM GRID */
+.features{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#2196f3;
+padding:10px;
+display:flex;
+flex-wrap:wrap;
+justify-content:space-around;
+gap:10px;
+z-index:1000;
 }
 
 .feature{
-background:#1f2c33;
-padding:20px;
-border-radius:12px;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:11px;
+color:white;
+width:60px;
+}
+
+.feature i{
+font-size:24px;
+margin-bottom:4px;
 }
 
 /* SECTION */
 .section{
-padding:50px 20px;
-max-width:900px;
-margin:auto;
+padding:40px 15px;
+margin-bottom:120px;
 }
 
-.section h2{
-font-size:24px;
-margin-bottom:15px;
+.section h2{margin-bottom:10px;}
+
+.more{
+color:#2196f3;
+cursor:pointer;
 }
 
-.section p{
-line-height:1.6;
-font-size:15px;
-color:#cfcfcf;
-}
+/* HIDE FULL TEXT */
+.full{display:none;}
 
-/* FOOTER */
-.footer{
-padding:30px;
-background:#111b21;
-text-align:center;
-margin-top:40px;
-}
-
-.footer p{
-color:#aaa;
-font-size:13px;
-}
-
-/* DOWNLOAD BUTTON */
-.download-fixed{
-position:fixed;
-bottom:15px;
-left:50%;
-transform:translateX(-50%);
-background:#2196f3;
-color:white;
-padding:10px 25px;
-border-radius:100px;
-font-weight:600;
-display:flex;
-align-items:center;
-gap:8px;
-z-index:2000;
-box-shadow:0 5px 20px rgba(0,0,0,0.4);
-}
-
-/* DESKTOP */
-@media(min-width:768px){
-
-.hero{
-padding:80px 40px;
-}
-
-.hero-text h1{
-font-size:48px;
-}
-
-.feature-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.navbar{
-padding:0 40px;
-}
-
-}
-</style></head><body><!-- NAVBAR --><div class="navbar">
-<div class="logo">Appnetick</div><div class="nav-links">
-<a href="#features"><i class="ph ph-star"></i>Features</a>
-<a href="#privacy"><i class="ph ph-lock"></i>Privacy</a>
-<a href="#terms"><i class="ph ph-file-text"></i>Terms</a>
-<a href="#" class="btn"><i class="ph ph-download"></i>Download</a>
+</style></head><body><!-- DRAWER --><div class="drawer" id="drawer">
+<h3>Features Info</h3>
+<p>Chat: Real-time messaging</p>
+<p>Calls: Voice/video calling</p>
+<p>Privacy: Secure chats</p>
+<p>Groups: Community chats</p>
+<p>Status: Share updates</p>
+</div><!-- NAVBAR --><div class="navbar">
+<i class="ph ph-list" onclick="toggleDrawer()"></i>
+<div class="logo">Appnetick</div>
+<div class="nav-icons">
+<i class="ph ph-bell"></i>
+<i class="ph ph-user"></i>
 </div>
-</div><!-- HERO --><div class="hero"><div class="hero-text">
-<h1>Simple. Secure. Social.</h1><p>
-Appnetick helps you connect with friends, share moments, and chat privately —
-all in one powerful platform.
-</p><div class="hero-buttons">
-<a href="#" class="btn"><i class="ph ph-user"></i>Get Started</a>
-<a href="#" style="color:#2196f3;">Open Web</a>
-</div>
-</div><img src="https://via.placeholder.com/400" alt="app">
-</div><!-- FEATURES --><div class="features" id="features"><h2>Why Choose Appnetick?</h2><div class="feature-grid"><div class="feature">
-<h3>🔒 Privacy First</h3>
-<p>Your data is encrypted and safe.</p>
-</div><div class="feature">
-<h3>⚡ Fast Messaging</h3>
-<p>Instant messaging with real-time sync.</p>
-</div><div class="feature">
-<h3>🌍 Connect Globally</h3>
-<p>Chat with anyone, anywhere.</p>
-</div><div class="feature">
-<h3>📱 Cross Platform</h3>
-<p>Works on mobile, web, and desktop.</p>
-</div></div>
-</div><!-- PRIVACY --><div class="section" id="privacy">
-<h2>Privacy Policy</h2>
-<p>
-We value your privacy. Appnetick ensures that your personal data is never shared
-without your consent. Messages are encrypted and stored securely.
+</div><!-- HERO --><div class="hero">
+<h1>Simple. Secure. Social.</h1>
+<p>Connect with people worldwide.</p>
+</div><!-- PRIVACY --><div class="section">
+<h2>Privacy Policy</h2><p id="short1">
+We value your privacy and protect your data...
+<span class="more" onclick="toggleText('full1','short1')">more</span>
+</p><p id="full1" class="full">
+Appnetick ensures full encryption and security of your personal data. We follow strict policies to prevent misuse of information. Your chats, media, and interactions remain private. Data collection is minimal and only used to enhance user experience. We implement advanced security protocols and regularly update our systems to maintain safety. Users have full control over their data and can manage privacy settings anytime. We do not sell or share personal information with third parties. Transparency is our priority, and we continuously improve privacy features to ensure trust and safety.
 </p>
-<p>
-We collect minimal data required to improve user experience, such as login
-information and usage analytics.
+</div><!-- TERMS --><div class="section">
+<h2>Terms & Conditions</h2><p id="short2">
+By using Appnetick you agree to basic rules...
+<span class="more" onclick="toggleText('full2','short2')">more</span>
+</p><p id="full2" class="full">
+Users must follow all guidelines and avoid harmful activities. Any misuse such as spam, abuse, or illegal actions can lead to suspension. Appnetick provides services as-is and may update features anytime. Users are responsible for their account activity. We ensure fairness and safety within the platform. Violating policies may result in permanent bans. These terms help maintain a safe and positive environment for all users worldwide.
 </p>
-</div><!-- TERMS --><div class="section" id="terms">
-<h2>Terms & Conditions</h2>
-<p>
-By using Appnetick, you agree not to misuse the platform or engage in harmful
-activities. Users must respect community guidelines and privacy rules.
-</p>
-<p>
-We reserve the right to suspend accounts that violate our policies.
-</p>
-</div><!-- CONTACT --><div class="section">
-<h2>Contact Us</h2>
-<p>Email: support@appnetick.com</p>
-<p>Website: appnetick.com</p>
-</div><!-- FOOTER --><div class="footer">
-<p>© 2026 Appnetick. All rights reserved.</p>
-</div><!-- FIXED DOWNLOAD BUTTON --><div class="download-fixed">
-<i class="ph ph-download"></i> Download App
-</div><script>
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-document.querySelector(this.getAttribute('href')).scrollIntoView({
-behavior: 'smooth'
-});
-});
-});
+</div><!-- FEATURES --><div class="features"><div class="feature"><i class="ph ph-chat"></i>Chat</div>
+<div class="feature"><i class="ph ph-phone"></i>Call</div>
+<div class="feature"><i class="ph ph-video"></i>Video</div>
+<div class="feature"><i class="ph ph-users"></i>Groups</div>
+<div class="feature"><i class="ph ph-lock"></i>Privacy</div>
+<div class="feature"><i class="ph ph-camera"></i>Stories</div>
+<div class="feature"><i class="ph ph-image"></i>Media</div>
+<div class="feature"><i class="ph ph-heart"></i>Likes</div>
+<div class="feature"><i class="ph ph-share"></i>Share</div>
+<div class="feature"><i class="ph ph-globe"></i>Global</div>
+<div class="feature"><i class="ph ph-bell"></i>Notify</div>
+<div class="feature"><i class="ph ph-user"></i>Profile</div>
+<div class="feature"><i class="ph ph-gear"></i>Settings</div>
+<div class="feature"><i class="ph ph-shield"></i>Secure</div>
+<div class="feature"><i class="ph ph-lightning"></i>Fast</div>
+<div class="feature"><i class="ph ph-moon"></i>Dark</div>
+<div class="feature"><i class="ph ph-star"></i>Premium</div>
+<div class="feature"><i class="ph ph-map-pin"></i>Location</div>
+<div class="feature"><i class="ph ph-calendar"></i>Events</div>
+<div class="feature"><i class="ph ph-microphone"></i>Voice</div>
+<div class="feature"><i class="ph ph-cloud"></i>Cloud</div>
+<div class="feature"><i class="ph ph-database"></i>Backup</div>
+<div class="feature"><i class="ph ph-code"></i>API</div>
+<div class="feature"><i class="ph ph-wifi-high"></i>Online</div>
+<div class="feature"><i class="ph ph-wifi-slash"></i>Offline</div>
+<div class="feature"><i class="ph ph-file"></i>Docs</div>
+<div class="feature"><i class="ph ph-lock-key"></i>Auth</div>
+<div class="feature"><i class="ph ph-clock"></i>History</div>
+<div class="feature"><i class="ph ph-device-mobile"></i>Mobile</div></div><script>
+function toggleDrawer(){
+document.getElementById("drawer").classList.toggle("active");
+}
+
+function toggleText(full,short){
+document.getElementById(short).style.display="none";
+document.getElementById(full).style.display="block";
+}
 </script></body>
 </html>
