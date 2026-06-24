@@ -2,55 +2,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up - Appnetick</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"><style>
+<title>Signup - Appnetick</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
 background:#0b141a;
 color:#fff;
+}
+
+/* LIQUID TOOLBAR */
+.toolbar{
+position:sticky;
+top:0;
 display:flex;
-justify-content:center;
 align-items:center;
-height:100vh;
+justify-content:space-between;
+padding:12px 16px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border-bottom:1px solid rgba(255,255,255,0.1);
+z-index:1000;
 }
 
-/* LANGUAGE */
-.lang{
-position:absolute;
-top:20px;
-font-size:14px;
-color:#ccc;
-cursor:pointer;
+.toolbar .title{
+font-weight:700;
+font-size:18px;
 }
 
-/* CONTAINER */
+.toolbar img{
+width:35px;
+height:35px;
+border-radius:50%;
+}
+
+/* MAIN */
 .container{
-width:100%;
-max-width:350px;
-padding:20px;
-text-align:center;
+padding:25px;
+max-width:400px;
+margin:auto;
 }
 
-/* LOGO */
-.logo img{
-width:80px;
-margin:5px 0 10px 0;
-border-radius:20px;
+/* HEADINGS */
+.heading{
+font-size:26px;
+font-weight:700;
+margin-top:20px;
 }
 
-/* TEXT */
-h2{
-margin-top:10px;
-margin-bottom:30px;
+.desc{
+color:#aaa;
+margin-top:8px;
+font-size:14px;
+line-height:1.5;
 }
 
-/* INPUT */
+/* INPUTS */
 input{
 width:100%;
-padding:12px;
-margin:12px 0;
+padding:14px;
+margin-top:18px;
 border:none;
-border-radius:10px;
+border-radius:12px;
 background:#1f2c33;
 color:#fff;
 }
@@ -58,8 +70,8 @@ color:#fff;
 /* BUTTON */
 button{
 width:100%;
-padding:12px;
-margin-top:15px;
+padding:14px;
+margin-top:20px;
 border:none;
 border-radius:35px;
 background:#2196f3;
@@ -67,89 +79,39 @@ color:#fff;
 font-weight:700;
 }
 
-/* LINK */
-.link{
+/* SWITCH */
+.switch{
 margin-top:15px;
-display:block;
+text-align:center;
 color:#2196f3;
 cursor:pointer;
 }
 
-/* SHEET */
-.sheet{
+/* FOOTER */
+.footer{
 position:fixed;
-bottom:-100%;
-left:0;
+bottom:20px;
 width:100%;
-background:#111;
-padding:20px;
-border-radius:20px 20px 0 0;
-transition:0.3s;
-max-height:70%;
-overflow:auto;
+text-align:center;
+font-size:14px;
 }
-.sheet.active{bottom:0;}
-.sheet div{
-padding:12px;
-border-bottom:1px solid #333;
+
+.footer span{
+color:#2196f3;
 cursor:pointer;
 }
-</style></head><body><div class="lang" onclick="toggleSheet()">English ▼</div><div class="container"><div class="logo">
+
+</style></head><body><!-- TOOLBAR --><div class="toolbar">
+<div class="title">Appnetick</div>
 <img src="/20260313_121958.jpg">
-</div><h2>Create Account</h2><input type="text" placeholder="Full Name">
+</div><div class="container"><div class="heading">Create a new account</div><div class="desc">
+Join Appnetick to connect with people, share moments, and experience a powerful social platform.
+</div><input type="text" placeholder="Full Name">
 <input type="email" placeholder="Email">
 <input type="password" placeholder="Password"><button>Sign Up</button>
 
-<span class="link" onclick="location.href='/auth/user/login'">
-Already have an account? Login
-</span></div><div class="sheet" id="sheet">
-<div onclick="setLang('English')">English</div>
-<div onclick="setLang('Hindi')">Hindi</div>
-<div onclick="setLang('Spanish')">Spanish</div>
-<div onclick="setLang('French')">French</div>
-<div onclick="setLang('German')">German</div>
-<div onclick="setLang('Chinese')">Chinese</div>
-<div onclick="setLang('Japanese')">Japanese</div>
-<div onclick="setLang('Arabic')">Arabic</div>
-<div onclick="setLang('Russian')">Russian</div>
-<div onclick="setLang('Portuguese')">Portuguese</div>
-<div onclick="setLang('Bengali')">Bengali</div>
-<div onclick="setLang('Tamil')">Tamil</div>
-<div onclick="setLang('Telugu')">Telugu</div>
-<div onclick="setLang('Marathi')">Marathi</div>
-<div onclick="setLang('Gujarati')">Gujarati</div>
-<div onclick="setLang('Punjabi')">Punjabi</div>
-<div onclick="setLang('Urdu')">Urdu</div>
-<div onclick="setLang('Malayalam')">Malayalam</div>
-<div onclick="setLang('Kannada')">Kannada</div>
-<div onclick="setLang('Nepali')">Nepali</div>
-<div onclick="setLang('Thai')">Thai</div>
-<div onclick="setLang('Vietnamese')">Vietnamese</div>
-<div onclick="setLang('Indonesian')">Indonesian</div>
-<div onclick="setLang('Turkish')">Turkish</div>
-<div onclick="setLang('Italian')">Italian</div>
-<div onclick="setLang('Dutch')">Dutch</div>
-<div onclick="setLang('Swedish')">Swedish</div>
-<div onclick="setLang('Polish')">Polish</div>
-<div onclick="setLang('Greek')">Greek</div>
-<div onclick="setLang('Czech')">Czech</div>
-<div onclick="setLang('Romanian')">Romanian</div>
-<div onclick="setLang('Hungarian')">Hungarian</div>
-<div onclick="setLang('Finnish')">Finnish</div>
-<div onclick="setLang('Norwegian')">Norwegian</div>
-<div onclick="setLang('Danish')">Danish</div>
-<div onclick="setLang('Ukrainian')">Ukrainian</div>
-<div onclick="setLang('Filipino')">Filipino</div>
-<div onclick="setLang('Swahili')">Swahili</div>
-<div onclick="setLang('Afrikaans')">Afrikaans</div>
-</div><script>
-function toggleSheet(){
-document.getElementById("sheet").classList.toggle("active");
-}
-
-function setLang(lang){
-document.querySelector(".lang").innerText = lang + " ▼";
-toggleSheet();
-}
-</script></body>
+<div class="switch">Use mobile instead</div></div><div class="footer">
+Already have an account? 
+<span onclick="location.href='/auth/user/login'">Login</span>
+</div></body>
 </html>
