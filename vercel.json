@@ -10,8 +10,8 @@
   "destination": "/api/channel.js"
 },
 {
-"source": "/user/profile",
-"destination": "/api/profile"
+  "source": "/user/profile",
+  "destination": "/api/profile"
 },
 {
 "source": "/auth/user/login",
