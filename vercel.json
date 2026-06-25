@@ -6,7 +6,7 @@
 "destination": "/post.html"
 },
 {
-"source": "/user/:username/channel",
+"source": "/user/username/channel",
 "destination": "/channel.html"
 },
 {
