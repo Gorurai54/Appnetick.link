@@ -6,6 +6,10 @@
 "destination": "/post.html"
 },
 {
+"source": "/user/:username/channel",
+"destination": "/channel.html"
+},
+{
 "source": "/user/profile",
 "destination": "/api/profile.js"
 },
