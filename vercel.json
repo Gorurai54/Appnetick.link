@@ -11,7 +11,7 @@
 },
 {
 "source": "/user/profile",
-"destination": "/api/profile.js"
+"destination": "/api/profile"
 },
 {
 "source": "/auth/user/login",
