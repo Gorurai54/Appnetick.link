@@ -350,70 +350,118 @@ get
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyBGIQFj6syU2231sov7c5i_90O0s6olCxlM",
-authDomain: "appnetick.firebaseapp.com",
-databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
-projectId: "appnetick",
-storageBucket: "appnetick.firebasestorage.app",
-messagingSenderId: "816276009696",
-appId: "1:816276009696:web:db763c2ae70d2b944c9685"
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+databaseURL: "https://users-f0dd7-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "users-f0dd7",
+storageBucket: "users-f0dd7.firebasestorage.app",
+appId: "YOUR_APP_ID"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/* GET UID */
+/*
+FINAL URL FORMAT
 
-const params = new URLSearchParams(window.location.search);
+https://appnetick-link.vercel.app/user/channel/invite/uid?=383737376363?cid?=27363g373736
+*/
 
-const uid = params.get("uid");
+function getInviteData() {
 
-/* LOAD CHANNEL */
+const url = window.location.href;
 
-async function loadChannel(){
+let inviterUid = "";
+let channelId = "";
 
-if(!uid){
+const firstSplit = url.split("?=");
 
-document.getElementById("channelName").innerText =
-"Channel Not Found";
+if (firstSplit.length > 1) {
 
-return;
+    const secondPart = firstSplit[1];
+
+    const cidSplit = secondPart.split("?cid?=");
+
+    inviterUid = cidSplit[0];
+
+    if (cidSplit.length > 1) {
+        channelId = cidSplit[1];
+    }
+}
+
+return {
+    uid: inviterUid,
+    cid: channelId
+};
 
 }
 
-const snap =
-await get(ref(db,"Channels/" + uid));
+async function loadChannel() {
 
-if(snap.exists()){
+const inviteData = getInviteData();
 
-const data = snap.val();
+const inviterUid = inviteData.uid;
+const channelId = inviteData.cid;
 
-document.getElementById("channelName").innerText =
-data.name || "Channel";
+console.log("Inviter UID:", inviterUid);
+console.log("Channel ID:", channelId);
 
-document.getElementById("channelDescription").innerText =
-data.description || "No description available.";
+if (!channelId) {
 
-document.getElementById("subscribers").innerText =
-data.members || 0;
+    document.getElementById("channelName").innerText =
+    "Channel Not Found";
 
-document.getElementById("posts").innerText =
-data.posts || 0;
+    return;
+}
 
-document.getElementById("channelLogo").src =
-data.logo ||
-"https://via.placeholder.com/140";
+try {
 
-}else{
+    const snap = await get(
+        ref(db, "Channels/" + channelId)
+    );
 
-document.getElementById("channelName").innerText =
-"Channel Not Found";
+    if (!snap.exists()) {
+
+        document.getElementById("channelName").innerText =
+        "Channel Not Found";
+
+        return;
+    }
+
+    const data = snap.val();
+
+    document.getElementById("channelName").innerText =
+    data.name || "Channel";
+
+    document.getElementById("channelDescription").innerText =
+    data.description || "No description available";
+
+    document.getElementById("subscribers").innerText =
+    data.subscribers || 0;
+
+    document.getElementById("channelLogo").src =
+    data.logo || "https://via.placeholder.com/140";
+
+    document.title =
+    (data.name || "Channel") + " • Appnetick";
+
+    document.querySelector(".invite").innerText =
+    "You are invited to join @" +
+    (data.username || "channel");
+
+} catch (e) {
+
+    console.error(e);
+
+    document.getElementById("channelName").innerText =
+    "Unable to load channel";
 
 }
 
 }
 
 loadChannel();
+
 
 window.joinChannel = function(){
 
