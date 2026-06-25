@@ -7,7 +7,7 @@
 },
 {
   "source": "/user/channel/invite/uid",
-  "destination": "/api/channel-og"
+  "destination": "/api/channel.js"
 },
 {
 "source": "/user/profile",
