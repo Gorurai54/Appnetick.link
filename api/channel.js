@@ -44,9 +44,11 @@ export default async function handler(req, res) {
 
 <title>${name}</title>
 
-<meta http-equiv="refresh"
-content="0;url=/user/channel.html?uid=${req.query.uid}&cid=${cid}">
-
+<script>
+setTimeout(() => {
+  window.location.replace("/user/channel.html?uid=${req.query.uid}&cid=${cid}");
+}, 1500);
+</script>
 </head>
 <body>
 
