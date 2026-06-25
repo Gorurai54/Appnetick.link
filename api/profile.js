@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   data.avatar ||
   data.profilePic ||
   data.photo ||
-  "https://appnetick-link.vercel.app/20260314_091747.png";
+  "https://appnetick-link.vercel.app/20260313_121958.jpg";
 
     res.setHeader("Content-Type", "text/html");
 
