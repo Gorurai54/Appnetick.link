@@ -367,34 +367,34 @@ FINAL URL FORMAT
 https://appnetick-link.vercel.app/user/channel/invite/uid?=383737376363?cid?=27363g373736
 */
 
+
 function getInviteData() {
 
-const url = window.location.href;
+    const url = window.location.href;
 
-let inviterUid = "";
-let channelId = "";
+    let uid = "";
+    let cid = "";
 
-const firstSplit = url.split("?=");
+    const uidMatch = url.match(/\?=([^&]+)/);
+    const cidMatch = url.match(/&cid\?=([^&]+)/);
 
-if (firstSplit.length > 1) {
-
-    const secondPart = firstSplit[1];
-
-    const cidSplit = secondPart.split("?cid?=");
-
-    inviterUid = cidSplit[0];
-
-    if (cidSplit.length > 1) {
-        channelId = cidSplit[1];
+    if (uidMatch) {
+        uid = uidMatch[1];
     }
-}
 
-return {
-    uid: inviterUid,
-    cid: channelId
-};
+    if (cidMatch) {
+        cid = cidMatch[1];
+    }
 
+    return {
+        uid: uid,
+        cid: cid
+    };
+    
 }
+    
+
+
 
 async function loadChannel() {
 
