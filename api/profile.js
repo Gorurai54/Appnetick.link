@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         <meta property="og:site_name" content="Appnetick">
 
 <meta property="og:title" content="${name}">
-<meta property="og:description" content="@${username} is on Appnetick">
+<meta property="og:description" content="${name} ( @${username} ) is now on Appnetick • 0 Following • 0 Followers • 0 Posts">
 <meta property="og:image" content="${avatar}">
 <meta property="og:url" content="https://appnetick-link.vercel.app/user/profile?uid=${uid}">
 <meta property="og:type" content="profile">
