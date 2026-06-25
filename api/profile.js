@@ -19,7 +19,11 @@ export default async function handler(req, res) {
     const name = data.full_name || "User";
     const username = data.Username || "user";
     const email = data.email || "";
-    const avatar = data.avatar || data.profilePic || "";
+    const avatar =
+  data.avatar ||
+  data.profilePic ||
+  data.photo ||
+  "https://appnetick-link.vercel.app/20260314_091747.png";
 
     res.setHeader("Content-Type", "text/html");
 
@@ -34,10 +38,19 @@ export default async function handler(req, res) {
 <meta property="og:site_name" content="Appnetick">
 
         <!-- OG TAGS -->
-        <meta property="og:title" content="${name}">
-        <meta property="og:description" content="${username} is on Appnetick • Find them in Appnetick App">
-        <meta property="og:image" content="${avatar}">
-        <meta property="og:type" content="profile">
+        
+        <meta property="og:site_name" content="Appnetick">
+
+<meta property="og:title" content="${name}">
+<meta property="og:description" content="@${username} is on Appnetick">
+<meta property="og:image" content="${avatar}">
+<meta property="og:url" content="https://appnetick-link.vercel.app/user/profile?uid=${uid}">
+<meta property="og:type" content="profile">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${name}">
+<meta name="twitter:description" content="@${username} is on Appnetick">
+<meta name="twitter:image" content="${avatar}">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${name}</title>
@@ -51,11 +64,10 @@ export default async function handler(req, res) {
         </div>
 
         <script>
-          // optional redirect to frontend app
-          // setTimeout(()=> window.location.href="/", 2000);
-        </script>
-      </body>
-      </html>
+window.location.replace("/user/profile-view.html?uid=${uid}");
+</script>
+</body>
+</html>
     `);
 
   } catch (err) {
