@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Appnetick Channel</title>
+
+<link rel="icon" href="/20260313_121958.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#0b141a;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* TOOLBAR */
+
+.topbar{
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:sticky;
+top:0;
+z-index:1000;
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.logo{
+font-size:22px;
+font-weight:700;
+color:#2196f3;
+cursor:pointer;
+}
+
+/* MAIN */
+
+.container{
+max-width:550px;
+margin:auto;
+padding:40px 20px;
+text-align:center;
+}
+
+/* CHANNEL IMAGE */
+
+.channel-logo{
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid rgba(255,255,255,0.08);
+box-shadow:0 0 25px rgba(33,150,243,0.15);
+}
+
+/* NAME */
+
+.channel-name{
+margin-top:20px;
+font-size:30px;
+font-weight:700;
+}
+
+/* INVITE TEXT */
+
+.invite{
+margin-top:10px;
+font-size:15px;
+color:#b8b8b8;
+}
+
+/* JOIN BUTTON */
+
+.join-btn{
+margin-top:25px;
+background:#2196f3;
+color:white;
+border:none;
+padding:14px 40px;
+border-radius:50px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+/* DESCRIPTION */
+
+.description-card{
+margin-top:35px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.05);
+border-radius:20px;
+padding:20px;
+text-align:left;
+backdrop-filter:blur(20px);
+}
+
+.description-title{
+font-size:18px;
+font-weight:700;
+margin-bottom:12px;
+}
+
+.description-text{
+font-size:14px;
+line-height:1.8;
+color:#cfcfcf;
+}
+
+/* STATS */
+
+.stats{
+display:flex;
+gap:15px;
+margin-top:25px;
+}
+
+.stat{
+flex:1;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.05);
+border-radius:18px;
+padding:20px;
+}
+
+.stat h2{
+font-size:24px;
+font-weight:700;
+}
+
+.stat p{
+margin-top:5px;
+color:#aaa;
+font-size:13px;
+}
+
+/* FEATURES */
+
+.features{
+margin-top:25px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.05);
+border-radius:20px;
+padding:20px;
+text-align:left;
+}
+
+.feature-item{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:14px;
+color:#ddd;
+}
+
+.feature-item:last-child{
+margin-bottom:0;
+}
+
+.feature-item i{
+color:#2196f3;
+font-size:18px;
+}
+
+/* DOWNLOAD */
+
+.download-box{
+margin-top:35px;
+padding:25px;
+background:rgba(255,255,255,0.04);
+border-radius:20px;
+}
+
+.download-box p{
+color:#bdbdbd;
+margin-bottom:15px;
+}
+
+.download-btn{
+background:#2196f3;
+border:none;
+color:white;
+padding:12px 28px;
+border-radius:50px;
+font-weight:700;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+.footer{
+padding:30px;
+text-align:center;
+color:#888;
+font-size:13px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- TOOLBAR -->
+
+<div class="topbar">
+
+<div class="logo"
+onclick="location.href='/'">
+Appnetick
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="container">
+
+<img
+id="channelLogo"
+class="channel-logo"
+src="https://via.placeholder.com/140">
+
+<h1
+id="channelName"
+class="channel-name">
+Loading...
+</h1>
+
+<p class="invite">
+You are invited to join this channel
+</p>
+
+<button
+class="join-btn"
+onclick="joinChannel()">
+Join Channel
+</button>
+
+<!-- DESCRIPTION -->
+
+<div class="description-card">
+
+<div class="description-title">
+About Channel
+</div>
+
+<div
+id="channelDescription"
+class="description-text">
+Loading channel information...
+</div>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<h2 id="subscribers">0</h2>
+<p>Subscribers</p>
+</div>
+
+<div class="stat">
+<h2 id="posts">0</h2>
+<p>Posts</p>
+</div>
+
+</div>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="feature-item">
+<i class="ph ph-check-circle"></i>
+<span>Public Channel</span>
+</div>
+
+<div class="feature-item">
+<i class="ph ph-shield-check"></i>
+<span>Secure Community</span>
+</div>
+
+<div class="feature-item">
+<i class="ph ph-lightning"></i>
+<span>Real Time Updates</span>
+</div>
+
+<div class="feature-item">
+<i class="ph ph-users"></i>
+<span>Unlimited Members</span>
+</div>
+
+</div>
+
+<!-- DOWNLOAD -->
+
+<div class="download-box">
+
+<p>
+Don't have Appnetick?
+</p>
+
+<button
+class="download-btn"
+onclick="location.href='/'">
+Download App
+</button>
+
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 Appnetick
+</div>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyBGIQFj6syU2231sov7c5i_90O0s6olCxlM",
+authDomain: "appnetick.firebaseapp.com",
+databaseURL: "https://appnetick-default-rtdb.firebaseio.com",
+projectId: "appnetick",
+storageBucket: "appnetick.firebasestorage.app",
+messagingSenderId: "816276009696",
+appId: "1:816276009696:web:db763c2ae70d2b944c9685"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* GET UID */
+
+const params = new URLSearchParams(window.location.search);
+
+const uid = params.get("uid");
+
+/* LOAD CHANNEL */
+
+async function loadChannel(){
+
+if(!uid){
+
+document.getElementById("channelName").innerText =
+"Channel Not Found";
+
+return;
+
+}
+
+const snap =
+await get(ref(db,"Channels/" + uid));
+
+if(snap.exists()){
+
+const data = snap.val();
+
+document.getElementById("channelName").innerText =
+data.name || "Channel";
+
+document.getElementById("channelDescription").innerText =
+data.description || "No description available.";
+
+document.getElementById("subscribers").innerText =
+data.members || 0;
+
+document.getElementById("posts").innerText =
+data.posts || 0;
+
+document.getElementById("channelLogo").src =
+data.logo ||
+"https://via.placeholder.com/140";
+
+}else{
+
+document.getElementById("channelName").innerText =
+"Channel Not Found";
+
+}
+
+}
+
+loadChannel();
+
+window.joinChannel = function(){
+
+alert("Channel joining system will be connected later.");
+
+}
+
+</script>
+
+</body>
+</html>
