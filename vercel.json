@@ -6,8 +6,8 @@
 "destination": "/post.html"
 },
 {
-"source": "/u/:username/channel",
-"destination": "/channel.html"
+      "source": "/user/channel/invite/userid",
+      "destination": "/user/channel"
 },
 {
 "source": "/user/profile",
