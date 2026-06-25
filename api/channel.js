@@ -18,7 +18,9 @@ export default async function handler(req, res) {
 
   const name = data.name || "Channel";
   const description = data.description || "";
-  const logo = data.logo || "";
+  const logo =
+  data.logo ||
+  "https://appnetick-link.vercel.app/20260314_091747.png";
 
   return res.status(200).send(`
 <!DOCTYPE html>
