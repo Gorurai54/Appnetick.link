@@ -368,29 +368,15 @@ https://appnetick-link.vercel.app/user/channel/invite/uid?=383737376363?cid?=273
 */
 
 
-function getInviteData() {
+ function getInviteData() {
 
-    const url = window.location.href;
+const params = new URLSearchParams(window.location.search);
 
-    let uid = "";
-    let cid = "";
+return {
+    uid: params.get("uid") || "",
+    cid: params.get("cid") || ""
+};
 
-    const uidMatch = url.match(/\?=([^&]+)/);
-    const cidMatch = url.match(/&cid\?=([^&]+)/);
-
-    if (uidMatch) {
-        uid = uidMatch[1];
-    }
-
-    if (cidMatch) {
-        cid = cidMatch[1];
-    }
-
-    return {
-        uid: uid,
-        cid: cid
-    };
-    
 }
     
 
@@ -400,6 +386,10 @@ async function loadChannel() {
 
 const inviteData = getInviteData();
 
+console.log("Full URL:", window.location.href);
+console.log("UID:", inviteData.uid);
+console.log("CID:", inviteData.cid);
+console.log("Firebase Path:", "Channels/" + inviteData.cid);
 const inviterUid = inviteData.uid;
 const channelId = inviteData.cid;
 
