@@ -32,91 +32,157 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#000814;
-color:white;
+background:#0b141a;
+color:#fff;
 overflow-x:hidden;
 }
 
 .container{
-max-width:500px;
+max-width:600px;
 margin:auto;
 padding-bottom:40px;
 }
 
-/* TOP BAR */
+/* TOOLBAR */
 .topbar{
-height:70px;
+height:60px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 18px;
+padding:0 16px;
 position:sticky;
 top:0;
-z-index:100;
-background:rgba(0,0,0,0.6);
+z-index:1000;
+background:rgba(0,0,0,0.45);
 backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.left-top{
-display:flex;
-align-items:center;
-gap:14px;
-}
-
-.top-icon{
-font-size:34px;
-color:white;
-}
-
-.username-top{
+.logo{
 font-size:22px;
 font-weight:700;
+color:#2196f3;
+cursor:pointer;
 }
 
-/* PROFILE */
+.top-icons{
+display:flex;
+gap:15px;
+font-size:24px;
+}
+
+.top-icons i{
+cursor:pointer;
+}
+
+/* PROFILE SECTION */
 .profile-header{
-padding:30px 22px 0;
+padding:40px 20px 20px;
 text-align:center;
 }
 
 .profile-image{
-width:120px;
-height:120px;
+width:130px;
+height:130px;
 border-radius:50%;
 object-fit:cover;
-border:3px solid #222;
+border:4px solid rgba(255,255,255,0.1);
+box-shadow:0 0 30px rgba(33,150,243,0.15);
 }
 
 .name{
 margin-top:18px;
 font-size:28px;
 font-weight:700;
+color:#fff;
+}
+
+.username{
+margin-top:6px;
+font-size:15px;
+color:#2196f3;
+font-weight:600;
 }
 
 .bio{
-margin-top:10px;
-font-size:18px;
-line-height:1.7;
-color:#f0f0f0;
+margin-top:16px;
+font-size:15px;
+line-height:1.8;
+color:#cfcfcf;
+padding:0 10px;
 }
 
+/* STATS */
 .stats{
 display:flex;
-justify-content:space-around;
-margin-top:34px;
+justify-content:center;
+gap:18px;
+margin-top:28px;
+padding:0 15px;
+}
+
+.stat{
+flex:1;
+max-width:120px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:18px;
+padding:18px 10px;
+backdrop-filter:blur(15px);
 }
 
 .stat h2{
-font-size:30px;
+font-size:24px;
 font-weight:700;
+color:#fff;
 }
 
 .stat p{
-margin-top:4px;
-font-size:18px;
-color:#cfcfcf;
+margin-top:5px;
+font-size:13px;
+color:#aaa;
 }
 
+/* INFO CARD */
+.info-card{
+margin:30px 20px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:20px;
+padding:20px;
+backdrop-filter:blur(20px);
+}
+
+.info-title{
+font-size:18px;
+font-weight:700;
+margin-bottom:15px;
+color:#fff;
+}
+
+.info-row{
+padding:12px 0;
+border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.info-row:last-child{
+border-bottom:none;
+}
+
+.info-label{
+font-size:13px;
+color:#888;
+margin-bottom:5px;
+}
+
+.info-value{
+font-size:15px;
+color:#fff;
+word-break:break-word;
+}
+
+/* LOADING */
 .loading{
 opacity:0.6;
 }
@@ -132,12 +198,14 @@ opacity:0.6;
 <!-- TOP BAR -->
 <div class="topbar">
 
-<div class="left-top">
-<i class="ph ph-plus top-icon"></i>
-<div class="username-top" id="usernameTop">loading...</div>
+<div class="logo"
+onclick="location.href='/'">
+Appnetick
 </div>
 
-<i class="ph ph-list top-icon"></i>
+<div class="top-icons">
+<i class="ph ph-user"></i>
+</div>
 
 </div>
 
