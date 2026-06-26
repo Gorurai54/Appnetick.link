@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
 <script>
 setTimeout(() => {
-  window.location.replace("/user/channel-view.html?uid=${req.query.uid}&cid=${cid}");
+  window.location.replace("/user/c.html?uid=${req.query.uid}&cid=${cid}");
 }, 1500);
 </script>
 </head>
