@@ -64,7 +64,7 @@ export default async function handler(req, res) {
         </div>
 
         <script>
-window.location.replace("/user/profile-view.html?uid=${uid}");
+window.location.replace("/user/p.html?uid=${uid}");
 </script>
 </body>
 </html>
