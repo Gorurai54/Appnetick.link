@@ -30,9 +30,9 @@ export default async function handler(req, res) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta property="og:site_name" content="Appnetick">
+<meta property="og:site_name" content="Appnetick • Channel">
 
-<meta property="og:title" content="${name}">
+<meta property="og:title" content="See ${name} channel on Appnetick">
 <meta property="og:description" content="${description}">
 <meta property="og:image" content="${logo}">
 <meta property="og:url" content="https://appnetick-link.vercel.app/user/channel/invite?uid=${req.query.uid}&cid=${cid}">
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 <meta name="twitter:description" content="${description}">
 <meta name="twitter:image" content="${logo}">
 
-<title>${name}</title>
+<title>${name} on Appnetick</title>
 
 <link rel="icon" href="/20260313_121958.jpg">
 
