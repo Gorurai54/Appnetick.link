@@ -1,0 +1,1058 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Appnetick - Update Manager</title>
+
+<link
+    rel="icon"
+    href="/20260313_121958.jpg"
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#0b141a;
+    color:#fff;
+}
+
+
+/* =========================================
+   TOOLBAR
+========================================= */
+
+.toolbar{
+    position:sticky;
+    top:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:12px 16px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.1);
+
+    z-index:1000;
+}
+
+.toolbar .title{
+    font-weight:700;
+    font-size:18px;
+}
+
+.toolbar img{
+    width:35px;
+    height:35px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.container{
+    padding:25px;
+
+    max-width:400px;
+
+    margin:auto;
+}
+
+
+/* =========================================
+   HEADINGS
+========================================= */
+
+.heading{
+    font-size:26px;
+
+    font-weight:700;
+
+    margin-top:20px;
+}
+
+.desc{
+    color:#aaa;
+
+    margin-top:8px;
+
+    font-size:14px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+input,
+textarea{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1f2c33;
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:14px;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#89949a;
+}
+
+textarea{
+    min-height:100px;
+
+    resize:vertical;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+button{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:35px;
+
+    background:#2196f3;
+
+    color:#fff;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:0.6;
+
+    cursor:not-allowed;
+}
+
+
+/* =========================================
+   SWITCH / LINKS
+========================================= */
+
+.switch{
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#2196f3;
+
+    cursor:pointer;
+
+    font-size:14px;
+}
+
+
+/* =========================================
+   ADMIN PANEL
+========================================= */
+
+#adminPanel{
+    display:none;
+}
+
+.section{
+    margin-top:28px;
+
+    font-size:17px;
+
+    font-weight:700;
+}
+
+
+/* =========================================
+   FORCE UPDATE
+========================================= */
+
+.force-row{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-top:18px;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:#1f2c33;
+}
+
+.force-text{
+    font-size:14px;
+}
+
+.switch-control{
+    position:relative;
+
+    width:48px;
+    height:27px;
+}
+
+.switch-control input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+
+    inset:0;
+
+    background:#45545c;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+.slider:before{
+    content:"";
+
+    position:absolute;
+
+    width:21px;
+    height:21px;
+
+    left:3px;
+    top:3px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    transition:0.2s;
+}
+
+.switch-control input:checked + .slider{
+    background:#2196f3;
+}
+
+.switch-control input:checked + .slider:before{
+    transform:translateX(21px);
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+.logout{
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#2196f3;
+
+    font-size:14px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status{
+    display:none;
+
+    margin-top:18px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    font-size:13px;
+
+    line-height:1.4;
+}
+
+.success{
+    display:block;
+
+    background:#12351f;
+
+    color:#6ee78a;
+}
+
+.error{
+    display:block;
+
+    background:#351719;
+
+    color:#ff7777;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+    margin-top:40px;
+
+    padding-bottom:20px;
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:14px;
+}
+
+.footer span{
+    color:#2196f3;
+
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     TOOLBAR
+========================================= -->
+
+<div class="toolbar">
+
+    <div class="title">
+        Appnetick
+    </div>
+
+    <img
+        src="/20260313_121958.jpg"
+        onclick="location.href='/index.html'"
+    >
+
+</div>
+
+
+<!-- =========================================
+     PROGRESS
+========================================= -->
+
+<div id="progress-container"></div>
+
+
+<script>
+
+fetch('/components/progress.html')
+
+.then(res => res.text())
+
+.then(data => {
+
+    document
+        .getElementById(
+            "progress-container"
+        )
+        .innerHTML = data;
+
+});
+
+</script>
+
+
+<!-- =========================================
+     LOGIN
+========================================= -->
+
+<div
+    class="container"
+    id="loginPanel"
+>
+
+    <div class="heading">
+        Admin Login
+    </div>
+
+    <div class="desc">
+        Sign in with your administrator account
+        to manage Appnetick updates.
+    </div>
+
+
+    <input
+        id="adminEmail"
+        type="email"
+        placeholder="Admin email"
+        autocomplete="email"
+    >
+
+
+    <input
+        id="adminPassword"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+    >
+
+
+    <button
+        id="loginButton"
+        onclick="adminLogin()"
+    >
+        Login
+    </button>
+
+
+    <div
+        id="loginStatus"
+        class="status"
+    ></div>
+
+</div>
+
+
+<!-- =========================================
+     ADMIN PANEL
+========================================= -->
+
+<div
+    class="container"
+    id="adminPanel"
+>
+
+    <div class="heading">
+        Update Appnetick
+    </div>
+
+    <div class="desc">
+        Publish a new APK update for Appnetick users.
+    </div>
+
+
+    <div class="section">
+        Version
+    </div>
+
+
+    <input
+        id="versionCode"
+        type="number"
+        min="1"
+        placeholder="Version Code e.g. 16"
+    >
+
+
+    <input
+        id="versionName"
+        type="text"
+        placeholder="Version Name e.g. 1.6.0"
+    >
+
+
+    <div class="section">
+        APK
+    </div>
+
+
+    <input
+        id="apkUrl"
+        type="url"
+        placeholder="APK download URL"
+    >
+
+
+    <div class="section">
+        Update Message
+    </div>
+
+
+    <textarea
+        id="message"
+        placeholder="Describe what's new..."
+    ></textarea>
+
+
+    <div class="force-row">
+
+        <div class="force-text">
+            Force Update
+        </div>
+
+        <label class="switch-control">
+
+            <input
+                id="forceUpdate"
+                type="checkbox"
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <button
+        id="publishButton"
+        onclick="publishUpdate()"
+    >
+        Publish Update
+    </button>
+
+
+    <div
+        id="publishStatus"
+        class="status"
+    ></div>
+
+
+    <div
+        class="logout"
+        onclick="adminLogout()"
+    >
+        Logout
+    </div>
+
+</div>
+
+
+<div class="footer">
+
+    Appnetick Update Manager
+
+</div>
+
+
+<!-- =========================================
+     FIREBASE
+========================================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+    getDatabase,
+    ref,
+    set
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyChIA7BRbQ8LCbR5jeEVYX1dKr_nHQymNE",
+
+    authDomain:
+        "appnetick-data.firebaseapp.com",
+
+    databaseURL:
+        "https://appnetick-data-default-rtdb.firebaseio.com",
+
+    projectId:
+        "appnetick-data",
+
+    storageBucket:
+        "appnetick-data.firebasestorage.app",
+
+    messagingSenderId:
+        "3020440442628",
+
+    appId:
+        "1:3020440442628:android:70a536b21871bcbf1c551"
+
+};
+
+
+
+/* =========================================
+   FIREBASE INIT
+========================================= */
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const auth =
+    getAuth(
+        app
+    );
+
+
+const database =
+    getDatabase(
+        app
+    );
+
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
+
+onAuthStateChanged(
+    auth,
+    user => {
+
+        if(user){
+
+            document
+                .getElementById(
+                    "loginPanel"
+                )
+                .style.display =
+                    "none";
+
+
+            document
+                .getElementById(
+                    "adminPanel"
+                )
+                .style.display =
+                    "block";
+
+        }else{
+
+            document
+                .getElementById(
+                    "loginPanel"
+                )
+                .style.display =
+                    "block";
+
+
+            document
+                .getElementById(
+                    "adminPanel"
+                )
+                .style.display =
+                    "none";
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   ADMIN LOGIN
+========================================= */
+
+window.adminLogin = async function(){
+
+    const email =
+        document
+            .getElementById(
+                "adminEmail"
+            )
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById(
+                "adminPassword"
+            )
+            .value;
+
+
+    if(!email){
+
+        showStatus(
+            "loginStatus",
+            "Please enter your admin email.",
+            false
+        );
+
+        return;
+    }
+
+
+    if(!password){
+
+        showStatus(
+            "loginStatus",
+            "Please enter your password.",
+            false
+        );
+
+        return;
+    }
+
+
+    const button =
+        document
+            .getElementById(
+                "loginButton"
+            );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Logging in...";
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showStatus(
+            "loginStatus",
+            "Invalid admin email or password.",
+            false
+        );
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "Login";
+
+};
+
+
+
+/* =========================================
+   PUBLISH UPDATE
+========================================= */
+
+window.publishUpdate = async function(){
+
+    const user =
+        auth.currentUser;
+
+
+    if(!user){
+
+        showStatus(
+            "publishStatus",
+            "Admin login required.",
+            false
+        );
+
+        return;
+    }
+
+
+    const versionCode =
+        document
+            .getElementById(
+                "versionCode"
+            )
+            .value
+            .trim();
+
+
+    const versionName =
+        document
+            .getElementById(
+                "versionName"
+            )
+            .value
+            .trim();
+
+
+    const apkUrl =
+        document
+            .getElementById(
+                "apkUrl"
+            )
+            .value
+            .trim();
+
+
+    const message =
+        document
+            .getElementById(
+                "message"
+            )
+            .value
+            .trim();
+
+
+    const forceUpdate =
+        document
+            .getElementById(
+                "forceUpdate"
+            )
+            .checked;
+
+
+    if(!versionCode){
+
+        showStatus(
+            "publishStatus",
+            "Enter Version Code.",
+            false
+        );
+
+        return;
+    }
+
+
+    if(!versionName){
+
+        showStatus(
+            "publishStatus",
+            "Enter Version Name.",
+            false
+        );
+
+        return;
+    }
+
+
+    if(!apkUrl){
+
+        showStatus(
+            "publishStatus",
+            "Enter APK URL.",
+            false
+        );
+
+        return;
+    }
+
+
+    if(
+        !apkUrl.startsWith("https://") &&
+        !apkUrl.startsWith("http://")
+    ){
+
+        showStatus(
+            "publishStatus",
+            "Enter a valid APK URL.",
+            false
+        );
+
+        return;
+    }
+
+
+    const button =
+        document
+            .getElementById(
+                "publishButton"
+            );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Publishing...";
+
+
+    try{
+
+        const updateData = {
+
+            versionCode:
+                Number(
+                    versionCode
+                ),
+
+            versionName:
+                versionName,
+
+            apkUrl:
+                apkUrl,
+
+            forceUpdate:
+                forceUpdate,
+
+            message:
+                message ||
+                "A new version of Appnetick is available."
+
+        };
+
+
+        await set(
+
+            ref(
+                database,
+                "AppUpdate"
+            ),
+
+            updateData
+
+        );
+
+
+        showStatus(
+            "publishStatus",
+            "Update published successfully.",
+            true
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showStatus(
+            "publishStatus",
+            "Unable to publish update. Check Firebase permissions.",
+            false
+        );
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "Publish Update";
+
+};
+
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+window.adminLogout = async function(){
+
+    await signOut(
+        auth
+    );
+
+};
+
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function showStatus(
+    elementId,
+    text,
+    success
+){
+
+    const element =
+        document
+            .getElementById(
+                elementId
+            );
+
+
+    element.textContent =
+        text;
+
+
+    element.className =
+        success
+            ? "status success"
+            : "status error";
+
+}
+
+</script>
+
+</body>
+
+</html>
