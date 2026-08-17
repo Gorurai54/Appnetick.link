@@ -4,18 +4,14 @@
 
 <meta charset="UTF-8">
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0,user-scalable=no">
+      content="width=device-width, initial-scale=1.0">
 
 <title>Appnetick - Login</title>
 
 <link rel="icon" href="/20260313_121958.jpg">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet">
-
-<link rel="stylesheet"
-      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
@@ -27,17 +23,12 @@
     padding:0;
     box-sizing:border-box;
     font-family:'Inter',sans-serif;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-    width:100%;
-    min-height:100%;
 }
 
 body{
     background:#0b141a;
     color:#fff;
+    min-height:100vh;
 }
 
 /* ================= TOOLBAR ================= */
@@ -45,26 +36,24 @@ body{
 .toolbar{
     position:sticky;
     top:0;
-    height:60px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:0 16px;
+    padding:12px 16px;
 
-    background:rgba(11,20,26,.88);
+    background:rgba(255,255,255,0.08);
     backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
 
-    border-bottom:1px solid rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,0.1);
 
-    z-index:100;
+    z-index:1000;
 }
 
 .toolbar .title{
-    font-size:18px;
     font-weight:700;
+    font-size:18px;
 }
 
 .toolbar img{
@@ -72,74 +61,51 @@ body{
     height:35px;
     border-radius:50%;
     object-fit:cover;
-    cursor:pointer;
 }
 
 /* ================= MAIN ================= */
 
 .container{
-    width:100%;
+    padding:25px;
     max-width:400px;
     margin:auto;
-    padding:30px 25px 100px;
 }
 
 .heading{
     font-size:26px;
     font-weight:700;
-    margin-top:15px;
+    margin-top:20px;
 }
 
 .desc{
     color:#aaa;
+    margin-top:8px;
     font-size:14px;
     line-height:1.5;
-    margin-top:8px;
 }
 
 /* ================= INPUT ================= */
 
-.inputBox{
-    position:relative;
-    margin-top:18px;
-}
-
-.inputBox i{
-    position:absolute;
-    left:15px;
-    top:50%;
-    transform:translateY(-50%);
-
-    color:#8d9aa1;
-    font-size:20px;
-}
-
-input{
+.input{
     width:100%;
-    height:50px;
+    padding:14px;
 
-    padding:0 15px 0 45px;
+    margin-top:18px;
 
-    border:1px solid transparent;
+    border:none;
     outline:none;
 
     border-radius:12px;
 
     background:#1f2c33;
+
     color:#fff;
 
     font-size:15px;
-
-    transition:.2s;
 }
 
-input:focus{
-    border-color:#2196f3;
-    background:#202f37;
-}
-
-input::placeholder{
-    color:#89949a;
+.input::placeholder{
+    color:#8d999f;
 }
 
 /* ================= BUTTON ================= */
@@ -148,47 +114,34 @@ button{
     width:100%;
     height:50px;
 
+    padding:14px;
+
     margin-top:20px;
 
     border:none;
-    outline:none;
-
     border-radius:35px;
 
     background:#2196f3;
+
     color:#fff;
 
-    font-size:15px;
     font-weight:700;
 
     cursor:pointer;
 
     position:relative;
-
-    transition:.2s;
-}
-
-button:active{
-    transform:scale(.98);
 }
 
 button:disabled{
-    opacity:.8;
-    cursor:default;
+    opacity:.75;
+    cursor:not-allowed;
 }
 
-/* ================= BUTTON LOADING ================= */
+/* ================= BUTTON LOADER ================= */
 
-.buttonContent{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
-}
-
-.spinner{
-    width:18px;
-    height:18px;
+.buttonLoader{
+    width:20px;
+    height:20px;
 
     border:2px solid rgba(255,255,255,.35);
     border-top-color:#fff;
@@ -196,6 +149,8 @@ button:disabled{
     border-radius:50%;
 
     animation:spin .7s linear infinite;
+
+    margin:auto;
 }
 
 @keyframes spin{
@@ -207,69 +162,22 @@ button:disabled{
 /* ================= SWITCH ================= */
 
 .switch{
-    margin-top:18px;
-
-    text-align:center;
-
-    color:#2196f3;
-
-    font-size:14px;
-    cursor:pointer;
-}
-
-/* ================= PIN ================= */
-
-.pinInfo{
-    display:none;
-}
-
-.backLogin{
-    display:none;
-
     margin-top:15px;
-
     text-align:center;
-
-    color:#8fa1aa;
-
-    font-size:14px;
-
+    color:#2196f3;
     cursor:pointer;
-}
-
-/* ================= ERROR ================= */
-
-.error{
-    display:none;
-
-    margin-top:12px;
-
-    padding:10px 12px;
-
-    border-radius:10px;
-
-    background:rgba(244,67,54,.12);
-
-    color:#ff7770;
-
-    font-size:13px;
 }
 
 /* ================= FOOTER ================= */
 
 .footer{
     position:fixed;
-
-    left:0;
     bottom:20px;
-
     width:100%;
 
     text-align:center;
 
     font-size:14px;
-
-    color:#aaa;
 }
 
 .footer span{
@@ -277,24 +185,197 @@ button:disabled{
     cursor:pointer;
 }
 
-/* ================= MOBILE ================= */
+/* ================= ERROR ================= */
 
-@media(max-width:360px){
+.error{
+    margin-top:12px;
 
-    .container{
-        padding-left:20px;
-        padding-right:20px;
+    color:#ff6b6b;
+
+    font-size:13px;
+
+    text-align:center;
+
+    display:none;
+}
+
+/* ================= PIN SCREEN ================= */
+
+#pinScreen{
+    display:none;
+}
+
+.pinTitle{
+    font-size:26px;
+    font-weight:700;
+    margin-top:20px;
+}
+
+.pinDesc{
+    color:#aaa;
+    margin-top:8px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* ================= PROFILE ================= */
+
+#profileScreen{
+    display:none;
+}
+
+.profileContainer{
+    max-width:500px;
+    margin:auto;
+    padding:25px 20px 50px;
+}
+
+.profileTop{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding-top:15px;
+}
+
+.avatar{
+    width:105px;
+    height:105px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#1f2c33;
+
+    border:2px solid rgba(255,255,255,.12);
+}
+
+.fullName{
+    margin-top:15px;
+
+    font-size:22px;
+    font-weight:700;
+}
+
+.username{
+    margin-top:5px;
+
+    color:#2196f3;
+
+    font-size:14px;
+}
+
+.profileCard{
+    margin-top:25px;
+
+    background:#151f25;
+
+    border-radius:18px;
+
+    overflow:hidden;
+}
+
+.profileRow{
+    display:flex;
+    align-items:center;
+
+    padding:16px;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.profileRow:last-child{
+    border-bottom:none;
+}
+
+.profileIcon{
+    width:42px;
+    height:42px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#1f2c33;
+
+    margin-right:14px;
+}
+
+.profileIcon svg{
+    width:21px;
+    height:21px;
+}
+
+.profileInfo{
+    flex:1;
+    min-width:0;
+}
+
+.profileLabel{
+    color:#8d999f;
+    font-size:12px;
+}
+
+.profileValue{
+    margin-top:3px;
+
+    font-size:14px;
+
+    word-break:break-word;
+}
+
+.logout{
+    width:100%;
+
+    margin-top:20px;
+
+    background:#1f2c33;
+}
+
+/* ================= LIGHT MODE ================= */
+
+@media(prefers-color-scheme:light){
+
+    body{
+        background:#fff;
+        color:#111;
     }
 
-    .heading{
-        font-size:24px;
+    .toolbar{
+        background:rgba(255,255,255,.75);
+        border-bottom:1px solid rgba(0,0,0,.08);
+    }
+
+    .desc,
+    .pinDesc{
+        color:#666;
+    }
+
+    .input{
+        background:#f1f3f5;
+        color:#111;
+    }
+
+    .profileCard{
+        background:#f7f7f7;
+    }
+
+    .profileRow{
+        border-bottom:1px solid rgba(0,0,0,.07);
+    }
+
+    .profileIcon{
+        background:#e9ecef;
     }
 
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
@@ -306,17 +387,18 @@ button:disabled{
         Appnetick
     </div>
 
-    <img src="/20260313_121958.jpg"
-         onclick="location.href='/index.html'">
+    <img
+        src="/20260313_121958.jpg"
+        onclick="location.href='/index.html'">
 
 </div>
 
 
 <!-- ================= LOGIN ================= -->
 
-<div class="container">
+<div id="loginScreen">
 
-    <div id="loginSection">
+    <div class="container">
 
         <div class="heading">
             Login with your account
@@ -328,47 +410,41 @@ button:disabled{
         </div>
 
 
-        <!-- USERNAME -->
+        <input
+            id="usernameInput"
+            class="input"
+            type="text"
+            placeholder="Username"
+            autocomplete="username">
 
-        <div class="inputBox">
 
-            <i class="ph ph-user"></i>
+        <input
+            id="passwordInput"
+            class="input"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password">
 
-            <input
-                id="username"
-                type="text"
-                placeholder="Username"
-                autocomplete="username">
 
+        <div
+            id="loginError"
+            class="error">
         </div>
 
 
-        <!-- PASSWORD -->
+        <button
+            id="loginButton"
+            onclick="startLogin()">
 
-        <div class="inputBox">
-
-            <i class="ph ph-lock"></i>
-
-            <input
-                id="password"
-                type="password"
-                placeholder="Password"
-                autocomplete="current-password">
-
-        </div>
-
-
-        <div id="loginError"
-             class="error">
-        </div>
-
-
-        <button id="loginButton"
-                onclick="startLogin()">
-
-            <span class="buttonContent">
+            <span id="loginButtonText">
                 Login
             </span>
+
+            <div
+                id="loginLoader"
+                class="buttonLoader"
+                style="display:none">
+            </div>
 
         </button>
 
@@ -379,74 +455,349 @@ button:disabled{
 
     </div>
 
+</div>
 
-    <!-- ================= PIN ================= -->
 
-    <div id="pinSection"
-         class="pinInfo">
+<!-- ================= PIN ================= -->
 
-        <div class="heading">
+<div id="pinScreen">
+
+    <div class="container">
+
+        <div class="pinTitle">
             Enter your PIN
         </div>
 
-        <div class="desc">
-            Enter your account PIN to securely continue
-            to your Appnetick profile.
+        <div class="pinDesc">
+            Enter your account PIN to continue.
         </div>
 
 
-        <div class="inputBox">
+        <input
+            id="pinInput"
+            class="input"
+            type="password"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="Enter PIN">
 
-            <i class="ph ph-key"></i>
 
-            <input
-                id="pin"
-                type="password"
-                inputmode="numeric"
-                maxlength="6"
-                placeholder="Enter PIN"
-                autocomplete="off">
-
+        <div
+            id="pinError"
+            class="error">
         </div>
 
 
-        <div id="pinError"
-             class="error">
-        </div>
+        <button
+            id="pinButton"
+            onclick="verifyPIN()">
 
-
-        <button id="pinButton"
-                onclick="verifyPin()">
-
-            <span class="buttonContent">
+            <span id="pinButtonText">
                 Continue
             </span>
 
+            <div
+                id="pinLoader"
+                class="buttonLoader"
+                style="display:none">
+            </div>
+
         </button>
-
-
-        <div class="backLogin"
-             id="backLogin"
-             onclick="backToLogin()">
-
-            ← Back to login
-
-        </div>
 
     </div>
 
 </div>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- ================= PROFILE ================= -->
 
-<div class="footer">
+<div id="profileScreen">
 
-    Don't have an account?
+    <div class="profileContainer">
 
-    <span onclick="location.href='/auth/user/signup'">
-        Sign Up
-    </span>
+        <div class="profileTop">
+
+            <img
+                id="profileAvatar"
+                class="avatar"
+                src="/20260313_121958.jpg">
+
+            <div
+                id="profileName"
+                class="fullName">
+                User
+            </div>
+
+            <div
+                id="profileUsername"
+                class="username">
+                @username
+            </div>
+
+        </div>
+
+
+        <div class="profileCard">
+
+            <!-- FULL NAME -->
+
+            <div class="profileRow">
+
+                <div class="profileIcon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="profileInfo">
+
+                    <div class="profileLabel">
+                        Full name
+                    </div>
+
+                    <div
+                        id="valueFullName"
+                        class="profileValue">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- USERNAME -->
+
+            <div class="profileRow">
+
+                <div class="profileIcon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <circle cx="12" cy="12" r="9"/>
+                        <circle cx="9" cy="10" r="1"/>
+                        <circle cx="15" cy="10" r="1"/>
+                        <path d="M8 15c1.2 1.3 2.5 2 4 2s2.8-.7 4-2"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="profileInfo">
+
+                    <div class="profileLabel">
+                        Username
+                    </div>
+
+                    <div
+                        id="valueUsername"
+                        class="profileValue">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="profileRow">
+
+                <div class="profileIcon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="14"
+                            rx="2"/>
+
+                        <path d="m3 7 9 6 9-6"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="profileInfo">
+
+                    <div class="profileLabel">
+                        Email
+                    </div>
+
+                    <div
+                        id="valueEmail"
+                        class="profileValue">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- UID -->
+
+            <div class="profileRow">
+
+                <div class="profileIcon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect
+                            x="4"
+                            y="4"
+                            width="16"
+                            height="16"
+                            rx="3"/>
+
+                        <path d="M8 9h8M8 13h5M8 17h3"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="profileInfo">
+
+                    <div class="profileLabel">
+                        User ID
+                    </div>
+
+                    <div
+                        id="valueUID"
+                        class="profileValue">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DEVICE -->
+
+            <div class="profileRow">
+
+                <div class="profileIcon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect
+                            x="6"
+                            y="2"
+                            width="12"
+                            height="20"
+                            rx="2"/>
+
+                        <path d="M10 18h4"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="profileInfo">
+
+                    <div class="profileLabel">
+                        Device ID
+                    </div>
+
+                    <div
+                        id="valueDevice"
+                        class="profileValue">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- JOINED -->
+
+            <div class="profileRow">
+
+                <div class="profileIcon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"/>
+
+                        <path d="M16 3v4M8 3v4M3 10h18"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="profileInfo">
+
+                    <div class="profileLabel">
+                        Joined date
+                    </div>
+
+                    <div
+                        id="valueJoined"
+                        class="profileValue">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="logout"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -454,154 +805,409 @@ button:disabled{
 <script>
 
 /* =========================================================
-   FIREBASE
-========================================================= */
+   FIREBASE CONFIGURATION
+   ========================================================= */
 
 const firebaseConfig = {
 
     apiKey:
-    "AIzaSyCFMrIVo8plDegspeRUx82PTQpuff2jojE",
+        "AIzaSyCFMrIVo8plDegspeRUx82PTQpuff2jojE",
+
+    authDomain:
+        "appnetick.firebaseapp.com",
 
     databaseURL:
-    "https://appnetick-default-rtdb.firebaseio.com",
+        "https://appnetick-default-rtdb.firebaseio.com",
 
     projectId:
-    "appnetick",
+        "appnetick",
 
     storageBucket:
-    "appnetick.firebasestorage.app"
+        "appnetick.firebasestorage.app",
+
+    messagingSenderId:
+        "816276009696",
+
+    appId:
+        "1:816276009696:web:5c4215255237b2844c9685"
+
 };
 
 
+/* =========================================================
+   INITIALIZE FIREBASE
+   ========================================================= */
+
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.database();
+const db =
+    firebase.database();
 
 
 /* =========================================================
-   TEMP LOGIN DATA
-========================================================= */
+   CURRENT USER
+   ========================================================= */
 
-let loggedUid = null;
-let loggedUser = null;
-
-
-/* =========================================================
-   BUTTON LOADING
-========================================================= */
-
-function setButtonLoading(button, text){
-
-    button.disabled = true;
-
-    button.innerHTML = `
-        <span class="buttonContent">
-            <span class="spinner"></span>
-            <span>${text}</span>
-        </span>
-    `;
-}
-
-
-function resetButton(button, text){
-
-    button.disabled = false;
-
-    button.innerHTML = `
-        <span class="buttonContent">
-            ${text}
-        </span>
-    `;
-}
+let currentUser = null;
 
 
 /* =========================================================
-   ERROR
-========================================================= */
+   MD5
+   ========================================================= */
 
-function showError(id,message){
+function md5(string){
 
-    const el = document.getElementById(id);
+    function rotateLeft(lValue, iShiftBits){
+        return (lValue << iShiftBits) |
+               (lValue >>> (32 - iShiftBits));
+    }
 
-    el.textContent = message;
-    el.style.display = "block";
-}
+    function addUnsigned(lX, lY){
 
+        const lX4 = lX & 0x40000000;
+        const lY4 = lY & 0x40000000;
 
-function hideError(id){
+        const lX8 = lX & 0x80000000;
+        const lY8 = lY & 0x80000000;
 
-    const el = document.getElementById(id);
+        const lResult =
+            (lX & 0x3FFFFFFF) +
+            (lY & 0x3FFFFFFF);
 
-    el.textContent = "";
-    el.style.display = "none";
+        if(lX4 & lY4){
+            return lResult ^ 0x80000000 ^
+                   lX8 ^ lY8;
+        }
+
+        if(lX4 | lY4){
+
+            if(lResult & 0x40000000){
+                return lResult ^ 0xC0000000 ^
+                       lX8 ^ lY8;
+            }else{
+                return lResult ^ 0x40000000 ^
+                       lX8 ^ lY8;
+            }
+
+        }else{
+            return lResult ^ lX8 ^ lY8;
+        }
+    }
+
+    function F(x,y,z){
+        return (x & y) | ((~x) & z);
+    }
+
+    function G(x,y,z){
+        return (x & z) | (y & (~z));
+    }
+
+    function H(x,y,z){
+        return x ^ y ^ z;
+    }
+
+    function I(x,y,z){
+        return y ^ (x | (~z));
+    }
+
+    function FF(a,b,c,d,x,s,ac){
+        a = addUnsigned(
+            a,
+            addUnsigned(
+                addUnsigned(F(b,c,d),x),
+                ac
+            )
+        );
+
+        return addUnsigned(
+            rotateLeft(a,s),
+            b
+        );
+    }
+
+    function GG(a,b,c,d,x,s,ac){
+        a = addUnsigned(
+            a,
+            addUnsigned(
+                addUnsigned(G(b,c,d),x),
+                ac
+            )
+        );
+
+        return addUnsigned(
+            rotateLeft(a,s),
+            b
+        );
+    }
+
+    function HH(a,b,c,d,x,s,ac){
+        a = addUnsigned(
+            a,
+            addUnsigned(
+                addUnsigned(H(b,c,d),x),
+                ac
+            )
+        );
+
+        return addUnsigned(
+            rotateLeft(a,s),
+            b
+        );
+    }
+
+    function II(a,b,c,d,x,s,ac){
+        a = addUnsigned(
+            a,
+            addUnsigned(
+                addUnsigned(I(b,c,d),x),
+                ac
+            )
+        );
+
+        return addUnsigned(
+            rotateLeft(a,s),
+            b
+        );
+    }
+
+    function convertToWordArray(string){
+
+        const lWordCount =
+            (((string.length + 8) -
+            ((string.length + 8) % 64)) / 64 + 1) * 16;
+
+        const lWordArray =
+            Array(lWordCount - 1);
+
+        let lBytePosition = 0;
+        let lByteCount = 0;
+
+        while(lByteCount < string.length){
+
+            const lWordCountIndex =
+                (lByteCount -
+                (lByteCount % 4)) / 4;
+
+            lBytePosition =
+                (lByteCount % 4) * 8;
+
+            lWordArray[lWordCountIndex] =
+                (lWordArray[lWordCountIndex] || 0) |
+                (string.charCodeAt(lByteCount)
+                << lBytePosition);
+
+            lByteCount++;
+        }
+
+        const lWordCountIndex =
+            (lByteCount -
+            (lByteCount % 4)) / 4;
+
+        lBytePosition =
+            (lByteCount % 4) * 8;
+
+        lWordArray[lWordCountIndex] =
+            (lWordArray[lWordCountIndex] || 0) |
+            (0x80 << lBytePosition);
+
+        lWordArray[lWordCount - 2] =
+            string.length << 3;
+
+        lWordArray[lWordCount - 1] =
+            string.length >>> 29;
+
+        return lWordArray;
+    }
+
+    function wordToHex(lValue){
+
+        let WordToHexValue = "";
+        let WordToHexValueTemp = "";
+        let lByte;
+
+        for(let lCount = 0; lCount <= 3; lCount++){
+
+            lByte =
+                (lValue >>> (lCount * 8)) & 255;
+
+            WordToHexValueTemp =
+                "0" + lByte.toString(16);
+
+            WordToHexValue +=
+                WordToHexValueTemp.substr(
+                    WordToHexValueTemp.length - 2,
+                    2
+                );
+        }
+
+        return WordToHexValue;
+    }
+
+    let x =
+        convertToWordArray(string);
+
+    let a = 0x67452301;
+    let b = 0xEFCDAB89;
+    let c = 0x98BADCFE;
+    let d = 0x10325476;
+
+    for(let k = 0; k < x.length; k += 16){
+
+        const AA = a;
+        const BB = b;
+        const CC = c;
+        const DD = d;
+
+        a=FF(a,b,c,d,x[k+0],7,0xD76AA478);
+        d=FF(d,a,b,c,x[k+1],12,0xE8C7B756);
+        c=FF(c,d,a,b,x[k+2],17,0x242070DB);
+        b=FF(b,c,d,a,x[k+3],22,0xC1BDCEEE);
+
+        a=FF(a,b,c,d,x[k+4],7,0xF57C0FAF);
+        d=FF(d,a,b,c,x[k+5],12,0x4787C62A);
+        c=FF(c,d,a,b,x[k+6],17,0xA8304613);
+        b=FF(b,c,d,a,x[k+7],22,0xFD469501);
+
+        a=FF(a,b,c,d,x[k+8],7,0x698098D8);
+        d=FF(d,a,b,c,x[k+9],12,0x8B44F7AF);
+        c=FF(c,d,a,b,x[k+10],17,0xFFFF5BB1);
+        b=FF(b,c,d,a,x[k+11],22,0x895CD7BE);
+
+        a=FF(a,b,c,d,x[k+12],7,0x6B901122);
+        d=FF(d,a,b,c,x[k+13],12,0xFD987193);
+        c=FF(c,d,a,b,x[k+14],17,0xA679438E);
+        b=FF(b,c,d,a,x[k+15],22,0x49B40821);
+
+        a=GG(a,b,c,d,x[k+1],5,0xF61E2562);
+        d=GG(d,a,b,c,x[k+6],9,0xC040B340);
+        c=GG(c,d,a,b,x[k+11],14,0x265E5A51);
+        b=GG(b,c,d,a,x[k+0],20,0xE9B6C7AA);
+
+        a=GG(a,b,c,d,x[k+5],5,0xD62F105D);
+        d=GG(d,a,b,c,x[k+10],9,0x02441453);
+        c=GG(c,d,a,b,x[k+15],14,0xD8A1E681);
+        b=GG(b,c,d,a,x[k+4],20,0xE7D3FBC8);
+
+        a=GG(a,b,c,d,x[k+9],5,0x21E1CDE6);
+        d=GG(d,a,b,c,x[k+14],9,0xC33707D6);
+        c=GG(c,d,a,b,x[k+3],14,0xF4D50D87);
+        b=GG(b,c,d,a,x[k+8],20,0x455A14ED);
+
+        a=GG(a,b,c,d,x[k+13],5,0xA9E3E905);
+        d=GG(d,a,b,c,x[k+2],9,0xFCEFA3F8);
+        c=GG(c,d,a,b,x[k+7],14,0x676F02D9);
+        b=GG(b,c,d,a,x[k+12],20,0x8D2A4C8A);
+
+        a=HH(a,b,c,d,x[k+5],4,0xFFFA3942);
+        d=HH(d,a,b,c,x[k+8],11,0x8771F681);
+        c=HH(c,d,a,b,x[k+11],16,0x6D9D6122);
+        b=HH(b,c,d,a,x[k+14],23,0xFDE5380C);
+
+        a=HH(a,b,c,d,x[k+1],4,0xA4BEEA44);
+        d=HH(d,a,b,c,x[k+4],11,0x4BDECFA9);
+        c=HH(c,d,a,b,x[k+7],16,0xF6BB4B60);
+        b=HH(b,c,d,a,x[k+10],23,0xBEBFBC70);
+
+        a=HH(a,b,c,d,x[k+13],4,0x289B7EC6);
+        d=HH(d,a,b,c,x[k+0],11,0xEAA127FA);
+        c=HH(c,d,a,b,x[k+3],16,0xD4EF3085);
+        b=HH(b,c,d,a,x[k+6],23,0x04881D05);
+
+        a=HH(a,b,c,d,x[k+9],4,0xD9D4D039);
+        d=HH(d,a,b,c,x[k+12],11,0xE6DB99E5);
+        c=HH(c,d,a,b,x[k+15],16,0x1FA27CF8);
+        b=HH(b,c,d,a,x[k+2],23,0xC4AC5665);
+
+        a=II(a,b,c,d,x[k+0],6,0xF4292244);
+        d=II(d,a,b,c,x[k+7],10,0x432AFF97);
+        c=II(c,d,a,b,x[k+14],15,0xAB9423A7);
+        b=II(b,c,d,a,x[k+5],21,0xFC93A039);
+
+        a=II(a,b,c,d,x[k+12],6,0x655B59C3);
+        d=II(d,a,b,c,x[k+3],10,0x8F0CCC92);
+        c=II(c,d,a,b,x[k+10],15,0xFFEFF47D);
+        b=II(b,c,d,a,x[k+1],21,0x85845DD1);
+
+        a=II(a,b,c,d,x[k+8],6,0x6FA87E4F);
+        d=II(d,a,b,c,x[k+15],10,0xFE2CE6E0);
+        c=II(c,d,a,b,x[k+6],15,0xA3014314);
+        b=II(b,c,d,a,x[k+13],21,0x4E0811A1);
+
+        a=II(a,b,c,d,x[k+4],6,0xF7537E82);
+        d=II(d,a,b,c,x[k+11],10,0xBD3AF235);
+        c=II(c,d,a,b,x[k+2],15,0x2AD7D2BB);
+        b=II(b,c,d,a,x[k+9],21,0xEB86D391);
+
+        a=addUnsigned(a,AA);
+        b=addUnsigned(b,BB);
+        c=addUnsigned(c,CC);
+        d=addUnsigned(d,DD);
+    }
+
+    return (
+        wordToHex(a) +
+        wordToHex(b) +
+        wordToHex(c) +
+        wordToHex(d)
+    ).toLowerCase();
 }
 
 
 /* =========================================================
    LOGIN
-========================================================= */
+   ========================================================= */
 
 async function startLogin(){
 
-    hideError("loginError");
-
     const username =
-        document.getElementById("username")
+        document
+        .getElementById("usernameInput")
         .value
         .trim()
         .toLowerCase();
 
     const password =
-        document.getElementById("password")
+        document
+        .getElementById("passwordInput")
         .value;
 
+    hideLoginError();
 
-    if(!username){
+    if(!username || !password){
 
-        showError(
-            "loginError",
-            "Please enter your username."
+        showLoginError(
+            "Enter username and password."
         );
 
         return;
     }
 
 
-    if(!password){
-
-        showError(
-            "loginError",
-            "Please enter your password."
-        );
-
-        return;
-    }
-
-
-    const button =
-        document.getElementById("loginButton");
-
-
-    setButtonLoading(
-        button,
-        "Logging in..."
-    );
+    setLoginLoading(true);
 
 
     try{
 
         /*
-         * UsernameIndex
+         * UsernameIndex:
          *
          * UsernameIndex/
-         *      goruraiii54_ : UID
+         *     goruraiii54_:
+         *         U3PZYC6UTS8DEO7QZ...
          */
 
         const usernameSnapshot =
-            await db.ref(
-                "UsernameIndex/" +
-                username
-            ).once("value");
+            await db
+            .ref("UsernameIndex/" + username)
+            .once("value");
+
+
+        if(!usernameSnapshot.exists()){
+
+            throw new Error(
+                "INVALID_LOGIN"
+            );
+        }
 
 
         const uid =
@@ -610,300 +1216,551 @@ async function startLogin(){
 
         if(!uid){
 
-            resetButton(
-                button,
-                "Login"
+            throw new Error(
+                "INVALID_LOGIN"
             );
-
-            showError(
-                "loginError",
-                "Username or password is incorrect."
-            );
-
-            return;
         }
 
 
         /*
-         * Users/{uid}
+         * Get user profile
          */
 
         const userSnapshot =
-            await db.ref(
-                "Users/" + uid
-            ).once("value");
+            await db
+            .ref("Users/" + uid)
+            .once("value");
+
+
+        if(!userSnapshot.exists()){
+
+            throw new Error(
+                "INVALID_LOGIN"
+            );
+        }
 
 
         const user =
             userSnapshot.val();
 
 
-        if(!user){
+        /*
+         * Password is HASHED in Firebase.
+         *
+         * Hash entered password using
+         * same algorithm.
+         */
 
-            resetButton(
-                button,
-                "Login"
+        const enteredHash =
+            md5(password);
+
+
+        const storedHash =
+            String(user.password || "")
+            .trim()
+            .toLowerCase();
+
+
+        if(
+            !storedHash ||
+            enteredHash !== storedHash
+        ){
+
+            throw new Error(
+                "INVALID_LOGIN"
             );
-
-            showError(
-                "loginError",
-                "Account data could not be found."
-            );
-
-            return;
         }
 
 
         /*
-         * Existing database structure
+         * Login successful.
+         *
+         * Save temporary user data.
          */
 
-        if(
-            String(user.password) !==
-            String(password)
-        ){
-
-            resetButton(
-                button,
-                "Login"
-            );
-
-            showError(
-                "loginError",
-                "Username or password is incorrect."
-            );
-
-            return;
-        }
+        currentUser = {
+            uid: uid,
+            data: user
+        };
 
 
         /*
          * Small loading delay
+         * as requested.
          */
 
         await new Promise(
-            resolve => setTimeout(resolve,800)
+            resolve =>
+                setTimeout(resolve, 700)
         );
 
 
-        loggedUid = uid;
-        loggedUser = user;
+        setLoginLoading(false);
+
+        showPINScreen();
 
 
-        /*
-         * Save ONLY UID.
-         * Password/PIN is not stored in browser.
-         */
+    }catch(error){
 
-        sessionStorage.setItem(
-            "appnetick_uid",
-            uid
+        console.error(
+            "Login error:",
+            error
         );
 
+        setLoginLoading(false);
 
-        document.getElementById(
-            "loginSection"
-        ).style.display = "none";
+        if(
+            error.message ===
+            "INVALID_LOGIN"
+        ){
 
+            showLoginError(
+                "Username or password is incorrect."
+            );
 
-        document.getElementById(
-            "pinSection"
-        ).style.display = "block";
+        }else{
 
-
-        document.getElementById(
-            "backLogin"
-        ).style.display = "block";
-
-
-        document.getElementById(
-            "pin"
-        ).focus();
-
-
-        resetButton(
-            document.getElementById("loginButton"),
-            "Login"
-        );
-
+            showLoginError(
+                "Unable to connect. Please try again."
+            );
+        }
     }
-    catch(error){
+}
 
-        console.error(error);
 
-        resetButton(
-            button,
-            "Login"
-        );
+/* =========================================================
+   PIN SCREEN
+   ========================================================= */
 
-        showError(
-            "loginError",
-            "Unable to connect. Please try again."
-        );
-    }
+function showPINScreen(){
 
+    document
+        .getElementById("loginScreen")
+        .style.display = "none";
+
+
+    document
+        .getElementById("pinScreen")
+        .style.display = "block";
+
+
+    document
+        .getElementById("pinInput")
+        .focus();
 }
 
 
 /* =========================================================
    VERIFY PIN
-========================================================= */
+   ========================================================= */
 
-async function verifyPin(){
+async function verifyPIN(){
 
-    hideError("pinError");
+    if(!currentUser){
+
+        return;
+    }
+
 
     const pin =
-        document.getElementById("pin")
+        document
+        .getElementById("pinInput")
         .value
         .trim();
 
 
+    const error =
+        document
+        .getElementById("pinError");
+
+
+    error.style.display = "none";
+
+
     if(!pin){
 
-        showError(
-            "pinError",
-            "Please enter your PIN."
-        );
+        error.textContent =
+            "Enter your PIN.";
+
+        error.style.display =
+            "block";
 
         return;
     }
 
 
-    if(!loggedUser){
-
-        backToLogin();
-        return;
-    }
-
-
-    const button =
-        document.getElementById("pinButton");
-
-
-    setButtonLoading(
-        button,
-        "Verifying..."
-    );
+    setPINLoading(true);
 
 
     try{
 
-        await new Promise(
-            resolve => setTimeout(resolve,700)
-        );
+        /*
+         * Re-read profile so that
+         * latest PIN is used.
+         */
+
+        const snapshot =
+            await db
+            .ref(
+                "Users/" +
+                currentUser.uid
+            )
+            .once("value");
+
+
+        const user =
+            snapshot.val();
+
+
+        if(!user){
+
+            throw new Error(
+                "USER_NOT_FOUND"
+            );
+        }
+
+
+        /*
+         * Your current database has
+         * PIN field.
+         */
+
+        const storedPIN =
+            String(user.pin || "");
 
 
         if(
-            String(loggedUser.pin) !==
-            String(pin)
+            storedPIN !== pin
         ){
 
-            resetButton(
-                button,
-                "Continue"
-            );
+            setPINLoading(false);
 
-            showError(
-                "pinError",
-                "Incorrect PIN."
-            );
+            error.textContent =
+                "Incorrect PIN.";
+
+            error.style.display =
+                "block";
 
             return;
         }
 
 
+        currentUser.data =
+            user;
+
+
         /*
-         * PIN correct
+         * Give button a small loading
+         * moment before profile.
          */
 
-        sessionStorage.setItem(
-            "appnetick_logged_in",
-            "true"
+        await new Promise(
+            resolve =>
+                setTimeout(resolve, 500)
         );
 
 
-        location.href =
-            "/authentication/suc/profile.html";
+        setPINLoading(false);
 
+        showProfile(user);
+
+
+    }catch(error){
+
+        console.error(
+            "PIN error:",
+            error
+        );
+
+        setPINLoading(false);
+
+        document
+            .getElementById("pinError")
+            .textContent =
+            "Unable to verify PIN.";
+
+        document
+            .getElementById("pinError")
+            .style.display =
+            "block";
     }
-    catch(error){
-
-        console.error(error);
-
-        resetButton(
-            button,
-            "Continue"
-        );
-
-        showError(
-            "pinError",
-            "Something went wrong."
-        );
-    }
-
 }
 
 
 /* =========================================================
-   BACK
-========================================================= */
+   PROFILE
+   ========================================================= */
 
-function backToLogin(){
+function showProfile(user){
 
-    loggedUid = null;
-    loggedUser = null;
-
-    document.getElementById(
-        "pin"
-    ).value = "";
+    document
+        .getElementById("pinScreen")
+        .style.display = "none";
 
 
-    document.getElementById(
-        "pinSection"
-    ).style.display = "none";
+    document
+        .getElementById("profileScreen")
+        .style.display = "block";
 
 
-    document.getElementById(
-        "loginSection"
-    ).style.display = "block";
+    const username =
+        user.username || "";
 
 
-    hideError("pinError");
+    const fullName =
+        user.full_name || "Appnetick User";
 
+
+    const email =
+        user.email || "Not available";
+
+
+    const uid =
+        user.uid ||
+        currentUser.uid ||
+        "";
+
+
+    const deviceID =
+        user.device_id ||
+        "Not available";
+
+
+    const avatar =
+        user.avatar ||
+        "/20260313_121958.jpg";
+
+
+    document
+        .getElementById("profileAvatar")
+        .src = avatar;
+
+
+    document
+        .getElementById("profileName")
+        .textContent =
+        fullName;
+
+
+    document
+        .getElementById("profileUsername")
+        .textContent =
+        "@" + username;
+
+
+    document
+        .getElementById("valueFullName")
+        .textContent =
+        fullName;
+
+
+    document
+        .getElementById("valueUsername")
+        .textContent =
+        "@" + username;
+
+
+    document
+        .getElementById("valueEmail")
+        .textContent =
+        email;
+
+
+    document
+        .getElementById("valueUID")
+        .textContent =
+        uid;
+
+
+    document
+        .getElementById("valueDevice")
+        .textContent =
+        deviceID;
+
+
+    document
+        .getElementById("valueJoined")
+        .textContent =
+        formatDate(
+            user.JoinedDate
+        );
 }
 
 
 /* =========================================================
-   ENTER KEY
-========================================================= */
+   DATE
+   ========================================================= */
 
-document.getElementById("password")
-.addEventListener(
-    "keydown",
-    function(e){
+function formatDate(timestamp){
 
-        if(e.key === "Enter"){
-            startLogin();
-        }
+    if(!timestamp){
 
+        return "Not available";
     }
-);
 
 
-document.getElementById("pin")
-.addEventListener(
-    "keydown",
-    function(e){
+    const date =
+        new Date(
+            Number(timestamp)
+        );
 
-        if(e.key === "Enter"){
-            verifyPin();
-        }
 
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "Not available";
     }
-);
+
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        }
+    );
+}
+
+
+/* =========================================================
+   LOGIN LOADING
+   ========================================================= */
+
+function setLoginLoading(loading){
+
+    const button =
+        document.getElementById(
+            "loginButton"
+        );
+
+    const text =
+        document.getElementById(
+            "loginButtonText"
+        );
+
+    const loader =
+        document.getElementById(
+            "loginLoader"
+        );
+
+
+    button.disabled =
+        loading;
+
+
+    text.style.display =
+        loading ? "none" : "inline";
+
+
+    loader.style.display =
+        loading ? "block" : "none";
+}
+
+
+/* =========================================================
+   PIN LOADING
+   ========================================================= */
+
+function setPINLoading(loading){
+
+    const button =
+        document.getElementById(
+            "pinButton"
+        );
+
+    const text =
+        document.getElementById(
+            "pinButtonText"
+        );
+
+    const loader =
+        document.getElementById(
+            "pinLoader"
+        );
+
+
+    button.disabled =
+        loading;
+
+
+    text.style.display =
+        loading ? "none" : "inline";
+
+
+    loader.style.display =
+        loading ? "block" : "none";
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+function showLoginError(message){
+
+    const error =
+        document.getElementById(
+            "loginError"
+        );
+
+    error.textContent =
+        message;
+
+    error.style.display =
+        "block";
+}
+
+
+function hideLoginError(){
+
+    document
+        .getElementById(
+            "loginError"
+        )
+        .style.display =
+        "none";
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+function logoutUser(){
+
+    currentUser = null;
+
+    document
+        .getElementById("profileScreen")
+        .style.display = "none";
+
+    document
+        .getElementById("pinScreen")
+        .style.display = "none";
+
+    document
+        .getElementById("loginScreen")
+        .style.display = "block";
+
+
+    document
+        .getElementById("usernameInput")
+        .value = "";
+
+    document
+        .getElementById("passwordInput")
+        .value = "";
+
+    document
+        .getElementById("pinInput")
+        .value = "";
+}
 
 </script>
 
 </body>
-  </html>
+</html>
