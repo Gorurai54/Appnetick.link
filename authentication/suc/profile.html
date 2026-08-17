@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>Profile - Appnetick</title>
+
+<link rel="icon" href="/20260313_121958.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+
+    background:#000;
+
+    color:#fff;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   TOP PROFILE BAR
+========================================================= */
+
+.profileTop{
+
+    height:70px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 29px;
+
+    gap:18px;
+}
+
+
+.username{
+
+    font-size:27px;
+
+    font-weight:500;
+
+    white-space:nowrap;
+}
+
+
+.verified{
+
+    width:28px;
+    height:28px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#000;
+
+    font-size:19px;
+}
+
+
+.topActions{
+
+    margin-left:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:24px;
+}
+
+
+.topActions i{
+
+    font-size:35px;
+
+    color:#fff;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.profileHeader{
+
+    padding:22px 29px 0;
+}
+
+
+.profileMain{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:28px;
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.avatarWrap{
+
+    width:155px;
+    height:155px;
+
+    flex-shrink:0;
+}
+
+
+.avatar{
+
+    width:100%;
+    height:100%;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:1px solid rgba(255,255,255,.15);
+}
+
+
+/* =========================================================
+   NAME + STATS
+========================================================= */
+
+.profileInfo{
+
+    flex:1;
+
+    min-width:0;
+}
+
+
+.fullName{
+
+    font-size:22px;
+
+    font-weight:600;
+
+    margin-top:8px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+.stats{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:28px;
+
+    gap:20px;
+}
+
+
+.stat{
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-width:55px;
+}
+
+
+.statNumber{
+
+    font-size:25px;
+
+    font-weight:500;
+}
+
+
+.statLabel{
+
+    margin-top:7px;
+
+    color:#999;
+
+    font-size:16px;
+}
+
+
+/* =========================================================
+   BIO
+========================================================= */
+
+.bio{
+
+    margin-top:25px;
+
+    color:#aaa;
+
+    font-size:17px;
+
+    line-height:1.45;
+}
+
+
+.bioName{
+
+    color:#fff;
+
+    font-size:19px;
+
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.editButton{
+
+    width:100%;
+
+    height:48px;
+
+    margin-top:22px;
+
+    border-radius:25px;
+
+    border:1px solid #454545;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+   SMALL ACTIONS
+========================================================= */
+
+.smallActions{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-top:15px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+}
+
+.smallActions::-webkit-scrollbar{
+    display:none;
+}
+
+
+.smallButton{
+
+    flex-shrink:0;
+
+    height:50px;
+
+    padding:0 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    border-radius:26px;
+
+    border:1px solid #454545;
+
+    background:transparent;
+
+    color:#aaa;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+}
+
+
+.smallButton i{
+
+    font-size:23px;
+
+    color:#fff;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tabs{
+
+    display:flex;
+
+    gap:16px;
+
+    overflow-x:auto;
+
+    padding:17px 29px 12px;
+
+    scrollbar-width:none;
+}
+
+.tabs::-webkit-scrollbar{
+    display:none;
+}
+
+
+.tab{
+
+    flex-shrink:0;
+
+    height:45px;
+
+    padding:0 22px;
+
+    border-radius:25px;
+
+    border:1px solid #444;
+
+    background:#191919;
+
+    color:#aaa;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    font-size:15px;
+
+    white-space:nowrap;
+}
+
+
+.tab.active{
+
+    background:#252525;
+
+    color:#ddd;
+}
+
+
+.tab i{
+
+    font-size:22px;
+}
+
+
+/* =========================================================
+   PROFILE DETAILS
+========================================================= */
+
+.details{
+
+    margin:10px 29px 100px;
+
+    border-top:1px solid #222;
+
+    padding-top:20px;
+}
+
+
+.detailsTitle{
+
+    font-size:18px;
+
+    font-weight:600;
+
+    margin-bottom:15px;
+}
+
+
+.detail{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:13px 0;
+
+    border-bottom:1px solid #191919;
+}
+
+
+.detail i{
+
+    width:28px;
+
+    font-size:23px;
+
+    color:#aaa;
+}
+
+
+.detailText{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+}
+
+
+.detailLabel{
+
+    color:#777;
+
+    font-size:12px;
+}
+
+
+.detailValue{
+
+    color:#ddd;
+
+    font-size:15px;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottomNav{
+
+    position:fixed;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+
+    height:78px;
+
+    background:#000;
+
+    border-top:1px solid #292929;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-around;
+
+    z-index:50;
+}
+
+
+.navItem{
+
+    width:55px;
+    height:55px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#fff;
+
+    cursor:pointer;
+}
+
+
+.navItem i{
+
+    font-size:34px;
+}
+
+
+.navProfile{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#aaa;
+}
+
+
+.loader{
+
+    width:25px;
+    height:25px;
+
+    border:2px solid #333;
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+}
+
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:600px){
+
+    .profileTop{
+        padding:0 29px;
+    }
+
+    .username{
+        font-size:26px;
+    }
+
+    .profileHeader{
+        padding-left:29px;
+        padding-right:29px;
+    }
+
+    .avatarWrap{
+        width:155px;
+        height:155px;
+    }
+
+}
+
+
+@media(max-width:430px){
+
+    .profileMain{
+        gap:27px;
+    }
+
+    .avatarWrap{
+        width:155px;
+        height:155px;
+    }
+
+    .fullName{
+        font-size:20px;
+    }
+
+    .statNumber{
+        font-size:23px;
+    }
+
+}
+
+
+@media(max-width:380px){
+
+    .profileMain{
+        gap:20px;
+    }
+
+    .avatarWrap{
+        width:125px;
+        height:125px;
+    }
+
+    .profileTop{
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    .profileHeader{
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="loading"
+     class="loading">
+
+    <div class="loader"></div>
+
+</div>
+
+
+<div id="profile"
+     style="display:none;">
+
+
+<!-- =====================================================
+     TOP
+===================================================== -->
+
+<div class="profileTop">
+
+    <div id="username"
+         class="username">
+        username
+    </div>
+
+    <div class="verified">
+
+        <i class="ph ph-check"></i>
+
+    </div>
+
+
+    <div class="topActions">
+
+        <i class="ph ph-chat-circle"
+           onclick="openInbox()"></i>
+
+        <i class="ph ph-gear"
+           onclick="openSettings()"></i>
+
+        <i class="ph ph-plus-circle"
+           onclick="openCreate()"></i>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<div class="profileHeader">
+
+    <div class="profileMain">
+
+
+        <!-- AVATAR -->
+
+        <div class="avatarWrap">
+
+            <img id="avatar"
+                 class="avatar"
+                 src="/20260313_121958.jpg">
+
+        </div>
+
+
+        <!-- INFO -->
+
+        <div class="profileInfo">
+
+            <div id="fullName"
+                 class="fullName">
+                Loading...
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <span class="statNumber"
+                          id="followers">
+                        0
+                    </span>
+
+                    <span class="statLabel">
+                        Followers
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="statNumber"
+                          id="following">
+                        0
+                    </span>
+
+                    <span class="statLabel">
+                        Following
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="statNumber"
+                          id="channels">
+                        0
+                    </span>
+
+                    <span class="statLabel">
+                        Channels
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BIO -->
+
+    <div class="bio">
+
+        <div>
+            Creator / Content consumer
+        </div>
+
+        <div id="bioName"
+             class="bioName">
+            Myself Only Me
+        </div>
+
+    </div>
+
+
+    <!-- EDIT -->
+
+    <button class="editButton"
+            onclick="editProfile()">
+
+        Edit profile
+
+    </button>
+
+
+    <!-- SMALL BUTTONS -->
+
+    <div class="smallActions">
+
+        <button class="smallButton"
+                onclick="createChannel()">
+
+            <i class="ph ph-chats-circle"></i>
+
+            Create channel
+
+        </button>
+
+
+        <button class="smallButton"
+                onclick="addSong()">
+
+            <i class="ph ph-music-note"></i>
+
+            Add song · None
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TABS
+===================================================== -->
+
+<div class="tabs">
+
+    <div class="tab active">
+
+        Reels and posts
+
+    </div>
+
+
+    <div class="tab">
+
+        Followers
+
+    </div>
+
+
+    <div class="tab">
+
+        Followings
+
+    </div>
+
+
+    <div class="tab">
+
+        <i class="ph ph-list"></i>
+
+        Other
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     DETAILS
+===================================================== -->
+
+<div class="details">
+
+    <div class="detailsTitle">
+        Profile details
+    </div>
+
+
+    <div class="detail">
+
+        <i class="ph ph-user"></i>
+
+        <div class="detailText">
+
+            <span class="detailLabel">
+                Username
+            </span>
+
+            <span id="detailUsername"
+                  class="detailValue">
+                -
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail">
+
+        <i class="ph ph-identification-card"></i>
+
+        <div class="detailText">
+
+            <span class="detailLabel">
+                Full name
+            </span>
+
+            <span id="detailFullName"
+                  class="detailValue">
+                -
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail">
+
+        <i class="ph ph-envelope"></i>
+
+        <div class="detailText">
+
+            <span class="detailLabel">
+                Email
+            </span>
+
+            <span id="detailEmail"
+                  class="detailValue">
+                -
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail">
+
+        <i class="ph ph-calendar"></i>
+
+        <div class="detailText">
+
+            <span class="detailLabel">
+                Joined
+            </span>
+
+            <span id="detailJoined"
+                  class="detailValue">
+                -
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail">
+
+        <i class="ph ph-fingerprint"></i>
+
+        <div class="detailText">
+
+            <span class="detailLabel">
+                User ID
+            </span>
+
+            <span id="detailUid"
+                  class="detailValue">
+                -
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+<div class="bottomNav">
+
+    <div class="navItem"
+         onclick="location.href='/index.html'">
+
+        <i class="ph ph-house"></i>
+
+    </div>
+
+
+    <div class="navItem">
+
+        <i class="ph ph-magnifying-glass"></i>
+
+    </div>
+
+
+    <div class="navItem">
+
+        <i class="ph ph-play-square"></i>
+
+    </div>
+
+
+    <div class="navItem">
+
+        <i class="ph ph-chat-circle"></i>
+
+    </div>
+
+
+    <div class="navItem">
+
+        <img id="bottomAvatar"
+             class="navProfile"
+             src="/20260313_121958.jpg">
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyCFMrIVo8plDegspeRUx82PTQpuff2jojE",
+
+    databaseURL:
+    "https://appnetick-default-rtdb.firebaseio.com",
+
+    projectId:
+    "appnetick",
+
+    storageBucket:
+    "appnetick.firebasestorage.app"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+
+/* =========================================================
+   GET UID
+========================================================= */
+
+const uid =
+    sessionStorage.getItem(
+        "appnetick_uid"
+    );
+
+
+const loggedIn =
+    sessionStorage.getItem(
+        "appnetick_logged_in"
+    );
+
+
+if(!uid || loggedIn !== "true"){
+
+    location.href =
+        "/auth/user/login";
+
+}
+else{
+
+    loadProfile();
+
+}
+
+
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
+
+async function loadProfile(){
+
+    try{
+
+        const snapshot =
+            await db.ref(
+                "Users/" + uid
+            ).once("value");
+
+
+        const user =
+            snapshot.val();
+
+
+        if(!user){
+
+            location.href =
+                "/auth/user/login";
+
+            return;
+        }
+
+
+        /* ================= USERNAME ================= */
+
+        const username =
+            user.Username ||
+            user.username ||
+            "";
+
+
+        document.getElementById(
+            "username"
+        ).textContent =
+            username;
+
+
+        document.getElementById(
+            "detailUsername"
+        ).textContent =
+            username;
+
+
+        /* ================= FULL NAME ================= */
+
+        const fullName =
+            user.full_name ||
+            user.fullName ||
+            "Appnetick User";
+
+
+        document.getElementById(
+            "fullName"
+        ).textContent =
+            fullName;
+
+
+        document.getElementById(
+            "detailFullName"
+        ).textContent =
+            fullName;
+
+
+        /* ================= EMAIL ================= */
+
+        document.getElementById(
+            "detailEmail"
+        ).textContent =
+            user.email ||
+            "Not available";
+
+
+        /* ================= UID ================= */
+
+        document.getElementById(
+            "detailUid"
+        ).textContent =
+            user.uid ||
+            uid;
+
+
+        /* ================= AVATAR ================= */
+
+        if(user.avatar){
+
+            document.getElementById(
+                "avatar"
+            ).src =
+                user.avatar;
+
+
+            document.getElementById(
+                "bottomAvatar"
+            ).src =
+                user.avatar;
+
+        }
+
+
+        /* ================= JOIN DATE ================= */
+
+        if(user.JoinedDate){
+
+            const date =
+                new Date(
+                    Number(user.JoinedDate)
+                );
+
+
+            document.getElementById(
+                "detailJoined"
+            ).textContent =
+                date.toLocaleDateString(
+                    "en-IN",
+                    {
+                        day:"numeric",
+                        month:"long",
+                        year:"numeric"
+                    }
+                );
+
+        }
+        else{
+
+            document.getElementById(
+                "detailJoined"
+            ).textContent =
+                "Not available";
+
+        }
+
+
+        /* =================================================
+           OPTIONAL COUNTS
+           
+           Agar tumhare Users data mein ye fields hain,
+           automatically show ho jayengi.
+        ================================================= */
+
+        document.getElementById(
+            "followers"
+        ).textContent =
+            user.followers ||
+            user.followersCount ||
+            0;
+
+
+        document.getElementById(
+            "following"
+        ).textContent =
+            user.following ||
+            user.followingCount ||
+            0;
+
+
+        document.getElementById(
+            "channels"
+        ).textContent =
+            user.channels ||
+            user.channelsCount ||
+            0;
+
+
+        /* ================= BIO ================= */
+
+        if(user.bio){
+
+            document.getElementById(
+                "bioName"
+            ).textContent =
+                user.bio;
+
+        }
+
+
+        /* ================= SHOW ================= */
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "profile"
+        ).style.display =
+            "block";
+
+    }
+    catch(error){
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+        document.getElementById(
+            "loading"
+        ).innerHTML =
+            "Unable to load profile.";
+
+    }
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+function editProfile(){
+
+    location.href =
+        "/user/edit-profile";
+
+}
+
+
+function createChannel(){
+
+    location.href =
+        "/channel/create";
+
+}
+
+
+function addSong(){
+
+    location.href =
+        "/music";
+
+}
+
+
+function openInbox(){
+
+    location.href =
+        "/inbox";
+
+}
+
+
+function openSettings(){
+
+    location.href =
+        "/settings";
+
+}
+
+
+function openCreate(){
+
+    location.href =
+        "/create";
+
+}
+
+</script>
+
+</body>
+          </html>
