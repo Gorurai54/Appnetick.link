@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>Appnetick - Profile</title>
+
+<link rel="icon"
+      href="/20260313_121958.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#0b141a;
+    color:#fff;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+    height:60px;
+
+    position:sticky;
+    top:0;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 16px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+    z-index:100;
+}
+
+.toolbar-title{
+    font-size:18px;
+    font-weight:700;
+}
+
+/* PROFILE */
+
+.profile{
+    max-width:600px;
+    margin:auto;
+}
+
+/* HEADER */
+
+.profile-header{
+    padding:28px 20px 22px;
+
+    display:flex;
+    align-items:center;
+
+    gap:18px;
+}
+
+.avatar{
+    width:92px;
+    height:92px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#1f2c33;
+}
+
+.identity{
+    flex:1;
+}
+
+.name{
+    font-size:22px;
+    font-weight:700;
+}
+
+.username{
+    margin-top:6px;
+
+    color:#2196f3;
+
+    font-size:14px;
+}
+
+/* CARD */
+
+.card{
+    margin:10px 15px;
+
+    background:#162229;
+
+    border-radius:18px;
+
+    overflow:hidden;
+}
+
+.row{
+    display:flex;
+    align-items:center;
+
+    min-height:60px;
+
+    padding:10px 16px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.row:last-child{
+    border-bottom:none;
+}
+
+.icon{
+    width:40px;
+
+    color:#2196f3;
+
+    font-size:18px;
+}
+
+.label{
+    width:110px;
+
+    color:#8f9ba1;
+
+    font-size:13px;
+}
+
+.value{
+    flex:1;
+
+    font-size:14px;
+
+    word-break:break-word;
+}
+
+.loading{
+    padding:50px;
+
+    text-align:center;
+
+    color:#aaa;
+}
+
+.error{
+    padding:40px 20px;
+
+    text-align:center;
+
+    color:#ff8a80;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="toolbar">
+
+    <div class="toolbar-title">
+        Profile
+    </div>
+
+</div>
+
+
+<div id="loading"
+     class="loading">
+
+    Loading profile...
+
+</div>
+
+
+<div id="error"
+     class="error"
+     style="display:none">
+
+</div>
+
+
+<div id="profile"
+     class="profile"
+     style="display:none">
+
+
+    <div class="profile-header">
+
+        <img
+            id="avatar"
+            class="avatar"
+            src="/20260313_121958.jpg"
+        >
+
+
+        <div class="identity">
+
+            <div
+                id="name"
+                class="name">
+            </div>
+
+
+            <div
+                id="username"
+                class="username">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <div class="row">
+
+            <div class="icon">
+                ◉
+            </div>
+
+            <div class="label">
+                Full name
+            </div>
+
+            <div
+                id="fullName"
+                class="value">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="icon">
+                @
+            </div>
+
+            <div class="label">
+                Username
+            </div>
+
+            <div
+                id="usernameValue"
+                class="value">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="icon">
+                ✉
+            </div>
+
+            <div class="label">
+                Email
+            </div>
+
+            <div
+                id="email"
+                class="value">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="icon">
+                ID
+            </div>
+
+            <div class="label">
+                UID
+            </div>
+
+            <div
+                id="uid"
+                class="value">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="icon">
+                ◷
+            </div>
+
+            <div class="label">
+                Joined date
+            </div>
+
+            <div
+                id="joined"
+                class="value">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="icon">
+                ▣
+            </div>
+
+            <div class="label">
+                Device ID
+            </div>
+
+            <div
+                id="device"
+                class="value">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="icon">
+                ✓
+            </div>
+
+            <div class="label">
+                Appnetick
+            </div>
+
+            <div
+                id="appnetick"
+                class="value">
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCFMrIVo8plDegspeRUx82PTQpuff2jojE",
+
+    authDomain:
+        "appnetick.firebaseapp.com",
+
+    databaseURL:
+        "https://appnetick-default-rtdb.firebaseio.com",
+
+    projectId:
+        "appnetick",
+
+    storageBucket:
+        "appnetick.firebasestorage.app",
+
+    messagingSenderId:
+        "816276009696",
+
+    appId:
+        "1:816276009696:web:5c4215255237b2844c9685"
+
+};
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getDatabase(app);
+
+
+/* =====================================================
+   GET UID
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const uid =
+    params.get("uid");
+
+
+/* =====================================================
+   LOAD PROFILE
+===================================================== */
+
+async function loadProfile(){
+
+    try{
+
+        if(!uid){
+
+            throw new Error(
+                "Profile UID is missing."
+            );
+        }
+
+
+        const snapshot =
+            await get(
+                ref(
+                    db,
+                    "Users/" + uid
+                )
+            );
+
+
+        if(!snapshot.exists()){
+
+            throw new Error(
+                "Profile not found."
+            );
+        }
+
+
+        const data =
+            snapshot.val();
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        document
+            .getElementById("name")
+            .textContent =
+                data.full_name ||
+                "User";
+
+
+        document
+            .getElementById("username")
+            .textContent =
+                data.username
+                    ? "@" + data.username
+                    : "";
+
+
+        /* =========================
+           AVATAR
+        ========================= */
+
+        if(
+            data.avatar &&
+            String(data.avatar).trim()
+        ){
+
+            document
+                .getElementById("avatar")
+                .src =
+                    data.avatar;
+
+        }
+
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        document
+            .getElementById("fullName")
+            .textContent =
+                data.full_name ||
+                "—";
+
+
+        document
+            .getElementById("usernameValue")
+            .textContent =
+                data.username ||
+                "—";
+
+
+        document
+            .getElementById("email")
+            .textContent =
+                data.email ||
+                "—";
+
+
+        document
+            .getElementById("uid")
+            .textContent =
+                data.uid ||
+                uid;
+
+
+        document
+            .getElementById("device")
+            .textContent =
+                data.device_id ||
+                "—";
+
+
+        document
+            .getElementById("appnetick")
+            .textContent =
+                data.appnetick ||
+                "—";
+
+
+        /* =========================
+           JOINED DATE
+        ========================= */
+
+        if(data.JoinedDate){
+
+            const date =
+                new Date(
+                    Number(
+                        data.JoinedDate
+                    )
+                );
+
+
+            document
+                .getElementById("joined")
+                .textContent =
+                    date.toLocaleString();
+
+        }else{
+
+            document
+                .getElementById("joined")
+                .textContent =
+                    "—";
+
+        }
+
+
+        /* =========================
+           SHOW
+        ========================= */
+
+        document
+            .getElementById("loading")
+            .style.display =
+                "none";
+
+
+        document
+            .getElementById("profile")
+            .style.display =
+                "block";
+
+
+    }catch(error){
+
+        console.error(
+            "PROFILE ERROR:",
+            error
+        );
+
+
+        document
+            .getElementById("loading")
+            .style.display =
+                "none";
+
+
+        const errorBox =
+            document
+                .getElementById("error");
+
+
+        errorBox.textContent =
+            error.message ||
+            "Unable to load profile.";
+
+
+        errorBox.style.display =
+            "block";
+
+    }
+
+}
+
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
