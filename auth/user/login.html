@@ -1,145 +1,909 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0,user-scalable=no">
+
 <title>Appnetick - Login</title>
 
 <link rel="icon" href="/20260313_121958.jpg">
-  
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"><style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
-body{
-background:#0b141a;
-color:#fff;
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+    -webkit-tap-highlight-color:transparent;
 }
 
-/* SAME TOOLBAR */
+html,body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    background:#0b141a;
+    color:#fff;
+}
+
+/* ================= TOOLBAR ================= */
+
 .toolbar{
-position:sticky;
-top:0;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:12px 16px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(20px);
-border-bottom:1px solid rgba(255,255,255,0.1);
-z-index:1000;
+    position:sticky;
+    top:0;
+    height:60px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 16px;
+
+    background:rgba(11,20,26,.88);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    z-index:100;
 }
 
 .toolbar .title{
-font-weight:700;
-font-size:18px;
+    font-size:18px;
+    font-weight:700;
 }
 
 .toolbar img{
-width:35px;
-height:35px;
-border-radius:50%;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    object-fit:cover;
+    cursor:pointer;
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
+
 .container{
-padding:25px;
-max-width:400px;
-margin:auto;
+    width:100%;
+    max-width:400px;
+    margin:auto;
+    padding:30px 25px 100px;
 }
 
-/* HEADINGS */
 .heading{
-font-size:26px;
-font-weight:700;
-margin-top:20px;
+    font-size:26px;
+    font-weight:700;
+    margin-top:15px;
 }
 
 .desc{
-color:#aaa;
-margin-top:8px;
-font-size:14px;
-line-height:1.5;
+    color:#aaa;
+    font-size:14px;
+    line-height:1.5;
+    margin-top:8px;
 }
 
-/* INPUT */
+/* ================= INPUT ================= */
+
+.inputBox{
+    position:relative;
+    margin-top:18px;
+}
+
+.inputBox i{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+
+    color:#8d9aa1;
+    font-size:20px;
+}
+
 input{
-width:100%;
-padding:14px;
-margin-top:18px;
-border:none;
-border-radius:12px;
-background:#1f2c33;
-color:#fff;
+    width:100%;
+    height:50px;
+
+    padding:0 15px 0 45px;
+
+    border:1px solid transparent;
+    outline:none;
+
+    border-radius:12px;
+
+    background:#1f2c33;
+    color:#fff;
+
+    font-size:15px;
+
+    transition:.2s;
 }
 
-/* BUTTON */
+input:focus{
+    border-color:#2196f3;
+    background:#202f37;
+}
+
+input::placeholder{
+    color:#89949a;
+}
+
+/* ================= BUTTON ================= */
+
 button{
-width:100%;
-padding:14px;
-margin-top:20px;
-border:none;
-border-radius:35px;
-background:#2196f3;
-color:#fff;
-font-weight:700;
+    width:100%;
+    height:50px;
+
+    margin-top:20px;
+
+    border:none;
+    outline:none;
+
+    border-radius:35px;
+
+    background:#2196f3;
+    color:#fff;
+
+    font-size:15px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    position:relative;
+
+    transition:.2s;
 }
 
-/* SWITCH */
+button:active{
+    transform:scale(.98);
+}
+
+button:disabled{
+    opacity:.8;
+    cursor:default;
+}
+
+/* ================= BUTTON LOADING ================= */
+
+.buttonContent{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+}
+
+.spinner{
+    width:18px;
+    height:18px;
+
+    border:2px solid rgba(255,255,255,.35);
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* ================= SWITCH ================= */
+
 .switch{
-margin-top:15px;
-text-align:center;
-color:#2196f3;
-cursor:pointer;
+    margin-top:18px;
+
+    text-align:center;
+
+    color:#2196f3;
+
+    font-size:14px;
+    cursor:pointer;
 }
 
-/* FOOTER */
+/* ================= PIN ================= */
+
+.pinInfo{
+    display:none;
+}
+
+.backLogin{
+    display:none;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#8fa1aa;
+
+    font-size:14px;
+
+    cursor:pointer;
+}
+
+/* ================= ERROR ================= */
+
+.error{
+    display:none;
+
+    margin-top:12px;
+
+    padding:10px 12px;
+
+    border-radius:10px;
+
+    background:rgba(244,67,54,.12);
+
+    color:#ff7770;
+
+    font-size:13px;
+}
+
+/* ================= FOOTER ================= */
+
 .footer{
-position:fixed;
-bottom:20px;
-width:100%;
-text-align:center;
-font-size:14px;
+    position:fixed;
+
+    left:0;
+    bottom:20px;
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#aaa;
 }
 
 .footer span{
-color:#2196f3;
-cursor:pointer;
+    color:#2196f3;
+    cursor:pointer;
 }
 
-  <div id="progress-container"></div>
+/* ================= MOBILE ================= */
 
-<script>
-fetch('/components/progress.html')
-.then(res => res.text())
-.then(data => {
-document.getElementById("progress-container").innerHTML = data;
-});
-</script>
+@media(max-width:360px){
 
-</style></head><body><!-- TOOLBAR --><div class="toolbar">
-<div class="title">Appnetick</div>
-<img src="/20260313_121958.jpg"
-     onclick="location.href='/index.html'">
-</div><div class="container"><div class="heading">Login with your account</div><div class="desc">
-Access your Appnetick account and continue chatting, sharing, and exploring the platform.
-</div><input type="email" placeholder="Email">
-<input type="password" placeholder="Password"><button onclick="startLogin()">Login</button>
+    .container{
+        padding-left:20px;
+        padding-right:20px;
+    }
 
-<script>
-function startLogin(){
-showProgress("Logging into your account...");
+    .heading{
+        font-size:24px;
+    }
 
-setTimeout(()=>{
-hideProgress();
-
-// 👉 yahan baad me tum Firebase login lagaoge
-alert("Login Success");
-
-},2000);
 }
+
+</style>
+</head>
+
+
+<body>
+
+<!-- ================= TOOLBAR ================= -->
+
+<div class="toolbar">
+
+    <div class="title">
+        Appnetick
+    </div>
+
+    <img src="/20260313_121958.jpg"
+         onclick="location.href='/index.html'">
+
+</div>
+
+
+<!-- ================= LOGIN ================= -->
+
+<div class="container">
+
+    <div id="loginSection">
+
+        <div class="heading">
+            Login with your account
+        </div>
+
+        <div class="desc">
+            Access your Appnetick account and continue
+            chatting, sharing, and exploring the platform.
+        </div>
+
+
+        <!-- USERNAME -->
+
+        <div class="inputBox">
+
+            <i class="ph ph-user"></i>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="Username"
+                autocomplete="username">
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="inputBox">
+
+            <i class="ph ph-lock"></i>
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password">
+
+        </div>
+
+
+        <div id="loginError"
+             class="error">
+        </div>
+
+
+        <button id="loginButton"
+                onclick="startLogin()">
+
+            <span class="buttonContent">
+                Login
+            </span>
+
+        </button>
+
+
+        <div class="switch">
+            Use mobile instead
+        </div>
+
+    </div>
+
+
+    <!-- ================= PIN ================= -->
+
+    <div id="pinSection"
+         class="pinInfo">
+
+        <div class="heading">
+            Enter your PIN
+        </div>
+
+        <div class="desc">
+            Enter your account PIN to securely continue
+            to your Appnetick profile.
+        </div>
+
+
+        <div class="inputBox">
+
+            <i class="ph ph-key"></i>
+
+            <input
+                id="pin"
+                type="password"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="Enter PIN"
+                autocomplete="off">
+
+        </div>
+
+
+        <div id="pinError"
+             class="error">
+        </div>
+
+
+        <button id="pinButton"
+                onclick="verifyPin()">
+
+            <span class="buttonContent">
+                Continue
+            </span>
+
+        </button>
+
+
+        <div class="backLogin"
+             id="backLogin"
+             onclick="backToLogin()">
+
+            ← Back to login
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<div class="footer">
+
+    Don't have an account?
+
+    <span onclick="location.href='/auth/user/signup'">
+        Sign Up
+    </span>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyCFMrIVo8plDegspeRUx82PTQpuff2jojE",
+
+    databaseURL:
+    "https://appnetick-default-rtdb.firebaseio.com",
+
+    projectId:
+    "appnetick",
+
+    storageBucket:
+    "appnetick.firebasestorage.app"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+
+/* =========================================================
+   TEMP LOGIN DATA
+========================================================= */
+
+let loggedUid = null;
+let loggedUser = null;
+
+
+/* =========================================================
+   BUTTON LOADING
+========================================================= */
+
+function setButtonLoading(button, text){
+
+    button.disabled = true;
+
+    button.innerHTML = `
+        <span class="buttonContent">
+            <span class="spinner"></span>
+            <span>${text}</span>
+        </span>
+    `;
+}
+
+
+function resetButton(button, text){
+
+    button.disabled = false;
+
+    button.innerHTML = `
+        <span class="buttonContent">
+            ${text}
+        </span>
+    `;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(id,message){
+
+    const el = document.getElementById(id);
+
+    el.textContent = message;
+    el.style.display = "block";
+}
+
+
+function hideError(id){
+
+    const el = document.getElementById(id);
+
+    el.textContent = "";
+    el.style.display = "none";
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function startLogin(){
+
+    hideError("loginError");
+
+    const username =
+        document.getElementById("username")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    if(!username){
+
+        showError(
+            "loginError",
+            "Please enter your username."
+        );
+
+        return;
+    }
+
+
+    if(!password){
+
+        showError(
+            "loginError",
+            "Please enter your password."
+        );
+
+        return;
+    }
+
+
+    const button =
+        document.getElementById("loginButton");
+
+
+    setButtonLoading(
+        button,
+        "Logging in..."
+    );
+
+
+    try{
+
+        /*
+         * UsernameIndex
+         *
+         * UsernameIndex/
+         *      goruraiii54_ : UID
+         */
+
+        const usernameSnapshot =
+            await db.ref(
+                "UsernameIndex/" +
+                username
+            ).once("value");
+
+
+        const uid =
+            usernameSnapshot.val();
+
+
+        if(!uid){
+
+            resetButton(
+                button,
+                "Login"
+            );
+
+            showError(
+                "loginError",
+                "Username or password is incorrect."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Users/{uid}
+         */
+
+        const userSnapshot =
+            await db.ref(
+                "Users/" + uid
+            ).once("value");
+
+
+        const user =
+            userSnapshot.val();
+
+
+        if(!user){
+
+            resetButton(
+                button,
+                "Login"
+            );
+
+            showError(
+                "loginError",
+                "Account data could not be found."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Existing database structure
+         */
+
+        if(
+            String(user.password) !==
+            String(password)
+        ){
+
+            resetButton(
+                button,
+                "Login"
+            );
+
+            showError(
+                "loginError",
+                "Username or password is incorrect."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Small loading delay
+         */
+
+        await new Promise(
+            resolve => setTimeout(resolve,800)
+        );
+
+
+        loggedUid = uid;
+        loggedUser = user;
+
+
+        /*
+         * Save ONLY UID.
+         * Password/PIN is not stored in browser.
+         */
+
+        sessionStorage.setItem(
+            "appnetick_uid",
+            uid
+        );
+
+
+        document.getElementById(
+            "loginSection"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "pinSection"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "backLogin"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "pin"
+        ).focus();
+
+
+        resetButton(
+            document.getElementById("loginButton"),
+            "Login"
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        resetButton(
+            button,
+            "Login"
+        );
+
+        showError(
+            "loginError",
+            "Unable to connect. Please try again."
+        );
+    }
+
+}
+
+
+/* =========================================================
+   VERIFY PIN
+========================================================= */
+
+async function verifyPin(){
+
+    hideError("pinError");
+
+    const pin =
+        document.getElementById("pin")
+        .value
+        .trim();
+
+
+    if(!pin){
+
+        showError(
+            "pinError",
+            "Please enter your PIN."
+        );
+
+        return;
+    }
+
+
+    if(!loggedUser){
+
+        backToLogin();
+        return;
+    }
+
+
+    const button =
+        document.getElementById("pinButton");
+
+
+    setButtonLoading(
+        button,
+        "Verifying..."
+    );
+
+
+    try{
+
+        await new Promise(
+            resolve => setTimeout(resolve,700)
+        );
+
+
+        if(
+            String(loggedUser.pin) !==
+            String(pin)
+        ){
+
+            resetButton(
+                button,
+                "Continue"
+            );
+
+            showError(
+                "pinError",
+                "Incorrect PIN."
+            );
+
+            return;
+        }
+
+
+        /*
+         * PIN correct
+         */
+
+        sessionStorage.setItem(
+            "appnetick_logged_in",
+            "true"
+        );
+
+
+        location.href =
+            "/authentication/suc/profile.html";
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        resetButton(
+            button,
+            "Continue"
+        );
+
+        showError(
+            "pinError",
+            "Something went wrong."
+        );
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function backToLogin(){
+
+    loggedUid = null;
+    loggedUser = null;
+
+    document.getElementById(
+        "pin"
+    ).value = "";
+
+
+    document.getElementById(
+        "pinSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "loginSection"
+    ).style.display = "block";
+
+
+    hideError("pinError");
+
+}
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document.getElementById("password")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+            startLogin();
+        }
+
+    }
+);
+
+
+document.getElementById("pin")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+            verifyPin();
+        }
+
+    }
+);
+
 </script>
 
-<div class="switch">Use mobile instead</div></div><div class="footer">
-Don't have an account? 
-<span onclick="location.href='/auth/user/signup'">Sign Up</span>
-</div></body>
-</html>
+</body>
+  </html>
