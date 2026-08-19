@@ -1,8 +1,14 @@
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN
+});
+
+const MAX_ATTEMPTS = 5;
+
 export default async function handler(req, res) {
 
-  // =========================
-  // METHOD CHECK
-  // =========================
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -12,129 +18,151 @@ export default async function handler(req, res) {
 
   try {
 
-    // =========================
-    // SAFE BODY PARSING (VERY IMPORTANT)
-    // =========================
-    let body = req.body;
+    const { email, otp } = req.body || {};
 
-    if (!body || typeof body === "string") {
-      try {
-        body = JSON.parse(body || "{}");
-      } catch (e) {
-        body = {};
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required"
+      });
+    }
+
+    if (!otp) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP is required"
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const enteredOtp = otp.toString().trim();
+
+    /*
+     * OTP must contain exactly 6 digits
+     */
+    if (!/^\d{6}$/.test(enteredOtp)) {
+
+      return res.status(400).json({
+        success: false,
+        message: "OTP must be 6 digits"
+      });
+
+    }
+
+    /*
+     * Same Redis key used by send-otp
+     */
+    const redisKey = `appnetick:otp:${normalizedEmail}`;
+
+    /*
+     * Get OTP data
+     */
+    const storedData = await redis.get(redisKey);
+
+    /*
+     * OTP doesn't exist
+     *
+     * This also happens automatically
+     * after the 5-minute expiration.
+     */
+    if (!storedData) {
+
+      return res.status(400).json({
+        success: false,
+        message: "OTP not found or expired"
+      });
+
+    }
+
+    /*
+     * Redis may return an object or a JSON string
+     */
+    let otpData;
+
+    if (typeof storedData === "string") {
+      otpData = JSON.parse(storedData);
+    } else {
+      otpData = storedData;
+    }
+
+    /*
+     * Check attempts
+     */
+    if (otpData.attempts >= MAX_ATTEMPTS) {
+
+      await redis.del(redisKey);
+
+      return res.status(429).json({
+        success: false,
+        message: "Too many incorrect attempts. Please request a new OTP."
+      });
+
+    }
+
+    /*
+     * Verify OTP
+     */
+    if (enteredOtp !== otpData.otp) {
+
+      otpData.attempts =
+        (otpData.attempts || 0) + 1;
+
+      /*
+       * Get remaining TTL.
+       *
+       * We don't reset the 5-minute expiration.
+       */
+      const ttl = await redis.ttl(redisKey);
+
+      if (ttl > 0) {
+
+        await redis.set(
+          redisKey,
+          JSON.stringify(otpData),
+          {
+            ex: ttl
+          }
+        );
+
       }
-    }
 
-    console.log("📦 HEADERS:", req.headers);
-    console.log("📦 RAW BODY:", req.body);
-    console.log("📦 PARSED BODY:", body);
-
-    let { email, otp } = body;
-
-    // =========================
-    // CLEAN INPUT
-    // =========================
-    email = String(email || "")
-      .trim()
-      .toLowerCase();
-
-    otp = String(otp || "").trim();
-
-    // =========================
-    // VALIDATION
-    // =========================
-    if (!email || !otp) {
-      return res.status(400).json({
-        success: false,
-        message: "Email and OTP required"
-      });
-    }
-
-    // =========================
-    // FIREBASE SAFE KEY
-    // =========================
-    const safeEmail =
-      email.replace(/[.#$\[\]@]/g, "_").toLowerCase();
-
-    const firebaseUrl =
-      `https://appnetick-default-rtdb.firebaseio.com/OTPs/${safeEmail}.json`;
-
-    // =========================
-    // GET OTP FROM FIREBASE
-    // =========================
-    const response = await fetch(firebaseUrl);
-    const data = await response.json();
-
-    console.log("🔥 FIREBASE DATA:", data);
-
-    // =========================
-    // NOT FOUND
-    // =========================
-    if (!data) {
-      return res.status(404).json({
-        success: false,
-        message: "OTP not found"
-      });
-    }
-
-    // =========================
-    // EXPIRE CHECK (5 MIN)
-    // =========================
-    const now = Date.now();
-    const createdAt = Number(data.createdAt || 0);
-
-    const isExpired = (now - createdAt) > 5 * 60 * 1000;
-
-    if (isExpired) {
-
-      // optional cleanup
-      await fetch(firebaseUrl, { method: "DELETE" });
+      const remainingAttempts =
+        MAX_ATTEMPTS - otpData.attempts;
 
       return res.status(400).json({
         success: false,
-        message: "OTP expired"
+        message: "Invalid OTP",
+        remainingAttempts: remainingAttempts
       });
+
     }
 
-    // =========================
-    // CLEAN STORED OTP
-    // =========================
-    const savedOtp = String(data.otp || "").trim();
-    const enteredOtp = String(otp || "").trim();
+    /*
+     * OTP is correct.
+     *
+     * Delete immediately so it cannot
+     * be reused.
+     */
+    await redis.del(redisKey);
 
-    console.log("🔐 ENTERED OTP:", enteredOtp);
-    console.log("🔐 SAVED OTP:", savedOtp);
-
-    // =========================
-    // VERIFY OTP
-    // =========================
-    if (savedOtp === enteredOtp) {
-
-      // DELETE AFTER SUCCESS
-      await fetch(firebaseUrl, { method: "DELETE" });
-
-      return res.status(200).json({
-        success: true,
-        verified: true,
-        message: "OTP verified successfully"
-      });
-    }
-
-    // =========================
-    // INVALID OTP
-    // =========================
-    return res.status(400).json({
-      success: false,
-      message: "Invalid OTP"
+    /*
+     * Verification successful
+     */
+    return res.status(200).json({
+      success: true,
+      verified: true,
+      message: "OTP verified successfully"
     });
 
-  } catch (err) {
+  } catch (error) {
 
-    console.error("❌ VERIFY ERROR:", err);
+    console.error("Verify OTP Error:", error);
 
     return res.status(500).json({
       success: false,
-      message: err.message
+      message: "Failed to verify OTP"
     });
+
   }
 }
