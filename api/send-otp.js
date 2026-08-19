@@ -20,10 +20,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // 🔥 Generate OTP
+    // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // 📩 Mail transporter
+    // Gmail transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -32,230 +32,424 @@ export default async function handler(req, res) {
       }
     });
 
-    // 📧 Send email
+    // Send email
     await transporter.sendMail({
-      from: `"Appnetick" <${process.env.EMAIL_USER}>`, 
+      from: `"Appnetick" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: "Your OTP Code",
+      subject: "Your Appnetick verification code",
+
       html: `
-        <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta name="color-scheme" content="light">
+
+  <title>Appnetick Verification</title>
 </head>
 
 <body style="
   margin:0;
   padding:0;
-  background:#f3f6fb;
-  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  color:#111827;
 ">
 
-  <div style="
-    max-width:620px;
-    margin:40px auto;
-    background:#ffffff;
-    border-radius:24px;
-    overflow:hidden;
-    box-shadow:0 6px 24px rgba(0,0,0,0.08);
-  ">
+  <!-- Main Wrapper -->
+  <table
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    style="background:#f4f7fb;padding:24px 12px;"
+  >
 
-    <!-- Top Header -->
-    <div style="
-      background:linear-gradient(135deg,#111827,#1f2937);
-      padding:45px 25px;
-      text-align:center;
-    ">
+    <tr>
+      <td align="center">
 
-      <h1 style="
-        margin:0;
-        color:#ffffff;
-        font-size:34px;
-        font-weight:700;
-        letter-spacing:1px;
-      ">
-        Appnetick
-      </h1>
+        <!-- Email Container -->
+        <table
+          width="100%"
+          cellpadding="0"
+          cellspacing="0"
+          border="0"
+          style="
+            max-width:620px;
+            background:#ffffff;
+            border-radius:22px;
+            overflow:hidden;
+            border:1px solid #e8edf3;
+          "
+        >
 
-      <p style="
-        color:#d1d5db;
-        margin-top:12px;
-        font-size:15px;
-        line-height:1.7;
-      ">
-        Secure identity verification system
-      </p>
+          <!-- Toolbar -->
+          <tr>
+            <td
+              style="
+                padding:18px 24px;
+                border-bottom:1px solid #edf0f4;
+                background:#ffffff;
+              "
+            >
 
-    </div>
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+              >
 
-    <!-- Main Content -->
-    <div style="padding:45px 35px;">
+                <tr>
 
-      <h2 style="
-        margin-top:0;
-        color:#111827;
-        font-size:28px;
-        line-height:1.4;
-      ">
-        Verify your account on Appnetick
-      </h2>
+                  <!-- Logo + Appnetick -->
+                  <td
+                    valign="middle"
+                    style="white-space:nowrap;"
+                  >
 
-      <p style="
-        color:#4b5563;
-        font-size:16px;
-        line-height:1.9;
-        margin-top:20px;
-      ">
-        We received a request to verify your identity on Appnetick.
-        To continue securely, please use the verification code below.
-        This helps us protect your account and keep your information safe.
-      </p>
+                    <!-- Logo -->
+                    <div
+                      style="
+                        display:inline-block;
+                        width:40px;
+                        height:40px;
+                        line-height:40px;
+                        text-align:center;
+                        vertical-align:middle;
+                        background:#111827;
+                        border-radius:12px;
+                        color:#ffffff;
+                        font-size:19px;
+                        font-weight:700;
+                      "
+                    >
+                      A
+                    </div>
 
-      <!-- OTP Card -->
-      <div style="
-        margin:40px 0;
-        text-align:center;
-      ">
+                    <span
+                      style="
+                        display:inline-block;
+                        vertical-align:middle;
+                        margin-left:10px;
+                        color:#111827;
+                        font-size:20px;
+                        line-height:40px;
+                        font-weight:700;
+                        letter-spacing:-0.4px;
+                      "
+                    >
+                      Appnetick
+                    </span>
 
-        <div style="
-          display:inline-block;
-          background:#f9fafb;
-          border:2px solid #e5e7eb;
-          border-radius:20px;
-          padding:28px 45px;
-          min-width:280px;
-        ">
+                  </td>
 
-          <div style="
-            font-size:13px;
-            color:#6b7280;
-            letter-spacing:2px;
-            margin-bottom:14px;
-            font-weight:600;
-          ">
-            VERIFICATION CODE
-          </div>
+                  <!-- Security Label -->
+                  <td
+                    align="right"
+                    valign="middle"
+                  >
+                    <span
+                      style="
+                        display:inline-block;
+                        padding:7px 11px;
+                        background:#f3f4f6;
+                        border-radius:20px;
+                        color:#6b7280;
+                        font-size:11px;
+                        font-weight:600;
+                      "
+                    >
+                      SECURE
+                    </span>
+                  </td>
 
-          <div style="
-            font-size:46px;
-            font-weight:700;
-            letter-spacing:10px;
-            color:#111827;
-          ">
-            ${otp}
-          </div>
+                </tr>
 
-          <div style="
-            margin-top:16px;
-            color:#6b7280;
-            font-size:14px;
-          ">
-            Valid for 5 minutes
-          </div>
+              </table>
 
-        </div>
+            </td>
+          </tr>
 
-      </div>
 
-      <!-- Description -->
-      <p style="
-        color:#4b5563;
-        font-size:15px;
-        line-height:1.9;
-      ">
-        Enter this code in the Appnetick app to complete verification.
-        Do not share this code with anyone for security reasons.
-      </p>
+          <!-- Hero -->
+          <tr>
+            <td
+              style="
+                padding:42px 28px 28px 28px;
+                text-align:center;
+              "
+            >
 
-      <!-- Security Box -->
-      <div style="
-        margin-top:35px;
-        background:#f9fafb;
-        border:1px solid #e5e7eb;
-        border-radius:18px;
-        padding:25px;
-      ">
+              <div
+                style="
+                  display:inline-block;
+                  width:56px;
+                  height:56px;
+                  line-height:56px;
+                  border-radius:18px;
+                  background:#f3f4f6;
+                  color:#111827;
+                  font-size:25px;
+                  font-weight:700;
+                "
+              >
+                ✓
+              </div>
 
-        <h3 style="
-          margin-top:0;
-          margin-bottom:18px;
-          color:#111827;
-          font-size:20px;
-        ">
-          Security Rules
-        </h3>
+              <h1
+                style="
+                  margin:22px 0 10px 0;
+                  color:#111827;
+                  font-size:27px;
+                  line-height:1.3;
+                  font-weight:700;
+                  letter-spacing:-0.5px;
+                "
+              >
+                Verify your account
+              </h1>
 
-        <ul style="
-          margin:0;
-          padding-left:22px;
-          color:#4b5563;
-          font-size:15px;
-          line-height:2;
-        ">
-          <li>Never share your OTP with anyone.</li>
-          <li>Appnetick support will never ask for your verification code.</li>
-          <li>This OTP automatically expires after 5 minutes.</li>
-          <li>If you did not request this verification, you can safely ignore this email.</li>
-        </ul>
+              <p
+                style="
+                  margin:0 auto;
+                  max-width:470px;
+                  color:#6b7280;
+                  font-size:15px;
+                  line-height:1.7;
+                "
+              >
+                Use the verification code below to securely
+                continue with your Appnetick account.
+              </p>
 
-      </div>
+            </td>
+          </tr>
 
-      <!-- Extra Description -->
-      <div style="
-        margin-top:35px;
-        padding:22px;
-        background:#111827;
-        border-radius:18px;
-      ">
 
-        <p style="
-          margin:0;
-          color:#e5e7eb;
-          font-size:14px;
-          line-height:1.9;
-          text-align:center;
-        ">
-          Appnetick uses advanced security systems to help protect your
-          account from unauthorized access and suspicious activity.
-        </p>
+          <!-- OTP Section -->
+          <tr>
+            <td
+              style="
+                padding:8px 28px 20px 28px;
+              "
+            >
 
-      </div>
+              <div
+                style="
+                  background:#f8fafc;
+                  border:1px solid #e5e7eb;
+                  border-radius:18px;
+                  padding:26px 20px;
+                  text-align:center;
+                "
+              >
 
-      <!-- Footer -->
-      <div style="
-        margin-top:45px;
-        text-align:center;
-        color:#9ca3af;
-        font-size:13px;
-        line-height:1.8;
-      ">
-        © ${new Date().getFullYear()} Appnetick <br/>
-        Secure Authentication Service
-      </div>
+                <div
+                  style="
+                    color:#6b7280;
+                    font-size:11px;
+                    font-weight:700;
+                    letter-spacing:2px;
+                    margin-bottom:13px;
+                  "
+                >
+                  VERIFICATION CODE
+                </div>
 
-    </div>
+                <div
+                  style="
+                    color:#111827;
+                    font-size:38px;
+                    line-height:1.2;
+                    font-weight:700;
+                    letter-spacing:8px;
+                    padding-left:8px;
+                  "
+                >
+                  ${otp}
+                </div>
 
-  </div>
+                <div
+                  style="
+                    margin-top:14px;
+                    color:#9ca3af;
+                    font-size:13px;
+                  "
+                >
+                  This code expires in 5 minutes
+                </div>
+
+              </div>
+
+            </td>
+          </tr>
+
+
+          <!-- Message -->
+          <tr>
+            <td
+              style="
+                padding:5px 28px 10px 28px;
+              "
+            >
+
+              <p
+                style="
+                  margin:0;
+                  color:#4b5563;
+                  font-size:14px;
+                  line-height:1.8;
+                "
+              >
+                Enter this code in the Appnetick app to complete
+                your verification. For your security, never share
+                this code with anyone.
+              </p>
+
+            </td>
+          </tr>
+
+
+          <!-- Security Card -->
+          <tr>
+            <td
+              style="
+                padding:22px 28px 8px 28px;
+              "
+            >
+
+              <div
+                style="
+                  background:#f8fafc;
+                  border:1px solid #e5e7eb;
+                  border-radius:16px;
+                  padding:20px;
+                "
+              >
+
+                <div
+                  style="
+                    color:#111827;
+                    font-size:15px;
+                    font-weight:700;
+                    margin-bottom:12px;
+                  "
+                >
+                  Security information
+                </div>
+
+                <div
+                  style="
+                    color:#6b7280;
+                    font-size:13px;
+                    line-height:1.8;
+                  "
+                >
+                  • Never share your verification code.<br>
+                  • Appnetick support will never ask for your OTP.<br>
+                  • This code automatically expires after 5 minutes.<br>
+                  • If you did not request this code, you can ignore this email.
+                </div>
+
+              </div>
+
+            </td>
+          </tr>
+
+
+          <!-- Bottom Message -->
+          <tr>
+            <td
+              style="
+                padding:22px 28px 10px 28px;
+              "
+            >
+
+              <div
+                style="
+                  background:#111827;
+                  border-radius:16px;
+                  padding:18px 20px;
+                  text-align:center;
+                "
+              >
+
+                <p
+                  style="
+                    margin:0;
+                    color:#d1d5db;
+                    font-size:12px;
+                    line-height:1.7;
+                  "
+                >
+                  Appnetick uses secure verification systems
+                  to help protect your account from unauthorized access.
+                </p>
+
+              </div>
+
+            </td>
+          </tr>
+
+
+          <!-- Footer -->
+          <tr>
+            <td
+              style="
+                padding:28px 20px 30px 20px;
+                text-align:center;
+              "
+            >
+
+              <div
+                style="
+                  color:#9ca3af;
+                  font-size:12px;
+                  line-height:1.8;
+                "
+              >
+                © ${new Date().getFullYear()} Appnetick
+                <br>
+                Secure Authentication Service
+              </div>
+
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+
+  </table>
 
 </body>
 </html>
       `
     });
 
-    // ✅ Response back to app
+    // Success response
+    // OTP is intentionally NOT returned.
     return res.status(200).json({
       success: true,
-      message: "OTP sent successfully",
-      otp: otp   // ⚠️ (only for testing, remove in production)
+      message: "OTP sent successfully"
     });
 
   } catch (err) {
 
+    console.error("OTP email error:", err);
+
     return res.status(500).json({
       success: false,
-      message: err.message
+      message: "Failed to send OTP"
     });
-
   }
 }
