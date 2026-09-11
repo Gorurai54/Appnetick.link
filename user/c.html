@@ -1,470 +1,1785 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Appnetick Channel</title>
 
- <meta property="og:site_name" content="Appnetick">
-  <meta property="og:image" content="IMAGE_URL">
-<meta property="og:title" content="Appnetick Channels">
-<meta property="og:description" content="View channel • 5 members • 15M Followers">
 
-<link rel="icon" href="/20260313_121958.jpg">
+<!-- =====================================================
+     OPEN GRAPH
+===================================================== -->
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta property="og:site_name"
+      content="Appnetick">
 
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<meta property="og:title"
+      content="Appnetick Channels">
+
+<meta property="og:description"
+      content="View channel • Appnetick">
+
+<meta property="og:image"
+      content="/20260313_121958.jpg">
+
+
+<link rel="icon"
+      href="/20260313_121958.jpg">
+
+
+<!-- =====================================================
+     FONT
+===================================================== -->
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+<!-- =====================================================
+     PHOSPHOR ICONS
+===================================================== -->
+
+<script
+src="https://unpkg.com/@phosphor-icons/web">
+</script>
+
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
+/* =========================================================
+   THEME
+========================================================= */
+
+:root{
+
+    --bg:#FFFFFF;
+
+    --surface:#FFFFFF;
+
+    --surface-secondary:#F7F7F7;
+
+    --text:#212121;
+
+    --secondary:#757575;
+
+    --muted:#9E9E9E;
+
+    --border:#DCDCDC;
+
+    --input-bg:#F5F5F5;
+
+    --primary:#2196F3;
+
+    --primary-soft:rgba(33,150,243,0.10);
+
+    --success:#2E7D32;
+
+    --shadow:
+        0 6px 25px rgba(0,0,0,0.06);
+
 }
+
+
+[data-theme="dark"]{
+
+    --bg:#1E1E1E;
+
+    --surface:#1E1E1E;
+
+    --surface-secondary:#252525;
+
+    --text:#FFFFFF;
+
+    --secondary:#A0A0A0;
+
+    --muted:#777777;
+
+    --border:#424242;
+
+    --input-bg:#252525;
+
+    --primary:#2979FF;
+
+    --primary-soft:rgba(41,121,255,0.14);
+
+    --success:#81C784;
+
+    --shadow:
+        0 6px 25px rgba(0,0,0,0.28);
+
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+html{
+
+    background:var(--bg);
+
+}
+
 
 body{
-background:#0b141a;
-color:#fff;
-overflow-x:hidden;
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    transition:
+
+        background .25s ease,
+
+        color .25s ease;
+
 }
 
-/* TOOLBAR */
+
+/* =========================================================
+   TOPBAR
+========================================================= */
 
 .topbar{
-height:60px;
-display:flex;
-align-items:center;
-justify-content:center;
-position:sticky;
-top:0;
-z-index:1000;
-background:rgba(0,0,0,0.45);
-backdrop-filter:blur(20px);
--webkit-backdrop-filter:blur(20px);
-border-bottom:1px solid rgba(255,255,255,0.08);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    width:100%;
+
+    height:64px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 14px;
+
+    background:var(--surface);
+
+    border-bottom:1px solid var(--border);
+
 }
 
-.logo{
-font-size:22px;
-font-weight:700;
-color:#2196f3;
-cursor:pointer;
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand{
+
+    font-size:21px;
+
+    font-weight:600;
+
+    letter-spacing:-.5px;
+
+    color:var(--text);
+
 }
 
-/* MAIN */
+
+.brand span{
+
+    color:var(--primary);
+
+}
+
+
+/* =========================================================
+   TOPBAR ACTIONS
+========================================================= */
+
+.topbar-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+}
+
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--text);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:
+
+        background .18s ease,
+
+        transform .12s ease;
+
+}
+
+
+.icon-button:hover{
+
+    background:var(--surface-secondary);
+
+}
+
+
+.icon-button:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
 .container{
-max-width:550px;
-margin:auto;
-padding:40px 20px;
-text-align:center;
+
+    width:100%;
+
+    max-width:430px;
+
+    margin:0 auto;
+
+    padding:30px 20px 40px;
+
 }
 
-/* CHANNEL IMAGE */
+
+/* =========================================================
+   CHANNEL HEADER
+========================================================= */
+
+.channel-header{
+
+    text-align:center;
+
+    padding:
+
+        8px
+
+        0
+
+        26px;
+
+}
+
+
+/* =========================================================
+   CHANNEL LOGO
+========================================================= */
+
+.channel-logo-wrap{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
 
 .channel-logo{
-width:140px;
-height:140px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid rgba(255,255,255,0.08);
-box-shadow:0 0 25px rgba(33,150,243,0.15);
+
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    display:block;
+
+    border:3px solid var(--surface);
+
+    box-shadow:
+
+        0 0 0 1px var(--border),
+
+        0 8px 25px rgba(0,0,0,.10);
+
+    background:var(--surface-secondary);
+
 }
 
-/* NAME */
+
+/* =========================================================
+   CHANNEL NAME
+========================================================= */
 
 .channel-name{
-margin-top:20px;
-font-size:30px;
-font-weight:700;
+
+    margin-top:18px;
+
+    font-size:27px;
+
+    line-height:1.2;
+
+    font-weight:700;
+
+    letter-spacing:-.6px;
+
+    word-break:break-word;
+
 }
 
-/* INVITE TEXT */
+
+/* =========================================================
+   INVITE
+========================================================= */
 
 .invite{
-margin-top:10px;
-font-size:15px;
-color:#b8b8b8;
+
+    margin:
+
+        9px
+
+        auto
+
+        0;
+
+    max-width:340px;
+
+    color:var(--secondary);
+
+    font-size:14px;
+
+    line-height:1.55;
+
 }
 
-/* JOIN BUTTON */
+
+/* =========================================================
+   JOIN BUTTON
+========================================================= */
 
 .join-btn{
-margin-top:25px;
-background:#2196f3;
-color:white;
-border:none;
-padding:14px 40px;
-border-radius:50px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
+
+    width:100%;
+
+    min-height:50px;
+
+    margin-top:20px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:30px;
+
+    background:var(--primary);
+
+    color:#FFFFFF;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    transition:
+
+        opacity .18s ease,
+
+        transform .12s ease;
+
 }
 
-/* DESCRIPTION */
 
-.description-card{
-margin-top:35px;
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.05);
-border-radius:20px;
-padding:20px;
-text-align:left;
-backdrop-filter:blur(20px);
+.join-btn:hover{
+
+    opacity:.90;
+
 }
 
-.description-title{
-font-size:18px;
-font-weight:700;
-margin-bottom:12px;
+
+.join-btn:active{
+
+    transform:scale(.985);
+
 }
+
+
+.join-btn i{
+
+    font-size:20px;
+
+}
+
+
+/* =========================================================
+   COMMON CARD
+========================================================= */
+
+.info-card{
+
+    margin-top:18px;
+
+    padding:18px;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+
+.card-title i{
+
+    font-size:20px;
+
+    color:var(--primary);
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
 
 .description-text{
-font-size:14px;
-line-height:1.8;
-color:#cfcfcf;
+
+    margin-top:11px;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    color:var(--secondary);
+
+    word-break:break-word;
+
 }
 
-/* STATS */
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
-display:flex;
-gap:15px;
-margin-top:25px;
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:18px;
+
 }
+
 
 .stat{
-flex:1;
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.05);
-border-radius:18px;
-padding:20px;
+
+    flex:1;
+
+    min-width:0;
+
+    padding:18px 12px;
+
+    text-align:center;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
 }
+
+
+.stat-icon{
+
+    width:38px;
+
+    height:38px;
+
+    margin:0 auto 9px;
+
+    border-radius:50%;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+.stat-icon i{
+
+    font-size:19px;
+
+}
+
 
 .stat h2{
-font-size:24px;
-font-weight:700;
+
+    font-size:22px;
+
+    line-height:1.2;
+
+    font-weight:700;
+
 }
+
 
 .stat p{
-margin-top:5px;
-color:#aaa;
-font-size:13px;
+
+    margin-top:5px;
+
+    color:var(--secondary);
+
+    font-size:12px;
+
 }
 
-/* FEATURES */
+
+/* =========================================================
+   FEATURES
+========================================================= */
 
 .features{
-margin-top:25px;
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.05);
-border-radius:20px;
-padding:20px;
-text-align:left;
+
+    margin-top:18px;
+
+    padding:18px;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
 }
+
 
 .feature-item{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:14px;
-color:#ddd;
+
+    min-height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:var(--secondary);
+
+    font-size:14px;
+
 }
 
-.feature-item:last-child{
-margin-bottom:0;
+
+.feature-item + .feature-item{
+
+    border-top:1px solid var(--border);
+
 }
+
 
 .feature-item i{
-color:#2196f3;
-font-size:18px;
+
+    width:28px;
+
+    color:var(--primary);
+
+    font-size:20px;
+
 }
 
-/* DOWNLOAD */
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
 
 .download-box{
-margin-top:35px;
-padding:25px;
-background:rgba(255,255,255,0.04);
-border-radius:20px;
+
+    margin-top:18px;
+
+    padding:20px;
+
+    text-align:center;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
 }
+
+
+.download-icon{
+
+    width:42px;
+
+    height:42px;
+
+    margin:0 auto 10px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+}
+
+
+.download-icon i{
+
+    font-size:21px;
+
+}
+
 
 .download-box p{
-color:#bdbdbd;
-margin-bottom:15px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    margin-bottom:14px;
+
 }
+
 
 .download-btn{
-background:#2196f3;
-border:none;
-color:white;
-padding:12px 28px;
-border-radius:50px;
-font-weight:700;
-cursor:pointer;
+
+    min-height:44px;
+
+    padding:0 25px;
+
+    border:none;
+
+    border-radius:25px;
+
+    background:var(--primary);
+
+    color:#FFFFFF;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
 }
 
-/* FOOTER */
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer{
-padding:30px;
-text-align:center;
-color:#888;
-font-size:13px;
+
+    padding:
+
+        12px
+
+        20px
+
+        30px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+
+    opacity:.65;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:500px){
+
+    .topbar{
+
+        height:60px;
+
+    }
+
+
+    .brand{
+
+        font-size:20px;
+
+    }
+
+
+    .container{
+
+        padding:
+
+            24px
+
+            16px
+
+            35px;
+
+    }
+
+
+    .channel-logo{
+
+        width:100px;
+
+        height:100px;
+
+    }
+
+
+    .channel-name{
+
+        font-size:25px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+@media(max-width:350px){
+
+    .stats{
+
+        gap:8px;
+
+    }
+
+
+    .stat{
+
+        padding:
+
+            15px
+
+            8px;
+
+    }
+
+
+    .stat h2{
+
+        font-size:20px;
+
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<!-- TOOLBAR -->
+
+<!-- =====================================================
+     TOOLBAR
+===================================================== -->
 
 <div class="topbar">
 
-<div class="logo"
-onclick="location.href='/'">
-Appnetick
-</div>
+
+    <div
+        class="brand"
+        onclick="location.href='/'">
+
+        Appnetick<span>.</span>
+
+    </div>
+
+
+    <div class="topbar-actions">
+
+
+        <!-- THEME -->
+
+        <button
+            id="themeButton"
+            class="icon-button"
+            aria-label="Change theme">
+
+            <i
+                id="themeIcon"
+                class="ph ph-moon">
+            </i>
+
+        </button>
+
+
+        <!-- HOME -->
+
+        <button
+            class="icon-button"
+            aria-label="Home"
+            onclick="location.href='/'">
+
+            <i class="ph ph-house"></i>
+
+        </button>
+
+
+    </div>
 
 </div>
 
-<!-- CONTENT -->
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <div class="container">
 
-<img
-id="channelLogo"
-class="channel-logo"
-src="https://via.placeholder.com/140">
 
-<h1
-id="channelName"
-class="channel-name">
-Loading...
-</h1>
+    <!-- =================================================
+         CHANNEL HEADER
+    ================================================== -->
 
-<p class="invite">
-You are invited to join this channel
-</p>
+    <div class="channel-header">
 
-<button
-class="join-btn"
-onclick="joinChannel()">
-Join Channel
-</button>
 
-<!-- DESCRIPTION -->
+        <div class="channel-logo-wrap">
 
-<div class="description-card">
+            <img
+                id="channelLogo"
+                class="channel-logo"
+                src="/20260313_121958.jpg"
+                alt="Channel">
 
-<div class="description-title">
-About Channel
+        </div>
+
+
+        <h1
+            id="channelName"
+            class="channel-name">
+
+            Loading...
+
+        </h1>
+
+
+        <p
+            id="inviteText"
+            class="invite">
+
+            You are invited to join this channel
+
+        </p>
+
+
+        <button
+            class="join-btn"
+            onclick="joinChannel()">
+
+            <i class="ph ph-user-plus"></i>
+
+            <span>Join Channel</span>
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         DESCRIPTION
+    ================================================== -->
+
+    <div class="info-card">
+
+
+        <div class="card-title">
+
+            <i class="ph ph-info"></i>
+
+            <span>About Channel</span>
+
+        </div>
+
+
+        <div
+            id="channelDescription"
+            class="description-text">
+
+            Loading channel information...
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATS
+    ================================================== -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+
+            <div class="stat-icon">
+
+                <i class="ph ph-users"></i>
+
+            </div>
+
+
+            <h2 id="subscribers">
+
+                0
+
+            </h2>
+
+
+            <p>
+
+                Subscribers
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="stat">
+
+
+            <div class="stat-icon">
+
+                <i class="ph ph-article"></i>
+
+            </div>
+
+
+            <h2 id="posts">
+
+                0
+
+            </h2>
+
+
+            <p>
+
+                Posts
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         FEATURES
+    ================================================== -->
+
+    <div class="features">
+
+
+        <div class="feature-item">
+
+            <i class="ph ph-check-circle"></i>
+
+            <span>
+
+                Public Channel
+
+            </span>
+
+        </div>
+
+
+        <div class="feature-item">
+
+            <i class="ph ph-shield-check"></i>
+
+            <span>
+
+                Secure Community
+
+            </span>
+
+        </div>
+
+
+        <div class="feature-item">
+
+            <i class="ph ph-lightning"></i>
+
+            <span>
+
+                Real Time Updates
+
+            </span>
+
+        </div>
+
+
+        <div class="feature-item">
+
+            <i class="ph ph-users-three"></i>
+
+            <span>
+
+                Unlimited Members
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         DOWNLOAD
+    ================================================== -->
+
+    <div class="download-box">
+
+
+        <div class="download-icon">
+
+            <i class="ph ph-download-simple"></i>
+
+        </div>
+
+
+        <p>
+
+            Don't have Appnetick?
+
+        </p>
+
+
+        <button
+            class="download-btn"
+            onclick="location.href='/'">
+
+            Download App
+
+        </button>
+
+
+    </div>
+
+
 </div>
 
-<div
-id="channelDescription"
-class="description-text">
-Loading channel information...
-</div>
 
-</div>
 
-<!-- STATS -->
-
-<div class="stats">
-
-<div class="stat">
-<h2 id="subscribers">0</h2>
-<p>Subscribers</p>
-</div>
-
-<div class="stat">
-<h2 id="posts">0</h2>
-<p>Posts</p>
-</div>
-
-</div>
-
-<!-- FEATURES -->
-
-<div class="features">
-
-<div class="feature-item">
-<i class="ph ph-check-circle"></i>
-<span>Public Channel</span>
-</div>
-
-<div class="feature-item">
-<i class="ph ph-shield-check"></i>
-<span>Secure Community</span>
-</div>
-
-<div class="feature-item">
-<i class="ph ph-lightning"></i>
-<span>Real Time Updates</span>
-</div>
-
-<div class="feature-item">
-<i class="ph ph-users"></i>
-<span>Unlimited Members</span>
-</div>
-
-</div>
-
-<!-- DOWNLOAD -->
-
-<div class="download-box">
-
-<p>
-Don't have Appnetick?
-</p>
-
-<button
-class="download-btn"
-onclick="location.href='/'">
-Download App
-</button>
-
-</div>
-
-</div>
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <div class="footer">
-© 2026 Appnetick
+
+    © 2026 Appnetick
+
 </div>
 
-<!-- FIREBASE -->
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getDatabase,
-ref,
-get
+    initializeApp
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    get
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+/* =======================================================
+   FIREBASE CONFIG
+======================================================= */
 
 const firebaseConfig = {
-apiKey: "AIzaSyDZtlQ6BR9olb_Ssf7c5i_90O0s6olCxlM",
-authDomain: "users-f0dd7.firebaseapp.com",
-databaseURL: "https://users-f0dd7-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "users-f0dd7",
-storageBucket: "users-f0dd7.firebasestorage.app",
-appId: "1:747543481819:android:df33f3d9d1b330d4d96bfe"
+
+    apiKey:
+    "AIzaSyDZtlQ6BR9olb_Ssf7c5i_90O0s6olCxlM",
+
+    authDomain:
+    "users-f0dd7.firebaseapp.com",
+
+    databaseURL:
+    "https://users-f0dd7-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId:
+    "users-f0dd7",
+
+    storageBucket:
+    "users-f0dd7.firebasestorage.app",
+
+    appId:
+    "1:747543481819:android:df33f3d9d1b330d4d96bfe"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
-/*
-FINAL URL FORMAT
-
-https://appnetick-link.vercel.app/user/channel/invite/uid?=383737376363?cid?=27363g373736
-*/
-
-
- function getInviteData() {
-
-const params = new URLSearchParams(window.location.search);
-
-return {
-    uid: params.get("uid") || "",
-    cid: params.get("cid") || ""
-};
-
-}
-    
-
-
-
-async function loadChannel() {
-
-const inviteData = getInviteData();
-
-console.log("Full URL:", window.location.href);
-console.log("UID:", inviteData.uid);
-console.log("CID:", inviteData.cid);
-console.log("Firebase Path:", "Channels/" + inviteData.cid);
-const inviterUid = inviteData.uid;
-const channelId = inviteData.cid;
-
-console.log("Inviter UID:", inviterUid);
-console.log("Channel ID:", channelId);
-
-if (!channelId) {
-
-    document.getElementById("channelName").innerText =
-    "Channel Not Found";
-
-    return;
-}
-
-try {
-
-    const snap = await get(
-        ref(db, "Channels/" + channelId)
+const app =
+    initializeApp(
+        firebaseConfig
     );
 
-    if (!snap.exists()) {
 
-        document.getElementById("channelName").innerText =
-        "Channel Not Found";
+const db =
+    getDatabase(app);
 
-        return;
+
+
+/* =======================================================
+   URL DATA
+======================================================= */
+
+function getInviteData(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    return {
+
+        uid:
+        params.get("uid") || "",
+
+        cid:
+        params.get("cid") || ""
+
+    };
+
+}
+
+
+
+/* =======================================================
+   FORMAT NUMBER
+======================================================= */
+
+function formatNumber(value){
+
+    const number =
+        Number(value) || 0;
+
+
+    if(number >= 1000000){
+
+        return (
+            number / 1000000
+        ).toFixed(
+            number >= 10000000
+                ? 0
+                : 1
+        ) + "M";
+
     }
 
-    const data = snap.val();
 
-    document.getElementById("channelName").innerText =
-    data.name || "Channel";
+    if(number >= 1000){
 
-    document.getElementById("channelDescription").innerText =
-    data.description || "No description available";
+        return (
+            number / 1000
+        ).toFixed(
+            number >= 10000
+                ? 0
+                : 1
+        ) + "K";
 
-    document.getElementById("subscribers").innerText =
-    data.subscribers || 0;
+    }
 
-    document.getElementById("channelLogo").src =
-    data.logo || "https://via.placeholder.com/140";
 
-    document.title =
-    (data.name || "Channel") + " • Appnetick";
-
-    document.querySelector(".invite").innerText =
-    "You are invited to join @" +
-    (data.username || "channel");
-
-} catch (e) {
-
-    console.error(e);
-
-    document.getElementById("channelName").innerText =
-    "Unable to load channel";
+    return number.toString();
 
 }
 
+
+
+/* =======================================================
+   LOAD CHANNEL
+======================================================= */
+
+async function loadChannel(){
+
+    const inviteData =
+        getInviteData();
+
+
+    console.log(
+        "Full URL:",
+        window.location.href
+    );
+
+
+    console.log(
+        "UID:",
+        inviteData.uid
+    );
+
+
+    console.log(
+        "CID:",
+        inviteData.cid
+    );
+
+
+    console.log(
+        "Firebase Path:",
+        "Channels/" +
+        inviteData.cid
+    );
+
+
+    const inviterUid =
+        inviteData.uid;
+
+
+    const channelId =
+        inviteData.cid;
+
+
+    console.log(
+        "Inviter UID:",
+        inviterUid
+    );
+
+
+    console.log(
+        "Channel ID:",
+        channelId
+    );
+
+
+    if(!channelId){
+
+        document
+            .getElementById(
+                "channelName"
+            )
+            .innerText =
+            "Channel Not Found";
+
+
+        document
+            .getElementById(
+                "channelDescription"
+            )
+            .innerText =
+            "The channel link is invalid or incomplete.";
+
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const snap =
+            await get(
+                ref(
+                    db,
+                    "Channels/" +
+                    channelId
+                )
+            );
+
+
+        if(!snap.exists()){
+
+            document
+                .getElementById(
+                    "channelName"
+                )
+                .innerText =
+                "Channel Not Found";
+
+
+            document
+                .getElementById(
+                    "channelDescription"
+                )
+                .innerText =
+                "This channel may have been deleted or the invite link is no longer valid.";
+
+
+            return;
+
+        }
+
+
+        const data =
+            snap.val();
+
+
+        /* =============================================
+           BASIC DATA
+        ============================================== */
+
+        const channelName =
+            data.name ||
+            "Channel";
+
+
+        const description =
+            data.description ||
+            "No description available";
+
+
+        const username =
+            data.username ||
+            "channel";
+
+
+        const logo =
+            data.logo ||
+            "/20260313_121958.jpg";
+
+
+        const subscribers =
+            data.subscribers ||
+            data.members ||
+            0;
+
+
+        const posts =
+            data.posts ||
+            data.postCount ||
+            0;
+
+
+
+        /* =============================================
+           UPDATE UI
+        ============================================== */
+
+        document
+            .getElementById(
+                "channelName"
+            )
+            .innerText =
+            channelName;
+
+
+        document
+            .getElementById(
+                "channelDescription"
+            )
+            .innerText =
+            description;
+
+
+        document
+            .getElementById(
+                "subscribers"
+            )
+            .innerText =
+            formatNumber(
+                subscribers
+            );
+
+
+        document
+            .getElementById(
+                "posts"
+            )
+            .innerText =
+            formatNumber(
+                posts
+            );
+
+
+        document
+            .getElementById(
+                "channelLogo"
+            )
+            .src =
+            logo;
+
+
+        document
+            .getElementById(
+                "inviteText"
+            )
+            .innerText =
+            "You are invited to join @" +
+            username;
+
+
+
+        /* =============================================
+           TITLE
+        ============================================== */
+
+        document.title =
+            channelName +
+            " • Appnetick";
+
+
+
+        /* =============================================
+           OPEN GRAPH
+        ============================================== */
+
+        const ogTitle =
+            document.querySelector(
+                'meta[property="og:title"]'
+            );
+
+
+        const ogDescription =
+            document.querySelector(
+                'meta[property="og:description"]'
+            );
+
+
+        const ogImage =
+            document.querySelector(
+                'meta[property="og:image"]'
+            );
+
+
+        if(ogTitle){
+
+            ogTitle.setAttribute(
+                "content",
+                channelName +
+                " • Appnetick Channels"
+            );
+
+        }
+
+
+        if(ogDescription){
+
+            ogDescription.setAttribute(
+                "content",
+                "View channel • " +
+                formatNumber(
+                    subscribers
+                ) +
+                " Subscribers"
+            );
+
+        }
+
+
+        if(ogImage){
+
+            ogImage.setAttribute(
+                "content",
+                logo
+            );
+
+        }
+
+
+    }catch(e){
+
+
+        console.error(
+            "Channel loading error:",
+            e
+        );
+
+
+        document
+            .getElementById(
+                "channelName"
+            )
+            .innerText =
+            "Unable to load channel";
+
+
+        document
+            .getElementById(
+                "channelDescription"
+            )
+            .innerText =
+            "Something went wrong while loading this channel. Please try again.";
+
+    }
+
 }
+
+
+
+/* =======================================================
+   JOIN
+======================================================= */
+
+window.joinChannel =
+function(){
+
+    alert(
+        "Channel joining system will be connected later."
+    );
+
+};
+
+
+
+/* =======================================================
+   THEME
+======================================================= */
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+
+const themeIcon =
+    document.getElementById(
+        "themeIcon"
+    );
+
+
+const systemTheme =
+    window.matchMedia &&
+    window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches
+        ? "dark"
+        : "light";
+
+
+let savedTheme =
+    localStorage.getItem(
+        "appnetick-theme"
+    );
+
+
+if(!savedTheme){
+
+    savedTheme =
+        systemTheme;
+
+}
+
+
+function applyTheme(theme){
+
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
+        );
+
+
+    localStorage.setItem(
+        "appnetick-theme",
+        theme
+    );
+
+
+    if(theme === "dark"){
+
+        themeIcon.className =
+            "ph ph-sun";
+
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to light theme"
+        );
+
+    }else{
+
+        themeIcon.className =
+            "ph ph-moon";
+
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to dark theme"
+        );
+
+    }
+
+}
+
+
+applyTheme(
+    savedTheme
+);
+
+
+themeButton.addEventListener(
+    "click",
+    function(){
+
+        const currentTheme =
+            document.documentElement
+                .getAttribute(
+                    "data-theme"
+                );
+
+
+        applyTheme(
+            currentTheme === "dark"
+                ? "light"
+                : "dark"
+        );
+
+    }
+);
+
+
+
+/* =======================================================
+   LOAD
+======================================================= */
 
 loadChannel();
-
-
-window.joinChannel = function(){
-
-alert("Channel joining system will be connected later.");
-
-}
 
 </script>
 
 </body>
+
 </html>
