@@ -1440,315 +1440,173 @@ button {
                 href="/auth/user/signup"
                 class="secondary-button">
 
-                gap:15px;
-font-size:22px;
+                <i class="ph ph-user-plus"></i>
+
+                Create account
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+
+    <div class="footer-links">
+
+        <a href="/privacy">
+            Privacy
+        </a>
+
+        <a href="/terms">
+            Terms
+        </a>
+
+        <a href="/auth/user/login">
+            Login
+        </a>
+
+        <a href="/verification">
+            Verification
+        </a>
+
+    </div>
+
+
+    <p>
+        © 2026 Appnetick
+    </p>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     THEME SCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   THEME ELEMENTS
+===================================================== */
+
+const themeButton =
+    document.getElementById("themeButton");
+
+const themeIcon =
+    document.getElementById("themeIcon");
+
+
+/* =====================================================
+   SYSTEM THEME
+===================================================== */
+
+const systemDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+
+/* =====================================================
+   LOAD THEME
+===================================================== */
+
+let savedTheme =
+    localStorage.getItem("appnetick-theme");
+
+
+if (!savedTheme) {
+
+    savedTheme =
+        systemDark ? "dark" : "light";
+
 }
 
-/* DRAWER */
-.drawer{
-position:fixed;
-left:-280px;
-top:0;
-width:280px;
-height:100%;
-background:#111;
-padding:20px;
-overflow-y:auto;
-transition:0.3s;
-z-index:2000;
+
+applyTheme(savedTheme);
+
+
+/* =====================================================
+   APPLY THEME
+===================================================== */
+
+function applyTheme(theme) {
+
+    document.documentElement
+        .setAttribute("data-theme", theme);
+
+
+    localStorage.setItem(
+        "appnetick-theme",
+        theme
+    );
+
+
+    if (theme === "dark") {
+
+        themeIcon.className =
+            "ph ph-sun";
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to light theme"
+        );
+
+    } else {
+
+        themeIcon.className =
+            "ph ph-moon";
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to dark theme"
+        );
+
+    }
+
 }
 
-.drawer.active{left:0;}
 
-.drawer h3{margin-bottom:15px;}
-.drawer-item{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:12px;
-color:#ccc;
-}
+/* =====================================================
+   TOGGLE THEME
+===================================================== */
 
-/* HERO */
-.hero{
-padding:60px 20px;
-text-align:center;
-}
+themeButton.addEventListener(
+    "click",
+    function() {
 
-.hero h1{font-size:27px;}
-.hero p{margin-top:15px;color:#ccc;line-height:1.6;}
+        const current =
+            document.documentElement
+                .getAttribute("data-theme");
 
-/* ABOUT */
-.about{
-padding:40px 20px;
-line-height:1.7;
-color:#ccc;
-}
 
-/* SECTION */
-.section{
-padding:40px 20px;
-}
+        const next =
+            current === "dark"
+                ? "light"
+                : "dark";
 
-.section h2{margin-bottom:10px;}
 
-.more{
-color:#2196f3;
-cursor:pointer;
-}
-  
+        applyTheme(next);
 
-.full{display:none;}
+    }
+);
 
-/* BOTTOM TEXT GRID */
-.bottom-features{
-padding:40px 15px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-background:#111b21;
-}
 
-.bottom-features div{
-text-align:center;
-color:#fff;
-font-size:14px;
-}
+</script>
 
-/* FOOTER */
-.footer{
-padding:30px;
-background:#111b21;
-text-align:center;
-}
 
-  .auth-btn{
-background:#2196f3;
-color:#fff;
-border:none;
-padding:10px 20px;
-border-radius:35px;
-font-weight:700;
-font-size:14px;
-cursor:pointer;
-  }
+</body>
 
-</style></head><body><!-- DRAWER --><div class="drawer" id="drawer">
-<h3>Features Info</h3><div class="drawer-item"><i class="ph ph-chat"></i>Chats history</div>
-<div class="drawer-item"><i class="ph ph-phone"></i>Voice calls</div>
-<div class="drawer-item"><i class="ph ph-video"></i>Video calls</div>
-<div class="drawer-item"><i class="ph ph-users"></i>Group chats</div>
-<div class="drawer-item"><i class="ph ph-lock"></i>Privacy system</div>
-<div class="drawer-item"><i class="ph ph-image"></i>Media sharing</div>
-<div class="drawer-item"><i class="ph ph-globe"></i>Global chats</div>
-<div class="drawer-item"><i class="ph ph-heart"></i>Likes system</div>
-<div class="drawer-item"><i class="ph ph-share"></i>Sharing</div>
-<div class="drawer-item"><i class="ph ph-bell"></i>Notifications</div>
-<div class="drawer-item"><i class="ph ph-user"></i>Profiles</div>
-<div class="drawer-item"><i class="ph ph-gear"></i>Settings</div>
-<div class="drawer-item"><i class="ph ph-shield"></i>Security</div>
-<div class="drawer-item"><i class="ph ph-lightning"></i>Fast system</div>
-<div class="drawer-item"><i class="ph ph-moon"></i>Dark mode</div>
-<div class="drawer-item"><i class="ph ph-star"></i>Premium</div>
-<div class="drawer-item"><i class="ph ph-map-pin"></i>Location</div>
-<div class="drawer-item"><i class="ph ph-calendar"></i>Events</div>
-<div class="drawer-item"><i class="ph ph-microphone"></i>Voice messages</div>
-<div class="drawer-item"><i class="ph ph-cloud"></i>Cloud backup</div>
-<div class="drawer-item"><i class="ph ph-database"></i>Database</div>
-<div class="drawer-item"><i class="ph ph-code"></i>API access</div>
-<div class="drawer-item"><i class="ph ph-wifi-high"></i>Online mode</div>
-<div class="drawer-item"><i class="ph ph-wifi-slash"></i>Offline mode</div>
-<div class="drawer-item"><i class="ph ph-file"></i>Documents</div>
-<div class="drawer-item"><i class="ph ph-lock-key"></i>Authentication</div>
-<div class="drawer-item"><i class="ph ph-clock"></i>History</div>
-  <div class="drawer-item"><i class="ph ph-circle"></i>Status</div>
-<div class="drawer-item"><i class="ph ph-circle"></i>Stories</div>
-<div class="drawer-item"><i class="ph ph-circle"></i>Reels</div>
-<div class="drawer-item"><i class="ph ph-compass"></i>Explore</div>
-<div class="drawer-item"><i class="ph ph-magnifying-glass"></i>Search</div>
-<div class="drawer-item"><i class="ph ph-users"></i>Friends</div>
-<div class="drawer-item"><i class="ph ph-user-plus"></i>Followers</div>
-<div class="drawer-item"><i class="ph ph-user-check"></i>Following</div>
-<div class="drawer-item"><i class="ph ph-user-list"></i>Requests</div>
-<div class="drawer-item"><i class="ph ph-bell"></i>Notifications</div>
-<div class="drawer-item"><i class="ph ph-bookmark"></i>Bookmarks</div>
-<div class="drawer-item"><i class="ph ph-bookmark-simple"></i>Saved</div>
-<div class="drawer-item"><i class="ph ph-star"></i>Highlights</div>
-<div class="drawer-item"><i class="ph ph-broadcast"></i>Live</div>
-<div class="drawer-item"><i class="ph ph-play-circle"></i>Streaming</div>
-<div class="drawer-item"><i class="ph ph-storefront"></i>Marketplace</div>
-<div class="drawer-item"><i class="ph ph-credit-card"></i>Payments</div>
-<div class="drawer-item"><i class="ph ph-wallet"></i>Wallet</div>
-<div class="drawer-item"><i class="ph ph-megaphone"></i>Ads</div>
-<div class="drawer-item"><i class="ph ph-chart-bar"></i>Analytics</div>
-<div class="drawer-item"><i class="ph ph-chart-line"></i>Insights</div>
-<div class="drawer-item"><i class="ph ph-flag"></i>Reports</div>
-<div class="drawer-item"><i class="ph ph-shield-check"></i>Moderation</div>
-<div class="drawer-item"><i class="ph ph-headset"></i>Support</div>
-<div class="drawer-item"><i class="ph ph-question"></i>Help Center</div>
-<div class="drawer-item"><i class="ph ph-chat-centered"></i>Feedback</div>
-<div class="drawer-item"><i class="ph ph-arrow-clockwise"></i>Updates</div>
-<div class="drawer-item"><i class="ph ph-newspaper"></i>News</div>
-<div class="drawer-item"><i class="ph ph-fire"></i>Trending</div>
-<div class="drawer-item"><i class="ph ph-compass-tool"></i>Discover</div>
-<div class="drawer-item"><i class="ph ph-map-pin"></i>Nearby</div>
-<div class="drawer-item"><i class="ph ph-share-network"></i>Location Share</div>
-<div class="drawer-item"><i class="ph ph-qr-code"></i>QR Code</div>
-<div class="drawer-item"><i class="ph ph-scan"></i>Scan</div>
-<div class="drawer-item"><i class="ph ph-palette"></i>Themes</div>
-<div class="drawer-item"><i class="ph ph-sliders"></i>Customization</div>
-<div class="drawer-item"><i class="ph ph-translate"></i>Language</div>
-<div class="drawer-item"><i class="ph ph-universal-access"></i>Accessibility</div>
-<div class="drawer-item"><i class="ph ph-warning"></i>Security Alerts</div>
-<div class="drawer-item"><i class="ph ph-clock"></i>Sessions</div>
-<div class="drawer-item"><i class="ph ph-devices"></i>Devices</div>
-<div class="drawer-item"><i class="ph ph-arrows-clockwise"></i>Sync</div>
-<div class="drawer-item"><i class="ph ph-cloud-arrow-up"></i>Auto Backup</div>
-<div class="drawer-item"><i class="ph ph-cloud-arrow-down"></i>Restore</div>
-<div class="drawer-item"><i class="ph ph-drop"></i>Data Saver</div>
-<div class="drawer-item"><i class="ph ph-hard-drive"></i>Storage</div>
-<div class="drawer-item"><i class="ph ph-trash"></i>Clear Cache</div>
-<div class="drawer-item"><i class="ph ph-sign-out"></i>Logout</div>
-<div class="drawer-item"><i class="ph ph-user-minus"></i>Delete Account</div>
-<div class="drawer-item"><i class="ph ph-device-mobile"></i>Mobile support</div></div><!-- NAVBAR --><div class="navbar">
-<i class="ph ph-list" onclick="toggleDrawer()"></i>
-<div class="logo">Appnetick</div>
-<div class="nav-icons">
-<i class="ph ph-bell"></i>
-<i class="ph ph-user"></i>
-</div>
-</div><!-- HERO --><div class="hero">
-  <div class="top-banner">
-  <img src="file_000000008c18722f9aaa269dbc1c3bc9.png" alt="banner">
-  </div>
-<h1>Welcome to Appnetick</h1>
-<p>
-Appnetick is a next-generation social platform designed to connect people across the world. 
-It combines messaging, social networking, and privacy-focused communication into one powerful experience.
-</p>
-</div><!-- ABOUT --><div class="about">
-<p>
-Appnetick provides a seamless communication experience where users can chat, share media, 
-connect globally, and explore advanced features. Our mission is to build a secure and fast platform 
-that empowers users to stay connected anytime, anywhere.
-</p>
-</div><!-- PRIVACY --><div class="section">
-<h2>Privacy Policy</h2>
-<p id="s1">
-We respect your privacy and ensure safety...
-<span class="more" onclick="toggleText('f1','s1')">more</span>
-</p><p id="f1" class="full">
-Appnetick follows strict privacy policies ensuring that user data is encrypted and protected...
-(extend this to 500+ words as needed)
-</p>
-</div><!-- TERMS --><div class="section">
-<h2>Terms & Conditions</h2>
-<p id="s2">
-By using this platform you agree...
-<span class="more" onclick="toggleText('f2','s2')">more</span>
-</p><p id="f2" class="full">
-Users must follow all guidelines and maintain respectful behavior...
-(extend this also)
-</p>
-
-   <div style="margin-top:20px; display:flex; gap:15px; flex-wrap:wrap;"><button class="auth-btn" onclick="location.href='/auth/user/login'">
-Login
-</button><button class="auth-btn" onclick="location.href='/auth/user/signup'">
-Sign Up
-</button></div>
-<div class="social-row">
-  <div class="social-icon"><i class="ph ph-facebook-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-instagram-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-twitter-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-youtube-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-linkedin-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-whatsapp-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-telegram-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-github-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-discord-logo"></i></div>
-  <div class="social-icon"><i class="ph ph-reddit-logo"></i></div>
-</div>
-  
-</div><!-- BOTTOM FEATURES TEXT --><div class="bottom-features">
-<div>Chats</div>
-<div>Global Chats</div>
-<div>Groups</div>
-<div>Media</div>
-<div>Privacy</div>
-<div>Security</div>
-<div>Backup</div>
-<div>Cloud</div>
-<div>Voice</div>
-<div>Video</div>
-<div>Events</div>
-<div>History</div>
-<div>Premium</div>
-<div>Fast</div>
-<div>Online</div>
-<div>Offline</div>
-<div>Docs</div>
-<div>Auth</div>
-<div>API</div>
-<div>Mobile</div>
-<div>Status</div>
-<div>Stories</div>
-<div>Reels</div>
-<div>Explore</div>
-<div>Search</div>
-<div>Friends</div>
-<div>Followers</div>
-<div>Following</div>
-<div>Requests</div>
-<div>Notifications</div>
-<div>Bookmarks</div>
-<div>Saved</div>
-<div>Highlights</div>
-<div>Live</div>
-<div>Streaming</div>
-<div>Marketplace</div>
-<div>Payments</div>
-<div>Wallet</div>
-<div>Ads</div>
-<div>Analytics</div>
-<div>Insights</div>
-<div>Reports</div>
-<div>Moderation</div>
-<div>Support</div>
-<div>Help Center</div>
-<div>Feedback</div>
-<div>Updates</div>
-<div>News</div>
-<div>Trending</div>
-<div>Discover</div>
-<div>Nearby</div>
-<div>Location Share</div>
-<div>QR Code</div>
-<div>Scan</div>
-<div>Themes</div>
-<div>Customization</div>
-<div>Language</div>
-<div>Accessibility</div>
-<div>Security Alerts</div>
-<div>Sessions</div>
-<div>Devices</div>
-<div>Sync</div>
-<div>Auto Backup</div>
-<div>Restore</div>
-<div>Data Saver</div>
-<div>Storage</div>
-<div>Clear Cache</div>
-<div>Logout</div>
-<div>Delete Account</div>
-</div><!-- FOOTER --><div class="footer">
-<p>© 2026 Appnetick</p>
-</div><script>
-function toggleDrawer(){
-document.getElementById("drawer").classList.toggle("active");
-}
-
-function toggleText(full,short){
-document.getElementById(short).style.display="none";
-document.getElementById(full).style.display="block";
-}
-</script></body>
 </html>
