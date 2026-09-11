@@ -6,6 +6,10 @@
 "destination": "/post.html"
 },
 {
+  "source": "/admin/verification/",
+  "destination": "/admin/verification/index.html"
+},
+{
   "source": "/user/channel",
   "destination": "/api/channel"
 },
