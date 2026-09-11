@@ -16,79 +16,63 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet">
 
-<!-- Phosphor Icons -->
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
 
 <style>
 
 /* =========================================================
-   THEME VARIABLES
+   THEME
 ========================================================= */
 
 :root{
 
     --bg:#FFFFFF;
-
     --surface:#FFFFFF;
-
     --surface-secondary:#F7F7F7;
 
     --text:#212121;
-
     --secondary:#757575;
-
     --muted:#9E9E9E;
 
     --border:#DCDCDC;
-
     --input-bg:#F5F5F5;
 
     --primary:#2196F3;
-
     --primary-soft:rgba(33,150,243,0.10);
 
     --error-bg:rgba(244,67,54,0.10);
-
     --error-text:#D32F2F;
 
-    --shadow:0 6px 25px rgba(0,0,0,0.06);
+    --success-bg:rgba(46,125,50,0.10);
+    --success-text:#2E7D32;
 
+    --shadow:0 6px 25px rgba(0,0,0,0.06);
 }
 
-
-/* =========================================================
-   DARK THEME
-========================================================= */
 
 [data-theme="dark"]{
 
     --bg:#1E1E1E;
-
     --surface:#1E1E1E;
-
     --surface-secondary:#252525;
 
     --text:#FFFFFF;
-
     --secondary:#A0A0A0;
-
     --muted:#777777;
 
     --border:#424242;
-
     --input-bg:#252525;
 
     --primary:#2979FF;
-
     --primary-soft:rgba(41,121,255,0.14);
 
     --error-bg:rgba(244,67,54,0.12);
-
     --error-text:#FF8A80;
 
-    --shadow:0 6px 25px rgba(0,0,0,0.28);
+    --success-bg:rgba(102,187,106,0.12);
+    --success-text:#66BB6A;
 
+    --shadow:0 6px 25px rgba(0,0,0,0.28);
 }
 
 
@@ -99,12 +83,12 @@
 *{
 
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
 
     font-family:'Inter',sans-serif;
+
+    -webkit-tap-highlight-color:transparent;
 
 }
 
@@ -216,10 +200,6 @@ input{
 }
 
 
-/* =========================================================
-   ICON BUTTON
-========================================================= */
-
 .icon-button{
 
     width:42px;
@@ -246,8 +226,6 @@ input{
 
     cursor:pointer;
 
-    transition:background .18s ease;
-
 }
 
 
@@ -266,7 +244,7 @@ input{
 
 
 /* =========================================================
-   MAIN
+   CONTAINER
 ========================================================= */
 
 .container{
@@ -283,7 +261,7 @@ input{
 
 
 /* =========================================================
-   LOGIN HEADER
+   HEADER
 ========================================================= */
 
 .login-header{
@@ -361,7 +339,7 @@ input{
 
     min-height:52px;
 
-    padding:0 48px 0 16px;
+    padding:0 48px 0 46px;
 
     border:1px solid var(--border);
 
@@ -379,9 +357,7 @@ input{
 
         border .18s ease,
 
-        box-shadow .18s ease,
-
-        background .18s ease;
+        box-shadow .18s ease;
 
 }
 
@@ -397,14 +373,12 @@ input{
 
     border-color:var(--primary);
 
-    box-shadow:0 0 0 3px var(--primary-soft);
+    box-shadow:
+
+        0 0 0 3px var(--primary-soft);
 
 }
 
-
-/* =========================================================
-   INPUT ICON
-========================================================= */
 
 .input-leading{
 
@@ -424,17 +398,6 @@ input{
 
 }
 
-
-.has-leading{
-
-    padding-left:46px;
-
-}
-
-
-/* =========================================================
-   INPUT ACTION
-========================================================= */
 
 .input-action{
 
@@ -473,13 +436,6 @@ input{
 }
 
 
-.input-action:hover{
-
-    background:var(--surface-secondary);
-
-}
-
-
 /* =========================================================
    ERROR
 ========================================================= */
@@ -497,6 +453,33 @@ input{
     background:var(--error-bg);
 
     color:var(--error-text);
+
+    font-size:13px;
+
+    line-height:1.45;
+
+    word-break:break-word;
+
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.success{
+
+    display:none;
+
+    margin-top:14px;
+
+    padding:13px 14px;
+
+    border-radius:14px;
+
+    background:var(--success-bg);
+
+    color:var(--success-text);
 
     font-size:13px;
 
@@ -573,10 +556,6 @@ input{
 }
 
 
-/* =========================================================
-   BUTTON ICON
-========================================================= */
-
 .primary-button > i{
 
     font-size:20px;
@@ -585,7 +564,7 @@ input{
 
 
 /* =========================================================
-   BUTTON LOADER
+   LOADER
 ========================================================= */
 
 .button-loader{
@@ -653,7 +632,7 @@ input{
 
 
 /* =========================================================
-   SMALL INFO
+   SECURITY
 ========================================================= */
 
 .security-info{
@@ -695,10 +674,6 @@ input{
 }
 
 
-/* =========================================================
-   PIN ICON
-========================================================= */
-
 .pin-icon{
 
     width:62px;
@@ -725,7 +700,7 @@ input{
 
 
 /* =========================================================
-   PROFILE
+   PROFILE SCREEN
 ========================================================= */
 
 #profileScreen{
@@ -835,10 +810,6 @@ input{
 }
 
 
-/* =========================================================
-   PROFILE ROW
-========================================================= */
-
 .profile-row{
 
     min-height:62px;
@@ -860,10 +831,6 @@ input{
 
 }
 
-
-/* =========================================================
-   PROFILE ICON
-========================================================= */
 
 .profile-icon{
 
@@ -892,10 +859,6 @@ input{
 }
 
 
-/* =========================================================
-   PROFILE LABEL
-========================================================= */
-
 .profile-label{
 
     width:105px;
@@ -908,10 +871,6 @@ input{
 
 }
 
-
-/* =========================================================
-   PROFILE VALUE
-========================================================= */
 
 .profile-value{
 
@@ -1019,17 +978,6 @@ input{
 
 
 /* =========================================================
-   HIDDEN
-========================================================= */
-
-.hidden{
-
-    display:none !important;
-
-}
-
-
-/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -1041,13 +989,11 @@ input{
 
     }
 
-
     .toolbar-title{
 
         font-size:20px;
 
     }
-
 
     .container{
 
@@ -1061,20 +1007,17 @@ input{
 
     }
 
-
     .login-header{
 
         padding-top:8px;
 
     }
 
-
     .heading{
 
         font-size:25px;
 
     }
-
 
     .profile-header{
 
@@ -1084,7 +1027,6 @@ input{
 
     }
 
-
     .profile-card{
 
         margin-left:12px;
@@ -1092,7 +1034,6 @@ input{
         margin-right:12px;
 
     }
-
 
     .logout{
 
@@ -1107,10 +1048,6 @@ input{
 }
 
 
-/* =========================================================
-   VERY SMALL SCREEN
-========================================================= */
-
 @media(max-width:350px){
 
     .profile-avatar{
@@ -1121,13 +1058,11 @@ input{
 
     }
 
-
     .profile-label{
 
         width:85px;
 
     }
-
 
     .profile-value{
 
@@ -1151,7 +1086,6 @@ input{
 
 <div class="toolbar">
 
-
     <div class="toolbar-left">
 
         <div class="toolbar-title">
@@ -1165,13 +1099,10 @@ input{
 
     <div class="toolbar-actions">
 
-
-        <!-- THEME -->
-
         <button
             class="icon-button"
             id="themeButton"
-            aria-label="Change theme">
+            type="button">
 
             <i
                 class="ph ph-moon"
@@ -1181,17 +1112,14 @@ input{
         </button>
 
 
-        <!-- HOME -->
-
         <button
             class="icon-button"
-            aria-label="Home"
+            type="button"
             onclick="location.href='/index.html'">
 
             <i class="ph ph-house"></i>
 
         </button>
-
 
     </div>
 
@@ -1205,12 +1133,9 @@ input{
 
 <div id="loginScreen">
 
-
     <div class="container">
 
-
         <div class="login-header">
-
 
             <img
                 class="login-logo"
@@ -1232,44 +1157,36 @@ input{
 
             </div>
 
-
         </div>
-
 
 
         <!-- USERNAME -->
 
         <div class="form-group">
 
-            <i
-                class="ph ph-user input-leading">
-            </i>
-
+            <i class="ph ph-user input-leading"></i>
 
             <input
                 id="username"
-                class="input has-leading"
+                class="input"
                 type="text"
                 autocomplete="username"
+                autocapitalize="none"
+                spellcheck="false"
                 placeholder="Username">
 
-
         </div>
-
 
 
         <!-- PASSWORD -->
 
         <div class="form-group">
 
-            <i
-                class="ph ph-lock input-leading">
-            </i>
-
+            <i class="ph ph-lock input-leading"></i>
 
             <input
                 id="password"
-                class="input has-leading"
+                class="input"
                 type="password"
                 autocomplete="current-password"
                 placeholder="Password">
@@ -1278,8 +1195,7 @@ input{
             <button
                 type="button"
                 class="input-action"
-                id="passwordToggle"
-                aria-label="Show password">
+                id="passwordToggle">
 
                 <i
                     class="ph ph-eye"
@@ -1291,47 +1207,33 @@ input{
         </div>
 
 
-
-        <!-- ERROR -->
-
         <div
             id="loginError"
             class="error">
         </div>
 
 
-
-        <!-- LOGIN -->
-
         <button
             id="loginButton"
             class="primary-button"
-            onclick="startLogin()">
-
+            type="button">
 
             <i class="ph ph-sign-in"></i>
 
-
             <span id="loginButtonText">
-
                 Login
-
             </span>
-
 
         </button>
 
 
-
-        <!-- MOBILE LOGIN -->
-
         <div
-            class="switch">
+            class="switch"
+            onclick="location.href='/auth/user/signup'">
 
-            Use mobile instead
+            Don't have an account? Sign Up
 
         </div>
-
 
 
         <div class="security-info">
@@ -1341,7 +1243,6 @@ input{
             Secure Appnetick login
 
         </div>
-
 
     </div>
 
@@ -1355,12 +1256,9 @@ input{
 
 <div id="pinScreen">
 
-
     <div class="container">
 
-
         <div class="login-header">
-
 
             <div class="pin-icon">
 
@@ -1378,31 +1276,23 @@ input{
 
             <div class="desc">
 
-                Enter your account PIN to continue
-                to your Appnetick account.
+                Your account requires a PIN
+                to complete login.
 
             </div>
-
 
         </div>
 
 
-
-        <!-- PIN -->
-
         <div class="form-group">
 
-            <i
-                class="ph ph-key input-leading">
-            </i>
-
+            <i class="ph ph-key input-leading"></i>
 
             <input
                 id="pin"
-                class="input has-leading"
+                class="input"
                 type="password"
                 inputmode="numeric"
-                maxlength="20"
                 autocomplete="off"
                 placeholder="Enter PIN">
 
@@ -1410,8 +1300,7 @@ input{
             <button
                 type="button"
                 class="input-action"
-                id="pinToggle"
-                aria-label="Show PIN">
+                id="pinToggle">
 
                 <i
                     class="ph ph-eye"
@@ -1423,43 +1312,29 @@ input{
         </div>
 
 
-
-        <!-- ERROR -->
-
         <div
             id="pinError"
             class="error">
         </div>
 
 
-
-        <!-- CONTINUE -->
-
         <button
             id="pinButton"
             class="primary-button"
-            onclick="verifyPIN()">
-
+            type="button">
 
             <i class="ph ph-arrow-right"></i>
 
-
             <span id="pinButtonText">
-
                 Continue
-
             </span>
-
 
         </button>
 
 
-
-        <!-- BACK -->
-
         <div
             class="switch"
-            onclick="backToLogin()">
+            id="backLoginButton">
 
             <i class="ph ph-arrow-left"></i>
 
@@ -1476,7 +1351,6 @@ input{
 
         </div>
 
-
     </div>
 
 </div>
@@ -1484,31 +1358,27 @@ input{
 
 
 <!-- =====================================================
-     PROFILE SCREEN
+     PROFILE / LOGGED-IN SCREEN
 ===================================================== -->
 
 <div id="profileScreen">
 
-
     <div class="profile-header">
-
 
         <img
             id="profileAvatar"
             class="profile-avatar"
             src="/20260313_121958.jpg"
-            onerror="this.src='/20260313_121958.jpg'"
             alt="Profile">
 
 
         <div class="profile-name-area">
 
-
             <div
                 id="profileName"
                 class="profile-name">
 
-                User
+                Welcome
 
             </div>
 
@@ -1521,238 +1391,105 @@ input{
 
             </div>
 
-
         </div>
-
 
     </div>
 
-
-
-    <!-- PROFILE CARD -->
 
     <div class="profile-card">
 
 
-        <!-- FULL NAME -->
-
         <div class="profile-row">
 
-
             <div class="profile-icon">
-
                 <i class="ph ph-user"></i>
-
             </div>
-
 
             <div class="profile-label">
-
                 Full name
-
             </div>
-
 
             <div
                 id="pFullName"
                 class="profile-value">
-
                 —
-
             </div>
-
 
         </div>
 
 
-
-        <!-- USERNAME -->
-
         <div class="profile-row">
 
-
             <div class="profile-icon">
-
                 <i class="ph ph-at"></i>
-
             </div>
-
 
             <div class="profile-label">
-
                 Username
-
             </div>
-
 
             <div
                 id="pUsername"
                 class="profile-value">
-
                 —
-
             </div>
-
 
         </div>
 
 
-
-        <!-- EMAIL -->
-
         <div class="profile-row">
 
-
             <div class="profile-icon">
-
                 <i class="ph ph-envelope"></i>
-
             </div>
-
 
             <div class="profile-label">
-
                 Email
-
             </div>
-
 
             <div
                 id="pEmail"
                 class="profile-value">
-
                 —
-
             </div>
-
 
         </div>
 
 
-
-        <!-- UID -->
-
         <div class="profile-row">
 
-
             <div class="profile-icon">
-
                 <i class="ph ph-identification-card"></i>
-
             </div>
-
 
             <div class="profile-label">
-
                 UID
-
             </div>
-
 
             <div
                 id="pUid"
                 class="profile-value">
-
                 —
-
             </div>
-
 
         </div>
 
 
-
-        <!-- JOINED -->
-
         <div class="profile-row">
 
-
             <div class="profile-icon">
-
                 <i class="ph ph-calendar-blank"></i>
-
             </div>
-
 
             <div class="profile-label">
-
                 Joined
-
             </div>
-
 
             <div
                 id="pJoined"
                 class="profile-value">
-
                 —
-
             </div>
-
-
-        </div>
-
-
-
-        <!-- DEVICE -->
-
-        <div class="profile-row">
-
-
-            <div class="profile-icon">
-
-                <i class="ph ph-device-mobile"></i>
-
-            </div>
-
-
-            <div class="profile-label">
-
-                Device ID
-
-            </div>
-
-
-            <div
-                id="pDevice"
-                class="profile-value">
-
-                —
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- APPNETICK -->
-
-        <div class="profile-row">
-
-
-            <div class="profile-icon">
-
-                <i class="ph ph-seal-check"></i>
-
-            </div>
-
-
-            <div class="profile-label">
-
-                Appnetick
-
-            </div>
-
-
-            <div
-                id="pAppnetick"
-                class="profile-value">
-
-                —
-
-            </div>
-
 
         </div>
 
@@ -1760,12 +1497,10 @@ input{
     </div>
 
 
-
-    <!-- LOGOUT -->
-
     <button
         class="logout"
-        onclick="logout()">
+        id="logoutButton"
+        type="button">
 
         <i class="ph ph-sign-out"></i>
 
@@ -1773,105 +1508,116 @@ input{
 
     </button>
 
-
 </div>
 
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
 
 <div
     class="footer"
     id="loginFooter">
 
-    Don't have an account?
-
-    <span
-        onclick="location.href='/auth/user/signup'">
-
-        Sign Up
-
-    </span>
+    Your account is protected by
+    Appnetick secure login.
 
 </div>
 
 
 
-<!-- =====================================================
-     API SCRIPT
-===================================================== -->
-
 <script>
 
-/*
-=========================================================
-APPNETICK API
-=========================================================
-*/
+/* =========================================================
+   API CONFIG
+========================================================= */
+
+const API_BASE =
+    "https://api-appnetick.vercel.app";
+
 
 const LOGIN_API =
-    "https://api.appnetick/api/login";
-
-const VERIFY_PIN_API =
-    "https://api.appnetick/api/verify-pin";
+    API_BASE +
+    "/api/login";
 
 
-/*
-=========================================================
-CURRENT USER
-=========================================================
-*/
-
-let currentUID = "";
-
-let currentUserData = null;
+const PIN_API =
+    API_BASE +
+    "/api/verify-pin";
 
 
-/*
-=========================================================
-THEME
-=========================================================
-*/
+const ME_API =
+    API_BASE +
+    "/api/auth/me";
+
+
+const LOGOUT_API =
+    API_BASE +
+    "/api/auth/logout";
+
+
+/* =========================================================
+   PERSISTENT SESSION
+========================================================= */
+
+const SESSION_KEY =
+    "appnetick_auth_token";
+
+
+let authToken =
+    localStorage.getItem(
+        SESSION_KEY
+    );
+
+
+let currentUID =
+    "";
+
+
+let currentUserData =
+    null;
+
+
+let pendingPinToken =
+    null;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const loginScreen =
+    document.getElementById(
+        "loginScreen"
+    );
+
+const pinScreen =
+    document.getElementById(
+        "pinScreen"
+    );
+
+const profileScreen =
+    document.getElementById(
+        "profileScreen"
+    );
+
+const loginFooter =
+    document.getElementById(
+        "loginFooter"
+    );
+
+
+/* =========================================================
+   THEME
+========================================================= */
 
 const themeButton =
     document.getElementById(
         "themeButton"
     );
 
+
 const themeIcon =
     document.getElementById(
         "themeIcon"
     );
-
-
-const systemTheme =
-    window.matchMedia &&
-    window.matchMedia(
-        "(prefers-color-scheme: dark)"
-    ).matches
-        ? "dark"
-        : "light";
-
-
-let savedTheme =
-    localStorage.getItem(
-        "appnetick-theme"
-    );
-
-
-if(!savedTheme){
-
-    savedTheme =
-        systemTheme;
-
-}
-
-
-applyTheme(
-    savedTheme
-);
 
 
 function applyTheme(theme){
@@ -1889,29 +1635,39 @@ function applyTheme(theme){
     );
 
 
-    if(theme === "dark"){
-
-        themeIcon.className =
-            "ph ph-sun";
-
-        themeButton.setAttribute(
-            "aria-label",
-            "Switch to light theme"
-        );
-
-    }else{
-
-        themeIcon.className =
-            "ph ph-moon";
-
-        themeButton.setAttribute(
-            "aria-label",
-            "Switch to dark theme"
-        );
-
-    }
+    themeIcon.className =
+        theme === "dark"
+            ? "ph ph-sun"
+            : "ph ph-moon";
 
 }
+
+
+let savedTheme =
+    localStorage.getItem(
+        "appnetick-theme"
+    );
+
+
+if(
+    savedTheme !== "dark" &&
+    savedTheme !== "light"
+){
+
+    savedTheme =
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches
+            ? "dark"
+            : "light";
+
+}
+
+
+applyTheme(
+    savedTheme
+);
 
 
 themeButton.addEventListener(
@@ -1935,117 +1691,97 @@ themeButton.addEventListener(
 );
 
 
-/*
-=========================================================
-PASSWORD VISIBILITY
-=========================================================
-*/
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
 
-const password =
-    document.getElementById(
-        "password"
-    );
-
-const passwordToggle =
-    document.getElementById(
+document
+    .getElementById(
         "passwordToggle"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            const input =
+                document.getElementById(
+                    "password"
+                );
+
+
+            const icon =
+                document.getElementById(
+                    "passwordIcon"
+                );
+
+
+            const show =
+                input.type ===
+                "password";
+
+
+            input.type =
+                show
+                    ? "text"
+                    : "password";
+
+
+            icon.className =
+                show
+                    ? "ph ph-eye-slash"
+                    : "ph ph-eye";
+
+        }
     );
 
-const passwordIcon =
-    document.getElementById(
-        "passwordIcon"
-    );
 
+/* =========================================================
+   PIN TOGGLE
+========================================================= */
 
-passwordToggle.addEventListener(
-    "click",
-    function(){
-
-        const isPassword =
-            password.type === "password";
-
-
-        password.type =
-            isPassword
-                ? "text"
-                : "password";
-
-
-        passwordIcon.className =
-            isPassword
-                ? "ph ph-eye-slash"
-                : "ph ph-eye";
-
-
-        passwordToggle.setAttribute(
-            "aria-label",
-            isPassword
-                ? "Hide password"
-                : "Show password"
-        );
-
-    }
-);
-
-
-/*
-=========================================================
-PIN VISIBILITY
-=========================================================
-*/
-
-const pin =
-    document.getElementById(
-        "pin"
-    );
-
-const pinToggle =
-    document.getElementById(
+document
+    .getElementById(
         "pinToggle"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            const input =
+                document.getElementById(
+                    "pin"
+                );
+
+
+            const icon =
+                document.getElementById(
+                    "pinIcon"
+                );
+
+
+            const show =
+                input.type ===
+                "password";
+
+
+            input.type =
+                show
+                    ? "text"
+                    : "password";
+
+
+            icon.className =
+                show
+                    ? "ph ph-eye-slash"
+                    : "ph ph-eye";
+
+        }
     );
 
-const pinIcon =
-    document.getElementById(
-        "pinIcon"
-    );
 
-
-pinToggle.addEventListener(
-    "click",
-    function(){
-
-        const isPassword =
-            pin.type === "password";
-
-
-        pin.type =
-            isPassword
-                ? "text"
-                : "password";
-
-
-        pinIcon.className =
-            isPassword
-                ? "ph ph-eye-slash"
-                : "ph ph-eye";
-
-
-        pinToggle.setAttribute(
-            "aria-label",
-            isPassword
-                ? "Hide PIN"
-                : "Show PIN"
-        );
-
-    }
-);
-
-
-/*
-=========================================================
-ERROR
-=========================================================
-*/
+/* =========================================================
+   ERROR
+========================================================= */
 
 function showError(
     id,
@@ -2064,6 +1800,7 @@ function showError(
 
     element.style.display =
         "block";
+
 }
 
 
@@ -2081,19 +1818,19 @@ function clearError(id){
 
     element.style.display =
         "none";
+
 }
 
 
-/*
-=========================================================
-BUTTON LOADING
-=========================================================
-*/
+/* =========================================================
+   BUTTON LOADING
+========================================================= */
 
-function setButtonLoading(
+function setLoading(
     buttonId,
     textId,
-    loading
+    loading,
+    loadingText
 ){
 
     const button =
@@ -2108,44 +1845,22 @@ function setButtonLoading(
         );
 
 
+    button.disabled =
+        loading;
+
+
     if(loading){
-
-        button.disabled =
-            true;
-
 
         text.style.display =
             "none";
 
 
-        if(
-            !button.querySelector(
-                ".button-loader"
-            )
-        ){
-
-            const loader =
-                document.createElement(
-                    "span"
-                );
-
-
-            loader.className =
-                "button-loader";
-
-
-            button.appendChild(
-                loader
-            );
-
-        }
-
+        button.insertAdjacentHTML(
+            "beforeend",
+            '<span class="button-loader"></span>'
+        );
 
     }else{
-
-        button.disabled =
-            false;
-
 
         text.style.display =
             "inline";
@@ -2158,9 +1873,7 @@ function setButtonLoading(
 
 
         if(loader){
-
             loader.remove();
-
         }
 
     }
@@ -2168,14 +1881,67 @@ function setButtonLoading(
 }
 
 
-/*
-=========================================================
-LOGIN
-=========================================================
-*/
+/* =========================================================
+   READ API RESPONSE
+========================================================= */
 
-window.startLogin =
-async function(){
+async function readAPIResponse(
+    response
+){
+
+    const contentType =
+        response.headers.get(
+            "content-type"
+        ) || "";
+
+
+    if(
+        contentType
+            .toLowerCase()
+            .includes(
+                "application/json"
+            )
+    ){
+
+        try{
+
+            return await response.json();
+
+        }catch(error){
+
+            throw new Error(
+                "Server returned invalid JSON."
+            );
+
+        }
+
+    }
+
+
+    const text =
+        await response.text();
+
+
+    console.error(
+        "NON JSON API RESPONSE:",
+        text
+    );
+
+
+    throw new Error(
+        "API returned HTTP " +
+        response.status +
+        ". Please check the API route deployment."
+    );
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function login(){
 
     const username =
         document
@@ -2186,7 +1952,7 @@ async function(){
             .trim();
 
 
-    const passwordValue =
+    const password =
         document
             .getElementById(
                 "password"
@@ -2211,7 +1977,7 @@ async function(){
     }
 
 
-    if(!passwordValue){
+    if(!password){
 
         showError(
             "loginError",
@@ -2223,77 +1989,90 @@ async function(){
     }
 
 
-    setButtonLoading(
+    setLoading(
         "loginButton",
         "loginButtonText",
-        true
+        true,
+        "Logging in..."
     );
 
 
     try{
 
-        const response =
-            await fetch(
-                LOGIN_API,
-                {
-
-                    method:"POST",
-
-                    headers:{
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Accept":
-                            "application/json"
-
-                    },
-
-                    body:JSON.stringify({
-
-                        username:
-                            username,
-
-                        password:
-                            passwordValue
-
-                    })
-
-                }
-            );
-
-
-        let result;
+        let response;
 
 
         try{
 
-            result =
-                await response.json();
+            response =
+                await fetch(
+                    LOGIN_API,
+                    {
+
+                        method:"POST",
+
+                        headers:{
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+
+                        },
+
+                        body:JSON.stringify({
+
+                            username:
+                                username,
+
+                            password:
+                                password
+
+                        })
+
+                    }
+                );
 
         }catch(error){
 
             throw new Error(
-                "Invalid server response."
+                "Unable to connect to Appnetick server."
             );
 
         }
 
 
+        const result =
+            await readAPIResponse(
+                response
+            );
+
+
         console.log(
-            "LOGIN API:",
+            "LOGIN RESPONSE:",
             result
         );
 
 
+        if(!response.ok){
+
+            throw new Error(
+                result.error ||
+                result.message ||
+                "Login failed."
+            );
+
+        }
+
+
         if(
-            !response.ok ||
             result.success !== true
         ){
 
             throw new Error(
-                result.message ||
                 result.error ||
+                result.message ||
                 "Username or password is incorrect."
             );
 
@@ -2302,90 +2081,117 @@ async function(){
 
         /*
         =========================================
-        USER DATA
+        PIN REQUIRED
         =========================================
         */
 
-        const user =
-            result.user ||
-            result.data?.user ||
-            result.data ||
-            null;
+        if(
+            result.requiresPin === true
+        ){
+
+            if(
+                !result.pinToken
+            ){
+
+                throw new Error(
+                    "PIN token was not returned by the server."
+                );
+
+            }
 
 
-        currentUID =
-            result.uid ||
-            user?.uid ||
-            result.data?.uid ||
-            "";
+            pendingPinToken =
+                result.pinToken;
 
 
-        currentUserData =
-            user;
+            currentUID =
+                result.uid ||
+                "";
 
 
-        if(!currentUID){
+            currentUserData =
+                result.user ||
+                null;
 
-            throw new Error(
-                "Server did not return user UID."
+
+            loginScreen.style.display =
+                "none";
+
+
+            pinScreen.style.display =
+                "block";
+
+
+            document
+                .getElementById(
+                    "pin"
+                )
+                .value =
+                "";
+
+
+            setTimeout(
+                function(){
+
+                    document
+                        .getElementById(
+                            "pin"
+                        )
+                        .focus();
+
+                },
+                100
             );
+
+
+            return;
 
         }
 
 
         /*
         =========================================
-        TEMP SESSION
+        NO PIN
         =========================================
         */
 
-        sessionStorage.setItem(
-            "appnetick_uid",
-            currentUID
-        );
+        if(
+            result.token
+        ){
+
+            authToken =
+                result.token;
 
 
-        /*
-        =========================================
-        LOGIN -> PIN
-        =========================================
-        */
+            localStorage.setItem(
+                SESSION_KEY,
+                authToken
+            );
 
-        document
-            .getElementById(
-                "loginScreen"
-            )
-            .style.display =
-                "none";
+        }
 
 
-        document
-            .getElementById(
-                "pinScreen"
-            )
-            .style.display =
-                "block";
+        currentUID =
+            result.uid ||
+            result.user?.uid ||
+            "";
 
 
-        document
-            .getElementById(
-                "pin"
-            )
-            .value =
-                "";
+        currentUserData =
+            result.user ||
+            null;
 
 
-        setTimeout(
-            function(){
+        if(!currentUserData){
 
-                document
-                    .getElementById(
-                        "pin"
-                    )
-                    .focus();
+            currentUserData =
+                await fetchCurrentUser();
 
-            },
-            100
+        }
+
+
+        showProfile(
+            currentUserData
         );
 
 
@@ -2403,10 +2209,9 @@ async function(){
             "Unable to login."
         );
 
-
     }finally{
 
-        setButtonLoading(
+        setLoading(
             "loginButton",
             "loginButtonText",
             false
@@ -2414,19 +2219,16 @@ async function(){
 
     }
 
-};
+}
 
 
-/*
-=========================================================
-VERIFY PIN
-=========================================================
-*/
+/* =========================================================
+   PIN VERIFICATION
+========================================================= */
 
-window.verifyPIN =
-async function(){
+async function verifyPIN(){
 
-    const pinValue =
+    const pin =
         document
             .getElementById(
                 "pin"
@@ -2440,7 +2242,7 @@ async function(){
     );
 
 
-    if(!pinValue){
+    if(!pin){
 
         showError(
             "pinError",
@@ -2452,7 +2254,7 @@ async function(){
     }
 
 
-    if(!currentUID){
+    if(!pendingPinToken){
 
         showError(
             "pinError",
@@ -2464,121 +2266,145 @@ async function(){
     }
 
 
-    setButtonLoading(
+    setLoading(
         "pinButton",
         "pinButtonText",
-        true
+        true,
+        "Verifying..."
     );
 
 
     try{
 
-        const response =
-            await fetch(
-                VERIFY_PIN_API,
-                {
-
-                    method:"POST",
-
-                    headers:{
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Accept":
-                            "application/json"
-
-                    },
-
-                    body:JSON.stringify({
-
-                        uid:
-                            currentUID,
-
-                        pin:
-                            pinValue
-
-                    })
-
-                }
-            );
-
-
-        let result;
+        let response;
 
 
         try{
 
-            result =
-                await response.json();
+            response =
+                await fetch(
+                    PIN_API,
+                    {
+
+                        method:"POST",
+
+                        headers:{
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+
+                        },
+
+                        body:JSON.stringify({
+
+                            pinToken:
+                                pendingPinToken,
+
+                            pin:
+                                pin
+
+                        })
+
+                    }
+                );
 
         }catch(error){
 
             throw new Error(
-                "Invalid server response."
+                "Unable to connect to Appnetick server."
             );
 
         }
 
 
+        const result =
+            await readAPIResponse(
+                response
+            );
+
+
         console.log(
-            "PIN API:",
+            "PIN RESPONSE:",
             result
         );
 
 
+        if(!response.ok){
+
+            throw new Error(
+                result.error ||
+                result.message ||
+                "PIN verification failed."
+            );
+
+        }
+
+
         if(
-            !response.ok ||
             result.success !== true
         ){
 
             throw new Error(
-                result.message ||
                 result.error ||
+                result.message ||
                 "Incorrect PIN."
             );
 
         }
 
 
-        /*
-        =========================================
-        UPDATED USER DATA
-        =========================================
-        */
+        if(
+            !result.token
+        ){
 
-        if(result.user){
-
-            currentUserData =
-                result.user;
-
-        }
-
-        else if(result.data?.user){
-
-            currentUserData =
-                result.data.user;
+            throw new Error(
+                "Login token was not returned by the server."
+            );
 
         }
 
 
         /*
         =========================================
-        AUTHENTICATED
+        FINAL AUTH TOKEN
         =========================================
         */
 
-        sessionStorage.setItem(
-            "appnetick_authenticated",
-            "true"
+        authToken =
+            result.token;
+
+
+        localStorage.setItem(
+            SESSION_KEY,
+            authToken
         );
 
 
-        /*
-        =========================================
-        PROFILE
-        =========================================
-        */
+        currentUID =
+            result.uid ||
+            currentUID ||
+            "";
+
+
+        currentUserData =
+            result.user ||
+            currentUserData;
+
+
+        pendingPinToken =
+            null;
+
+
+        if(!currentUserData){
+
+            currentUserData =
+                await fetchCurrentUser();
+
+        }
+
 
         showProfile(
             currentUserData
@@ -2599,10 +2425,9 @@ async function(){
             "PIN verification failed."
         );
 
-
     }finally{
 
-        setButtonLoading(
+        setLoading(
             "pinButton",
             "pinButtonText",
             false
@@ -2610,22 +2435,118 @@ async function(){
 
     }
 
-};
+}
 
 
-/*
-=========================================================
-SHOW PROFILE
-=========================================================
-*/
+/* =========================================================
+   FETCH CURRENT USER
+========================================================= */
+
+async function fetchCurrentUser(){
+
+    if(!authToken){
+
+        throw new Error(
+            "No login session found."
+        );
+
+    }
+
+
+    let response;
+
+
+    try{
+
+        response =
+            await fetch(
+                ME_API,
+                {
+
+                    method:"GET",
+
+                    headers:{
+
+                        "Accept":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " +
+                            authToken
+
+                    }
+
+                }
+            );
+
+    }catch(error){
+
+        throw new Error(
+            "Unable to connect to Appnetick server."
+        );
+
+    }
+
+
+    if(
+        response.status === 401
+    ){
+
+        clearSession();
+
+        throw new Error(
+            "Login session expired."
+        );
+
+    }
+
+
+    const result =
+        await readAPIResponse(
+            response
+        );
+
+
+    if(
+        !response.ok ||
+        result.success !== true
+    ){
+
+        throw new Error(
+            result.error ||
+            result.message ||
+            "Unable to fetch account."
+        );
+
+    }
+
+
+    currentUID =
+        result.uid ||
+        result.user?.uid ||
+        currentUID;
+
+
+    return (
+        result.user ||
+        result.data ||
+        null
+    );
+
+}
+
+
+/* =========================================================
+   SHOW PROFILE
+========================================================= */
 
 function showProfile(user){
 
     if(!user){
 
         showError(
-            "pinError",
-            "User profile data was not returned by the API."
+            "loginError",
+            "Account data could not be loaded."
         );
 
         return;
@@ -2633,13 +2554,18 @@ function showProfile(user){
     }
 
 
-    /*
-    =========================================
-    DATA
-    =========================================
-    */
+    currentUserData =
+        user;
+
+
+    currentUID =
+        user.uid ||
+        currentUID ||
+        "";
+
 
     const username =
+        user.Username ||
         user.username ||
         "";
 
@@ -2666,27 +2592,15 @@ function showProfile(user){
         "/20260313_121958.jpg";
 
 
-    const deviceId =
-        user.device_id ||
-        user.deviceId ||
-        "";
-
-
-    const appnetick =
-        user.appnetick ||
-        "";
-
-
     const joinedDate =
         user.JoinedDate ||
         user.joinedDate ||
-        user.joined_date ||
         "";
 
 
     /*
     =========================================
-    AVATAR
+    PROFILE HEADER
     =========================================
     */
 
@@ -2700,12 +2614,6 @@ function showProfile(user){
         avatar;
 
 
-    /*
-    =========================================
-    HEADER
-    =========================================
-    */
-
     document
         .getElementById(
             "profileName"
@@ -2713,7 +2621,7 @@ function showProfile(user){
         .textContent =
             fullName ||
             username ||
-            "User";
+            "Welcome";
 
 
     document
@@ -2723,12 +2631,12 @@ function showProfile(user){
         .textContent =
             username
                 ? "@" + username
-                : "@username";
+                : "";
 
 
     /*
     =========================================
-    PROFILE DETAILS
+    DETAILS
     =========================================
     */
 
@@ -2766,234 +2674,153 @@ function showProfile(user){
 
     document
         .getElementById(
-            "pDevice"
+            "pJoined"
         )
         .textContent =
-            deviceId || "—";
-
-
-    document
-        .getElementById(
-            "pAppnetick"
-        )
-        .textContent =
-            appnetick || "—";
+            formatDate(
+                joinedDate
+            );
 
 
     /*
     =========================================
-    JOINED DATE
+    SCREEN
     =========================================
     */
 
-    let formattedDate =
-        "—";
+    loginScreen.style.display =
+        "none";
 
 
-    if(joinedDate){
-
-        const numericDate =
-            Number(joinedDate);
+    pinScreen.style.display =
+        "none";
 
 
-        const date =
-            new Date(
-                numericDate
+    profileScreen.style.display =
+        "block";
+
+
+    loginFooter.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   CHECK EXISTING LOGIN
+========================================================= */
+
+async function checkExistingLogin(){
+
+    if(!authToken){
+
+        return;
+
+    }
+
+
+    try{
+
+        const user =
+            await fetchCurrentUser();
+
+
+        if(user){
+
+            showProfile(
+                user
             );
 
+        }
 
-        if(
-            !isNaN(
-                date.getTime()
-            )
-        ){
 
-            formattedDate =
-                date.toLocaleString(
-                    "en-IN",
-                    {
+    }catch(error){
 
-                        day:"2-digit",
+        console.log(
+            "NO ACTIVE SESSION:",
+            error.message
+        );
 
-                        month:"short",
 
-                        year:"numeric"
+        clearSession();
+
+
+        loginScreen.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+    const tokenToLogout =
+        authToken;
+
+
+    clearSession();
+
+
+    /*
+     * Tell backend about logout.
+     * Local session is already removed immediately.
+     */
+
+    if(tokenToLogout){
+
+        try{
+
+            await fetch(
+                LOGOUT_API,
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Accept":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " +
+                            tokenToLogout
 
                     }
-                );
+
+                }
+            );
+
+        }catch(error){
+
+            console.log(
+                "Logout API:",
+                error
+            );
 
         }
 
     }
 
 
-    document
-        .getElementById(
-            "pJoined"
-        )
-        .textContent =
-            formattedDate;
+    loginScreen.style.display =
+        "block";
 
 
-    /*
-    =========================================
-    SCREEN CHANGE
-    =========================================
-    */
-
-    document
-        .getElementById(
-            "loginScreen"
-        )
-        .style.display =
-            "none";
+    pinScreen.style.display =
+        "none";
 
 
-    document
-        .getElementById(
-            "pinScreen"
-        )
-        .style.display =
-            "none";
+    profileScreen.style.display =
+        "none";
 
 
-    document
-        .getElementById(
-            "profileScreen"
-        )
-        .style.display =
-            "block";
-
-
-    /*
-    =========================================
-    FOOTER HIDE
-    =========================================
-    */
-
-    document
-        .getElementById(
-            "loginFooter"
-        )
-        .style.display =
-            "none";
-
-}
-
-
-/*
-=========================================================
-BACK TO LOGIN
-=========================================================
-*/
-
-window.backToLogin =
-function(){
-
-    currentUID =
-        "";
-
-    currentUserData =
-        null;
-
-
-    sessionStorage.removeItem(
-        "appnetick_uid"
-    );
-
-
-    sessionStorage.removeItem(
-        "appnetick_authenticated"
-    );
-
-
-    document
-        .getElementById(
-            "pinScreen"
-        )
-        .style.display =
-            "none";
-
-
-    document
-        .getElementById(
-            "profileScreen"
-        )
-        .style.display =
-            "none";
-
-
-    document
-        .getElementById(
-            "loginScreen"
-        )
-        .style.display =
-            "block";
-
-
-    document
-        .getElementById(
-            "pin"
-        )
-        .value =
-            "";
-
-
-    clearError(
-        "pinError"
-    );
-
-};
-
-
-/*
-=========================================================
-LOGOUT
-=========================================================
-*/
-
-window.logout =
-function(){
-
-    currentUID =
-        "";
-
-    currentUserData =
-        null;
-
-
-    sessionStorage.removeItem(
-        "appnetick_uid"
-    );
-
-
-    sessionStorage.removeItem(
-        "appnetick_authenticated"
-    );
-
-
-    document
-        .getElementById(
-            "profileScreen"
-        )
-        .style.display =
-            "none";
-
-
-    document
-        .getElementById(
-            "pinScreen"
-        )
-        .style.display =
-            "none";
-
-
-    document
-        .getElementById(
-            "loginScreen"
-        )
-        .style.display =
-            "block";
+    loginFooter.style.display =
+        "block";
 
 
     document
@@ -3029,22 +2856,85 @@ function(){
         "pinError"
     );
 
-
-    document
-        .getElementById(
-            "loginFooter"
-        )
-        .style.display =
-            "block";
-
-};
+}
 
 
-/*
-=========================================================
-ENTER KEY - USERNAME
-=========================================================
-*/
+/* =========================================================
+   CLEAR SESSION
+========================================================= */
+
+function clearSession(){
+
+    authToken =
+        null;
+
+    currentUID =
+        "";
+
+    currentUserData =
+        null;
+
+    pendingPinToken =
+        null;
+
+
+    localStorage.removeItem(
+        SESSION_KEY
+    );
+
+}
+
+
+/* =========================================================
+   BACK TO LOGIN
+========================================================= */
+
+document
+    .getElementById(
+        "backLoginButton"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            pendingPinToken =
+                null;
+
+
+            currentUID =
+                "";
+
+            currentUserData =
+                null;
+
+
+            pinScreen.style.display =
+                "none";
+
+
+            loginScreen.style.display =
+                "block";
+
+
+            document
+                .getElementById(
+                    "pin"
+                )
+                .value =
+                    "";
+
+
+            clearError(
+                "pinError"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
 
 document
     .getElementById(
@@ -3055,22 +2945,21 @@ document
         function(event){
 
             if(
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ){
 
-                startLogin();
+                document
+                    .getElementById(
+                        "password"
+                    )
+                    .focus();
 
             }
 
         }
     );
 
-
-/*
-=========================================================
-ENTER KEY - PASSWORD
-=========================================================
-*/
 
 document
     .getElementById(
@@ -3081,22 +2970,17 @@ document
         function(event){
 
             if(
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ){
 
-                startLogin();
+                login();
 
             }
 
         }
     );
 
-
-/*
-=========================================================
-ENTER KEY - PIN
-=========================================================
-*/
 
 document
     .getElementById(
@@ -3107,7 +2991,8 @@ document
         function(event){
 
             if(
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ){
 
                 verifyPIN();
@@ -3117,8 +3002,128 @@ document
         }
     );
 
-</script>
 
+document
+    .getElementById(
+        "loginButton"
+    )
+    .addEventListener(
+        "click",
+        login
+    );
+
+
+document
+    .getElementById(
+        "pinButton"
+    )
+    .addEventListener(
+        "click",
+        verifyPIN
+    );
+
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        logout
+    );
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(value){
+
+    if(
+        !value ||
+        value === 0
+    ){
+
+        return "—";
+
+    }
+
+
+    let date;
+
+
+    if(
+        typeof value ===
+        "number"
+    ){
+
+        date =
+            new Date(
+                value
+            );
+
+    }else{
+
+        const number =
+            Number(value);
+
+
+        if(
+            !isNaN(number) &&
+            number > 0
+        ){
+
+            date =
+                new Date(
+                    number
+                );
+
+        }else{
+
+            date =
+                new Date(
+                    value
+                );
+
+        }
+
+    }
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return String(value);
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+
+            day:"2-digit",
+
+            month:"short",
+
+            year:"numeric"
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkExistingLogin();
+
+</script>
 
 </body>
 
