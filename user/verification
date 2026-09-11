@@ -1,0 +1,3049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Get Verified • Appnetick</title>
+
+<link rel="icon" href="/20260313_121958.jpg">
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --bg: #FFFFFF;
+    --surface: #FFFFFF;
+    --surface-secondary: #F7F7F7;
+
+    --text: #212121;
+    --secondary: #757575;
+    --muted: #9E9E9E;
+
+    --border: #DCDCDC;
+
+    --input-bg: #F5F5F5;
+
+    --primary: #2196F3;
+    --primary-soft: rgba(33,150,243,0.10);
+
+    --danger: #E53935;
+
+    --shadow:
+        0 8px 30px rgba(0,0,0,0.06);
+
+    --radius: 18px;
+}
+
+html[data-theme="dark"] {
+
+    --bg: #1E1E1E;
+    --surface: #1E1E1E;
+    --surface-secondary: #252525;
+
+    --text: #FFFFFF;
+    --secondary: #A0A0A0;
+    --muted: #777777;
+
+    --border: #424242;
+
+    --input-bg: #252525;
+
+    --primary: #2979FF;
+    --primary-soft: rgba(41,121,255,0.14);
+
+    --danger: #EF5350;
+
+    --shadow:
+        0 8px 30px rgba(0,0,0,0.22);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    font-family: Inter, sans-serif;
+
+    overflow-x: hidden;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+
+    height: 64px;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+}
+
+.toolbar-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.icon-btn {
+
+    width: 42px;
+
+    height: 42px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: transparent;
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-size: 21px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.icon-btn:hover {
+
+    background: var(--surface-secondary);
+}
+
+.icon-btn:active {
+
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    padding:
+        26px
+        20px
+        36px;
+
+    min-height:
+        calc(100vh - 64px);
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-area {
+
+    width: 100%;
+
+    margin-bottom: 30px;
+}
+
+.progress-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.progress-label {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--secondary);
+}
+
+.progress-number {
+
+    font-size: 13px;
+
+    color: var(--muted);
+
+    font-weight: 500;
+}
+
+.progress-track {
+
+    width: 100%;
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    background: var(--surface-secondary);
+}
+
+.progress-fill {
+
+    height: 100%;
+
+    width: 5%;
+
+    border-radius: inherit;
+
+    background: var(--primary);
+
+    transition:
+        width 0.35s ease;
+}
+
+
+/* =========================================================
+   STEP VIEWPORT
+========================================================= */
+
+.step-viewport {
+
+    width: 100%;
+
+    position: relative;
+
+    overflow: hidden;
+
+    flex: 1;
+}
+
+.step {
+
+    width: 100%;
+
+    animation-duration: 0.34s;
+
+    animation-timing-function: cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+    );
+
+    animation-fill-mode: both;
+}
+
+.slide-next-enter {
+
+    animation-name: slideNextEnter;
+}
+
+.slide-next-exit {
+
+    animation-name: slideNextExit;
+}
+
+.slide-back-enter {
+
+    animation-name: slideBackEnter;
+}
+
+.slide-back-exit {
+
+    animation-name: slideBackExit;
+}
+
+@keyframes slideNextEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translate3d(100%,0,0);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translate3d(0,0,0);
+    }
+}
+
+@keyframes slideNextExit {
+
+    from {
+
+        opacity: 1;
+
+        transform:
+            translate3d(0,0,0);
+    }
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            translate3d(-100%,0,0);
+    }
+}
+
+@keyframes slideBackEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translate3d(-100%,0,0);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translate3d(0,0,0);
+    }
+}
+
+@keyframes slideBackExit {
+
+    from {
+
+        opacity: 1;
+
+        transform:
+            translate3d(0,0,0);
+    }
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            translate3d(100%,0,0);
+    }
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro-icon {
+
+    width: 82px;
+
+    height: 82px;
+
+    border-radius: 25px;
+
+    margin:
+        10px
+        auto
+        24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    font-size: 42px;
+}
+
+.step-title {
+
+    margin: 0 0 10px;
+
+    font-size: 25px;
+
+    line-height: 1.22;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.step-description {
+
+    margin: 0;
+
+    color: var(--secondary);
+
+    font-size: 15px;
+
+    line-height: 1.65;
+}
+
+.intro-points {
+
+    margin-top: 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.intro-point {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    border-radius: 16px;
+
+    background: var(--surface-secondary);
+
+    border: 1px solid var(--border);
+}
+
+.intro-point-icon {
+
+    width: 36px;
+
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    border-radius: 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--primary);
+
+    background: var(--primary-soft);
+
+    font-size: 19px;
+}
+
+.intro-point-text {
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: var(--secondary);
+}
+
+.intro-point-text strong {
+
+    display: block;
+
+    color: var(--text);
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.question-label {
+
+    display: block;
+
+    margin-top: 8px;
+
+    margin-bottom: 9px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    letter-spacing: -0.25px;
+}
+
+.question-help {
+
+    margin:
+        0
+        0
+        22px;
+
+    color: var(--secondary);
+
+    font-size: 14px;
+
+    line-height: 1.55;
+}
+
+.input-wrap {
+
+    position: relative;
+
+    width: 100%;
+}
+
+.input-icon {
+
+    position: absolute;
+
+    left: 16px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--muted);
+
+    font-size: 21px;
+
+    pointer-events: none;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+
+    width: 100%;
+
+    border: 1px solid var(--border);
+
+    outline: none;
+
+    color: var(--text);
+
+    background: var(--input-bg);
+
+    border-radius: 16px;
+
+    font-size: 15px;
+
+    transition:
+        border 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-input,
+.form-select {
+
+    min-height: 54px;
+
+    padding:
+        0
+        16px;
+}
+
+.form-input.with-icon,
+.form-select.with-icon {
+
+    padding-left: 50px;
+}
+
+.form-textarea {
+
+    min-height: 135px;
+
+    padding: 16px;
+
+    resize: none;
+
+    line-height: 1.55;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        var(--primary-soft);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   CHIPS
+========================================================= */
+
+.chips {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.chip {
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--secondary);
+
+    border-radius: 999px;
+
+    padding:
+        11px
+        15px;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.chip:active {
+
+    transform: scale(0.96);
+}
+
+.chip.selected {
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   INFO CARD
+========================================================= */
+
+.info-card {
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 16px;
+
+    background: var(--surface-secondary);
+
+    border: 1px solid var(--border);
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: flex-start;
+}
+
+.info-card i {
+
+    color: var(--primary);
+
+    font-size: 19px;
+
+    margin-top: 1px;
+}
+
+.info-card span {
+
+    color: var(--secondary);
+
+    font-size: 12px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.confirm-box {
+
+    padding: 17px;
+
+    border-radius: 17px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-secondary);
+
+    cursor: pointer;
+}
+
+.confirm-row {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+}
+
+.custom-check {
+
+    width: 22px;
+
+    height: 22px;
+
+    flex: 0 0 22px;
+
+    border-radius: 7px;
+
+    border: 1.5px solid var(--muted);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #FFFFFF;
+
+    font-size: 15px;
+
+    margin-top: 1px;
+}
+
+.confirm-box.checked .custom-check {
+
+    border-color: var(--primary);
+
+    background: var(--primary);
+}
+
+.confirm-text {
+
+    color: var(--secondary);
+
+    font-size: 13px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
+
+.review-card {
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-secondary);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+}
+
+.review-row {
+
+    padding:
+        14px
+        15px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.review-row:last-child {
+
+    border-bottom: 0;
+}
+
+.review-label {
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    margin-bottom: 4px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    font-weight: 600;
+}
+
+.review-value {
+
+    font-size: 14px;
+
+    color: var(--text);
+
+    line-height: 1.45;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-actions {
+
+    width: 100%;
+
+    margin-top: 30px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.back-button {
+
+    width: 54px;
+
+    height: 54px;
+
+    flex: 0 0 54px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+    cursor: pointer;
+}
+
+.next-button {
+
+    height: 54px;
+
+    flex: 1;
+
+    border: 0;
+
+    border-radius: 999px;
+
+    background: var(--primary);
+
+    color: #FFFFFF;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(33,150,243,0.18);
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.2s ease;
+}
+
+.next-button:active {
+
+    transform: scale(0.98);
+}
+
+.next-button:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.success {
+
+    text-align: center;
+
+    padding-top: 35px;
+}
+
+.success-icon {
+
+    width: 86px;
+
+    height: 86px;
+
+    margin: 0 auto 24px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--primary);
+
+    background: var(--primary-soft);
+
+    font-size: 44px;
+}
+
+.success h2 {
+
+    margin: 0 0 10px;
+
+    font-size: 25px;
+}
+
+.success p {
+
+    margin: 0;
+
+    color: var(--secondary);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .page {
+
+        padding-left: 16px;
+
+        padding-right: 16px;
+    }
+
+    .step-title {
+
+        font-size: 23px;
+    }
+
+    .question-label {
+
+        font-size: 19px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- =======================================================
+     TOOLBAR
+======================================================== -->
+
+<header class="toolbar">
+
+    <div class="brand">
+        Appnetick.
+    </div>
+
+    <div class="toolbar-actions">
+
+        <button
+            class="icon-btn"
+            id="themeButton"
+            type="button"
+            aria-label="Change theme"
+        >
+            <i class="ph ph-moon"></i>
+        </button>
+
+        <button
+            class="icon-btn"
+            type="button"
+            onclick="goHome()"
+            aria-label="Home"
+        >
+            <i class="ph ph-house"></i>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     PAGE
+======================================================== -->
+
+<main class="page">
+
+    <!-- PROGRESS -->
+
+    <div class="progress-area">
+
+        <div class="progress-top">
+
+            <span
+                class="progress-label"
+                id="progressLabel"
+            >
+                Verification
+            </span>
+
+            <span
+                class="progress-number"
+                id="progressNumber"
+            >
+                1 of 20
+            </span>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                class="progress-fill"
+                id="progressFill"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STEP VIEW -->
+
+    <div
+        class="step-viewport"
+        id="stepViewport"
+    ></div>
+
+
+    <!-- BOTTOM BUTTONS -->
+
+    <div
+        class="bottom-actions"
+        id="bottomActions"
+    >
+
+        <button
+            class="back-button"
+            id="backButton"
+            type="button"
+            onclick="previousStep()"
+        >
+            <i class="ph ph-arrow-left"></i>
+        </button>
+
+        <button
+            class="next-button"
+            id="nextButton"
+            type="button"
+            onclick="nextStep()"
+        >
+            <span id="nextText">
+                Get started
+            </span>
+
+            <i
+                class="ph ph-arrow-right"
+                id="nextIcon"
+            ></i>
+
+        </button>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   FIREBASE CONFIG
+   Only used to identify the logged-in user's existing
+   information if supplied by your backend/session.
+========================================================= */
+
+const API_BASE =
+    "https://api-appnetick.vercel.app";
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const savedTheme =
+    localStorage.getItem("appnetick-theme");
+
+if (savedTheme === "dark") {
+
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            "dark"
+        );
+}
+
+function updateThemeIcon() {
+
+    const button =
+        document.getElementById("themeButton");
+
+    const icon =
+        button.querySelector("i");
+
+    const isDark =
+        document.documentElement
+            .getAttribute("data-theme") === "dark";
+
+    icon.className =
+        isDark
+            ? "ph ph-sun"
+            : "ph ph-moon";
+}
+
+updateThemeIcon();
+
+
+document
+    .getElementById("themeButton")
+    .addEventListener(
+        "click",
+        function () {
+
+            const isDark =
+                document.documentElement
+                    .getAttribute("data-theme") === "dark";
+
+            if (isDark) {
+
+                document.documentElement
+                    .removeAttribute("data-theme");
+
+                localStorage
+                    .setItem(
+                        "appnetick-theme",
+                        "light"
+                    );
+
+            } else {
+
+                document.documentElement
+                    .setAttribute(
+                        "data-theme",
+                        "dark"
+                    );
+
+                localStorage
+                    .setItem(
+                        "appnetick-theme",
+                        "dark"
+                    );
+            }
+
+            updateThemeIcon();
+        }
+    );
+
+
+/* =========================================================
+   FORM DATA
+========================================================= */
+
+const formData = {
+
+    uid: "",
+    username: "",
+    fullName: "",
+    email: "",
+
+    legalName: "",
+    dateOfBirth: "",
+
+    country: "",
+    phone: "",
+
+    accountCategory: "",
+    profession: "",
+
+    verificationReason: "",
+    knownFor: "",
+
+    website: "",
+    socialProfile: "",
+
+    audience: "",
+    contentCategory: "",
+
+    achievement: "",
+    publicPresence: "",
+
+    authenticityConfirmed: false,
+    informationConfirmed: false,
+    termsConfirmed: false
+};
+
+
+/* =========================================================
+   STEP DEFINITIONS
+========================================================= */
+
+const steps = [
+
+    {
+        type: "intro"
+    },
+
+    {
+        type: "input",
+
+        key: "legalName",
+
+        title: "What is your legal name?",
+
+        help:
+            "Enter your full legal name exactly as it appears on your official records.",
+
+        icon: "ph-user",
+
+        placeholder:
+            "Enter your legal name"
+    },
+
+    {
+        type: "input",
+
+        key: "username",
+
+        title: "Confirm your username",
+
+        help:
+            "This is the Appnetick username associated with the account you want to verify.",
+
+        icon: "ph-at",
+
+        placeholder:
+            "@username"
+    },
+
+    {
+        type: "date",
+
+        key: "dateOfBirth",
+
+        title: "What is your date of birth?",
+
+        help:
+            "Your date of birth helps us establish that the account belongs to a real person.",
+
+        icon: "ph-calendar-blank"
+    },
+
+    {
+        type: "chips",
+
+        key: "country",
+
+        title: "Where are you based?",
+
+        help:
+            "Select the country that best represents your current primary location.",
+
+        options: [
+
+            "India",
+            "United States",
+            "United Kingdom",
+            "Canada",
+            "Australia",
+            "UAE",
+            "Other"
+        ]
+    },
+
+    {
+        type: "input",
+
+        key: "phone",
+
+        title: "What is your phone number?",
+
+        help:
+            "Use a phone number that you control. It may be used for account security checks.",
+
+        icon: "ph-phone",
+
+        placeholder:
+            "+91 XXXXX XXXXX",
+
+        inputType:
+            "tel"
+    },
+
+    {
+        type: "chips",
+
+        key: "accountCategory",
+
+        title: "What best describes your account?",
+
+        help:
+            "Choose the category that most accurately represents your public presence.",
+
+        options: [
+
+            "Creator",
+            "Public Figure",
+            "Artist",
+            "Musician",
+            "Business",
+            "Brand",
+            "Professional",
+            "Organization",
+            "Community",
+            "Other"
+        ]
+    },
+
+    {
+        type: "input",
+
+        key: "profession",
+
+        title: "What is your profession or role?",
+
+        help:
+            "Tell us what you currently do publicly or professionally.",
+
+        icon: "ph-briefcase",
+
+        placeholder:
+            "Example: Photographer"
+    },
+
+    {
+        type: "textarea",
+
+        key: "verificationReason",
+
+        title: "Why should this account be verified?",
+
+        help:
+            "Explain why people may search for or recognize you, your organization, brand or work.",
+
+        placeholder:
+            "Tell us why this account deserves verification..."
+    },
+
+    {
+        type: "textarea",
+
+        key: "knownFor",
+
+        title: "What are you known for?",
+
+        help:
+            "Describe your main work, public identity, achievements or contribution.",
+
+        placeholder:
+            "Example: I create educational technology content..."
+    },
+
+    {
+        type: "input",
+
+        key: "website",
+
+        title: "Do you have an official website?",
+
+        help:
+            "Add a website that can help us confirm your public presence. This can be skipped.",
+
+        icon: "ph-globe",
+
+        placeholder:
+            "https://example.com",
+
+        inputType:
+            "url",
+
+        optional:
+            true
+    },
+
+    {
+        type: "input",
+
+        key: "socialProfile",
+
+        title: "Add another public profile",
+
+        help:
+            "Provide one public social profile or professional page that represents you.",
+
+        icon: "ph-link",
+
+        placeholder:
+            "https://..."
+    },
+
+    {
+        type: "chips",
+
+        key: "audience",
+
+        title: "What is your approximate audience size?",
+
+        help:
+            "Choose the closest range. Exact numbers are not required.",
+
+        options: [
+
+            "Under 1K",
+            "1K – 10K",
+            "10K – 50K",
+            "50K – 100K",
+            "100K – 500K",
+            "500K – 1M",
+            "1M+"
+        ]
+    },
+
+    {
+        type: "chips",
+
+        key: "contentCategory",
+
+        title: "What type of content do you primarily share?",
+
+        help:
+            "Select the category that best describes your public activity.",
+
+        options: [
+
+            "Education",
+            "Entertainment",
+            "Technology",
+            "Music",
+            "Fashion",
+            "Sports",
+            "News",
+            "Business",
+            "Lifestyle",
+            "Other"
+        ]
+    },
+
+    {
+        type: "textarea",
+
+        key: "achievement",
+
+        title: "Tell us about your notable achievements",
+
+        help:
+            "Mention awards, professional accomplishments, major projects or other meaningful achievements.",
+
+        placeholder:
+            "Describe your achievements..."
+    },
+
+    {
+        type: "textarea",
+
+        key: "publicPresence",
+
+        title: "Where can your public presence be verified?",
+
+        help:
+            "Mention publications, interviews, official websites, events, organizations or other publicly available references.",
+
+        placeholder:
+            "Example: Featured by..., interviewed by..., official organization page..."
+    },
+
+    {
+        type: "confirm",
+
+        key: "authenticityConfirmed",
+
+        title: "Confirm account authenticity",
+
+        text:
+            "I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
+    },
+
+    {
+        type: "confirm",
+
+        key: "informationConfirmed",
+
+        title: "Confirm your information",
+
+        text:
+            "I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
+    },
+
+    {
+        type: "confirm",
+
+        key: "termsConfirmed",
+
+        title: "Verification declaration",
+
+        text:
+            "I understand that submitting this application does not guarantee verification. Appnetick may review the information provided and may approve or reject the request."
+    },
+
+    {
+        type: "review"
+    }
+
+];
+
+
+/* =========================================================
+   CURRENT STEP
+========================================================= */
+
+let currentStep = 0;
+
+let isAnimating = false;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const viewport =
+    document.getElementById(
+        "stepViewport"
+    );
+
+const progressFill =
+    document.getElementById(
+        "progressFill"
+    );
+
+const progressNumber =
+    document.getElementById(
+        "progressNumber"
+    );
+
+const backButton =
+    document.getElementById(
+        "backButton"
+    );
+
+const nextButton =
+    document.getElementById(
+        "nextButton"
+    );
+
+const nextText =
+    document.getElementById(
+        "nextText"
+    );
+
+const nextIcon =
+    document.getElementById(
+        "nextIcon"
+    );
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderStep(
+    direction = "next",
+    animate = false
+) {
+
+    const step =
+        steps[currentStep];
+
+    const newElement =
+        document.createElement("div");
+
+    newElement.className =
+        "step";
+
+    newElement.innerHTML =
+        getStepHTML(step);
+
+    if (animate) {
+
+        newElement.classList.add(
+            direction === "next"
+                ? "slide-next-enter"
+                : "slide-back-enter"
+        );
+    }
+
+    const oldElement =
+        viewport.firstElementChild;
+
+    if (oldElement && animate) {
+
+        oldElement.classList.add(
+            direction === "next"
+                ? "slide-next-exit"
+                : "slide-back-exit"
+        );
+
+        oldElement.addEventListener(
+            "animationend",
+            function () {
+
+                if (oldElement.parentNode) {
+
+                    oldElement.parentNode
+                        .removeChild(oldElement);
+                }
+
+            },
+            {
+                once: true
+            }
+        );
+    }
+
+    viewport.appendChild(
+        newElement
+    );
+
+    setTimeout(
+        restoreFieldValue,
+        0
+    );
+
+    updateProgress();
+
+    updateButtons();
+}
+
+
+/* =========================================================
+   STEP HTML
+========================================================= */
+
+function getStepHTML(step) {
+
+    if (step.type === "intro") {
+
+        return `
+
+            <div class="intro-icon">
+                <i class="ph ph-seal-check"></i>
+            </div>
+
+            <h1 class="step-title">
+                Get the Appnetick verification badge
+            </h1>
+
+            <p class="step-description">
+                Verification helps people recognize authentic accounts
+                and makes it easier to identify the real person, creator,
+                organization or brand behind an account.
+            </p>
+
+            <div class="intro-points">
+
+                <div class="intro-point">
+
+                    <div class="intro-point-icon">
+                        <i class="ph ph-shield-check"></i>
+                    </div>
+
+                    <div class="intro-point-text">
+
+                        <strong>Authenticity</strong>
+
+                        We'll review the information you provide
+                        to understand whether your account represents
+                        a real identity or entity.
+
+                    </div>
+
+                </div>
+
+
+                <div class="intro-point">
+
+                    <div class="intro-point-icon">
+                        <i class="ph ph-magnifying-glass"></i>
+                    </div>
+
+                    <div class="intro-point-text">
+
+                        <strong>Public presence</strong>
+
+                        We'll consider information that helps establish
+                        your public presence and identity.
+
+                    </div>
+
+                </div>
+
+
+                <div class="intro-point">
+
+                    <div class="intro-point-icon">
+                        <i class="ph ph-lock-key"></i>
+                    </div>
+
+                    <div class="intro-point-text">
+
+                        <strong>Security review</strong>
+
+                        Your application is reviewed separately from
+                        your normal Appnetick profile information.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    if (step.type === "input") {
+
+        return `
+
+            <label class="question-label">
+                ${step.title}
+            </label>
+
+            <p class="question-help">
+                ${step.help}
+            </p>
+
+            <div class="input-wrap">
+
+                <i class="ph ${step.icon} input-icon"></i>
+
+                <input
+                    class="form-input with-icon"
+                    id="currentInput"
+                    type="${step.inputType || "text"}"
+                    placeholder="${step.placeholder || ""}"
+                    autocomplete="off"
+                    ${step.optional ? "" : "required"}
+                >
+
+            </div>
+
+            ${
+                step.optional
+                    ? `
+                        <div class="info-card">
+
+                            <i class="ph ph-info"></i>
+
+                            <span>
+                                This field is optional. You can continue
+                                without adding a website.
+                            </span>
+
+                        </div>
+                    `
+                    : ""
+            }
+
+        `;
+    }
+
+
+    if (step.type === "date") {
+
+        return `
+
+            <label class="question-label">
+                ${step.title}
+            </label>
+
+            <p class="question-help">
+                ${step.help}
+            </p>
+
+            <div class="input-wrap">
+
+                <i class="ph ${step.icon} input-icon"></i>
+
+                <input
+                    class="form-input with-icon"
+                    id="currentInput"
+                    type="date"
+                >
+
+            </div>
+
+        `;
+    }
+
+
+    if (step.type === "textarea") {
+
+        return `
+
+            <label class="question-label">
+                ${step.title}
+            </label>
+
+            <p class="question-help">
+                ${step.help}
+            </p>
+
+            <textarea
+                class="form-textarea"
+                id="currentInput"
+                placeholder="${step.placeholder || ""}"
+                maxlength="1000"
+            ></textarea>
+
+        `;
+    }
+
+
+    if (step.type === "chips") {
+
+        return `
+
+            <label class="question-label">
+                ${step.title}
+            </label>
+
+            <p class="question-help">
+                ${step.help}
+            </p>
+
+            <div class="chips">
+
+                ${
+                    step.options.map(
+                        option => `
+
+                            <button
+                                type="button"
+                                class="chip"
+                                data-value="${escapeHTML(option)}"
+                                onclick="selectChip(this)"
+                            >
+                                ${escapeHTML(option)}
+                            </button>
+
+                        `
+                    ).join("")
+                }
+
+            </div>
+
+        `;
+    }
+
+
+    if (step.type === "confirm") {
+
+        return `
+
+            <label class="question-label">
+                ${step.title}
+            </label>
+
+            <p class="question-help">
+                Please read this confirmation carefully before continuing.
+            </p>
+
+            <div
+                class="confirm-box"
+                id="confirmBox"
+                onclick="toggleConfirm()"
+            >
+
+                <div class="confirm-row">
+
+                    <div
+                        class="custom-check"
+                        id="customCheck"
+                    >
+                        <i class="ph ph-check"></i>
+                    </div>
+
+                    <div class="confirm-text">
+                        ${step.text}
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    if (step.type === "review") {
+
+        return getReviewHTML();
+    }
+
+
+    return "";
+}
+
+
+/* =========================================================
+   CHIP SELECT
+========================================================= */
+
+function selectChip(element) {
+
+    const all =
+        document.querySelectorAll(
+            ".chip"
+        );
+
+    all.forEach(
+        chip =>
+            chip.classList.remove(
+                "selected"
+            )
+    );
+
+    element.classList.add(
+        "selected"
+    );
+
+    formData[
+        steps[currentStep].key
+    ] =
+        element.dataset.value;
+
+    updateButtons();
+}
+
+
+/* =========================================================
+   CONFIRM
+========================================================= */
+
+function toggleConfirm() {
+
+    const box =
+        document.getElementById(
+            "confirmBox"
+        );
+
+    if (!box) return;
+
+    const key =
+        steps[currentStep].key;
+
+    formData[key] =
+        !formData[key];
+
+    box.classList.toggle(
+        "checked",
+        formData[key]
+    );
+
+    updateButtons();
+}
+
+
+/* =========================================================
+   SAVE CURRENT FIELD
+========================================================= */
+
+function saveCurrentValue() {
+
+    const step =
+        steps[currentStep];
+
+    if (
+        step.type === "input" ||
+        step.type === "date" ||
+        step.type === "textarea"
+    ) {
+
+        const input =
+            document.getElementById(
+                "currentInput"
+            );
+
+        if (input) {
+
+            formData[step.key] =
+                input.value.trim();
+        }
+    }
+}
+
+
+/* =========================================================
+   RESTORE FIELD
+========================================================= */
+
+function restoreFieldValue() {
+
+    const step =
+        steps[currentStep];
+
+    if (
+        step.type === "input" ||
+        step.type === "date" ||
+        step.type === "textarea"
+    ) {
+
+        const input =
+            document.getElementById(
+                "currentInput"
+            );
+
+        if (
+            input &&
+            formData[step.key]
+        ) {
+
+            input.value =
+                formData[step.key];
+        }
+    }
+
+
+    if (step.type === "chips") {
+
+        const selected =
+            formData[step.key];
+
+        if (!selected) return;
+
+        document
+            .querySelectorAll(".chip")
+            .forEach(
+                chip => {
+
+                    if (
+                        chip.dataset.value ===
+                        selected
+                    ) {
+
+                        chip.classList.add(
+                            "selected"
+                        );
+                    }
+                }
+            );
+    }
+
+
+    if (step.type === "confirm") {
+
+        const box =
+            document.getElementById(
+                "confirmBox"
+            );
+
+        if (
+            box &&
+            formData[step.key]
+        ) {
+
+            box.classList.add(
+                "checked"
+            );
+        }
+    }
+}
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+function validateCurrentStep() {
+
+    const step =
+        steps[currentStep];
+
+    if (step.type === "intro") {
+
+        return true;
+    }
+
+
+    if (
+        step.type === "input" ||
+        step.type === "date" ||
+        step.type === "textarea"
+    ) {
+
+        saveCurrentValue();
+
+        if (
+            !formData[step.key] &&
+            !step.optional
+        ) {
+
+            showError(
+                "Please enter this information before continuing."
+            );
+
+            return false;
+        }
+    }
+
+
+    if (step.type === "chips") {
+
+        if (
+            !formData[step.key]
+        ) {
+
+            showError(
+                "Please select one option to continue."
+            );
+
+            return false;
+        }
+    }
+
+
+    if (step.type === "confirm") {
+
+        if (
+            !formData[step.key]
+        ) {
+
+            showError(
+                "Please confirm this before continuing."
+            );
+
+            return false;
+        }
+    }
+
+
+    return true;
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+function nextStep() {
+
+    if (isAnimating) return;
+
+    if (!validateCurrentStep()) {
+        return;
+    }
+
+    if (
+        currentStep >=
+        steps.length - 1
+    ) {
+
+        submitVerification();
+
+        return;
+    }
+
+    isAnimating = true;
+
+    currentStep++;
+
+    renderStep(
+        "next",
+        true
+    );
+
+    setTimeout(
+        () => {
+            isAnimating = false;
+        },
+        350
+    );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function previousStep() {
+
+    if (isAnimating) return;
+
+    if (currentStep <= 0) {
+
+        goHome();
+
+        return;
+    }
+
+    saveCurrentValue();
+
+    isAnimating = true;
+
+    currentStep--;
+
+    renderStep(
+        "back",
+        true
+    );
+
+    setTimeout(
+        () => {
+            isAnimating = false;
+        },
+        350
+    );
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateProgress() {
+
+    const total =
+        steps.length;
+
+    const number =
+        currentStep + 1;
+
+    const percentage =
+        (number / total) * 100;
+
+    progressNumber.textContent =
+        `${number} of ${total}`;
+
+    progressFill.style.width =
+        `${percentage}%`;
+
+    if (
+        currentStep === 0
+    ) {
+
+        document.getElementById(
+            "progressLabel"
+        ).textContent =
+            "Verification";
+
+    } else if (
+        currentStep === total - 1
+    ) {
+
+        document.getElementById(
+            "progressLabel"
+        ).textContent =
+            "Review";
+
+    } else {
+
+        document.getElementById(
+            "progressLabel"
+        ).textContent =
+            "Application";
+    }
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+function updateButtons() {
+
+    if (
+        currentStep === 0
+    ) {
+
+        backButton.style.visibility =
+            "hidden";
+
+        nextText.textContent =
+            "Get started";
+
+        nextIcon.className =
+            "ph ph-arrow-right";
+
+        nextButton.disabled =
+            false;
+
+        return;
+    }
+
+
+    backButton.style.visibility =
+        "visible";
+
+
+    if (
+        currentStep ===
+        steps.length - 1
+    ) {
+
+        nextText.textContent =
+            "Submit application";
+
+        nextIcon.className =
+            "ph ph-paper-plane-tilt";
+
+    } else {
+
+        nextText.textContent =
+            "Next";
+
+        nextIcon.className =
+            "ph ph-arrow-right";
+    }
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
+
+function getReviewHTML() {
+
+    return `
+
+        <div class="success-icon"
+             style="
+                width:72px;
+                height:72px;
+                font-size:34px;
+                margin-bottom:20px;
+             ">
+
+            <i class="ph ph-seal-check"></i>
+
+        </div>
+
+        <h1 class="step-title">
+            Review your application
+        </h1>
+
+        <p class="step-description"
+           style="margin-bottom:22px;">
+
+            Please check the information below.
+            Once submitted, your verification request
+            will be reviewed by Appnetick.
+
+        </p>
+
+
+        <div class="review-card">
+
+            ${reviewRow(
+                "Legal name",
+                formData.legalName
+            )}
+
+            ${reviewRow(
+                "Username",
+                formData.username
+            )}
+
+            ${reviewRow(
+                "Date of birth",
+                formData.dateOfBirth
+            )}
+
+            ${reviewRow(
+                "Country",
+                formData.country
+            )}
+
+            ${reviewRow(
+                "Phone",
+                formData.phone
+            )}
+
+            ${reviewRow(
+                "Account category",
+                formData.accountCategory
+            )}
+
+            ${reviewRow(
+                "Profession",
+                formData.profession
+            )}
+
+            ${reviewRow(
+                "Verification reason",
+                formData.verificationReason
+            )}
+
+            ${reviewRow(
+                "Known for",
+                formData.knownFor
+            )}
+
+            ${reviewRow(
+                "Website",
+                formData.website || "Not provided"
+            )}
+
+            ${reviewRow(
+                "Public profile",
+                formData.socialProfile
+            )}
+
+            ${reviewRow(
+                "Audience",
+                formData.audience
+            )}
+
+            ${reviewRow(
+                "Content category",
+                formData.contentCategory
+            )}
+
+            ${reviewRow(
+                "Achievements",
+                formData.achievement
+            )}
+
+            ${reviewRow(
+                "Public presence",
+                formData.publicPresence
+            )}
+
+        </div>
+
+        <div class="info-card">
+
+            <i class="ph ph-shield-check"></i>
+
+            <span>
+                Your application will be stored as a verification
+                request separately from your normal account data.
+            </span>
+
+        </div>
+
+    `;
+}
+
+
+function reviewRow(
+    label,
+    value
+) {
+
+    return `
+
+        <div class="review-row">
+
+            <div class="review-label">
+                ${escapeHTML(label)}
+            </div>
+
+            <div class="review-value">
+                ${
+                    escapeHTML(
+                        value || "Not provided"
+                    )
+                }
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+async function submitVerification() {
+
+    if (isAnimating) return;
+
+    saveCurrentValue();
+
+    const payload = {
+
+        uid:
+            formData.uid,
+
+        username:
+            formData.username,
+
+        full_name:
+            formData.fullName,
+
+        legal_name:
+            formData.legalName,
+
+        email:
+            formData.email,
+
+        date_of_birth:
+            formData.dateOfBirth,
+
+        country:
+            formData.country,
+
+        phone:
+            formData.phone,
+
+        account_category:
+            formData.accountCategory,
+
+        profession:
+            formData.profession,
+
+        verification_reason:
+            formData.verificationReason,
+
+        known_for:
+            formData.knownFor,
+
+        website:
+            formData.website,
+
+        social_profile:
+            formData.socialProfile,
+
+        audience:
+            formData.audience,
+
+        content_category:
+            formData.contentCategory,
+
+        achievement:
+            formData.achievement,
+
+        public_presence:
+            formData.publicPresence,
+
+        authenticity_confirmed:
+            formData.authenticityConfirmed,
+
+        information_confirmed:
+            formData.informationConfirmed,
+
+        terms_confirmed:
+            formData.termsConfirmed,
+
+        verification_status:
+            "pending",
+
+        submitted_at:
+            Date.now(),
+
+        reviewed_at:
+            0,
+
+        reviewed_by:
+            ""
+
+    };
+
+
+    /*
+       IMPORTANT:
+
+       Backend endpoint intentionally not invented here.
+
+       Replace the URL below with your actual Vercel
+       verification API after we create it.
+    */
+
+
+    nextButton.disabled =
+        true;
+
+    nextText.textContent =
+        "Submitting...";
+
+    nextIcon.className =
+        "ph ph-spinner";
+
+    nextIcon.style.animation =
+        "spin 0.8s linear infinite";
+
+
+    try {
+
+        /*
+        const response =
+            await fetch(
+                `${API_BASE}/api/verification/submit`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "Unable to submit verification request."
+            );
+        }
+        */
+
+
+        /*
+           Temporary successful UI.
+
+           Actual Firebase DataApp submission
+           will be connected once the API route
+           is created.
+        */
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    700
+                )
+        );
+
+        showSuccess();
+
+    } catch (error) {
+
+        console.error(error);
+
+        nextButton.disabled =
+            false;
+
+        nextText.textContent =
+            "Submit application";
+
+        nextIcon.className =
+            "ph ph-paper-plane-tilt";
+
+        showError(
+            "Something went wrong. Please try again."
+        );
+    }
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+function showSuccess() {
+
+    document.getElementById(
+        "bottomActions"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "progressLabel"
+    ).textContent =
+        "Submitted";
+
+    document.getElementById(
+        "progressNumber"
+    ).textContent =
+        "Complete";
+
+    progressFill.style.width =
+        "100%";
+
+
+    viewport.innerHTML = `
+
+        <div class="success">
+
+            <div class="success-icon">
+
+                <i class="ph ph-check"></i>
+
+            </div>
+
+            <h2>
+                Application submitted
+            </h2>
+
+            <p>
+
+                Your verification request has been
+                submitted successfully.
+
+                <br><br>
+
+                Appnetick will review the information
+                provided and update the verification
+                status when the review is complete.
+
+            </p>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message) {
+
+    let existing =
+        document.getElementById(
+            "formError"
+        );
+
+    if (existing) {
+
+        existing.remove();
+    }
+
+    const error =
+        document.createElement(
+            "div"
+        );
+
+    error.id =
+        "formError";
+
+    error.style.cssText = `
+
+        margin-top:14px;
+        padding:12px 14px;
+        border-radius:14px;
+        background:rgba(229,57,53,0.10);
+        border:1px solid rgba(229,57,53,0.25);
+        color:var(--danger);
+        font-size:13px;
+        line-height:1.45;
+
+    `;
+
+    error.innerHTML = `
+
+        <i class="ph ph-warning-circle"></i>
+        ${escapeHTML(message)}
+
+    `;
+
+    viewport
+        .firstElementChild
+        ?.appendChild(error);
+
+    setTimeout(
+        () => {
+
+            if (error.parentNode) {
+
+                error.remove();
+            }
+
+        },
+        3000
+    );
+}
+
+
+/* =========================================================
+   USER DATA
+========================================================= */
+
+/*
+   Your existing Users/{uid} data can be supplied
+   to this page from your authentication/session API.
+
+   Example expected object:
+
+   {
+       uid: "...",
+       Username: "...",
+       email: "...",
+       full_name: "..."
+   }
+*/
+
+function setUserData(user) {
+
+    if (!user) return;
+
+    formData.uid =
+        user.uid || "";
+
+    formData.username =
+        user.Username || "";
+
+    formData.fullName =
+        user.full_name || "";
+
+    formData.email =
+        user.email || "";
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function goHome() {
+
+    window.location.href =
+        "/";
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderStep(
+    "next",
+    false
+);
+
+updateProgress();
+
+updateButtons();
+
+
+/* =========================================================
+   INPUT LISTENER
+========================================================= */
+
+document.addEventListener(
+    "input",
+    function () {
+
+        saveCurrentValue();
+
+    }
+);
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+const spinnerStyle =
+    document.createElement(
+        "style"
+    );
+
+spinnerStyle.textContent = `
+
+    @keyframes spin {
+
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+
+    }
+
+`;
+
+document.head.appendChild(
+    spinnerStyle
+);
+
+</script>
+
+</body>
+</html>
