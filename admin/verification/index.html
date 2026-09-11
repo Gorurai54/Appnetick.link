@@ -1,1364 +1,1414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
 
-    <title>Verification Requests - Appnetick</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="icon" type="image/jpeg" href="/20260313_121958.jpg">
+<title>Verification Requests - Appnetick</title>
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link rel="icon"
+      type="image/jpeg"
+      href="/20260313_121958.jpg">
 
-    <style>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-        /* =========================================================
-           APPNETICK THEME
-        ========================================================= */
+<style>
 
-        :root {
-            --bg: #FFFFFF;
-            --surface: #FFFFFF;
-            --surface-secondary: #F7F7F7;
+/* =========================================================
+   THEME
+========================================================= */
 
-            --text: #212121;
-            --secondary: #757575;
-            --muted: #9E9E9E;
+:root {
+    --bg:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-secondary:#F7F7F7;
 
-            --border: #DCDCDC;
-            --input-bg: #F5F5F5;
+    --text:#212121;
+    --secondary:#757575;
+    --muted:#9E9E9E;
 
-            --primary: #2196F3;
-            --primary-soft: rgba(33,150,243,0.10);
+    --border:#DCDCDC;
+    --input-bg:#F5F5F5;
 
-            --success: #2E7D32;
-            --success-soft: rgba(46,125,50,0.10);
+    --primary:#2196F3;
+    --primary-soft:rgba(33,150,243,.10);
 
-            --danger: #D32F2F;
-            --danger-soft: rgba(211,47,47,0.10);
+    --success:#2E7D32;
+    --success-soft:rgba(46,125,50,.10);
 
-            --warning: #F57C00;
-            --warning-soft: rgba(245,124,0,0.10);
+    --danger:#D32F2F;
+    --danger-soft:rgba(211,47,47,.10);
 
-            --shadow:
-                0 8px 30px rgba(0,0,0,0.06);
+    --warning:#F57C00;
+    --warning-soft:rgba(245,124,0,.10);
 
-            --radius: 18px;
-        }
+    --shadow:0 8px 30px rgba(0,0,0,.06);
 
-        body.dark {
-            --bg: #1E1E1E;
-            --surface: #1E1E1E;
-            --surface-secondary: #252525;
+    --radius:18px;
+}
 
-            --text: #FFFFFF;
-            --secondary: #A0A0A0;
-            --muted: #777777;
+body.dark {
 
-            --border: #424242;
-            --input-bg: #252525;
+    --bg:#1E1E1E;
+    --surface:#1E1E1E;
+    --surface-secondary:#252525;
 
-            --primary: #2979FF;
-            --primary-soft: rgba(41,121,255,0.14);
+    --text:#FFFFFF;
+    --secondary:#A0A0A0;
+    --muted:#777777;
 
-            --success: #66BB6A;
-            --success-soft: rgba(102,187,106,0.12);
+    --border:#424242;
+    --input-bg:#252525;
 
-            --danger: #EF5350;
-            --danger-soft: rgba(239,83,80,0.12);
+    --primary:#2979FF;
+    --primary-soft:rgba(41,121,255,.14);
 
-            --warning: #FFB74D;
-            --warning-soft: rgba(255,183,77,0.12);
+    --success:#66BB6A;
+    --success-soft:rgba(102,187,106,.12);
 
-            --shadow:
-                0 8px 30px rgba(0,0,0,0.25);
-        }
+    --danger:#EF5350;
+    --danger-soft:rgba(239,83,80,.12);
 
+    --warning:#FFB74D;
+    --warning-soft:rgba(255,183,77,.12);
 
-        /* =========================================================
-           RESET
-        ========================================================= */
+    --shadow:0 8px 30px rgba(0,0,0,.25);
+}
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
 
-        html {
-            min-height: 100%;
-            background: var(--bg);
-        }
+/* =========================================================
+   RESET
+========================================================= */
 
-        body {
-            margin: 0;
-            min-height: 100vh;
+* {
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
 
-            background: var(--bg);
-            color: var(--text);
+html {
+    min-height:100%;
+    background:var(--bg);
+}
 
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
+body {
+    margin:0;
+    min-height:100vh;
 
-            transition:
-                background .25s ease,
-                color .25s ease;
-        }
+    background:var(--bg);
+    color:var(--text);
 
-        button,
-        input,
-        textarea {
-            font: inherit;
-        }
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
-        button {
-            border: 0;
-            cursor: pointer;
-        }
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
 
+button,
+input,
+textarea {
+    font:inherit;
+}
 
-        /* =========================================================
-           TOOLBAR
-        ========================================================= */
+button {
+    border:0;
+    cursor:pointer;
+}
 
-        .toolbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
 
-            height: 64px;
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
-            display: flex;
-            align-items: center;
+.toolbar {
 
-            padding: 0 16px;
+    position:sticky;
+    top:0;
+    z-index:100;
 
-            background: var(--surface);
+    height:64px;
 
-            border-bottom:
-                1px solid var(--border);
+    display:flex;
+    align-items:center;
 
-            backdrop-filter: blur(16px);
-        }
+    padding:0 16px;
 
-        .toolbar-left {
-            display: flex;
-            align-items: center;
+    background:var(--surface);
 
-            min-width: 0;
-            flex: 1;
-        }
+    border-bottom:1px solid var(--border);
 
-        .back-button,
-        .icon-button {
-            width: 42px;
-            height: 42px;
+    backdrop-filter:blur(16px);
+}
 
-            border-radius: 50%;
+.toolbar-left {
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    display:flex;
+    align-items:center;
 
-            background: transparent;
-            color: var(--text);
+    min-width:0;
+    flex:1;
+}
 
-            font-size: 23px;
+.back-button,
+.icon-button {
 
-            transition:
-                background .18s ease,
-                transform .18s ease;
-        }
+    width:42px;
+    height:42px;
 
-        .back-button:active,
-        .icon-button:active {
-            transform: scale(.92);
-            background: var(--surface-secondary);
-        }
+    border-radius:50%;
 
-        .toolbar-title {
-            margin-left: 7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            font-size: 18px;
-            font-weight: 700;
+    background:transparent;
+    color:var(--text);
 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    font-size:23px;
+}
 
-        .toolbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-        }
+.back-button:active,
+.icon-button:active {
 
+    transform:scale(.92);
 
-        /* =========================================================
-           PAGE
-        ========================================================= */
+    background:var(--surface-secondary);
+}
 
-        .page {
-            width: 100%;
-            max-width: 850px;
+.toolbar-title {
 
-            margin: 0 auto;
+    margin-left:7px;
 
-            padding:
-                28px 18px
-                50px;
-        }
+    font-size:18px;
+    font-weight:700;
 
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
-        /* =========================================================
-           HEADER
-        ========================================================= */
+.toolbar-actions {
 
-        .page-header {
-            margin-bottom: 22px;
-        }
+    display:flex;
+    align-items:center;
+    gap:2px;
+}
 
-        .page-title {
-            margin: 0;
 
-            font-size: 27px;
-            line-height: 1.2;
+/* =========================================================
+   PAGE
+========================================================= */
 
-            font-weight: 700;
-            letter-spacing: -.5px;
-        }
+.page {
 
-        .page-description {
-            margin: 8px 0 0;
+    width:100%;
+    max-width:850px;
 
-            color: var(--secondary);
+    margin:0 auto;
 
-            font-size: 14px;
-            line-height: 1.5;
-        }
+    padding:28px 18px 50px;
+}
 
+.page-header {
+    margin-bottom:22px;
+}
 
-        /* =========================================================
-           STAT CARDS
-        ========================================================= */
+.page-title {
 
-        .stats {
-            display: grid;
+    margin:0;
 
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
+    font-size:27px;
+    line-height:1.2;
 
-            gap: 10px;
+    font-weight:700;
+    letter-spacing:-.5px;
+}
 
-            margin-bottom: 18px;
-        }
+.page-description {
 
-        .stat-card {
-            min-width: 0;
+    margin:8px 0 0;
 
-            padding: 15px 14px;
+    color:var(--secondary);
 
-            border:
-                1px solid var(--border);
+    font-size:14px;
+    line-height:1.5;
+}
 
-            border-radius: 16px;
 
-            background: var(--surface);
+/* =========================================================
+   STATS
+========================================================= */
 
-            box-shadow: var(--shadow);
-        }
+.stats {
 
-        .stat-icon {
-            width: 36px;
-            height: 36px;
+    display:grid;
 
-            border-radius: 11px;
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    gap:10px;
 
-            background: var(--primary-soft);
-            color: var(--primary);
+    margin-bottom:18px;
+}
 
-            font-size: 19px;
+.stat-card {
 
-            margin-bottom: 10px;
-        }
+    min-width:0;
 
-        .stat-number {
-            font-size: 21px;
-            font-weight: 700;
-        }
+    padding:15px 14px;
 
-        .stat-label {
-            margin-top: 3px;
+    border:1px solid var(--border);
 
-            color: var(--secondary);
+    border-radius:16px;
 
-            font-size: 12px;
-        }
+    background:var(--surface);
 
+    box-shadow:var(--shadow);
+}
 
-        /* =========================================================
-           SEARCH
-        ========================================================= */
+.stat-icon {
 
-        .search-box {
-            position: relative;
+    width:36px;
+    height:36px;
 
-            margin-bottom: 13px;
-        }
+    border-radius:11px;
 
-        .search-box i {
-            position: absolute;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            left: 16px;
-            top: 50%;
+    background:var(--primary-soft);
+    color:var(--primary);
 
-            transform: translateY(-50%);
+    font-size:19px;
 
-            color: var(--secondary);
+    margin-bottom:10px;
+}
 
-            font-size: 20px;
+.stat-number {
 
-            pointer-events: none;
-        }
+    font-size:21px;
+    font-weight:700;
+}
 
-        .search-box input {
-            width: 100%;
-            height: 52px;
+.stat-label {
 
-            padding:
-                0 45px
-                0 47px;
+    margin-top:3px;
 
-            border:
-                1px solid var(--border);
+    color:var(--secondary);
 
-            outline: none;
+    font-size:12px;
+}
 
-            border-radius: 16px;
 
-            background: var(--input-bg);
-            color: var(--text);
+/* =========================================================
+   SEARCH
+========================================================= */
 
-            font-size: 14px;
+.search-box {
 
-            transition:
-                border .2s ease,
-                box-shadow .2s ease;
-        }
+    position:relative;
 
-        .search-box input::placeholder {
-            color: var(--muted);
-        }
+    margin-bottom:13px;
+}
 
-        .search-box input:focus {
-            border-color: var(--primary);
+.search-box > i {
 
-            box-shadow:
-                0 0 0 3px
-                var(--primary-soft);
-        }
+    position:absolute;
 
-        .clear-search {
-            position: absolute;
+    left:16px;
+    top:50%;
 
-            right: 9px;
-            top: 5px;
+    transform:translateY(-50%);
 
-            width: 42px;
-            height: 42px;
+    color:var(--secondary);
 
-            display: none;
+    font-size:20px;
 
-            align-items: center;
-            justify-content: center;
+    pointer-events:none;
+}
 
-            background: transparent;
+.search-box input {
 
-            color: var(--secondary);
+    width:100%;
+    height:52px;
 
-            font-size: 19px;
-        }
+    padding:0 45px 0 47px;
 
+    border:1px solid var(--border);
 
-        /* =========================================================
-           FILTERS
-        ========================================================= */
+    outline:none;
 
-        .filters {
-            display: flex;
+    border-radius:16px;
 
-            gap: 8px;
+    background:var(--input-bg);
+    color:var(--text);
 
-            overflow-x: auto;
+    font-size:14px;
+}
 
-            padding-bottom: 4px;
+.search-box input::placeholder {
+    color:var(--muted);
+}
 
-            margin-bottom: 20px;
+.search-box input:focus {
 
-            scrollbar-width: none;
-        }
+    border-color:var(--primary);
 
-        .filters::-webkit-scrollbar {
-            display: none;
-        }
+    box-shadow:
+        0 0 0 3px var(--primary-soft);
+}
 
-        .filter-button {
-            flex-shrink: 0;
+.clear-search {
 
-            height: 39px;
+    position:absolute;
 
-            padding: 0 16px;
+    right:9px;
+    top:5px;
 
-            border-radius: 999px;
+    width:42px;
+    height:42px;
 
-            border:
-                1px solid var(--border);
+    display:none;
 
-            background: var(--surface);
+    align-items:center;
+    justify-content:center;
 
-            color: var(--secondary);
+    background:transparent;
 
-            font-size: 13px;
-            font-weight: 600;
+    color:var(--secondary);
 
-            transition: all .2s ease;
-        }
+    font-size:19px;
+}
 
-        .filter-button.active {
-            background: var(--primary);
-            border-color: var(--primary);
 
-            color: #FFFFFF;
-        }
+/* =========================================================
+   FILTERS
+========================================================= */
 
+.filters {
 
-        /* =========================================================
-           LIST HEADER
-        ========================================================= */
+    display:flex;
 
-        .list-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+    gap:8px;
 
-            margin-bottom: 11px;
-        }
+    overflow-x:auto;
 
-        .list-title {
-            font-size: 15px;
-            font-weight: 700;
-        }
+    padding-bottom:4px;
 
-        .result-count {
-            color: var(--secondary);
-            font-size: 12px;
-        }
+    margin-bottom:20px;
 
+    scrollbar-width:none;
+}
 
-        /* =========================================================
-           REQUEST CARD
-        ========================================================= */
+.filters::-webkit-scrollbar {
+    display:none;
+}
 
-        .requests {
-            display: flex;
-            flex-direction: column;
+.filter-button {
 
-            gap: 10px;
-        }
+    flex-shrink:0;
 
-        .request-card {
-            position: relative;
+    height:39px;
 
-            display: flex;
-            align-items: center;
+    padding:0 16px;
 
-            gap: 13px;
+    border-radius:999px;
 
-            width: 100%;
+    border:1px solid var(--border);
 
-            padding: 15px;
+    background:var(--surface);
 
-            border:
-                1px solid var(--border);
+    color:var(--secondary);
 
-            border-radius: var(--radius);
+    font-size:13px;
+    font-weight:600;
+}
 
-            background: var(--surface);
+.filter-button.active {
 
-            box-shadow: var(--shadow);
+    background:var(--primary);
 
-            cursor: pointer;
+    border-color:var(--primary);
 
-            transition:
-                transform .18s ease,
-                border .18s ease,
-                background .18s ease;
-        }
+    color:#FFFFFF;
+}
 
-        .request-card:active {
-            transform: scale(.985);
-        }
 
-        .request-card:hover {
-            border-color:
-                color-mix(
-                    in srgb,
-                    var(--primary) 35%,
-                    var(--border)
-                );
-        }
+/* =========================================================
+   LIST
+========================================================= */
 
-        .avatar {
-            width: 53px;
-            height: 53px;
+.list-header {
 
-            flex-shrink: 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-            border-radius: 50%;
+    margin-bottom:11px;
+}
 
-            object-fit: cover;
+.list-title {
 
-            background: var(--surface-secondary);
+    font-size:15px;
+    font-weight:700;
+}
 
-            border:
-                1px solid var(--border);
-        }
+.result-count {
 
-        .avatar-fallback {
-            width: 53px;
-            height: 53px;
+    color:var(--secondary);
 
-            flex-shrink: 0;
+    font-size:12px;
+}
 
-            border-radius: 50%;
+.requests {
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    display:flex;
+    flex-direction:column;
 
-            background: var(--primary-soft);
-            color: var(--primary);
+    gap:10px;
+}
 
-            font-size: 22px;
-            font-weight: 700;
-        }
 
-        .request-main {
-            flex: 1;
-            min-width: 0;
-        }
+/* =========================================================
+   REQUEST CARD
+========================================================= */
 
-        .request-name-row {
-            display: flex;
-            align-items: center;
+.request-card {
 
-            gap: 5px;
+    position:relative;
 
-            min-width: 0;
-        }
+    display:flex;
+    align-items:center;
 
-        .request-name {
-            min-width: 0;
+    gap:13px;
 
-            font-size: 15px;
-            font-weight: 700;
+    width:100%;
 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    padding:15px;
 
-        .request-username {
-            margin-top: 3px;
+    border:1px solid var(--border);
 
-            color: var(--secondary);
+    border-radius:var(--radius);
 
-            font-size: 13px;
+    background:var(--surface);
 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    box-shadow:var(--shadow);
 
-        .request-meta {
-            display: flex;
-            align-items: center;
+    cursor:pointer;
+}
 
-            gap: 7px;
+.request-card:active {
+    transform:scale(.985);
+}
 
-            margin-top: 7px;
+.avatar,
+.avatar-fallback {
 
-            color: var(--muted);
+    width:53px;
+    height:53px;
 
-            font-size: 11px;
-        }
+    flex-shrink:0;
 
-        .request-status {
-            flex-shrink: 0;
+    border-radius:50%;
+}
 
-            padding: 6px 9px;
+.avatar {
 
-            border-radius: 999px;
+    object-fit:cover;
 
-            font-size: 10px;
-            font-weight: 700;
-        }
+    background:var(--surface-secondary);
 
-        .status-pending {
-            color: var(--warning);
-            background: var(--warning-soft);
-        }
+    border:1px solid var(--border);
+}
 
-        .status-approved {
-            color: var(--success);
-            background: var(--success-soft);
-        }
+.avatar-fallback {
 
-        .status-rejected {
-            color: var(--danger);
-            background: var(--danger-soft);
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .verified-icon {
-            color: var(--primary);
+    background:var(--primary-soft);
+    color:var(--primary);
 
-            font-size: 16px;
-        }
+    font-size:22px;
+    font-weight:700;
+}
 
-        .request-arrow {
-            color: var(--muted);
-            font-size: 18px;
-        }
+.request-main {
 
+    flex:1;
+    min-width:0;
+}
 
-        /* =========================================================
-           LOADING
-        ========================================================= */
+.request-name {
 
-        .loading {
-            display: flex;
+    min-width:0;
 
-            flex-direction: column;
+    font-size:15px;
+    font-weight:700;
 
-            gap: 10px;
-        }
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
-        .skeleton {
-            height: 84px;
+.request-username {
 
-            border-radius: var(--radius);
+    margin-top:3px;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--surface-secondary) 25%,
-                    var(--border) 37%,
-                    var(--surface-secondary) 63%
-                );
+    color:var(--secondary);
 
-            background-size: 400% 100%;
+    font-size:13px;
 
-            animation:
-                skeleton 1.3s ease infinite;
-        }
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
-        @keyframes skeleton {
-            0% {
-                background-position: 100% 0;
-            }
+.request-meta {
 
-            100% {
-                background-position: -100% 0;
-            }
-        }
+    display:flex;
+    align-items:center;
 
+    gap:7px;
 
-        /* =========================================================
-           EMPTY / ERROR
-        ========================================================= */
+    margin-top:7px;
 
-        .state {
-            display: none;
+    color:var(--muted);
 
-            text-align: center;
+    font-size:11px;
+}
 
-            padding: 55px 20px;
-        }
+.request-status {
 
-        .state-icon {
-            width: 62px;
-            height: 62px;
+    flex-shrink:0;
 
-            margin: 0 auto 15px;
+    padding:6px 9px;
 
-            border-radius: 20px;
+    border-radius:999px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    font-size:10px;
+    font-weight:700;
+}
 
-            background: var(--surface-secondary);
+.status-pending {
 
-            color: var(--secondary);
+    color:var(--warning);
 
-            font-size: 29px;
-        }
+    background:var(--warning-soft);
+}
 
-        .state-title {
-            font-size: 16px;
-            font-weight: 700;
-        }
+.status-approved {
 
-        .state-text {
-            max-width: 350px;
+    color:var(--success);
 
-            margin: 7px auto 0;
+    background:var(--success-soft);
+}
 
-            color: var(--secondary);
+.status-rejected {
 
-            font-size: 13px;
-            line-height: 1.5;
-        }
+    color:var(--danger);
 
-        .retry-button {
-            margin-top: 16px;
+    background:var(--danger-soft);
+}
 
-            height: 42px;
+.request-arrow {
 
-            padding: 0 18px;
+    color:var(--muted);
 
-            border-radius: 999px;
+    font-size:18px;
+}
 
-            background: var(--primary);
-            color: #FFFFFF;
 
-            font-size: 13px;
-            font-weight: 600;
-        }
+/* =========================================================
+   LOADING
+========================================================= */
 
+.loading {
 
-        /* =========================================================
-           OVERLAY
-        ========================================================= */
+    display:flex;
 
-        .overlay {
-            position: fixed;
+    flex-direction:column;
 
-            inset: 0;
+    gap:10px;
+}
 
-            z-index: 500;
+.skeleton {
 
-            display: none;
+    height:84px;
 
-            align-items: flex-end;
-            justify-content: center;
+    border-radius:var(--radius);
 
-            background:
-                rgba(0,0,0,.55);
+    background:
+        linear-gradient(
+            90deg,
+            var(--surface-secondary) 25%,
+            var(--border) 37%,
+            var(--surface-secondary) 63%
+        );
 
-            padding: 0;
-        }
+    background-size:400% 100%;
 
-        .overlay.show {
-            display: flex;
-        }
+    animation:skeleton 1.3s ease infinite;
+}
 
+@keyframes skeleton {
 
-        /* =========================================================
-           DETAIL SHEET
-        ========================================================= */
+    0% {
+        background-position:100% 0;
+    }
 
-        .detail-sheet {
-            width: 100%;
-            max-width: 650px;
+    100% {
+        background-position:-100% 0;
+    }
+}
 
-            max-height: 92vh;
 
-            overflow-y: auto;
+/* =========================================================
+   STATE
+========================================================= */
 
-            background: var(--surface);
+.state {
 
-            border-radius:
-                25px 25px 0 0;
+    display:none;
 
-            animation:
-                sheetUp .25s ease;
-        }
+    text-align:center;
 
-        @keyframes sheetUp {
-            from {
-                transform: translateY(100%);
-            }
+    padding:55px 20px;
+}
 
-            to {
-                transform: translateY(0);
-            }
-        }
+.state-icon {
 
-        .sheet-header {
-            position: sticky;
-            top: 0;
-            z-index: 3;
+    width:62px;
+    height:62px;
 
-            display: flex;
-            align-items: center;
+    margin:0 auto 15px;
 
-            padding: 14px 17px;
+    border-radius:20px;
 
-            background: var(--surface);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            border-bottom:
-                1px solid var(--border);
-        }
+    background:var(--surface-secondary);
 
-        .sheet-title {
-            flex: 1;
+    color:var(--secondary);
 
-            margin-left: 5px;
+    font-size:29px;
+}
 
-            font-size: 17px;
-            font-weight: 700;
-        }
+.state-title {
 
-        .sheet-body {
-            padding: 22px 18px 30px;
-        }
+    font-size:16px;
+    font-weight:700;
+}
 
+.state-text {
 
-        /* =========================================================
-           DETAIL PROFILE
-        ========================================================= */
+    max-width:350px;
 
-        .detail-profile {
-            display: flex;
+    margin:7px auto 0;
 
-            flex-direction: column;
-            align-items: center;
+    color:var(--secondary);
 
-            text-align: center;
+    font-size:13px;
+    line-height:1.5;
 
-            padding-bottom: 22px;
+    word-break:break-word;
+}
 
-            border-bottom:
-                1px solid var(--border);
-        }
+.retry-button {
 
-        .detail-avatar {
-            width: 84px;
-            height: 84px;
+    margin-top:16px;
 
-            border-radius: 50%;
+    height:42px;
 
-            object-fit: cover;
+    padding:0 18px;
 
-            border:
-                1px solid var(--border);
+    border-radius:999px;
 
-            background: var(--surface-secondary);
-        }
+    background:var(--primary);
+    color:#FFFFFF;
 
-        .detail-name {
-            margin-top: 11px;
+    font-size:13px;
+    font-weight:600;
+}
 
-            font-size: 20px;
-            font-weight: 700;
-        }
 
-        .detail-username {
-            margin-top: 3px;
+/* =========================================================
+   OVERLAY
+========================================================= */
 
-            color: var(--secondary);
+.overlay {
 
-            font-size: 14px;
-        }
+    position:fixed;
 
-        .detail-status {
-            margin-top: 10px;
-        }
+    inset:0;
 
+    z-index:500;
 
-        /* =========================================================
-           DETAILS
-        ========================================================= */
+    display:none;
 
-        .details-section {
-            padding: 20px 0;
+    align-items:flex-end;
+    justify-content:center;
 
-            border-bottom:
-                1px solid var(--border);
-        }
+    background:rgba(0,0,0,.55);
+}
 
-        .details-section:last-child {
-            border-bottom: 0;
-        }
+.overlay.show {
+    display:flex;
+}
 
-        .section-title {
-            margin-bottom: 13px;
 
-            font-size: 14px;
-            font-weight: 700;
-        }
+/* =========================================================
+   DETAIL SHEET
+========================================================= */
 
-        .detail-row {
-            display: flex;
+.detail-sheet {
 
-            align-items: flex-start;
+    width:100%;
+    max-width:650px;
 
-            gap: 12px;
+    max-height:92vh;
 
-            padding: 10px 0;
-        }
+    overflow-y:auto;
 
-        .detail-row-icon {
-            width: 34px;
-            height: 34px;
+    background:var(--surface);
 
-            flex-shrink: 0;
+    border-radius:25px 25px 0 0;
 
-            border-radius: 10px;
+    animation:sheetUp .25s ease;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+@keyframes sheetUp {
 
-            background: var(--surface-secondary);
+    from {
+        transform:translateY(100%);
+    }
 
-            color: var(--secondary);
+    to {
+        transform:translateY(0);
+    }
+}
 
-            font-size: 17px;
-        }
+.sheet-header {
 
-        .detail-row-content {
-            flex: 1;
-            min-width: 0;
-        }
+    position:sticky;
+    top:0;
+    z-index:3;
 
-        .detail-label {
-            color: var(--secondary);
+    display:flex;
+    align-items:center;
 
-            font-size: 11px;
-        }
+    padding:14px 17px;
 
-        .detail-value {
-            margin-top: 3px;
+    background:var(--surface);
 
-            font-size: 14px;
-            line-height: 1.45;
+    border-bottom:1px solid var(--border);
+}
 
-            word-break: break-word;
-        }
+.sheet-title {
 
-        .detail-value.empty {
-            color: var(--muted);
-        }
+    flex:1;
 
+    margin-left:5px;
 
-        /* =========================================================
-           ACTIONS
-        ========================================================= */
+    font-size:17px;
+    font-weight:700;
+}
 
-        .detail-actions {
-            display: flex;
+.sheet-body {
+    padding:22px 18px 30px;
+}
 
-            gap: 10px;
 
-            padding-top: 20px;
-        }
+/* =========================================================
+   PROFILE
+========================================================= */
 
-        .action-button {
-            flex: 1;
+.detail-profile {
 
-            height: 49px;
+    display:flex;
 
-            border-radius: 15px;
+    flex-direction:column;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    align-items:center;
 
-            gap: 7px;
+    text-align:center;
 
-            font-size: 14px;
-            font-weight: 700;
-        }
+    padding-bottom:22px;
 
-        .approve-button {
-            background: var(--primary);
-            color: #FFFFFF;
-        }
+    border-bottom:1px solid var(--border);
+}
 
-        .decline-button {
-            background: var(--danger-soft);
-            color: var(--danger);
-        }
+.detail-avatar {
 
-        .action-button:active {
-            transform: scale(.97);
-        }
+    width:84px;
+    height:84px;
 
+    border-radius:50%;
 
-        /* =========================================================
-           CONFIRM DIALOG
-        ========================================================= */
+    object-fit:cover;
 
-        .dialog {
-            width:
-                min(
-                    calc(100% - 32px),
-                    430px
-                );
+    border:1px solid var(--border);
 
-            padding: 22px;
+    background:var(--surface-secondary);
+}
 
-            border-radius: 22px;
+.detail-name {
 
-            background: var(--surface);
+    margin-top:11px;
 
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.25);
+    font-size:20px;
+    font-weight:700;
+}
 
-            animation:
-                dialogIn .2s ease;
-        }
+.detail-username {
 
-        @keyframes dialogIn {
-            from {
-                transform: scale(.94);
-                opacity: 0;
-            }
+    margin-top:3px;
 
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+    color:var(--secondary);
 
-        .dialog-icon {
-            width: 48px;
-            height: 48px;
+    font-size:14px;
+}
 
-            border-radius: 15px;
+.detail-status {
+    margin-top:10px;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
 
-            background: var(--danger-soft);
+/* =========================================================
+   DETAILS
+========================================================= */
 
-            color: var(--danger);
+.details-section {
 
-            font-size: 24px;
+    padding:20px 0;
 
-            margin-bottom: 14px;
-        }
+    border-bottom:1px solid var(--border);
+}
 
-        .dialog-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
+.details-section:last-child {
+    border-bottom:0;
+}
 
-        .dialog-text {
-            margin-top: 7px;
+.section-title {
 
-            color: var(--secondary);
+    margin-bottom:13px;
 
-            font-size: 13px;
-            line-height: 1.5;
-        }
+    font-size:14px;
+    font-weight:700;
+}
 
-        .reason-input {
-            width: 100%;
+.detail-row {
 
-            min-height: 100px;
+    display:flex;
 
-            resize: vertical;
+    align-items:flex-start;
 
-            margin-top: 15px;
+    gap:12px;
 
-            padding: 13px;
+    padding:10px 0;
+}
 
-            border:
-                1px solid var(--border);
+.detail-row-icon {
 
-            border-radius: 14px;
+    width:34px;
+    height:34px;
 
-            outline: none;
+    flex-shrink:0;
 
-            background: var(--input-bg);
-            color: var(--text);
+    border-radius:10px;
 
-            font-size: 13px;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .reason-input:focus {
-            border-color: var(--primary);
+    background:var(--surface-secondary);
 
-            box-shadow:
-                0 0 0 3px
-                var(--primary-soft);
-        }
+    color:var(--secondary);
 
-        .dialog-actions {
-            display: flex;
+    font-size:17px;
+}
 
-            gap: 9px;
+.detail-row-content {
 
-            margin-top: 15px;
-        }
+    flex:1;
+    min-width:0;
+}
 
-        .dialog-button {
-            flex: 1;
+.detail-label {
 
-            height: 44px;
+    color:var(--secondary);
 
-            border-radius: 13px;
+    font-size:11px;
+}
 
-            font-size: 13px;
-            font-weight: 700;
-        }
+.detail-value {
 
-        .cancel-button {
-            background: var(--surface-secondary);
-            color: var(--text);
-        }
+    margin-top:3px;
 
-        .confirm-decline {
-            background: var(--danger);
-            color: #FFFFFF;
-        }
+    font-size:14px;
 
+    line-height:1.45;
 
-        /* =========================================================
-           LOGIN
-        ========================================================= */
+    word-break:break-word;
+}
 
-        .login-screen {
-            position: fixed;
+.detail-value.empty {
+    color:var(--muted);
+}
 
-            inset: 0;
 
-            z-index: 1000;
+/* =========================================================
+   ACTIONS
+========================================================= */
 
-            display: flex;
+.detail-actions {
 
-            align-items: center;
-            justify-content: center;
+    display:flex;
 
-            padding: 20px;
+    gap:10px;
 
-            background: var(--bg);
-        }
+    padding-top:20px;
+}
 
-        .login-card {
-            width: 100%;
-            max-width: 390px;
+.action-button {
 
-            padding: 30px 22px;
+    flex:1;
 
-            border:
-                1px solid var(--border);
+    height:49px;
 
-            border-radius: 24px;
+    border-radius:15px;
 
-            background: var(--surface);
+    display:flex;
 
-            box-shadow: var(--shadow);
+    align-items:center;
+    justify-content:center;
 
-            text-align: center;
-        }
+    gap:7px;
 
-        .login-logo {
-            width: 68px;
-            height: 68px;
+    font-size:14px;
+    font-weight:700;
+}
 
-            border-radius: 19px;
+.approve-button {
 
-            object-fit: cover;
+    background:var(--primary);
 
-            margin-bottom: 18px;
-        }
+    color:#FFFFFF;
+}
 
-        .login-title {
-            margin: 0;
+.decline-button {
 
-            font-size: 24px;
-            font-weight: 700;
-        }
+    background:var(--danger-soft);
 
-        .login-description {
-            margin: 8px auto 22px;
+    color:var(--danger);
+}
 
-            max-width: 300px;
+.action-button:active {
+    transform:scale(.97);
+}
 
-            color: var(--secondary);
 
-            font-size: 13px;
-            line-height: 1.5;
-        }
+/* =========================================================
+   DIALOG
+========================================================= */
 
-        .password-box {
-            position: relative;
-        }
+.dialog {
 
-        .password-box i.left {
-            position: absolute;
+    width:min(
+        calc(100% - 32px),
+        430px
+    );
 
-            left: 16px;
-            top: 50%;
+    padding:22px;
 
-            transform: translateY(-50%);
+    border-radius:22px;
 
-            color: var(--secondary);
+    background:var(--surface);
 
-            font-size: 20px;
-        }
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
 
-        .password-box input {
-            width: 100%;
-            height: 52px;
+    animation:dialogIn .2s ease;
+}
 
-            padding:
-                0 47px
-                0 47px;
+@keyframes dialogIn {
 
-            border:
-                1px solid var(--border);
+    from {
+        transform:scale(.94);
+        opacity:0;
+    }
 
-            border-radius: 16px;
+    to {
+        transform:scale(1);
+        opacity:1;
+    }
+}
 
-            outline: none;
+.dialog-icon {
 
-            background: var(--input-bg);
-            color: var(--text);
-        }
+    width:48px;
+    height:48px;
 
-        .password-box input:focus {
-            border-color: var(--primary);
+    border-radius:15px;
 
-            box-shadow:
-                0 0 0 3px
-                var(--primary-soft);
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .password-toggle {
-            position: absolute;
+    background:var(--danger-soft);
 
-            right: 7px;
-            top: 5px;
+    color:var(--danger);
 
-            width: 42px;
-            height: 42px;
+    font-size:24px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    margin-bottom:14px;
+}
 
-            background: transparent;
+.dialog-title {
 
-            color: var(--secondary);
+    font-size:18px;
+    font-weight:700;
+}
 
-            font-size: 19px;
-        }
+.dialog-text {
 
-        .login-button {
-            width: 100%;
+    margin-top:7px;
 
-            height: 50px;
+    color:var(--secondary);
 
-            margin-top: 13px;
+    font-size:13px;
+    line-height:1.5;
+}
 
-            border-radius: 999px;
+.reason-input {
 
-            background: var(--primary);
-            color: #FFFFFF;
+    width:100%;
 
-            font-size: 14px;
-            font-weight: 700;
-        }
+    min-height:100px;
 
-        .login-error {
-            display: none;
+    resize:vertical;
 
-            margin-top: 12px;
+    margin-top:15px;
 
-            padding: 10px 12px;
+    padding:13px;
 
-            border-radius: 12px;
+    border:1px solid var(--border);
 
-            background: var(--danger-soft);
+    border-radius:14px;
 
-            color: var(--danger);
+    outline:none;
 
-            font-size: 12px;
+    background:var(--input-bg);
 
-            text-align: left;
-        }
+    color:var(--text);
 
+    font-size:13px;
+}
 
-        /* =========================================================
-           RESPONSIVE
-        ========================================================= */
+.reason-input:focus {
 
-        @media (min-width: 700px) {
+    border-color:var(--primary);
 
-            .page {
-                padding-top: 38px;
-            }
+    box-shadow:
+        0 0 0 3px var(--primary-soft);
+}
 
-            .overlay {
-                align-items: center;
-                padding: 20px;
-            }
+.dialog-actions {
 
-            .detail-sheet {
-                border-radius: 25px;
+    display:flex;
 
-                max-height: 90vh;
-            }
-        }
+    gap:9px;
 
-        @media (max-width: 380px) {
+    margin-top:15px;
+}
 
-            .stats {
-                gap: 7px;
-            }
+.dialog-button {
 
-            .stat-card {
-                padding: 13px 10px;
-            }
+    flex:1;
 
-            .request-card {
-                padding: 13px;
-                gap: 10px;
-            }
+    height:44px;
 
-            .avatar,
-            .avatar-fallback {
-                width: 48px;
-                height: 48px;
-            }
+    border-radius:13px;
 
-            .request-status {
-                padding: 5px 7px;
-            }
-        }
+    font-size:13px;
+    font-weight:700;
+}
 
-    </style>
+.cancel-button {
+
+    background:var(--surface-secondary);
+
+    color:var(--text);
+}
+
+.confirm-decline {
+
+    background:var(--danger);
+
+    color:#FFFFFF;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.login-screen {
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:1000;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:var(--bg);
+}
+
+.login-card {
+
+    width:100%;
+    max-width:390px;
+
+    padding:30px 22px;
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    background:var(--surface);
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+}
+
+.login-logo {
+
+    width:68px;
+    height:68px;
+
+    border-radius:19px;
+
+    object-fit:cover;
+
+    margin-bottom:18px;
+}
+
+.login-title {
+
+    margin:0;
+
+    font-size:24px;
+    font-weight:700;
+}
+
+.login-description {
+
+    margin:8px auto 22px;
+
+    max-width:300px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+.password-box {
+    position:relative;
+}
+
+.password-box i.left {
+
+    position:absolute;
+
+    left:16px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:var(--secondary);
+
+    font-size:20px;
+}
+
+.password-box input {
+
+    width:100%;
+    height:52px;
+
+    padding:0 47px;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    outline:none;
+
+    background:var(--input-bg);
+
+    color:var(--text);
+}
+
+.password-box input:focus {
+
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 3px var(--primary-soft);
+}
+
+.password-toggle {
+
+    position:absolute;
+
+    right:7px;
+    top:5px;
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:transparent;
+
+    color:var(--secondary);
+
+    font-size:19px;
+}
+
+.login-button {
+
+    width:100%;
+
+    height:50px;
+
+    margin-top:13px;
+
+    border-radius:999px;
+
+    background:var(--primary);
+
+    color:#FFFFFF;
+
+    font-size:14px;
+    font-weight:700;
+}
+
+.login-button:disabled {
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+.login-error {
+
+    display:none;
+
+    margin-top:12px;
+
+    padding:10px 12px;
+
+    border-radius:12px;
+
+    background:var(--danger-soft);
+
+    color:var(--danger);
+
+    font-size:12px;
+
+    text-align:left;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (min-width:700px) {
+
+    .page {
+        padding-top:38px;
+    }
+
+    .overlay {
+
+        align-items:center;
+
+        padding:20px;
+    }
+
+    .detail-sheet {
+
+        border-radius:25px;
+
+        max-height:90vh;
+    }
+}
+
+@media (max-width:380px) {
+
+    .stats {
+        gap:7px;
+    }
+
+    .stat-card {
+        padding:13px 10px;
+    }
+
+    .request-card {
+
+        padding:13px;
+
+        gap:10px;
+    }
+
+    .avatar,
+    .avatar-fallback {
+
+        width:48px;
+        height:48px;
+    }
+
+    .request-status {
+
+        padding:5px 7px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
+
 <!-- =========================================================
-     ADMIN LOGIN
+     LOGIN
 ========================================================= -->
 
 <div id="loginScreen" class="login-screen">
@@ -1389,9 +1439,9 @@
                 autocomplete="current-password">
 
             <button
+                id="passwordToggle"
                 class="password-toggle"
-                type="button"
-                id="passwordToggle">
+                type="button">
 
                 <i class="ph ph-eye"></i>
 
@@ -1400,8 +1450,9 @@
         </div>
 
         <button
+            id="loginButton"
             class="login-button"
-            id="loginButton">
+            type="button">
 
             <i class="ph ph-sign-in"></i>
             &nbsp;
@@ -1420,304 +1471,302 @@
 
 
 <!-- =========================================================
-     MAIN ADMIN PAGE
+     APP
 ========================================================= -->
 
-<div id="app" style="display:none;">
+<div
+    id="app"
+    style="display:none;">
 
-    <!-- TOOLBAR -->
+<header class="toolbar">
 
-    <header class="toolbar">
+    <div class="toolbar-left">
 
-        <div class="toolbar-left">
+        <button
+            class="back-button"
+            id="backButton"
+            type="button">
 
-            <button
-                class="back-button"
-                onclick="goBack()">
+            <i class="ph ph-arrow-left"></i>
 
-                <i class="ph ph-arrow-left"></i>
+        </button>
 
-            </button>
-
-            <div class="toolbar-title">
-                Verification Requests
-            </div>
-
+        <div class="toolbar-title">
+            Verification Requests
         </div>
 
-        <div class="toolbar-actions">
+    </div>
 
-            <button
-                class="icon-button"
-                id="themeButton"
-                title="Theme">
+    <div class="toolbar-actions">
 
-                <i class="ph ph-moon"></i>
+        <button
+            class="icon-button"
+            id="themeButton"
+            type="button">
 
-            </button>
+            <i class="ph ph-moon"></i>
 
-            <button
-                class="icon-button"
-                id="refreshButton"
-                title="Refresh">
+        </button>
 
-                <i class="ph ph-arrow-clockwise"></i>
+        <button
+            class="icon-button"
+            id="refreshButton"
+            type="button">
 
-            </button>
+            <i class="ph ph-arrow-clockwise"></i>
 
-            <button
-                class="icon-button"
-                id="logoutButton"
-                title="Logout">
+        </button>
 
-                <i class="ph ph-sign-out"></i>
+        <button
+            class="icon-button"
+            id="logoutButton"
+            type="button">
 
-            </button>
+            <i class="ph ph-sign-out"></i>
 
-        </div>
+        </button>
 
-    </header>
+    </div>
 
+</header>
 
-    <!-- PAGE -->
 
-    <main class="page">
+<main class="page">
 
-        <section class="page-header">
+<section class="page-header">
 
-            <h1 class="page-title">
-                Verification requests
-            </h1>
+    <h1 class="page-title">
+        Verification requests
+    </h1>
 
-            <p class="page-description">
-                Review submitted verification applications and
-                approve or decline them.
-            </p>
+    <p class="page-description">
+        Review submitted verification applications and approve or decline them.
+    </p>
 
-        </section>
+</section>
 
 
-        <!-- STATS -->
+<!-- STATS -->
 
-        <section class="stats">
+<section class="stats">
 
-            <div class="stat-card">
+<div class="stat-card">
 
-                <div class="stat-icon">
-                    <i class="ph ph-list"></i>
-                </div>
+    <div class="stat-icon">
+        <i class="ph ph-list"></i>
+    </div>
 
-                <div
-                    id="totalCount"
-                    class="stat-number">
-                    0
-                </div>
+    <div
+        id="totalCount"
+        class="stat-number">
+        0
+    </div>
 
-                <div class="stat-label">
-                    Total
-                </div>
+    <div class="stat-label">
+        Total
+    </div>
 
-            </div>
+</div>
 
 
-            <div class="stat-card">
+<div class="stat-card">
 
-                <div class="stat-icon">
-                    <i class="ph ph-clock"></i>
-                </div>
+    <div class="stat-icon">
+        <i class="ph ph-clock"></i>
+    </div>
 
-                <div
-                    id="pendingCount"
-                    class="stat-number">
-                    0
-                </div>
+    <div
+        id="pendingCount"
+        class="stat-number">
+        0
+    </div>
 
-                <div class="stat-label">
-                    Pending
-                </div>
+    <div class="stat-label">
+        Pending
+    </div>
 
-            </div>
+</div>
 
 
-            <div class="stat-card">
+<div class="stat-card">
 
-                <div class="stat-icon">
-                    <i class="ph ph-seal-check"></i>
-                </div>
+    <div class="stat-icon">
+        <i class="ph ph-seal-check"></i>
+    </div>
 
-                <div
-                    id="approvedCount"
-                    class="stat-number">
-                    0
-                </div>
+    <div
+        id="approvedCount"
+        class="stat-number">
+        0
+    </div>
 
-                <div class="stat-label">
-                    Approved
-                </div>
+    <div class="stat-label">
+        Approved
+    </div>
 
-            </div>
+</div>
 
-        </section>
+</section>
 
 
-        <!-- SEARCH -->
+<!-- SEARCH -->
 
-        <div class="search-box">
+<div class="search-box">
 
-            <i class="ph ph-magnifying-glass"></i>
+    <i class="ph ph-magnifying-glass"></i>
 
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="Search name, username or UID"
-                autocomplete="off">
+    <input
+        id="searchInput"
+        type="search"
+        placeholder="Search name, username or UID"
+        autocomplete="off">
 
-            <button
-                id="clearSearch"
-                class="clear-search"
-                type="button">
+    <button
+        id="clearSearch"
+        class="clear-search"
+        type="button">
 
-                <i class="ph ph-x"></i>
+        <i class="ph ph-x"></i>
 
-            </button>
+    </button>
 
-        </div>
+</div>
 
 
-        <!-- FILTERS -->
+<!-- FILTER -->
 
-        <div class="filters">
+<div class="filters">
 
-            <button
-                class="filter-button active"
-                data-filter="all">
+    <button
+        class="filter-button active"
+        data-filter="all"
+        type="button">
+        All
+    </button>
 
-                All
-            </button>
+    <button
+        class="filter-button"
+        data-filter="pending"
+        type="button">
+        Pending
+    </button>
 
-            <button
-                class="filter-button"
-                data-filter="pending">
+    <button
+        class="filter-button"
+        data-filter="approved"
+        type="button">
+        Approved
+    </button>
 
-                Pending
-            </button>
+    <button
+        class="filter-button"
+        data-filter="rejected"
+        type="button">
+        Rejected
+    </button>
 
-            <button
-                class="filter-button"
-                data-filter="approved">
+</div>
 
-                Approved
-            </button>
 
-            <button
-                class="filter-button"
-                data-filter="rejected">
+<!-- LIST HEADER -->
 
-                Rejected
-            </button>
+<div class="list-header">
 
-        </div>
+    <div class="list-title">
+        Requests
+    </div>
 
+    <div
+        id="resultCount"
+        class="result-count">
+        0 requests
+    </div>
 
-        <!-- LIST HEADER -->
+</div>
 
-        <div class="list-header">
 
-            <div class="list-title">
-                Requests
-            </div>
+<!-- LOADING -->
 
-            <div
-                id="resultCount"
-                class="result-count">
-                0 requests
-            </div>
+<div
+    id="loading"
+    class="loading">
 
-        </div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
 
+</div>
 
-        <!-- LOADING -->
 
-        <div
-            id="loading"
-            class="loading">
+<!-- REQUESTS -->
 
-            <div class="skeleton"></div>
-            <div class="skeleton"></div>
-            <div class="skeleton"></div>
+<div
+    id="requests"
+    class="requests">
+</div>
 
-        </div>
 
+<!-- EMPTY -->
 
-        <!-- REQUESTS -->
+<div
+    id="emptyState"
+    class="state">
 
-        <div
-            id="requests"
-            class="requests">
-        </div>
+    <div class="state-icon">
+        <i class="ph ph-folder-open"></i>
+    </div>
 
+    <div class="state-title">
+        No requests found
+    </div>
 
-        <!-- EMPTY -->
+    <div class="state-text">
+        There are no verification requests matching your current search or filter.
+    </div>
 
-        <div
-            id="emptyState"
-            class="state">
+</div>
 
-            <div class="state-icon">
-                <i class="ph ph-folder-open"></i>
-            </div>
 
-            <div class="state-title">
-                No requests found
-            </div>
+<!-- ERROR -->
 
-            <div class="state-text">
-                There are no verification requests matching
-                your current search or filter.
-            </div>
+<div
+    id="errorState"
+    class="state">
 
-        </div>
+    <div class="state-icon">
+        <i class="ph ph-warning-circle"></i>
+    </div>
 
+    <div class="state-title">
+        Couldn't load requests
+    </div>
 
-        <!-- ERROR -->
+    <div
+        id="errorText"
+        class="state-text">
+        Something went wrong.
+    </div>
 
-        <div
-            id="errorState"
-            class="state">
+    <button
+        id="retryButton"
+        class="retry-button"
+        type="button">
 
-            <div class="state-icon">
-                <i class="ph ph-warning-circle"></i>
-            </div>
+        <i class="ph ph-arrow-clockwise"></i>
+        &nbsp;
+        Try again
 
-            <div class="state-title">
-                Couldn't load requests
-            </div>
+    </button>
 
-            <div
-                id="errorText"
-                class="state-text">
-                Something went wrong.
-            </div>
+</div>
 
-            <button
-                class="retry-button"
-                onclick="loadRequests()">
-
-                <i class="ph ph-arrow-clockwise"></i>
-                &nbsp;
-                Try again
-
-            </button>
-
-        </div>
-
-    </main>
+</main>
 
 </div>
 
 
 <!-- =========================================================
-     DETAILS OVERLAY
+     DETAIL OVERLAY
 ========================================================= -->
 
 <div
@@ -1729,8 +1778,9 @@
         <div class="sheet-header">
 
             <button
+                id="closeDetailsButton"
                 class="icon-button"
-                onclick="closeDetails()">
+                type="button">
 
                 <i class="ph ph-x"></i>
 
@@ -1772,8 +1822,7 @@
         </div>
 
         <div class="dialog-text">
-            Please provide a reason. This reason will be
-            stored with the verification request.
+            Please provide a reason. This reason will be stored with the verification request.
         </div>
 
         <textarea
@@ -1784,19 +1833,17 @@
         <div class="dialog-actions">
 
             <button
+                id="cancelDecline"
                 class="dialog-button cancel-button"
-                onclick="closeDeclineDialog()">
-
+                type="button">
                 Cancel
-
             </button>
 
             <button
                 id="confirmDecline"
-                class="dialog-button confirm-decline">
-
+                class="dialog-button confirm-decline"
+                type="button">
                 Decline
-
             </button>
 
         </div>
@@ -1808,148 +1855,155 @@
 
 <script>
 
-    /* =========================================================
-       CONFIG
-    ========================================================= */
+/* =========================================================
+   CONFIG
+========================================================= */
 
-    const API_BASE =
-        "https://api-appnetick.vercel.app";
-
-    const ADMIN_TOKEN_KEY =
-        "appnetick_admin_token";
-
-    /*
-     * Token is intentionally kept only in memory.
-     *
-     * Refreshing the page requires admin login again.
-     */
-
-    let adminToken = null;
-
-    let requests = [];
-
-    let currentFilter = "all";
-
-    let currentRequest = null;
+const API_BASE =
+    "https://api-appnetick.vercel.app";
 
 
-    /* =========================================================
-       ELEMENTS
-    ========================================================= */
+/*
+ * Token is intentionally NOT stored in localStorage.
+ */
 
-    const loginScreen =
-        document.getElementById("loginScreen");
+let adminToken = null;
 
-    const app =
-        document.getElementById("app");
+let requests = [];
 
-    const adminPassword =
-        document.getElementById("adminPassword");
+let currentFilter = "all";
 
-    const loginButton =
-        document.getElementById("loginButton");
-
-    const loginError =
-        document.getElementById("loginError");
-
-    const passwordToggle =
-        document.getElementById("passwordToggle");
-
-    const requestsContainer =
-        document.getElementById("requests");
-
-    const loading =
-        document.getElementById("loading");
-
-    const emptyState =
-        document.getElementById("emptyState");
-
-    const errorState =
-        document.getElementById("errorState");
-
-    const errorText =
-        document.getElementById("errorText");
-
-    const searchInput =
-        document.getElementById("searchInput");
-
-    const clearSearch =
-        document.getElementById("clearSearch");
-
-    const resultCount =
-        document.getElementById("resultCount");
-
-    const detailOverlay =
-        document.getElementById("detailOverlay");
-
-    const detailBody =
-        document.getElementById("detailBody");
-
-    const declineOverlay =
-        document.getElementById("declineOverlay");
-
-    const declineReason =
-        document.getElementById("declineReason");
-
-    const confirmDecline =
-        document.getElementById("confirmDecline");
+let currentRequest = null;
 
 
-    /* =========================================================
-       THEME
-    ========================================================= */
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-    function applyTheme(theme) {
+const loginScreen =
+    document.getElementById("loginScreen");
 
-        document.body.classList.toggle(
-            "dark",
-            theme === "dark"
+const app =
+    document.getElementById("app");
+
+const adminPassword =
+    document.getElementById("adminPassword");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const loginError =
+    document.getElementById("loginError");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
+
+const requestsContainer =
+    document.getElementById("requests");
+
+const loading =
+    document.getElementById("loading");
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const errorState =
+    document.getElementById("errorState");
+
+const errorText =
+    document.getElementById("errorText");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const clearSearch =
+    document.getElementById("clearSearch");
+
+const resultCount =
+    document.getElementById("resultCount");
+
+const detailOverlay =
+    document.getElementById("detailOverlay");
+
+const detailBody =
+    document.getElementById("detailBody");
+
+const declineOverlay =
+    document.getElementById("declineOverlay");
+
+const declineReason =
+    document.getElementById("declineReason");
+
+const confirmDecline =
+    document.getElementById("confirmDecline");
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(theme) {
+
+    document.body.classList.toggle(
+        "dark",
+        theme === "dark"
+    );
+
+    const icon =
+        document.querySelector(
+            "#themeButton i"
         );
 
-        const icon =
-            document.querySelector("#themeButton i");
+    if (!icon) return;
 
-        if (!icon) return;
-
-        icon.className =
-            theme === "dark"
-                ? "ph ph-sun"
-                : "ph ph-moon";
-    }
+    icon.className =
+        theme === "dark"
+            ? "ph ph-sun"
+            : "ph ph-moon";
+}
 
 
-    function initTheme() {
+function initTheme() {
 
-        const saved =
-            localStorage.getItem("appnetick-theme");
-
-        if (saved === "dark" ||
-            saved === "light") {
-
-            applyTheme(saved);
-            return;
-        }
-
-        const systemDark =
-            window.matchMedia &&
-            window.matchMedia(
-                "(prefers-color-scheme: dark)"
-            ).matches;
-
-        applyTheme(
-            systemDark
-                ? "dark"
-                : "light"
+    const saved =
+        localStorage.getItem(
+            "appnetick-theme"
         );
+
+    if (
+        saved === "dark" ||
+        saved === "light"
+    ) {
+
+        applyTheme(saved);
+
+        return;
     }
 
+    const systemDark =
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
 
-    document
-        .getElementById("themeButton")
-        .addEventListener("click", () => {
+    applyTheme(
+        systemDark
+            ? "dark"
+            : "light"
+    );
+}
+
+
+document
+    .getElementById("themeButton")
+    .addEventListener(
+        "click",
+        function() {
 
             const dark =
-                document.body.classList.contains("dark");
+                document.body.classList.contains(
+                    "dark"
+                );
 
             const theme =
                 dark
@@ -1963,271 +2017,210 @@
 
             applyTheme(theme);
 
-        });
-
-
-    initTheme();
-
-
-    /* =========================================================
-       LOGIN
-    ========================================================= */
-
-    passwordToggle.addEventListener(
-        "click",
-        () => {
-
-            const isPassword =
-                adminPassword.type === "password";
-
-            adminPassword.type =
-                isPassword
-                    ? "text"
-                    : "password";
-
-            passwordToggle.innerHTML =
-                isPassword
-                    ? '<i class="ph ph-eye-slash"></i>'
-                    : '<i class="ph ph-eye"></i>';
-
         }
     );
 
 
-    adminPassword.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key === "Enter") {
-                login();
-            }
-
-        }
-    );
+initTheme();
 
 
-    loginButton.addEventListener(
-        "click",
-        login
-    );
+/* =========================================================
+   LOGIN
+========================================================= */
+
+passwordToggle.addEventListener(
+    "click",
+    function() {
+
+        const isPassword =
+            adminPassword.type === "password";
+
+        adminPassword.type =
+            isPassword
+                ? "text"
+                : "password";
+
+        passwordToggle.innerHTML =
+            isPassword
+                ? '<i class="ph ph-eye-slash"></i>'
+                : '<i class="ph ph-eye"></i>';
+
+    }
+);
 
 
-    async function login() {
+adminPassword.addEventListener(
+    "keydown",
+    function(event) {
 
-        const password =
-            adminPassword.value.trim();
-
-        if (!password) {
-
-            showLoginError(
-                "Please enter the admin password."
-            );
-
-            return;
-        }
-
-
-        setLoginLoading(true);
-
-
-        try {
-
-            const response =
-                await fetch(
-                    API_BASE +
-                    "/api/admin/verification/login",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            password: password
-                        })
-                    }
-                );
-
-
-            const data =
-                await response.json()
-                    .catch(() => ({}));
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.error ||
-                    "Invalid admin password."
-                );
-            }
-
-
-            if (!data.token) {
-
-                throw new Error(
-                    "Server did not return an admin token."
-                );
-            }
-
-
-            adminToken =
-                data.token;
-
-
-            loginScreen.style.display =
-                "none";
-
-            app.style.display =
-                "block";
-
-
-            adminPassword.value = "";
-
-
-            await loadRequests();
-
-        } catch (error) {
-
-            console.error(error);
-
-            showLoginError(
-                error.message ||
-                "Unable to sign in."
-            );
-
-        } finally {
-
-            setLoginLoading(false);
-
+        if (event.key === "Enter") {
+            login();
         }
 
     }
+);
 
 
-    function setLoginLoading(loadingState) {
+loginButton.addEventListener(
+    "click",
+    login
+);
 
-        loginButton.disabled =
-            loadingState;
 
-        loginButton.innerHTML =
-            loadingState
-                ? '<i class="ph ph-spinner-gap ph-spin"></i> &nbsp; Signing in...'
-                : '<i class="ph ph-sign-in"></i> &nbsp; Sign in';
+async function login() {
 
+    const password =
+        adminPassword.value.trim();
+
+    if (!password) {
+
+        showLoginError(
+            "Please enter the admin password."
+        );
+
+        return;
     }
 
 
-    function showLoginError(message) {
+    setLoginLoading(true);
 
-        loginError.textContent =
-            message;
-
-        loginError.style.display =
-            "block";
-
-    }
+    loginError.style.display =
+        "none";
 
 
-    /* =========================================================
-       API HELPER
-    ========================================================= */
-
-    async function apiFetch(
-        endpoint,
-        options = {}
-    ) {
-
-        if (!adminToken) {
-
-            throw new Error(
-                "Admin session expired."
-            );
-        }
-
-
-        const headers = {
-            ...(options.headers || {}),
-
-            "Authorization":
-                "Bearer " + adminToken
-        };
-
+    try {
 
         const response =
             await fetch(
-                API_BASE + endpoint,
+                API_BASE +
+                "/api/admin/verification/login",
                 {
-                    ...options,
-                    headers
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        password:password
+                    })
                 }
             );
 
 
-        if (response.status === 401) {
-
-            logout();
-
-            throw new Error(
-                "Admin session expired. Please sign in again."
-            );
-        }
-
-
         const data =
-            await response.json()
-                .catch(() => ({}));
+            await readResponse(response);
 
 
         if (!response.ok) {
 
             throw new Error(
                 data.error ||
-                "Request failed."
+                "Invalid admin password."
             );
         }
 
 
-        return data;
+        if (!data.token) {
+
+            throw new Error(
+                "Server did not return an admin token."
+            );
+        }
+
+
+        adminToken =
+            data.token;
+
+
+        loginScreen.style.display =
+            "none";
+
+        app.style.display =
+            "block";
+
+        adminPassword.value =
+            "";
+
+
+        await loadRequests();
+
+
+    } catch(error) {
+
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
+
+        showLoginError(
+            error.message ||
+            "Unable to sign in."
+        );
+
+    } finally {
+
+        setLoginLoading(false);
 
     }
 
+}
 
-    /* =========================================================
-       LOAD REQUESTS
-    ========================================================= */
 
-    async function loadRequests() {
+function setLoginLoading(isLoading) {
 
-        showLoading();
+    loginButton.disabled =
+        isLoading;
+
+    loginButton.innerHTML =
+        isLoading
+            ? '<i class="ph ph-spinner-gap ph-spin"></i> &nbsp; Signing in...'
+            : '<i class="ph ph-sign-in"></i> &nbsp; Sign in';
+
+}
+
+
+function showLoginError(message) {
+
+    loginError.textContent =
+        message;
+
+    loginError.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   SAFE RESPONSE READER
+========================================================= */
+
+async function readResponse(response) {
+
+    const contentType =
+        response.headers.get(
+            "content-type"
+        ) || "";
+
+
+    if (
+        contentType
+            .toLowerCase()
+            .includes("application/json")
+    ) {
 
         try {
 
-            const data =
-                await apiFetch(
-                    "/api/admin/verification/requests"
-                );
+            return await response.json();
 
+        } catch(error) {
 
-            requests =
-                Array.isArray(data.requests)
-                    ? data.requests
-                    : [];
-
-
-            updateStats();
-
-            renderRequests();
-
-        } catch (error) {
-
-            console.error(error);
-
-            showError(
-                error.message ||
-                "Unable to load verification requests."
+            throw new Error(
+                "API returned invalid JSON."
             );
 
         }
@@ -2235,119 +2228,353 @@
     }
 
 
-    /* =========================================================
-       STATS
-    ========================================================= */
-
-    function updateStats() {
-
-        const total =
-            requests.length;
+    const text =
+        await response.text();
 
 
-        const pending =
-            requests.filter(
-                request =>
-                    normalizeStatus(
-                        request.verification_status
-                    ) === "pending"
-            ).length;
+    console.error(
+        "NON JSON RESPONSE:",
+        text
+    );
 
 
-        const approved =
-            requests.filter(
-                request =>
-                    normalizeStatus(
-                        request.verification_status
-                    ) === "approved"
-            ).length;
+    if (!response.ok) {
 
-
-        document.getElementById(
-            "totalCount"
-        ).textContent = total;
-
-
-        document.getElementById(
-            "pendingCount"
-        ).textContent = pending;
-
-
-        document.getElementById(
-            "approvedCount"
-        ).textContent = approved;
+        throw new Error(
+            "API returned HTTP " +
+            response.status +
+            ". The API route may be missing or the deployment may have failed."
+        );
 
     }
 
 
-    /* =========================================================
-       STATUS
-    ========================================================= */
+    throw new Error(
+        "API returned an unexpected response."
+    );
 
-    function normalizeStatus(status) {
+}
 
-        const value =
-            String(status || "")
-                .toLowerCase()
-                .trim();
+
+/* =========================================================
+   API HELPER
+========================================================= */
+
+async function apiFetch(
+    endpoint,
+    options = {}
+) {
+
+    if (!adminToken) {
+
+        throw new Error(
+            "Admin session expired. Please sign in again."
+        );
+
+    }
+
+
+    const headers = {
+
+        "Accept":
+            "application/json",
+
+        ...(options.headers || {}),
+
+        "Authorization":
+            "Bearer " + adminToken
+
+    };
+
+
+    let response;
+
+
+    try {
+
+        response =
+            await fetch(
+                API_BASE + endpoint,
+                {
+                    ...options,
+                    headers:headers
+                }
+            );
+
+    } catch(error) {
+
+        console.error(
+            "NETWORK ERROR:",
+            error
+        );
+
+        throw new Error(
+            "Unable to connect to Appnetick API. Check api-appnetick.vercel.app and your network connection."
+        );
+
+    }
+
+
+    const data =
+        await readResponse(response);
+
+
+    console.log(
+        "API RESPONSE:",
+        endpoint,
+        response.status,
+        data
+    );
+
+
+    if (response.status === 401) {
+
+        logout();
+
+        throw new Error(
+            "Admin session expired. Please sign in again."
+        );
+
+    }
+
+
+    if (response.status === 403) {
+
+        throw new Error(
+            data.error ||
+            "Access denied. Admin authorization failed."
+        );
+
+    }
+
+
+    if (response.status === 404) {
+
+        throw new Error(
+            data.error ||
+            "Verification API route was not found. Check the Vercel API route path."
+        );
+
+    }
+
+
+    if (response.status >= 500) {
+
+        throw new Error(
+            data.error ||
+            "Server error (" +
+            response.status +
+            "). Check Firebase configuration and Vercel logs."
+        );
+
+    }
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error ||
+            "Request failed with HTTP " +
+            response.status +
+            "."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =========================================================
+   LOAD REQUESTS
+========================================================= */
+
+async function loadRequests() {
+
+    showLoading();
+
+
+    try {
+
+        console.log(
+            "Loading verification requests..."
+        );
+
+
+        const data =
+            await apiFetch(
+                "/api/admin/verification/requests"
+            );
+
+
+        console.log(
+            "REQUESTS:",
+            data
+        );
 
 
         if (
-            value === "approve" ||
-            value === "approved"
+            !data ||
+            !Array.isArray(
+                data.requests
+            )
         ) {
-            return "approved";
+
+            throw new Error(
+                "API response is invalid. Expected a 'requests' array."
+            );
+
         }
 
 
-        if (
-            value === "reject" ||
-            value === "rejected" ||
-            value === "declined"
-        ) {
-            return "rejected";
-        }
+        requests =
+            data.requests;
 
 
-        return "pending";
+        updateStats();
+
+        renderRequests();
+
+
+    } catch(error) {
+
+        console.error(
+            "LOAD REQUESTS ERROR:",
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Unable to load verification requests."
+        );
 
     }
 
+}
 
-    function statusLabel(status) {
 
-        switch (
-            normalizeStatus(status)
-        ) {
+/* =========================================================
+   STATS
+========================================================= */
 
-            case "approved":
-                return "Approved";
+function updateStats() {
 
-            case "rejected":
-                return "Rejected";
+    const total =
+        requests.length;
 
-            default:
-                return "Pending";
 
-        }
+    const pending =
+        requests.filter(
+            request =>
+                normalizeStatus(
+                    request.verification_status
+                ) === "pending"
+        ).length;
 
+
+    const approved =
+        requests.filter(
+            request =>
+                normalizeStatus(
+                    request.verification_status
+                ) === "approved"
+        ).length;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent = pending;
+
+
+    document.getElementById(
+        "approvedCount"
+    ).textContent = approved;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function normalizeStatus(status) {
+
+    const value =
+        String(status || "")
+            .toLowerCase()
+            .trim();
+
+
+    if (
+        value === "approve" ||
+        value === "approved"
+    ) {
+        return "approved";
     }
 
 
-    /* =========================================================
-       RENDER
-    ========================================================= */
-
-    function renderRequests() {
-
-        const search =
-            searchInput.value
-                .trim()
-                .toLowerCase();
+    if (
+        value === "reject" ||
+        value === "rejected" ||
+        value === "declined"
+    ) {
+        return "rejected";
+    }
 
 
-        const filtered =
-            requests.filter(request => {
+    return "pending";
+
+}
+
+
+function statusLabel(status) {
+
+    const normalized =
+        normalizeStatus(status);
+
+
+    if (
+        normalized === "approved"
+    ) {
+        return "Approved";
+    }
+
+
+    if (
+        normalized === "rejected"
+    ) {
+        return "Rejected";
+    }
+
+
+    return "Pending";
+
+}
+
+
+/* =========================================================
+   RENDER REQUESTS
+========================================================= */
+
+function renderRequests() {
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    const filtered =
+        requests.filter(
+            function(request) {
 
                 const status =
                     normalizeStatus(
@@ -2369,903 +2596,954 @@
 
 
                 const searchable = [
+
                     request.uid,
+
                     request.username,
+
                     request.Username,
+
                     request.full_name,
+
                     request.name,
+
                     request.legal_name,
+
                     request.email
+
                 ]
-                    .filter(Boolean)
-                    .join(" ")
-                    .toLowerCase();
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
 
 
-                return searchable.includes(search);
-
-            });
-
-
-        requestsContainer.innerHTML =
-            "";
-
-
-        resultCount.textContent =
-            filtered.length +
-            (
-                filtered.length === 1
-                    ? " request"
-                    : " requests"
-            );
-
-
-        loading.style.display =
-            "none";
-
-        errorState.style.display =
-            "none";
-
-
-        if (!filtered.length) {
-
-            emptyState.style.display =
-                "block";
-
-            return;
-
-        }
-
-
-        emptyState.style.display =
-            "none";
-
-
-        filtered.forEach(
-            request => {
-
-                requestsContainer.appendChild(
-                    createRequestCard(request)
+                return searchable.includes(
+                    search
                 );
 
             }
         );
 
+
+    requestsContainer.innerHTML =
+        "";
+
+
+    resultCount.textContent =
+        filtered.length +
+        (
+            filtered.length === 1
+                ? " request"
+                : " requests"
+        );
+
+
+    loading.style.display =
+        "none";
+
+    errorState.style.display =
+        "none";
+
+
+    if (!filtered.length) {
+
+        emptyState.style.display =
+            "block";
+
+        return;
+
     }
 
 
-    function createRequestCard(request) {
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "request-card";
+    emptyState.style.display =
+        "none";
 
 
-        const name =
-            request.full_name ||
-            request.name ||
-            request.legal_name ||
-            "Unknown user";
+    filtered.forEach(
+        function(request) {
 
-
-        const username =
-            request.username ||
-            request.Username ||
-            "";
-
-
-        const uid =
-            request.uid ||
-            "";
-
-
-        const status =
-            normalizeStatus(
-                request.verification_status
+            requestsContainer.appendChild(
+                createRequestCard(request)
             );
 
+        }
+    );
 
-        const avatar =
-            request.avatar ||
-            request.logo ||
-            request.profile ||
-            "";
+}
 
 
-        const date =
-            formatDate(
-                request.submitted_at
-            );
+/* =========================================================
+   REQUEST CARD
+========================================================= */
+
+function createRequestCard(request) {
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+    card.className =
+        "request-card";
 
 
-        const avatarHTML =
-            avatar
-                ? `
-                    <img
-                        class="avatar"
-                        src="${escapeAttr(avatar)}"
-                        alt=""
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-
-                    <div
-                        class="avatar-fallback"
-                        style="display:none;">
-                        ${escapeHtml(
-                            getInitial(name)
-                        )}
-                    </div>
-                  `
-                : `
-                    <div class="avatar-fallback">
-                        ${escapeHtml(
-                            getInitial(name)
-                        )}
-                    </div>
-                  `;
+    const name =
+        request.full_name ||
+        request.name ||
+        request.legal_name ||
+        "Unknown user";
 
 
-        card.innerHTML = `
+    const username =
+        request.username ||
+        request.Username ||
+        "";
 
-            ${avatarHTML}
 
-            <div class="request-main">
+    const uid =
+        request.uid ||
+        "";
 
-                <div class="request-name-row">
 
-                    <div class="request-name">
-                        ${escapeHtml(name)}
-                    </div>
+    const status =
+        normalizeStatus(
+            request.verification_status
+        );
 
+
+    const avatar =
+        request.avatar ||
+        request.logo ||
+        request.profile ||
+        "";
+
+
+    const avatarHTML =
+        avatar
+            ? `
+                <img
+                    class="avatar"
+                    src="${escapeAttr(avatar)}"
+                    alt=""
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+                <div
+                    class="avatar-fallback"
+                    style="display:none;">
+                    ${escapeHtml(
+                        getInitial(name)
+                    )}
                 </div>
+              `
+            : `
+                <div class="avatar-fallback">
+                    ${escapeHtml(
+                        getInitial(name)
+                    )}
+                </div>
+              `;
 
-                <div class="request-username">
 
-                    ${username
+    card.innerHTML = `
+
+        ${avatarHTML}
+
+        <div class="request-main">
+
+            <div class="request-name">
+                ${escapeHtml(name)}
+            </div>
+
+            <div class="request-username">
+
+                ${
+                    username
                         ? "@" +
                           escapeHtml(
                               removeAt(username)
                           )
                         : escapeHtml(uid)
-                    }
+                }
 
+            </div>
+
+            <div class="request-meta">
+
+                <span>
+                    ${escapeHtml(
+                        formatDate(
+                            request.submitted_at
+                        )
+                    )}
+                </span>
+
+                <span>•</span>
+
+                <span>
+                    ${escapeHtml(
+                        shortUid(uid)
+                    )}
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="
+            request-status
+            status-${status}
+        ">
+            ${statusLabel(status)}
+        </div>
+
+        <i class="
+            ph
+            ph-caret-right
+            request-arrow
+        "></i>
+
+    `;
+
+
+    card.addEventListener(
+        "click",
+        function() {
+
+            openDetails(request);
+
+        }
+    );
+
+
+    return card;
+
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+function openDetails(request) {
+
+    currentRequest =
+        request;
+
+
+    const name =
+        request.full_name ||
+        request.name ||
+        request.legal_name ||
+        "Unknown user";
+
+
+    const username =
+        request.username ||
+        request.Username ||
+        "";
+
+
+    const avatar =
+        request.avatar ||
+        request.logo ||
+        request.profile ||
+        "";
+
+
+    const status =
+        normalizeStatus(
+            request.verification_status
+        );
+
+
+    const avatarHTML =
+        avatar
+            ? `
+                <img
+                    class="detail-avatar"
+                    src="${escapeAttr(avatar)}"
+                    alt=""
+                    onerror="this.style.display='none';">
+              `
+            : `
+                <div
+                    class="detail-avatar"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        background:var(--primary-soft);
+                        color:var(--primary);
+                        font-size:30px;
+                        font-weight:700;">
+                    ${escapeHtml(
+                        getInitial(name)
+                    )}
                 </div>
+              `;
 
-                <div class="request-meta">
 
-                    <span>
-                        ${escapeHtml(date)}
-                    </span>
+    detailBody.innerHTML = `
 
-                    <span>•</span>
+        <div class="detail-profile">
 
-                    <span>
-                        ${escapeHtml(
-                            shortUid(uid)
-                        )}
-                    </span>
+            ${avatarHTML}
 
-                </div>
+            <div class="detail-name">
+                ${escapeHtml(name)}
+            </div>
+
+            <div class="detail-username">
+
+                ${
+                    username
+                        ? "@" +
+                          escapeHtml(
+                              removeAt(username)
+                          )
+                        : escapeHtml(
+                            request.uid || ""
+                          )
+                }
 
             </div>
 
             <div class="
+                detail-status
                 request-status
                 status-${status}
             ">
                 ${statusLabel(status)}
             </div>
 
-            <i class="
-                ph
-                ph-caret-right
-                request-arrow
-            "></i>
-
-        `;
+        </div>
 
 
-        card.addEventListener(
-            "click",
-            () => openDetails(request)
+        ${detailSection(
+            "Account",
+            [
+
+                detailItem(
+                    "UID",
+                    request.uid,
+                    "ph-identification-card"
+                ),
+
+                detailItem(
+                    "Username",
+                    username
+                        ? "@" +
+                          removeAt(username)
+                        : "",
+                    "ph-at"
+                ),
+
+                detailItem(
+                    "Email",
+                    request.email,
+                    "ph-envelope"
+                ),
+
+                detailItem(
+                    "Full name",
+                    request.full_name ||
+                    request.name,
+                    "ph-user"
+                )
+
+            ]
+        )}
+
+
+        ${detailSection(
+            "Personal information",
+            [
+
+                detailItem(
+                    "Legal name",
+                    request.legal_name,
+                    "ph-identification-badge"
+                ),
+
+                detailItem(
+                    "Date of birth",
+                    request.date_of_birth,
+                    "ph-calendar"
+                ),
+
+                detailItem(
+                    "Country",
+                    request.country,
+                    "ph-globe"
+                ),
+
+                detailItem(
+                    "Phone number",
+                    request.phone,
+                    "ph-phone"
+                )
+
+            ]
+        )}
+
+
+        ${detailSection(
+            "Verification",
+            [
+
+                detailItem(
+                    "Account category",
+                    request.account_category,
+                    "ph-user-circle"
+                ),
+
+                detailItem(
+                    "Profession / role",
+                    request.profession,
+                    "ph-briefcase"
+                ),
+
+                detailItem(
+                    "Why should you be verified?",
+                    request.verification_reason,
+                    "ph-seal-check"
+                ),
+
+                detailItem(
+                    "What are you known for?",
+                    request.known_for,
+                    "ph-star"
+                )
+
+            ]
+        )}
+
+
+        ${detailSection(
+            "Public presence",
+            [
+
+                detailItem(
+                    "Public profile / website",
+                    request.website,
+                    "ph-link"
+                ),
+
+                detailItem(
+                    "Other social profile",
+                    request.social_profile,
+                    "ph-share-network"
+                ),
+
+                detailItem(
+                    "Audience size",
+                    request.audience,
+                    "ph-users"
+                ),
+
+                detailItem(
+                    "Content / activity category",
+                    request.content_category,
+                    "ph-video-camera"
+                ),
+
+                detailItem(
+                    "Notable achievement",
+                    request.achievement,
+                    "ph-trophy"
+                ),
+
+                detailItem(
+                    "Public presence / media coverage",
+                    request.public_presence,
+                    "ph-newspaper"
+                )
+
+            ]
+        )}
+
+
+        ${detailSection(
+            "Confirmation",
+            [
+
+                detailItem(
+                    "Account authenticity",
+                    yesNo(
+                        request.authenticity_confirmed
+                    ),
+                    "ph-shield-check"
+                ),
+
+                detailItem(
+                    "Information accuracy",
+                    yesNo(
+                        request.information_confirmed
+                    ),
+                    "ph-check-circle"
+                ),
+
+                detailItem(
+                    "Verification terms",
+                    yesNo(
+                        request.terms_confirmed
+                    ),
+                    "ph-file-text"
+                )
+
+            ]
+        )}
+
+
+        ${detailSection(
+            "Submission",
+            [
+
+                detailItem(
+                    "Submitted at",
+                    formatDate(
+                        request.submitted_at
+                    ),
+                    "ph-clock"
+                ),
+
+                detailItem(
+                    "Reviewed at",
+                    request.reviewed_at &&
+                    request.reviewed_at !== 0
+                        ? formatDate(
+                            request.reviewed_at
+                          )
+                        : "",
+                    "ph-calendar-check"
+                ),
+
+                detailItem(
+                    "Reviewed by",
+                    request.reviewed_by,
+                    "ph-user-gear"
+                ),
+
+                detailItem(
+                    "Rejection reason",
+                    request.rejection_reason,
+                    "ph-warning"
+                )
+
+            ]
+        )}
+
+
+        ${
+            status === "pending"
+                ? `
+
+                    <div class="detail-actions">
+
+                        <button
+                            class="
+                                action-button
+                                decline-button
+                            "
+                            id="detailDeclineButton"
+                            type="button">
+
+                            <i class="ph ph-x"></i>
+
+                            Decline
+
+                        </button>
+
+
+                        <button
+                            class="
+                                action-button
+                                approve-button
+                            "
+                            id="detailApproveButton"
+                            type="button">
+
+                            <i class="ph ph-seal-check"></i>
+
+                            Approve
+
+                        </button>
+
+                    </div>
+
+                  `
+                : ""
+        }
+
+    `;
+
+
+    const approveButton =
+        document.getElementById(
+            "detailApproveButton"
         );
 
+    if (approveButton) {
 
-        return card;
+        approveButton.addEventListener(
+            "click",
+            approveRequest
+        );
 
     }
 
 
-    /* =========================================================
-       DETAILS
-    ========================================================= */
+    const declineButton =
+        document.getElementById(
+            "detailDeclineButton"
+        );
 
-    function openDetails(request) {
+    if (declineButton) {
 
-        currentRequest =
-            request;
+        declineButton.addEventListener(
+            "click",
+            openDeclineDialog
+        );
 
-
-        const name =
-            request.full_name ||
-            request.name ||
-            request.legal_name ||
-            "Unknown user";
+    }
 
 
-        const username =
-            request.username ||
-            request.Username ||
-            "";
+    detailOverlay.classList.add(
+        "show"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+}
 
 
-        const avatar =
-            request.avatar ||
-            request.logo ||
-            request.profile ||
-            "";
+function detailSection(
+    title,
+    items
+) {
+
+    return `
+
+        <section class="details-section">
+
+            <div class="section-title">
+                ${escapeHtml(title)}
+            </div>
+
+            ${items.join("")}
+
+        </section>
+
+    `;
+
+}
 
 
-        const status =
-            normalizeStatus(
-                request.verification_status
-            );
+function detailItem(
+    label,
+    value,
+    icon
+) {
+
+    const empty =
+        value === undefined ||
+        value === null ||
+        String(value).trim() === "";
 
 
-        const avatarHTML =
-            avatar
-                ? `
-                    <img
-                        class="detail-avatar"
-                        src="${escapeAttr(avatar)}"
-                        alt=""
-                        onerror="this.style.display='none';">
-                  `
-                : `
-                    <div
-                        class="detail-avatar"
-                        style="
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            background:var(--primary-soft);
-                            color:var(--primary);
-                            font-size:30px;
-                            font-weight:700;">
-                        ${escapeHtml(
-                            getInitial(name)
-                        )}
-                    </div>
-                  `;
+    return `
 
+        <div class="detail-row">
 
-        detailBody.innerHTML = `
+            <div class="detail-row-icon">
 
-            <div class="detail-profile">
+                <i class="
+                    ph
+                    ${icon}
+                "></i>
 
-                ${avatarHTML}
+            </div>
 
-                <div class="detail-name">
-                    ${escapeHtml(name)}
+            <div class="detail-row-content">
+
+                <div class="detail-label">
+                    ${escapeHtml(label)}
                 </div>
 
-                <div class="detail-username">
+                <div class="
+                    detail-value
+                    ${empty ? "empty" : ""}
+                ">
 
                     ${
-                        username
-                            ? "@" +
-                              escapeHtml(
-                                  removeAt(username)
-                              )
+                        empty
+                            ? "Not provided"
                             : escapeHtml(
-                                request.uid || ""
+                                String(value)
                               )
                     }
 
                 </div>
 
-                <div class="
-                    detail-status
-                    request-status
-                    status-${status}
-                ">
-                    ${statusLabel(status)}
-                </div>
-
             </div>
 
+        </div>
 
-            ${detailSection(
-                "Account",
-                [
-                    detailItem(
-                        "Identification",
-                        "UID",
-                        request.uid,
-                        "ph-identification-card"
-                    ),
+    `;
 
-                    detailItem(
-                        "User",
-                        "Username",
-                        username
-                            ? "@" + removeAt(username)
-                            : "",
-                        "ph-at"
-                    ),
-
-                    detailItem(
-                        "User",
-                        "Email",
-                        request.email,
-                        "ph-envelope"
-                    ),
-
-                    detailItem(
-                        "User",
-                        "Full name",
-                        request.full_name ||
-                        request.name,
-                        "ph-user"
-                    )
-                ]
-            )}
+}
 
 
-            ${detailSection(
-                "Personal information",
-                [
+function closeDetails() {
 
-                    detailItem(
-                        "Legal",
-                        "Legal name",
-                        request.legal_name,
-                        "ph-identification-badge"
-                    ),
+    detailOverlay.classList.remove(
+        "show"
+    );
 
-                    detailItem(
-                        "Personal",
-                        "Date of birth",
-                        request.date_of_birth,
-                        "ph-calendar"
-                    ),
+    document.body.style.overflow =
+        "";
 
-                    detailItem(
-                        "Location",
-                        "Country",
-                        request.country,
-                        "ph-globe"
-                    ),
+    currentRequest =
+        null;
 
-                    detailItem(
-                        "Contact",
-                        "Phone number",
-                        request.phone,
-                        "ph-phone"
-                    )
-
-                ]
-            )}
+}
 
 
-            ${detailSection(
-                "Verification",
-                [
+/* =========================================================
+   APPROVE
+========================================================= */
 
-                    detailItem(
-                        "Account",
-                        "Account category",
-                        request.account_category,
-                        "ph-user-circle"
-                    ),
+async function approveRequest() {
 
-                    detailItem(
-                        "Profession",
-                        "Profession / role",
-                        request.profession,
-                        "ph-briefcase"
-                    ),
-
-                    detailItem(
-                        "Reason",
-                        "Why should you be verified?",
-                        request.verification_reason,
-                        "ph-seal-check"
-                    ),
-
-                    detailItem(
-                        "Known for",
-                        "What are you known for?",
-                        request.known_for,
-                        "ph-star"
-                    )
-
-                ]
-            )}
+    if (!currentRequest) {
+        return;
+    }
 
 
-            ${detailSection(
-                "Public presence",
-                [
-
-                    detailItem(
-                        "Website",
-                        "Public profile / website",
-                        request.website,
-                        "ph-link"
-                    ),
-
-                    detailItem(
-                        "Social",
-                        "Other social profile",
-                        request.social_profile,
-                        "ph-share-network"
-                    ),
-
-                    detailItem(
-                        "Audience",
-                        "Audience size",
-                        request.audience,
-                        "ph-users"
-                    ),
-
-                    detailItem(
-                        "Content",
-                        "Content / activity category",
-                        request.content_category,
-                        "ph-video-camera"
-                    ),
-
-                    detailItem(
-                        "Achievement",
-                        "Notable achievement",
-                        request.achievement,
-                        "ph-trophy"
-                    ),
-
-                    detailItem(
-                        "Media",
-                        "Public presence / media coverage",
-                        request.public_presence,
-                        "ph-newspaper"
-                    )
-
-                ]
-            )}
+    const uid =
+        currentRequest.uid;
 
 
-            ${detailSection(
-                "Confirmation",
-                [
+    if (!uid) {
 
-                    detailItem(
-                        "Authenticity",
-                        "Account authenticity",
-                        yesNo(
-                            request.authenticity_confirmed
-                        ),
-                        "ph-shield-check"
-                    ),
-
-                    detailItem(
-                        "Accuracy",
-                        "Information accuracy",
-                        yesNo(
-                            request.information_confirmed
-                        ),
-                        "ph-check-circle"
-                    ),
-
-                    detailItem(
-                        "Terms",
-                        "Verification terms",
-                        yesNo(
-                            request.terms_confirmed
-                        ),
-                        "ph-file-text"
-                    )
-
-                ]
-            )}
-
-
-            ${detailSection(
-                "Submission",
-                [
-
-                    detailItem(
-                        "Submitted",
-                        "Submitted at",
-                        formatDate(
-                            request.submitted_at
-                        ),
-                        "ph-clock"
-                    ),
-
-                    detailItem(
-                        "Reviewed",
-                        "Reviewed at",
-                        request.reviewed_at &&
-                        request.reviewed_at !== 0
-                            ? formatDate(
-                                request.reviewed_at
-                              )
-                            : "",
-                        "ph-calendar-check"
-                    ),
-
-                    detailItem(
-                        "Admin",
-                        "Reviewed by",
-                        request.reviewed_by,
-                        "ph-user-gear"
-                    ),
-
-                    detailItem(
-                        "Reason",
-                        "Rejection reason",
-                        request.rejection_reason,
-                        "ph-warning"
-                    )
-
-                ]
-            )}
-
-
-            ${
-                status === "pending"
-                    ? `
-                        <div class="detail-actions">
-
-                            <button
-                                class="
-                                    action-button
-                                    decline-button
-                                "
-                                onclick="openDeclineDialog()">
-
-                                <i class="ph ph-x"></i>
-
-                                Decline
-
-                            </button>
-
-                            <button
-                                class="
-                                    action-button
-                                    approve-button
-                                "
-                                onclick="approveRequest()">
-
-                                <i class="ph ph-seal-check"></i>
-
-                                Approve
-
-                            </button>
-
-                        </div>
-                      `
-                    : ""
-            }
-
-        `;
-
-
-        detailOverlay.classList.add(
-            "show"
+        alert(
+            "Request UID is missing."
         );
 
-        document.body.style.overflow =
-            "hidden";
+        return;
 
     }
 
 
-    function detailSection(
-        title,
-        items
+    if (
+        !confirm(
+            "Approve this verification request?"
+        )
     ) {
-
-        return `
-
-            <section class="details-section">
-
-                <div class="section-title">
-                    ${escapeHtml(title)}
-                </div>
-
-                ${items.join("")}
-
-            </section>
-
-        `;
-
+        return;
     }
 
 
-    function detailItem(
-        category,
-        label,
-        value,
-        icon
-    ) {
+    try {
 
-        const empty =
-            value === undefined ||
-            value === null ||
-            String(value).trim() === "";
-
-
-        return `
-
-            <div class="detail-row">
-
-                <div class="detail-row-icon">
-
-                    <i class="
-                        ph
-                        ${icon}
-                    "></i>
-
-                </div>
-
-                <div class="detail-row-content">
-
-                    <div class="detail-label">
-                        ${escapeHtml(label)}
-                    </div>
-
-                    <div class="
-                        detail-value
-                        ${empty ? "empty" : ""}
-                    ">
-
-                        ${
-                            empty
-                                ? "Not provided"
-                                : escapeHtml(
-                                    String(value)
-                                  )
-                        }
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-
-    function closeDetails() {
-
-        detailOverlay.classList.remove(
-            "show"
+        await reviewRequest(
+            uid,
+            "approve",
+            ""
         );
 
-        document.body.style.overflow =
-            "";
 
-        currentRequest =
-            null;
+        closeDetails();
+
+        await loadRequests();
+
+
+        alert(
+            "Verification approved successfully."
+        );
+
+
+    } catch(error) {
+
+        console.error(error);
+
+        alert(
+            error.message ||
+            "Unable to approve request."
+        );
 
     }
 
+}
 
-    /* =========================================================
-       APPROVE
-    ========================================================= */
 
-    async function approveRequest() {
+/* =========================================================
+   DECLINE
+========================================================= */
+
+function openDeclineDialog() {
+
+    if (!currentRequest) {
+        return;
+    }
+
+    declineReason.value =
+        "";
+
+    declineOverlay.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeDeclineDialog() {
+
+    declineOverlay.classList.remove(
+        "show"
+    );
+
+}
+
+
+confirmDecline.addEventListener(
+    "click",
+    async function() {
 
         if (!currentRequest) {
             return;
         }
 
 
-        const uid =
-            currentRequest.uid;
+        const reason =
+            declineReason.value.trim();
 
 
-        if (!uid) {
+        if (!reason) {
 
-            alert(
-                "Request UID is missing."
-            );
+            declineReason.focus();
 
             return;
+
         }
 
 
-        if (
-            !confirm(
-                "Approve this verification request?"
-            )
-        ) {
-            return;
-        }
+        confirmDecline.disabled =
+            true;
+
+        confirmDecline.textContent =
+            "Declining...";
 
 
         try {
 
             await reviewRequest(
-                uid,
-                "approve",
-                ""
+                currentRequest.uid,
+                "reject",
+                reason
             );
 
+
+            closeDeclineDialog();
 
             closeDetails();
 
             await loadRequests();
 
+
             alert(
-                "Verification approved successfully."
+                "Verification request declined."
             );
 
-        } catch (error) {
+
+        } catch(error) {
 
             console.error(error);
 
             alert(
                 error.message ||
-                "Unable to approve request."
+                "Unable to decline request."
             );
+
+        } finally {
+
+            confirmDecline.disabled =
+                false;
+
+            confirmDecline.textContent =
+                "Decline";
 
         }
 
     }
+);
 
 
-    /* =========================================================
-       DECLINE
-    ========================================================= */
+/* =========================================================
+   REVIEW API
+========================================================= */
 
-    function openDeclineDialog() {
+async function reviewRequest(
+    uid,
+    action,
+    reason
+) {
 
-        declineReason.value = "";
+    return await apiFetch(
+        "/api/admin/verification/review",
+        {
 
-        declineOverlay.classList.add(
-            "show"
-        );
+            method:"POST",
 
-    }
+            headers:{
+                "Content-Type":
+                    "application/json"
+            },
 
+            body:JSON.stringify({
 
-    function closeDeclineDialog() {
+                uid:uid,
 
-        declineOverlay.classList.remove(
-            "show"
-        );
+                action:action,
 
-    }
+                reason:reason
 
-
-    confirmDecline.addEventListener(
-        "click",
-        async () => {
-
-            if (!currentRequest) {
-                return;
-            }
-
-
-            const reason =
-                declineReason.value.trim();
-
-
-            if (!reason) {
-
-                declineReason.focus();
-
-                return;
-            }
-
-
-            confirmDecline.disabled =
-                true;
-
-            confirmDecline.textContent =
-                "Declining...";
-
-
-            try {
-
-                await reviewRequest(
-                    currentRequest.uid,
-                    "reject",
-                    reason
-                );
-
-
-                closeDeclineDialog();
-
-                closeDetails();
-
-                await loadRequests();
-
-                alert(
-                    "Verification request declined."
-                );
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    error.message ||
-                    "Unable to decline request."
-                );
-
-            } finally {
-
-                confirmDecline.disabled =
-                    false;
-
-                confirmDecline.textContent =
-                    "Decline";
-
-            }
+            })
 
         }
     );
 
-
-    /* =========================================================
-       REVIEW API
-    ========================================================= */
-
-    async function reviewRequest(
-        uid,
-        action,
-        reason
-    ) {
-
-        return await apiFetch(
-            "/api/admin/verification/review",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-                    uid: uid,
-                    action: action,
-                    reason: reason
-                })
-            }
-        );
-
-    }
+}
 
 
-    /* =========================================================
-       FILTER
-    ========================================================= */
+/* =========================================================
+   FILTER
+========================================================= */
 
-    document
-        .querySelectorAll(".filter-button")
-        .forEach(button => {
+document
+    .querySelectorAll(
+        ".filter-button"
+    )
+    .forEach(
+        function(button) {
 
             button.addEventListener(
                 "click",
-                () => {
+                function() {
 
                     document
                         .querySelectorAll(
                             ".filter-button"
                         )
                         .forEach(
-                            item =>
+                            function(item) {
+
                                 item.classList.remove(
                                     "active"
-                                )
+                                );
+
+                            }
                         );
 
 
@@ -3283,414 +3561,517 @@
                 }
             );
 
-        });
-
-
-    /* =========================================================
-       SEARCH
-    ========================================================= */
-
-    searchInput.addEventListener(
-        "input",
-        () => {
-
-            clearSearch.style.display =
-                searchInput.value
-                    ? "flex"
-                    : "none";
-
-
-            renderRequests();
-
         }
     );
 
 
-    clearSearch.addEventListener(
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        clearSearch.style.display =
+            searchInput.value
+                ? "flex"
+                : "none";
+
+
+        renderRequests();
+
+    }
+);
+
+
+clearSearch.addEventListener(
+    "click",
+    function() {
+
+        searchInput.value =
+            "";
+
+        clearSearch.style.display =
+            "none";
+
+        renderRequests();
+
+        searchInput.focus();
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+document
+    .getElementById(
+        "refreshButton"
+    )
+    .addEventListener(
         "click",
-        () => {
+        async function() {
 
-            searchInput.value = "";
-
-            clearSearch.style.display =
-                "none";
-
-            renderRequests();
-
-            searchInput.focus();
-
-        }
-    );
+            const icon =
+                document.querySelector(
+                    "#refreshButton i"
+                );
 
 
-    /* =========================================================
-       REFRESH
-    ========================================================= */
-
-    document
-        .getElementById("refreshButton")
-        .addEventListener(
-            "click",
-            async () => {
-
-                const icon =
-                    document.querySelector(
-                        "#refreshButton i"
-                    );
+            icon.classList.add(
+                "ph-spin"
+            );
 
 
-                icon.classList.add(
+            try {
+
+                await loadRequests();
+
+            } finally {
+
+                icon.classList.remove(
                     "ph-spin"
                 );
 
-
-                try {
-
-                    await loadRequests();
-
-                } finally {
-
-                    icon.classList.remove(
-                        "ph-spin"
-                    );
-
-                }
-
             }
-        );
-
-
-    /* =========================================================
-       LOGOUT
-    ========================================================= */
-
-    document
-        .getElementById("logoutButton")
-        .addEventListener(
-            "click",
-            logout
-        );
-
-
-    function logout() {
-
-        adminToken =
-            null;
-
-        requests =
-            [];
-
-        currentRequest =
-            null;
-
-
-        app.style.display =
-            "none";
-
-        loginScreen.style.display =
-            "flex";
-
-
-        adminPassword.value =
-            "";
-
-        loginError.style.display =
-            "none";
-
-    }
-
-
-    /* =========================================================
-       STATES
-    ========================================================= */
-
-    function showLoading() {
-
-        loading.style.display =
-            "flex";
-
-        requestsContainer.innerHTML =
-            "";
-
-        emptyState.style.display =
-            "none";
-
-        errorState.style.display =
-            "none";
-
-    }
-
-
-    function showError(message) {
-
-        loading.style.display =
-            "none";
-
-        requestsContainer.innerHTML =
-            "";
-
-        emptyState.style.display =
-            "none";
-
-        errorState.style.display =
-            "block";
-
-        errorText.textContent =
-            message;
-
-    }
-
-
-    /* =========================================================
-       HELPERS
-    ========================================================= */
-
-    function formatDate(value) {
-
-        if (
-            value === undefined ||
-            value === null ||
-            value === "" ||
-            value === 0
-        ) {
-            return "Date not available";
-        }
-
-
-        let date;
-
-
-        if (
-            typeof value === "number" ||
-            /^\d+$/.test(String(value))
-        ) {
-
-            date =
-                new Date(
-                    Number(value)
-                );
-
-        } else {
-
-            date =
-                new Date(value);
 
         }
+    );
 
 
-        if (
-            Number.isNaN(
-                date.getTime()
-            )
-        ) {
-            return String(value);
-        }
+document
+    .getElementById(
+        "retryButton"
+    )
+    .addEventListener(
+        "click",
+        loadRequests
+    );
 
 
-        return date.toLocaleString(
-            undefined,
-            {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
-
-    }
-
-
-    function shortUid(uid) {
-
-        if (!uid) {
-            return "UID unavailable";
-        }
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        logout
+    );
 
 
-        const value =
-            String(uid);
+function logout() {
+
+    adminToken =
+        null;
+
+    requests =
+        [];
+
+    currentRequest =
+        null;
 
 
-        if (value.length <= 18) {
-            return value;
-        }
+    closeDetails();
+
+    closeDeclineDialog();
 
 
-        return (
-            value.substring(0, 9) +
-            "..." +
-            value.substring(
-                value.length - 5
-            )
-        );
+    app.style.display =
+        "none";
 
-    }
+    loginScreen.style.display =
+        "flex";
 
 
-    function getInitial(name) {
+    adminPassword.value =
+        "";
 
-        if (!name) {
-            return "?";
-        }
+    loginError.style.display =
+        "none";
 
-
-        return String(name)
-            .trim()
-            .charAt(0)
-            .toUpperCase();
-
-    }
+}
 
 
-    function removeAt(value) {
+/* =========================================================
+   BACK
+========================================================= */
 
-        return String(value)
-            .replace(/^@/, "");
+document
+    .getElementById(
+        "backButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
 
-    }
-
-
-    function yesNo(value) {
-
-        if (
-            value === true ||
-            value === "true" ||
-            value === 1
-        ) {
-            return "Confirmed";
-        }
-
-
-        if (
-            value === false ||
-            value === "false" ||
-            value === 0
-        ) {
-            return "Not confirmed";
-        }
-
-
-        return "";
-
-    }
-
-
-    function escapeHtml(value) {
-
-        return String(value ?? "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-
-    }
-
-
-    function escapeAttr(value) {
-
-        return escapeHtml(value);
-
-    }
-
-
-    /* =========================================================
-       BACK
-    ========================================================= */
-
-    function goBack() {
-
-        if (
-            document.referrer &&
-            document.referrer !==
+            if (
+                document.referrer &&
+                document.referrer !==
                 window.location.href
-        ) {
+            ) {
 
-            history.back();
+                history.back();
 
-        } else {
+            } else {
 
-            window.location.href =
-                "/";
+                window.location.href =
+                    "/";
+
+            }
 
         }
+    );
+
+
+/* =========================================================
+   CLOSE DETAILS
+========================================================= */
+
+document
+    .getElementById(
+        "closeDetailsButton"
+    )
+    .addEventListener(
+        "click",
+        closeDetails
+    );
+
+
+/* =========================================================
+   CANCEL DECLINE
+========================================================= */
+
+document
+    .getElementById(
+        "cancelDecline"
+    )
+    .addEventListener(
+        "click",
+        closeDeclineDialog
+    );
+
+
+/* =========================================================
+   STATES
+========================================================= */
+
+function showLoading() {
+
+    loading.style.display =
+        "flex";
+
+    requestsContainer.innerHTML =
+        "";
+
+    emptyState.style.display =
+        "none";
+
+    errorState.style.display =
+        "none";
+
+}
+
+
+function showError(message) {
+
+    loading.style.display =
+        "none";
+
+    requestsContainer.innerHTML =
+        "";
+
+    emptyState.style.display =
+        "none";
+
+    errorState.style.display =
+        "block";
+
+    errorText.textContent =
+        message;
+
+    resultCount.textContent =
+        "Unable to load";
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function formatDate(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        value === "" ||
+        value === 0
+    ) {
+
+        return "Date not available";
 
     }
 
 
-    /* =========================================================
-       OVERLAY CLICK
-    ========================================================= */
-
-    detailOverlay.addEventListener(
-        "click",
-        event => {
-
-            if (
-                event.target ===
-                detailOverlay
-            ) {
-                closeDetails();
-            }
-
-        }
-    );
+    let date;
 
 
-    declineOverlay.addEventListener(
-        "click",
-        event => {
+    if (
+        typeof value === "number" ||
+        /^\d+$/.test(
+            String(value)
+        )
+    ) {
 
-            if (
-                event.target ===
-                declineOverlay
-            ) {
-                closeDeclineDialog();
-            }
+        date =
+            new Date(
+                Number(value)
+            );
 
-        }
-    );
+    } else {
 
+        date =
+            new Date(value);
 
-    /* =========================================================
-       ESC KEY
-    ========================================================= */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key !== "Escape") {
-                return;
-            }
+    }
 
 
-            if (
-                declineOverlay.classList.contains(
-                    "show"
-                )
-            ) {
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
 
-                closeDeclineDialog();
+        return String(value);
 
-                return;
-            }
+    }
 
 
-            if (
-                detailOverlay.classList.contains(
-                    "show"
-                )
-            ) {
+    return date.toLocaleString(
+        undefined,
+        {
 
-                closeDetails();
+            day:"2-digit",
 
-            }
+            month:"short",
+
+            year:"numeric",
+
+            hour:"2-digit",
+
+            minute:"2-digit"
 
         }
     );
+
+}
+
+
+function shortUid(uid) {
+
+    if (!uid) {
+        return "UID unavailable";
+    }
+
+
+    const value =
+        String(uid);
+
+
+    if (
+        value.length <= 18
+    ) {
+
+        return value;
+
+    }
+
+
+    return (
+        value.substring(0,9) +
+        "..." +
+        value.substring(
+            value.length - 5
+        )
+    );
+
+}
+
+
+function getInitial(name) {
+
+    if (!name) {
+        return "?";
+    }
+
+
+    return String(name)
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+}
+
+
+function removeAt(value) {
+
+    return String(value)
+        .replace(/^@/,"");
+
+}
+
+
+function yesNo(value) {
+
+    if (
+        value === true ||
+        value === "true" ||
+        value === 1
+    ) {
+
+        return "Confirmed";
+
+    }
+
+
+    if (
+        value === false ||
+        value === "false" ||
+        value === 0
+    ) {
+
+        return "Not confirmed";
+
+    }
+
+
+    return "";
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function escapeAttr(value) {
+
+    return escapeHtml(value);
+
+}
+
+
+/* =========================================================
+   OVERLAY CLICK
+========================================================= */
+
+detailOverlay.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            detailOverlay
+        ) {
+
+            closeDetails();
+
+        }
+
+    }
+);
+
+
+declineOverlay.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            declineOverlay
+        ) {
+
+            closeDeclineDialog();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key !==
+            "Escape"
+        ) {
+            return;
+        }
+
+
+        if (
+            declineOverlay.classList.contains(
+                "show"
+            )
+        ) {
+
+            closeDeclineDialog();
+
+            return;
+
+        }
+
+
+        if (
+            detailOverlay.classList.contains(
+                "show"
+            )
+        ) {
+
+            closeDetails();
+
+        }
+
+    }
+);
 
 </script>
 
