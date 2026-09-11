@@ -8,7 +8,7 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Appnetick - Sign Up</title>
+<title>Appnetick - Signup</title>
 
 <link rel="icon"
       href="/20260313_121958.jpg">
@@ -16,87 +16,131 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet">
 
-<!-- PHOSPHOR ICONS -->
+<!-- Phosphor Icons -->
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 
 <style>
 
 /* =========================================================
-   RESET
-========================================================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
-}
-
-
-/* =========================================================
-   THEME
+   THEME VARIABLES
 ========================================================= */
 
 :root{
 
-    --bg:#ffffff;
-    --surface:#f5f5f5;
-    --surface-2:#eeeeee;
+    --bg:#FFFFFF;
+
+    --surface:#FFFFFF;
+
+    --surface-secondary:#F7F7F7;
 
     --text:#212121;
+
     --secondary:#757575;
-    --border:#dddddd;
 
-    --primary:#2196f3;
-    --primary-text:#ffffff;
+    --muted:#9E9E9E;
 
-    --error-bg:rgba(244,67,54,.10);
-    --error-text:#d32f2f;
+    --border:#DCDCDC;
 
-    --toolbar-bg:rgba(255,255,255,.88);
+    --input-bg:#F5F5F5;
 
-}
+    --primary:#2196F3;
 
+    --primary-soft:rgba(33,150,243,0.10);
 
-@media (prefers-color-scheme:dark){
+    --error-bg:rgba(244,67,54,0.10);
 
-    :root{
+    --error-text:#D32F2F;
 
-        --bg:#121212;
-        --surface:#1e1e1e;
-        --surface-2:#252525;
-
-        --text:#ffffff;
-        --secondary:#a0a0a0;
-        --border:#424242;
-
-        --primary:#2979ff;
-        --primary-text:#ffffff;
-
-        --error-bg:rgba(244,67,54,.14);
-        --error-text:#ff8a80;
-
-        --toolbar-bg:rgba(30,30,30,.88);
-
-    }
+    --shadow:0 6px 25px rgba(0,0,0,0.06);
 
 }
 
 
 /* =========================================================
-   BODY
+   DARK THEME
 ========================================================= */
 
+[data-theme="dark"]{
+
+    --bg:#1E1E1E;
+
+    --surface:#1E1E1E;
+
+    --surface-secondary:#252525;
+
+    --text:#FFFFFF;
+
+    --secondary:#A0A0A0;
+
+    --muted:#777777;
+
+    --border:#424242;
+
+    --input-bg:#252525;
+
+    --primary:#2979FF;
+
+    --primary-soft:rgba(41,121,255,0.14);
+
+    --error-bg:rgba(244,67,54,0.12);
+
+    --error-text:#FF8A80;
+
+    --shadow:0 6px 25px rgba(0,0,0,0.28);
+
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+html{
+
+    min-height:100%;
+
+    background:var(--bg);
+
+}
+
+
 body{
+
+    min-height:100vh;
 
     background:var(--bg);
 
     color:var(--text);
 
-    min-height:100vh;
-
     overflow-x:hidden;
+
+    transition:
+
+        background .25s ease,
+
+        color .25s ease;
+
+}
+
+
+button,
+input{
+
+    font-family:inherit;
 
 }
 
@@ -111,7 +155,9 @@ body{
 
     top:0;
 
-    height:60px;
+    width:100%;
+
+    height:64px;
 
     display:flex;
 
@@ -119,12 +165,9 @@ body{
 
     justify-content:space-between;
 
-    padding:0 16px;
+    padding:0 14px;
 
-    background:var(--toolbar-bg);
-
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
+    background:var(--surface);
 
     border-bottom:1px solid var(--border);
 
@@ -133,33 +176,97 @@ body{
 }
 
 
-.toolbar .title{
+.toolbar-left{
 
-    font-size:18px;
+    display:flex;
 
-    font-weight:700;
+    align-items:center;
 
-    letter-spacing:-0.3px;
+    gap:9px;
 
 }
 
 
-.toolbar-logo{
+.toolbar-title{
 
-    width:35px;
-    height:35px;
+    font-size:21px;
 
-    border-radius:50%;
+    font-weight:600;
 
-    object-fit:cover;
+    letter-spacing:-.5px;
 
-    cursor:pointer;
+}
+
+
+.toolbar-title span{
+
+    color:var(--primary);
+
+}
+
+
+.toolbar-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
 
 }
 
 
 /* =========================================================
-   MAIN CONTAINER
+   ICON BUTTON
+========================================================= */
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:23px;
+
+    cursor:pointer;
+
+    transition:background .18s ease;
+
+}
+
+
+.icon-button:hover{
+
+    background:var(--surface-secondary);
+
+}
+
+
+.icon-button:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* =========================================================
+   MAIN
 ========================================================= */
 
 .container{
@@ -170,47 +277,60 @@ body{
 
     margin:0 auto;
 
-    padding:28px 20px 100px;
+    padding:30px 20px 45px;
 
 }
 
 
 /* =========================================================
-   HEADER
+   SIGNUP HEADER
 ========================================================= */
 
-.page-icon{
+.signup-header{
 
-    width:56px;
-    height:56px;
+    text-align:center;
 
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    margin-top:8px;
-
-    border-radius:18px;
-
-    background:var(--surface);
-
-    color:var(--primary);
-
-    font-size:28px;
+    padding:12px 0 26px;
 
 }
 
 
+/* =========================================================
+   LOGO
+========================================================= */
+
+.signup-logo{
+
+    width:68px;
+
+    height:68px;
+
+    border-radius:20px;
+
+    object-fit:cover;
+
+    display:block;
+
+    margin:0 auto 20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
 .heading{
 
-    font-size:27px;
+    font-size:26px;
+
+    line-height:1.2;
 
     font-weight:700;
 
-    letter-spacing:-0.6px;
-
-    margin-top:22px;
+    letter-spacing:-.6px;
 
 }
 
@@ -219,11 +339,13 @@ body{
 
     color:var(--secondary);
 
-    margin-top:9px;
+    margin:10px auto 0;
+
+    max-width:340px;
 
     font-size:14px;
 
-    line-height:1.55;
+    line-height:1.6;
 
 }
 
@@ -232,18 +354,7 @@ body{
    FORM
 ========================================================= */
 
-.form{
-
-    margin-top:24px;
-
-}
-
-
-/* =========================================================
-   INPUT GROUP
-========================================================= */
-
-.input-group{
+.form-group{
 
     position:relative;
 
@@ -252,40 +363,21 @@ body{
 }
 
 
-.input-icon{
-
-    position:absolute;
-
-    left:15px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:var(--secondary);
-
-    font-size:20px;
-
-    pointer-events:none;
-
-}
-
-
 .input{
 
     width:100%;
 
-    height:52px;
+    min-height:52px;
 
-    padding:0 15px 0 48px;
+    padding:0 48px 0 46px;
 
     border:1px solid var(--border);
 
     outline:none;
 
-    border-radius:15px;
+    border-radius:16px;
 
-    background:var(--surface);
+    background:var(--input-bg);
 
     color:var(--text);
 
@@ -293,18 +385,18 @@ body{
 
     transition:
 
-        border-color .2s ease,
+        border .18s ease,
 
-        box-shadow .2s ease,
+        box-shadow .18s ease,
 
-        background .2s ease;
+        background .18s ease;
 
 }
 
 
 .input::placeholder{
 
-    color:var(--secondary);
+    color:var(--muted);
 
 }
 
@@ -314,49 +406,81 @@ body{
     border-color:var(--primary);
 
     box-shadow:
-        0 0 0 3px rgba(33,150,243,.12);
+
+        0 0 0 3px
+
+        var(--primary-soft);
 
 }
 
 
 /* =========================================================
-   PASSWORD
+   INPUT LEADING ICON
 ========================================================= */
 
-.password-toggle{
+.input-leading{
 
     position:absolute;
 
-    right:15px;
+    left:16px;
 
     top:50%;
 
     transform:translateY(-50%);
 
-    border:none;
-
-    background:none;
-
-    width:auto;
-
-    height:auto;
-
-    padding:4px;
-
-    margin:0;
+    font-size:21px;
 
     color:var(--secondary);
 
-    cursor:pointer;
-
-    font-size:20px;
+    pointer-events:none;
 
 }
 
 
-.password-toggle:hover{
+/* =========================================================
+   INPUT ACTION
+========================================================= */
 
-    color:var(--text);
+.input-action{
+
+    position:absolute;
+
+    right:8px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--secondary);
+
+    font-size:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+}
+
+
+.input-action:hover{
+
+    background:var(--surface-secondary);
 
 }
 
@@ -371,9 +495,9 @@ body{
 
     margin-top:14px;
 
-    padding:12px 14px;
+    padding:13px 14px;
 
-    border-radius:12px;
+    border-radius:14px;
 
     background:var(--error-bg);
 
@@ -387,32 +511,30 @@ body{
 
 
 /* =========================================================
-   SIGNUP BUTTON
+   PRIMARY BUTTON
 ========================================================= */
 
-.signup-button{
+.primary-button{
 
     width:100%;
 
     min-height:50px;
 
-    margin-top:20px;
-
-    padding:14px 20px;
+    margin-top:18px;
 
     border:none;
 
     outline:none;
 
-    border-radius:28px;
+    border-radius:30px;
 
     background:var(--primary);
 
-    color:var(--primary-text);
+    color:#FFFFFF;
 
     font-size:15px;
 
-    font-weight:700;
+    font-weight:600;
 
     cursor:pointer;
 
@@ -426,25 +548,39 @@ body{
 
     transition:
 
-        transform .15s ease,
+        opacity .18s ease,
 
-        opacity .2s ease;
-
-}
-
-
-.signup-button:active{
-
-    transform:scale(.98);
+        transform .12s ease;
 
 }
 
 
-.signup-button:disabled{
+.primary-button:hover{
+
+    opacity:.90;
+
+}
+
+
+.primary-button:active{
+
+    transform:scale(.985);
+
+}
+
+
+.primary-button:disabled{
 
     opacity:.65;
 
     cursor:not-allowed;
+
+}
+
+
+.primary-button > i{
+
+    font-size:20px;
 
 }
 
@@ -461,7 +597,7 @@ body{
 
     border:2px solid rgba(255,255,255,.35);
 
-    border-top-color:#fff;
+    border-top-color:#FFFFFF;
 
     border-radius:50%;
 
@@ -473,68 +609,78 @@ body{
 @keyframes spin{
 
     from{
+
         transform:rotate(0deg);
+
     }
 
     to{
+
         transform:rotate(360deg);
+
     }
 
 }
 
 
 /* =========================================================
-   LOGIN SWITCH
+   SWITCH
 ========================================================= */
 
-.login-switch{
+.switch{
 
-    margin-top:22px;
+    margin-top:18px;
 
     text-align:center;
 
-    color:var(--secondary);
+    color:var(--primary);
+
+    cursor:pointer;
 
     font-size:14px;
+
+    font-weight:500;
+
+    padding:6px;
 
 }
 
 
-.login-switch span{
+.switch:hover{
 
-    color:var(--primary);
-
-    font-weight:600;
-
-    cursor:pointer;
+    text-decoration:underline;
 
 }
 
 
 /* =========================================================
-   TERMS
+   SECURITY INFO
 ========================================================= */
 
-.terms{
+.security-info{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
 
     margin-top:22px;
 
     color:var(--secondary);
 
-    text-align:center;
-
     font-size:12px;
-
-    line-height:1.55;
 
 }
 
 
-.terms span{
+.security-info i{
+
+    font-size:16px;
 
     color:var(--primary);
-
-    cursor:pointer;
 
 }
 
@@ -545,48 +691,97 @@ body{
 
 .footer{
 
-    position:fixed;
-
-    bottom:0;
-
-    left:0;
-
     width:100%;
 
-    padding:15px 20px;
+    padding:18px 20px 25px;
 
     text-align:center;
 
-    background:var(--toolbar-bg);
-
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-
-    border-top:1px solid var(--border);
-
     color:var(--secondary);
 
-    font-size:12px;
+    font-size:13px;
+
+}
+
+
+.footer span{
+
+    color:var(--primary);
+
+    cursor:pointer;
+
+    font-weight:500;
+
+}
+
+
+.footer span:hover{
+
+    text-decoration:underline;
 
 }
 
 
 /* =========================================================
-   SMALL DEVICES
+   MOBILE
 ========================================================= */
 
-@media(max-width:360px){
+@media(max-width:500px){
+
+    .toolbar{
+
+        height:60px;
+
+    }
+
+
+    .toolbar-title{
+
+        font-size:20px;
+
+    }
+
 
     .container{
 
-        padding-left:16px;
-        padding-right:16px;
+        padding:
+
+            24px
+
+            16px
+
+            35px;
 
     }
+
+
+    .signup-header{
+
+        padding-top:8px;
+
+    }
+
 
     .heading{
 
         font-size:25px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media(max-width:350px){
+
+    .signup-logo{
+
+        width:62px;
+
+        height:62px;
 
     }
 
@@ -600,159 +795,231 @@ body{
 <body>
 
 
-<!-- =========================================================
+<!-- =====================================================
      TOOLBAR
-========================================================= -->
+===================================================== -->
 
 <div class="toolbar">
 
-    <div class="title">
-        Appnetick
+
+    <div class="toolbar-left">
+
+        <div class="toolbar-title">
+
+            Appnetick<span>.</span>
+
+        </div>
+
     </div>
 
 
-    <img
-        class="toolbar-logo"
-        src="/20260313_121958.jpg"
-        alt="Appnetick"
-        onclick="location.href='/index.html'"
-    >
+    <div class="toolbar-actions">
+
+
+        <!-- THEME -->
+
+        <button
+            class="icon-button"
+            id="themeButton"
+            aria-label="Change theme">
+
+            <i
+                class="ph ph-moon"
+                id="themeIcon">
+            </i>
+
+        </button>
+
+
+        <!-- HOME -->
+
+        <button
+            class="icon-button"
+            aria-label="Home"
+            onclick="location.href='/index.html'">
+
+            <i class="ph ph-house"></i>
+
+        </button>
+
+    </div>
 
 </div>
 
 
 
-<!-- =========================================================
-     MAIN
-========================================================= -->
+<!-- =====================================================
+     SIGNUP
+===================================================== -->
 
-<div class="container">
-
-
-    <!-- PAGE ICON -->
-
-    <div class="page-icon">
-
-        <i class="ph ph-user-plus"></i>
-
-    </div>
+<div id="signupScreen">
 
 
-
-    <!-- HEADING -->
-
-    <div class="heading">
-
-        Create a new account
-
-    </div>
+    <div class="container">
 
 
-    <div class="desc">
+        <!-- =============================================
+             HEADER
+        ============================================== -->
 
-        Join Appnetick to connect with people,
-        share moments, and experience a powerful
-        social platform.
-
-    </div>
+        <div class="signup-header">
 
 
+            <!-- LOGO IS ABOVE HEADING -->
 
-    <!-- =====================================================
-         FORM
-    ====================================================== -->
+            <img
+                class="signup-logo"
+                src="/20260313_121958.jpg"
+                alt="Appnetick">
 
-    <div class="form">
+
+            <div class="heading">
+
+                Create a new account
+
+            </div>
 
 
-        <!-- FULL NAME -->
+            <div class="desc">
 
-        <div class="input-group">
+                Join Appnetick to connect with people,
+                share moments, and experience a powerful
+                social platform.
 
-            <i class="ph ph-user input-icon"></i>
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             FULL NAME
+        ============================================== -->
+
+        <div class="form-group">
+
+
+            <i
+                class="ph ph-user input-leading">
+            </i>
+
 
             <input
                 id="fullName"
                 class="input"
                 type="text"
                 autocomplete="name"
-                placeholder="Full name"
-            >
+                placeholder="Full Name">
+
 
         </div>
 
 
 
-        <!-- EMAIL -->
+        <!-- =============================================
+             EMAIL
+        ============================================== -->
 
-        <div class="input-group">
+        <div class="form-group">
 
-            <i class="ph ph-envelope input-icon"></i>
+
+            <i
+                class="ph ph-envelope input-leading">
+            </i>
+
 
             <input
                 id="email"
                 class="input"
                 type="email"
                 autocomplete="email"
-                placeholder="Email address"
-            >
+                placeholder="Email">
+
 
         </div>
 
 
 
-        <!-- USERNAME -->
+        <!-- =============================================
+             PASSWORD
+        ============================================== -->
 
-        <div class="input-group">
-
-            <i class="ph ph-at input-icon"></i>
-
-            <input
-                id="username"
-                class="input"
-                type="text"
-                autocomplete="username"
-                placeholder="Username"
-            >
-
-        </div>
+        <div class="form-group">
 
 
+            <i
+                class="ph ph-lock input-leading">
+            </i>
 
-        <!-- PASSWORD -->
-
-        <div class="input-group">
-
-            <i class="ph ph-lock input-icon"></i>
 
             <input
                 id="password"
                 class="input"
                 type="password"
                 autocomplete="new-password"
-                placeholder="Password"
-            >
+                placeholder="Password">
 
 
             <button
                 type="button"
-                class="password-toggle"
-                onclick="togglePassword()"
-                aria-label="Show password"
-            >
+                class="input-action"
+                id="passwordToggle"
+                aria-label="Show password">
 
                 <i
-                    id="passwordIcon"
                     class="ph ph-eye"
-                ></i>
+                    id="passwordIcon">
+                </i>
 
             </button>
+
 
         </div>
 
 
 
-        <!-- ERROR -->
+        <!-- =============================================
+             CONFIRM PASSWORD
+        ============================================== -->
+
+        <div class="form-group">
+
+
+            <i
+                class="ph ph-lock-key input-leading">
+            </i>
+
+
+            <input
+                id="confirmPassword"
+                class="input"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Confirm Password">
+
+
+            <button
+                type="button"
+                class="input-action"
+                id="confirmPasswordToggle"
+                aria-label="Show password">
+
+                <i
+                    class="ph ph-eye"
+                    id="confirmPasswordIcon">
+                </i>
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             ERROR
+        ============================================== -->
 
         <div
             id="signupError"
@@ -761,171 +1028,346 @@ body{
 
 
 
-        <!-- SIGNUP BUTTON -->
+        <!-- =============================================
+             SIGN UP
+        ============================================== -->
 
         <button
             id="signupButton"
-            class="signup-button"
-            onclick="startSignup()"
-        >
+            class="primary-button"
+            onclick="startSignup()">
+
+
+            <i class="ph ph-user-plus"></i>
+
 
             <span id="signupButtonText">
 
-                Create account
+                Sign Up
 
             </span>
+
 
         </button>
 
 
-    </div>
+
+        <!-- =============================================
+             MOBILE
+        ============================================== -->
+
+        <div
+            class="switch">
+
+            Use mobile instead
+
+        </div>
 
 
 
-    <!-- LOGIN -->
+        <!-- =============================================
+             SECURITY
+        ============================================== -->
 
-    <div class="login-switch">
-
-        Already have an account?
-
-        <span
-            onclick="location.href='/auth/user/login'"
-        >
-
-            Login
-
-        </span>
-
-    </div>
+        <div class="security-info">
 
 
+            <i class="ph ph-shield-check"></i>
 
-    <!-- TERMS -->
 
-    <div class="terms">
+            Secure Appnetick account creation
 
-        By creating an account, you agree to
-        Appnetick's
 
-        <span>
-            Terms
-        </span>
+        </div>
 
-        and
-
-        <span>
-            Privacy Policy
-        </span>.
 
     </div>
-
 
 </div>
 
 
 
-<!-- =========================================================
+<!-- =====================================================
      FOOTER
-========================================================= -->
+===================================================== -->
 
 <div class="footer">
 
-    © 2026 Appnetick
+
+    Already have an account?
+
+
+    <span
+        onclick="location.href='/auth/user/login'">
+
+        Login
+
+    </span>
+
 
 </div>
 
 
 
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
+<!-- =====================================================
+     SCRIPT
+===================================================== -->
 
 <script>
 
 
-/* =========================================================
-   PASSWORD VISIBILITY
-========================================================= */
+/* =======================================================
+   THEME
+======================================================= */
 
-function togglePassword(){
-
-    const password =
-        document.getElementById("password");
-
-    const icon =
-        document.getElementById("passwordIcon");
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
 
 
-    if(password.type === "password"){
+const themeIcon =
+    document.getElementById(
+        "themeIcon"
+    );
 
-        password.type = "text";
 
-        icon.className =
-            "ph ph-eye-slash";
+const systemTheme =
+    window.matchMedia &&
+    window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches
+        ? "dark"
+        : "light";
+
+
+let savedTheme =
+    localStorage.getItem(
+        "appnetick-theme"
+    );
+
+
+if(!savedTheme){
+
+    savedTheme =
+        systemTheme;
+
+}
+
+
+applyTheme(
+    savedTheme
+);
+
+
+function applyTheme(theme){
+
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
+        );
+
+
+    localStorage.setItem(
+        "appnetick-theme",
+        theme
+    );
+
+
+    if(theme === "dark"){
+
+        themeIcon.className =
+            "ph ph-sun";
+
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to light theme"
+        );
 
     }else{
 
-        password.type = "password";
+        themeIcon.className =
+            "ph ph-moon";
 
-        icon.className =
-            "ph ph-eye";
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to dark theme"
+        );
 
     }
 
 }
 
 
+themeButton.addEventListener(
+    "click",
+    function(){
 
-/* =========================================================
+        const current =
+            document.documentElement
+                .getAttribute(
+                    "data-theme"
+                );
+
+
+        applyTheme(
+            current === "dark"
+                ? "light"
+                : "dark"
+        );
+
+    }
+);
+
+
+/* =======================================================
+   PASSWORD TOGGLE
+======================================================= */
+
+function setupPasswordToggle(
+    inputId,
+    buttonId,
+    iconId
+){
+
+    const input =
+        document.getElementById(
+            inputId
+        );
+
+
+    const button =
+        document.getElementById(
+            buttonId
+        );
+
+
+    const icon =
+        document.getElementById(
+            iconId
+        );
+
+
+    button.addEventListener(
+        "click",
+        function(){
+
+            const isPassword =
+                input.type === "password";
+
+
+            input.type =
+                isPassword
+                    ? "text"
+                    : "password";
+
+
+            icon.className =
+                isPassword
+                    ? "ph ph-eye-slash"
+                    : "ph ph-eye";
+
+
+            button.setAttribute(
+                "aria-label",
+                isPassword
+                    ? "Hide password"
+                    : "Show password"
+            );
+
+        }
+    );
+
+}
+
+
+setupPasswordToggle(
+    "password",
+    "passwordToggle",
+    "passwordIcon"
+);
+
+
+setupPasswordToggle(
+    "confirmPassword",
+    "confirmPasswordToggle",
+    "confirmPasswordIcon"
+);
+
+
+/* =======================================================
    ERROR
-========================================================= */
+======================================================= */
 
-function showError(message){
+function showError(
+    id,
+    message
+){
 
-    const error =
-        document.getElementById("signupError");
+    const element =
+        document.getElementById(
+            id
+        );
 
-    error.textContent =
+
+    element.textContent =
         message;
 
-    error.style.display =
+
+    element.style.display =
         "block";
 
 }
 
 
-function clearError(){
+function clearError(id){
 
-    const error =
-        document.getElementById("signupError");
+    const element =
+        document.getElementById(
+            id
+        );
 
-    error.textContent =
+
+    element.textContent =
         "";
 
-    error.style.display =
+
+    element.style.display =
         "none";
 
 }
 
 
-
-/* =========================================================
+/* =======================================================
    BUTTON LOADING
-========================================================= */
+======================================================= */
 
-function setSignupLoading(loading){
+function setButtonLoading(
+    buttonId,
+    textId,
+    loading
+){
 
     const button =
-        document.getElementById("signupButton");
+        document.getElementById(
+            buttonId
+        );
+
 
     const text =
-        document.getElementById("signupButtonText");
+        document.getElementById(
+            textId
+        );
 
 
     if(loading){
 
         button.disabled =
             true;
+
 
         text.style.display =
             "none";
@@ -938,12 +1380,18 @@ function setSignupLoading(loading){
         ){
 
             const loader =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
+
 
             loader.className =
                 "button-loader";
 
-            button.appendChild(loader);
+
+            button.appendChild(
+                loader
+            );
 
         }
 
@@ -951,6 +1399,7 @@ function setSignupLoading(loading){
 
         button.disabled =
             false;
+
 
         text.style.display =
             "inline";
@@ -973,51 +1422,56 @@ function setSignupLoading(loading){
 }
 
 
-
-/* =========================================================
+/* =======================================================
    SIGNUP
-========================================================= */
+======================================================= */
 
-async function startSignup(){
+window.startSignup =
+function(){
 
     const fullName =
         document
-            .getElementById("fullName")
+            .getElementById(
+                "fullName"
+            )
             .value
             .trim();
 
 
     const email =
         document
-            .getElementById("email")
-            .value
-            .trim();
-
-
-    const username =
-        document
-            .getElementById("username")
+            .getElementById(
+                "email"
+            )
             .value
             .trim();
 
 
     const password =
         document
-            .getElementById("password")
+            .getElementById(
+                "password"
+            )
             .value;
 
 
-    clearError();
+    const confirmPassword =
+        document
+            .getElementById(
+                "confirmPassword"
+            )
+            .value;
 
 
+    clearError(
+        "signupError"
+    );
 
-    /* =====================================================
-       VALIDATION
-    ====================================================== */
 
     if(!fullName){
 
         showError(
+            "signupError",
             "Please enter your full name."
         );
 
@@ -1029,18 +1483,8 @@ async function startSignup(){
     if(!email){
 
         showError(
-            "Please enter your email address."
-        );
-
-        return;
-
-    }
-
-
-    if(!username){
-
-        showError(
-            "Please choose a username."
+            "signupError",
+            "Please enter your email."
         );
 
         return;
@@ -1051,7 +1495,8 @@ async function startSignup(){
     if(!password){
 
         showError(
-            "Please create a password."
+            "signupError",
+            "Please enter a password."
         );
 
         return;
@@ -1062,7 +1507,8 @@ async function startSignup(){
     if(password.length < 6){
 
         showError(
-            "Password must contain at least 6 characters."
+            "signupError",
+            "Password must be at least 6 characters."
         );
 
         return;
@@ -1070,115 +1516,87 @@ async function startSignup(){
     }
 
 
-
-    /* =====================================================
-       API
-       
-       Signup API ko tumhare existing backend
-       ke according yahan connect kar sakte hain.
-    ====================================================== */
-
-    setSignupLoading(true);
-
-
-    try{
-
-        /*
-         * Existing signup API yahan connect hoga.
-         *
-         * Example:
-         *
-         * const response = await fetch(
-         *     "https://api.appnetick/api/signup",
-         *     {
-         *         method:"POST",
-         *         headers:{
-         *             "Content-Type":
-         *                 "application/json"
-         *         },
-         *         body:JSON.stringify({
-         *             fullName,
-         *             email,
-         *             username,
-         *             password
-         *         })
-         *     }
-         * );
-         */
-
-
-        /*
-         * TEMPORARY
-         * Remove this when API is connected.
-         */
-
-        await new Promise(
-            resolve =>
-                setTimeout(resolve,1000)
-        );
-
-
-        console.log({
-
-            fullName:
-                fullName,
-
-            email:
-                email,
-
-            username:
-                username,
-
-            password:
-                password
-
-        });
-
-
-        /*
-         * Yahan tumhara actual signup
-         * next-step flow open hoga.
-         */
-
-
-    }catch(error){
-
-        console.error(
-            "SIGNUP ERROR:",
-            error
-        );
-
+    if(!confirmPassword){
 
         showError(
-            error.message ||
-            "Unable to create account."
+            "signupError",
+            "Please confirm your password."
         );
 
-
-    }finally{
-
-        setSignupLoading(false);
+        return;
 
     }
 
-}
+
+    if(password !== confirmPassword){
+
+        showError(
+            "signupError",
+            "Passwords do not match."
+        );
+
+        return;
+
+    }
 
 
+    /*
+    -------------------------------------------------------
+    TEMPORARY
+    -------------------------------------------------------
+    Replace this section with your Signup API.
+    -------------------------------------------------------
+    */
 
-/* =========================================================
+    setButtonLoading(
+        "signupButton",
+        "signupButtonText",
+        true
+    );
+
+
+    setTimeout(
+        function(){
+
+            setButtonLoading(
+                "signupButton",
+                "signupButtonText",
+                false
+            );
+
+
+            showError(
+                "signupError",
+                "Signup API is not connected yet."
+            );
+
+        },
+        800
+    );
+
+};
+
+
+/* =======================================================
    ENTER KEY
-========================================================= */
+======================================================= */
 
 document
-    .getElementById("fullName")
+    .getElementById(
+        "fullName"
+    )
     .addEventListener(
         "keydown",
         function(event){
 
-            if(event.key === "Enter"){
+            if(
+                event.key === "Enter"
+            ){
 
                 document
-                    .getElementById("email")
+                    .getElementById(
+                        "email"
+                    )
                     .focus();
 
             }
@@ -1188,15 +1606,21 @@ document
 
 
 document
-    .getElementById("email")
+    .getElementById(
+        "email"
+    )
     .addEventListener(
         "keydown",
         function(event){
 
-            if(event.key === "Enter"){
+            if(
+                event.key === "Enter"
+            ){
 
                 document
-                    .getElementById("username")
+                    .getElementById(
+                        "password"
+                    )
                     .focus();
 
             }
@@ -1206,15 +1630,21 @@ document
 
 
 document
-    .getElementById("username")
+    .getElementById(
+        "password"
+    )
     .addEventListener(
         "keydown",
         function(event){
 
-            if(event.key === "Enter"){
+            if(
+                event.key === "Enter"
+            ){
 
                 document
-                    .getElementById("password")
+                    .getElementById(
+                        "confirmPassword"
+                    )
                     .focus();
 
             }
@@ -1224,12 +1654,16 @@ document
 
 
 document
-    .getElementById("password")
+    .getElementById(
+        "confirmPassword"
+    )
     .addEventListener(
         "keydown",
         function(event){
 
-            if(event.key === "Enter"){
+            if(
+                event.key === "Enter"
+            ){
 
                 startSignup();
 
