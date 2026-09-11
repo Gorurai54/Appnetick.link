@@ -16,410 +16,1283 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet">
 
+<!-- Phosphor Icons -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+/* =========================================================
+   THEME VARIABLES
+========================================================= */
+
+:root{
+
+    --bg:#FFFFFF;
+
+    --surface:#FFFFFF;
+
+    --surface-secondary:#F7F7F7;
+
+    --text:#212121;
+
+    --secondary:#757575;
+
+    --muted:#9E9E9E;
+
+    --border:#DCDCDC;
+
+    --input-bg:#F5F5F5;
+
+    --primary:#2196F3;
+
+    --primary-soft:rgba(33,150,243,0.10);
+
+    --error-bg:rgba(244,67,54,0.10);
+
+    --error-text:#D32F2F;
+
+    --shadow:0 6px 25px rgba(0,0,0,0.06);
+
 }
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"]{
+
+    --bg:#1E1E1E;
+
+    --surface:#1E1E1E;
+
+    --surface-secondary:#252525;
+
+    --text:#FFFFFF;
+
+    --secondary:#A0A0A0;
+
+    --muted:#777777;
+
+    --border:#424242;
+
+    --input-bg:#252525;
+
+    --primary:#2979FF;
+
+    --primary-soft:rgba(41,121,255,0.14);
+
+    --error-bg:rgba(244,67,54,0.12);
+
+    --error-text:#FF8A80;
+
+    --shadow:0 6px 25px rgba(0,0,0,0.28);
+
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+html{
+
+    min-height:100%;
+
+    background:var(--bg);
+
+}
+
 
 body{
-    background:#0b141a;
-    color:#fff;
+
     min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    transition:
+
+        background .25s ease,
+
+        color .25s ease;
+
 }
 
-/* ================= TOOLBAR ================= */
+
+button,
+input{
+
+    font-family:inherit;
+
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
 .toolbar{
+
     position:sticky;
+
     top:0;
-    height:60px;
+
+    width:100%;
+
+    height:64px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
-    padding:0 16px;
+    padding:0 14px;
 
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
+    background:var(--surface);
 
-    border-bottom:1px solid rgba(255,255,255,0.1);
+    border-bottom:1px solid var(--border);
 
     z-index:1000;
+
 }
 
-.toolbar .title{
-    font-size:18px;
-    font-weight:700;
-}
 
-.toolbar img{
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    object-fit:cover;
-    cursor:pointer;
-}
-
-/* ================= MAIN ================= */
-
-.container{
-    width:100%;
-    max-width:400px;
-    margin:auto;
-    padding:25px;
-}
-
-/* ================= HEADING ================= */
-
-.heading{
-    font-size:26px;
-    font-weight:700;
-    margin-top:20px;
-}
-
-.desc{
-    color:#aaa;
-    margin-top:8px;
-    font-size:14px;
-    line-height:1.5;
-}
-
-/* ================= INPUT ================= */
-
-.input{
-    width:100%;
-
-    padding:14px;
-
-    margin-top:18px;
-
-    border:none;
-    outline:none;
-
-    border-radius:12px;
-
-    background:#1f2c33;
-
-    color:#fff;
-
-    font-size:15px;
-}
-
-.input::placeholder{
-    color:#8f9ba1;
-}
-
-.input:focus{
-    box-shadow:0 0 0 2px rgba(33,150,243,.35);
-}
-
-/* ================= BUTTON ================= */
-
-button{
-    width:100%;
-
-    padding:14px;
-
-    margin-top:20px;
-
-    border:none;
-    outline:none;
-
-    border-radius:35px;
-
-    background:#2196f3;
-
-    color:#fff;
-
-    font-size:15px;
-    font-weight:700;
-
-    cursor:pointer;
-
-    min-height:48px;
+.toolbar-left{
 
     display:flex;
+
     align-items:center;
-    justify-content:center;
+
+    gap:9px;
+
 }
 
-button:disabled{
-    opacity:.75;
-    cursor:not-allowed;
+
+.toolbar-title{
+
+    font-size:21px;
+
+    font-weight:600;
+
+    letter-spacing:-.5px;
+
 }
 
-/* ================= BUTTON LOADER ================= */
 
-.button-loader{
-    width:20px;
-    height:20px;
+.toolbar-title span{
 
-    border:2px solid rgba(255,255,255,.35);
-    border-top-color:#fff;
+    color:var(--primary);
+
+}
+
+
+.toolbar-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+}
+
+
+/* =========================================================
+   ICON BUTTON
+========================================================= */
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
 
     border-radius:50%;
 
-    animation:spin .7s linear infinite;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:23px;
+
+    cursor:pointer;
+
+    transition:background .18s ease;
+
 }
 
-@keyframes spin{
 
-    from{
-        transform:rotate(0deg);
-    }
+.icon-button:hover{
 
-    to{
-        transform:rotate(360deg);
-    }
+    background:var(--surface-secondary);
 
 }
 
-/* ================= SWITCH ================= */
 
-.switch{
-    margin-top:15px;
+.icon-button:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+
+    width:100%;
+
+    max-width:430px;
+
+    margin:0 auto;
+
+    padding:30px 20px 45px;
+
+}
+
+
+/* =========================================================
+   LOGIN HEADER
+========================================================= */
+
+.login-header{
 
     text-align:center;
 
-    color:#2196f3;
+    padding:12px 0 26px;
+
+}
+
+
+.login-logo{
+
+    width:68px;
+
+    height:68px;
+
+    border-radius:20px;
+
+    object-fit:cover;
+
+    display:block;
+
+    margin:0 auto 20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.heading{
+
+    font-size:26px;
+
+    line-height:1.2;
+
+    font-weight:700;
+
+    letter-spacing:-.6px;
+
+}
+
+
+.desc{
+
+    color:var(--secondary);
+
+    margin:10px auto 0;
+
+    max-width:340px;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group{
+
+    position:relative;
+
+    margin-top:14px;
+
+}
+
+
+.input{
+
+    width:100%;
+
+    min-height:52px;
+
+    padding:0 48px 0 16px;
+
+    border:1px solid var(--border);
+
+    outline:none;
+
+    border-radius:16px;
+
+    background:var(--input-bg);
+
+    color:var(--text);
+
+    font-size:15px;
+
+    transition:
+
+        border .18s ease,
+
+        box-shadow .18s ease,
+
+        background .18s ease;
+
+}
+
+
+.input::placeholder{
+
+    color:var(--muted);
+
+}
+
+
+.input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px var(--primary-soft);
+
+}
+
+
+/* =========================================================
+   INPUT ICON
+========================================================= */
+
+.input-leading{
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:21px;
+
+    color:var(--secondary);
+
+    pointer-events:none;
+
+}
+
+
+.has-leading{
+
+    padding-left:46px;
+
+}
+
+
+/* =========================================================
+   INPUT ACTION
+========================================================= */
+
+.input-action{
+
+    position:absolute;
+
+    right:8px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--secondary);
+
+    font-size:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 
     cursor:pointer;
 
-    font-size:14px;
 }
 
-/* ================= ERROR ================= */
+
+.input-action:hover{
+
+    background:var(--surface-secondary);
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
 
 .error{
+
     display:none;
 
     margin-top:14px;
 
-    padding:12px;
+    padding:13px 14px;
 
-    border-radius:10px;
+    border-radius:14px;
 
-    background:rgba(244,67,54,.12);
+    background:var(--error-bg);
 
-    color:#ff8a80;
+    color:var(--error-text);
 
     font-size:13px;
 
-    line-height:1.4;
+    line-height:1.45;
+
 }
 
-/* ================= LOGIN ================= */
 
-#loginScreen{
-    display:block;
-}
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
 
-/* ================= PIN ================= */
-
-#pinScreen{
-    display:none;
-}
-
-/* ================= FOOTER ================= */
-
-.footer{
-    position:fixed;
-
-    bottom:20px;
+.primary-button{
 
     width:100%;
 
+    min-height:50px;
+
+    margin-top:18px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:30px;
+
+    background:var(--primary);
+
+    color:#FFFFFF;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    transition:
+
+        opacity .18s ease,
+
+        transform .12s ease;
+
+}
+
+
+.primary-button:hover{
+
+    opacity:.90;
+
+}
+
+
+.primary-button:active{
+
+    transform:scale(.985);
+
+}
+
+
+.primary-button:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =========================================================
+   BUTTON ICON
+========================================================= */
+
+.primary-button > i{
+
+    font-size:20px;
+
+}
+
+
+/* =========================================================
+   BUTTON LOADER
+========================================================= */
+
+.button-loader{
+
+    width:20px;
+
+    height:20px;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    border-top-color:#FFFFFF;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+
+}
+
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   SWITCH
+========================================================= */
+
+.switch{
+
+    margin-top:18px;
+
     text-align:center;
+
+    color:var(--primary);
+
+    cursor:pointer;
 
     font-size:14px;
 
-    color:#aaa;
+    font-weight:500;
+
+    padding:6px;
+
 }
 
-.footer span{
-    color:#2196f3;
-    cursor:pointer;
+
+.switch:hover{
+
+    text-decoration:underline;
+
 }
 
-/* ================= PROFILE ================= */
 
-#profileScreen{
-    display:none;
+/* =========================================================
+   SMALL INFO
+========================================================= */
 
-    max-width:600px;
-    margin:auto;
-
-    padding-bottom:40px;
-}
-
-.profile-header{
-    padding:25px 20px 20px;
+.security-info{
 
     display:flex;
+
     align-items:center;
 
-    gap:18px;
+    justify-content:center;
+
+    gap:6px;
+
+    margin-top:22px;
+
+    color:var(--secondary);
+
+    font-size:12px;
+
 }
 
+
+.security-info i{
+
+    font-size:16px;
+
+    color:var(--primary);
+
+}
+
+
+/* =========================================================
+   PIN SCREEN
+========================================================= */
+
+#pinScreen{
+
+    display:none;
+
+}
+
+
+/* =========================================================
+   PIN ICON
+========================================================= */
+
+.pin-icon{
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:18px;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin:0 auto 20px;
+
+    font-size:31px;
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+#profileScreen{
+
+    display:none;
+
+    width:100%;
+
+    max-width:620px;
+
+    margin:auto;
+
+    padding-bottom:50px;
+
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.profile-header{
+
+    padding:28px 20px 22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+
 .profile-avatar{
-    width:90px;
-    height:90px;
+
+    width:82px;
+
+    height:82px;
 
     border-radius:50%;
 
     object-fit:cover;
 
-    background:#1f2c33;
+    background:var(--input-bg);
+
+    border:1px solid var(--border);
+
+    flex-shrink:0;
+
 }
+
 
 .profile-name-area{
+
+    min-width:0;
+
     flex:1;
+
 }
+
 
 .profile-name{
+
     font-size:21px;
+
     font-weight:700;
+
+    line-height:1.3;
+
+    word-break:break-word;
+
 }
+
 
 .profile-username{
+
     margin-top:5px;
 
-    color:#2196f3;
-
-    font-size:14px;
-}
-
-.profile-card{
-    margin:10px 15px;
-
-    padding:5px 0;
-
-    background:#162229;
-
-    border-radius:18px;
-
-    overflow:hidden;
-}
-
-.profile-row{
-    min-height:58px;
-
-    display:flex;
-    align-items:center;
-
-    padding:10px 16px;
-
-    border-bottom:1px solid rgba(255,255,255,.07);
-}
-
-.profile-row:last-child{
-    border-bottom:none;
-}
-
-.profile-icon{
-    width:36px;
-
-    font-size:20px;
-
-    color:#2196f3;
-
-    flex-shrink:0;
-}
-
-.profile-label{
-    width:115px;
-
-    color:#8f9ba1;
-
-    font-size:13px;
-
-    flex-shrink:0;
-}
-
-.profile-value{
-    flex:1;
+    color:var(--primary);
 
     font-size:14px;
 
     word-break:break-word;
+
 }
+
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.profile-card{
+
+    margin:4px 15px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* =========================================================
+   PROFILE ROW
+========================================================= */
+
+.profile-row{
+
+    min-height:62px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:10px 15px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+.profile-row:last-child{
+
+    border-bottom:none;
+
+}
+
+
+/* =========================================================
+   PROFILE ICON
+========================================================= */
+
+.profile-icon{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:12px;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+    flex-shrink:0;
+
+    margin-right:12px;
+
+}
+
+
+/* =========================================================
+   PROFILE LABEL
+========================================================= */
+
+.profile-label{
+
+    width:105px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    flex-shrink:0;
+
+}
+
+
+/* =========================================================
+   PROFILE VALUE
+========================================================= */
+
+.profile-value{
+
+    flex:1;
+
+    font-size:14px;
+
+    color:var(--text);
+
+    word-break:break-word;
+
+    line-height:1.4;
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 .logout{
-    margin:20px 15px;
+
+    margin:20px 15px 0;
 
     width:calc(100% - 30px);
+
+    min-height:50px;
+
+    border:1px solid var(--border);
+
+    outline:none;
+
+    border-radius:30px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:15px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
 }
 
+
+.logout i{
+
+    font-size:20px;
+
+}
+
+
+.logout:hover{
+
+    background:var(--surface-secondary);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    width:100%;
+
+    padding:18px 20px 25px;
+
+    text-align:center;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+}
+
+
+.footer span{
+
+    color:var(--primary);
+
+    cursor:pointer;
+
+    font-weight:500;
+
+}
+
+
+.footer span:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
 .hidden{
+
     display:none !important;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:500px){
+
+    .toolbar{
+
+        height:60px;
+
+    }
+
+
+    .toolbar-title{
+
+        font-size:20px;
+
+    }
+
+
+    .container{
+
+        padding:
+
+            24px
+
+            16px
+
+            35px;
+
+    }
+
+
+    .login-header{
+
+        padding-top:8px;
+
+    }
+
+
+    .heading{
+
+        font-size:25px;
+
+    }
+
+
+    .profile-header{
+
+        padding-left:16px;
+
+        padding-right:16px;
+
+    }
+
+
+    .profile-card{
+
+        margin-left:12px;
+
+        margin-right:12px;
+
+    }
+
+
+    .logout{
+
+        width:calc(100% - 24px);
+
+        margin-left:12px;
+
+        margin-right:12px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media(max-width:350px){
+
+    .profile-avatar{
+
+        width:70px;
+
+        height:70px;
+
+    }
+
+
+    .profile-label{
+
+        width:85px;
+
+    }
+
+
+    .profile-value{
+
+        font-size:13px;
+
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 
-<!-- ================================================= -->
-<!-- TOOLBAR -->
-<!-- ================================================= -->
+<!-- =====================================================
+     TOOLBAR
+===================================================== -->
 
 <div class="toolbar">
 
-    <div class="title">
-        Appnetick
+
+    <div class="toolbar-left">
+
+        <div class="toolbar-title">
+
+            Appnetick<span>.</span>
+
+        </div>
+
     </div>
 
-    <img
-        src="/20260313_121958.jpg"
-        onclick="location.href='/index.html'"
-    >
+
+    <div class="toolbar-actions">
+
+
+        <!-- THEME -->
+
+        <button
+            class="icon-button"
+            id="themeButton"
+            aria-label="Change theme">
+
+            <i
+                class="ph ph-moon"
+                id="themeIcon">
+            </i>
+
+        </button>
+
+
+        <!-- HOME -->
+
+        <button
+            class="icon-button"
+            aria-label="Home"
+            onclick="location.href='/index.html'">
+
+            <i class="ph ph-house"></i>
+
+        </button>
+
+
+    </div>
 
 </div>
 
 
-<!-- ================================================= -->
-<!-- LOGIN SCREEN -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
 
 <div id="loginScreen">
 
+
     <div class="container">
 
-        <div class="heading">
-            Login with your account
+
+        <div class="login-header">
+
+
+            <img
+                class="login-logo"
+                src="/20260313_121958.jpg"
+                alt="Appnetick">
+
+
+            <div class="heading">
+
+                Welcome back
+
+            </div>
+
+
+            <div class="desc">
+
+                Login to your Appnetick account
+                to continue.
+
+            </div>
+
+
         </div>
 
-        <div class="desc">
-            Access your Appnetick account and continue
-            chatting, sharing, and exploring the platform.
+
+
+        <!-- USERNAME -->
+
+        <div class="form-group">
+
+            <i
+                class="ph ph-user input-leading">
+            </i>
+
+
+            <input
+                id="username"
+                class="input has-leading"
+                type="text"
+                autocomplete="username"
+                placeholder="Username">
+
+
         </div>
 
 
-        <input
-            id="username"
-            class="input"
-            type="text"
-            autocomplete="username"
-            placeholder="Username"
-        >
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <i
+                class="ph ph-lock input-leading">
+            </i>
 
 
-        <input
-            id="password"
-            class="input"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Password"
-        >
+            <input
+                id="password"
+                class="input has-leading"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Password">
 
+
+            <button
+                type="button"
+                class="input-action"
+                id="passwordToggle"
+                aria-label="Show password">
+
+                <i
+                    class="ph ph-eye"
+                    id="passwordIcon">
+                </i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- ERROR -->
 
         <div
             id="loginError"
@@ -427,53 +1300,131 @@ button:disabled{
         </div>
 
 
+
+        <!-- LOGIN -->
+
         <button
             id="loginButton"
+            class="primary-button"
             onclick="startLogin()">
 
+
+            <i class="ph ph-sign-in"></i>
+
+
             <span id="loginButtonText">
+
                 Login
+
             </span>
+
 
         </button>
 
 
-        <div class="switch">
+
+        <!-- MOBILE LOGIN -->
+
+        <div
+            class="switch">
+
             Use mobile instead
+
         </div>
+
+
+
+        <div class="security-info">
+
+            <i class="ph ph-shield-check"></i>
+
+            Secure Appnetick login
+
+        </div>
+
 
     </div>
 
 </div>
 
 
-<!-- ================================================= -->
-<!-- PIN SCREEN -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     PIN SCREEN
+===================================================== -->
 
 <div id="pinScreen">
 
+
     <div class="container">
 
-        <div class="heading">
-            Enter your PIN
+
+        <div class="login-header">
+
+
+            <div class="pin-icon">
+
+                <i class="ph ph-lock-key"></i>
+
+            </div>
+
+
+            <div class="heading">
+
+                Enter your PIN
+
+            </div>
+
+
+            <div class="desc">
+
+                Enter your account PIN to continue
+                to your Appnetick account.
+
+            </div>
+
+
         </div>
 
-        <div class="desc">
-            Enter your account PIN to continue.
+
+
+        <!-- PIN -->
+
+        <div class="form-group">
+
+            <i
+                class="ph ph-key input-leading">
+            </i>
+
+
+            <input
+                id="pin"
+                class="input has-leading"
+                type="password"
+                inputmode="numeric"
+                maxlength="20"
+                autocomplete="off"
+                placeholder="Enter PIN">
+
+
+            <button
+                type="button"
+                class="input-action"
+                id="pinToggle"
+                aria-label="Show PIN">
+
+                <i
+                    class="ph ph-eye"
+                    id="pinIcon">
+                </i>
+
+            </button>
+
         </div>
 
 
-        <input
-            id="pin"
-            class="input"
-            type="password"
-            inputmode="numeric"
-            maxlength="20"
-            autocomplete="off"
-            placeholder="Enter PIN"
-        >
 
+        <!-- ERROR -->
 
         <div
             id="pinError"
@@ -481,63 +1432,104 @@ button:disabled{
         </div>
 
 
+
+        <!-- CONTINUE -->
+
         <button
             id="pinButton"
+            class="primary-button"
             onclick="verifyPIN()">
 
+
+            <i class="ph ph-arrow-right"></i>
+
+
             <span id="pinButtonText">
+
                 Continue
+
             </span>
+
 
         </button>
 
+
+
+        <!-- BACK -->
 
         <div
             class="switch"
             onclick="backToLogin()">
 
-            Back to login
+            <i class="ph ph-arrow-left"></i>
+
+            &nbsp;Back to login
 
         </div>
+
+
+        <div class="security-info">
+
+            <i class="ph ph-shield-check"></i>
+
+            Your PIN is verified securely
+
+        </div>
+
 
     </div>
 
 </div>
 
 
-<!-- ================================================= -->
-<!-- PROFILE SCREEN -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     PROFILE SCREEN
+===================================================== -->
 
 <div id="profileScreen">
 
+
     <div class="profile-header">
+
 
         <img
             id="profileAvatar"
             class="profile-avatar"
             src="/20260313_121958.jpg"
             onerror="this.src='/20260313_121958.jpg'"
-        >
+            alt="Profile">
+
 
         <div class="profile-name-area">
+
 
             <div
                 id="profileName"
                 class="profile-name">
+
                 User
+
             </div>
+
 
             <div
                 id="profileUsername"
                 class="profile-username">
+
                 @username
+
             </div>
+
 
         </div>
 
+
     </div>
 
+
+
+    <!-- PROFILE CARD -->
 
     <div class="profile-card">
 
@@ -546,145 +1538,221 @@ button:disabled{
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                ♙
+
+                <i class="ph ph-user"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 Full name
+
             </div>
+
 
             <div
                 id="pFullName"
                 class="profile-value">
+
                 —
+
             </div>
 
+
         </div>
+
 
 
         <!-- USERNAME -->
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                @
+
+                <i class="ph ph-at"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 Username
+
             </div>
+
 
             <div
                 id="pUsername"
                 class="profile-value">
+
                 —
+
             </div>
 
+
         </div>
+
 
 
         <!-- EMAIL -->
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                ✉
+
+                <i class="ph ph-envelope"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 Email
+
             </div>
+
 
             <div
                 id="pEmail"
                 class="profile-value">
+
                 —
+
             </div>
 
+
         </div>
+
 
 
         <!-- UID -->
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                ID
+
+                <i class="ph ph-identification-card"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 UID
+
             </div>
+
 
             <div
                 id="pUid"
                 class="profile-value">
+
                 —
+
             </div>
+
 
         </div>
 
 
-        <!-- JOINED DATE -->
+
+        <!-- JOINED -->
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                ●
+
+                <i class="ph ph-calendar-blank"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 Joined
+
             </div>
+
 
             <div
                 id="pJoined"
                 class="profile-value">
+
                 —
+
             </div>
+
 
         </div>
 
 
-        <!-- DEVICE ID -->
+
+        <!-- DEVICE -->
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                ▣
+
+                <i class="ph ph-device-mobile"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 Device ID
+
             </div>
+
 
             <div
                 id="pDevice"
                 class="profile-value">
+
                 —
+
             </div>
 
+
         </div>
+
 
 
         <!-- APPNETICK -->
 
         <div class="profile-row">
 
+
             <div class="profile-icon">
-                ✓
+
+                <i class="ph ph-seal-check"></i>
+
             </div>
 
+
             <div class="profile-label">
+
                 Appnetick
+
             </div>
+
 
             <div
                 id="pAppnetick"
                 class="profile-value">
+
                 —
+
             </div>
+
 
         </div>
 
@@ -692,22 +1760,31 @@ button:disabled{
     </div>
 
 
+
+    <!-- LOGOUT -->
+
     <button
         class="logout"
         onclick="logout()">
+
+        <i class="ph ph-sign-out"></i>
 
         Logout
 
     </button>
 
+
 </div>
 
 
-<!-- ================================================= -->
-<!-- FOOTER -->
-<!-- ================================================= -->
 
-<div class="footer">
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<div
+    class="footer"
+    id="loginFooter">
 
     Don't have an account?
 
@@ -721,9 +1798,10 @@ button:disabled{
 </div>
 
 
-<!-- ================================================= -->
-<!-- API SCRIPT -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     API SCRIPT
+===================================================== -->
 
 <script>
 
@@ -753,6 +1831,218 @@ let currentUserData = null;
 
 /*
 =========================================================
+THEME
+=========================================================
+*/
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+const themeIcon =
+    document.getElementById(
+        "themeIcon"
+    );
+
+
+const systemTheme =
+    window.matchMedia &&
+    window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches
+        ? "dark"
+        : "light";
+
+
+let savedTheme =
+    localStorage.getItem(
+        "appnetick-theme"
+    );
+
+
+if(!savedTheme){
+
+    savedTheme =
+        systemTheme;
+
+}
+
+
+applyTheme(
+    savedTheme
+);
+
+
+function applyTheme(theme){
+
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
+        );
+
+
+    localStorage.setItem(
+        "appnetick-theme",
+        theme
+    );
+
+
+    if(theme === "dark"){
+
+        themeIcon.className =
+            "ph ph-sun";
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to light theme"
+        );
+
+    }else{
+
+        themeIcon.className =
+            "ph ph-moon";
+
+        themeButton.setAttribute(
+            "aria-label",
+            "Switch to dark theme"
+        );
+
+    }
+
+}
+
+
+themeButton.addEventListener(
+    "click",
+    function(){
+
+        const current =
+            document.documentElement
+                .getAttribute(
+                    "data-theme"
+                );
+
+
+        applyTheme(
+            current === "dark"
+                ? "light"
+                : "dark"
+        );
+
+    }
+);
+
+
+/*
+=========================================================
+PASSWORD VISIBILITY
+=========================================================
+*/
+
+const password =
+    document.getElementById(
+        "password"
+    );
+
+const passwordToggle =
+    document.getElementById(
+        "passwordToggle"
+    );
+
+const passwordIcon =
+    document.getElementById(
+        "passwordIcon"
+    );
+
+
+passwordToggle.addEventListener(
+    "click",
+    function(){
+
+        const isPassword =
+            password.type === "password";
+
+
+        password.type =
+            isPassword
+                ? "text"
+                : "password";
+
+
+        passwordIcon.className =
+            isPassword
+                ? "ph ph-eye-slash"
+                : "ph ph-eye";
+
+
+        passwordToggle.setAttribute(
+            "aria-label",
+            isPassword
+                ? "Hide password"
+                : "Show password"
+        );
+
+    }
+);
+
+
+/*
+=========================================================
+PIN VISIBILITY
+=========================================================
+*/
+
+const pin =
+    document.getElementById(
+        "pin"
+    );
+
+const pinToggle =
+    document.getElementById(
+        "pinToggle"
+    );
+
+const pinIcon =
+    document.getElementById(
+        "pinIcon"
+    );
+
+
+pinToggle.addEventListener(
+    "click",
+    function(){
+
+        const isPassword =
+            pin.type === "password";
+
+
+        pin.type =
+            isPassword
+                ? "text"
+                : "password";
+
+
+        pinIcon.className =
+            isPassword
+                ? "ph ph-eye-slash"
+                : "ph ph-eye";
+
+
+        pinToggle.setAttribute(
+            "aria-label",
+            isPassword
+                ? "Hide PIN"
+                : "Show PIN"
+        );
+
+    }
+);
+
+
+/*
+=========================================================
 ERROR
 =========================================================
 */
@@ -763,10 +2053,14 @@ function showError(
 ){
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
+
 
     element.textContent =
         message;
+
 
     element.style.display =
         "block";
@@ -776,10 +2070,14 @@ function showError(
 function clearError(id){
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
+
 
     element.textContent =
         "";
+
 
     element.style.display =
         "none";
@@ -799,16 +2097,22 @@ function setButtonLoading(
 ){
 
     const button =
-        document.getElementById(buttonId);
+        document.getElementById(
+            buttonId
+        );
+
 
     const text =
-        document.getElementById(textId);
+        document.getElementById(
+            textId
+        );
 
 
     if(loading){
 
         button.disabled =
             true;
+
 
         text.style.display =
             "none";
@@ -825,12 +2129,15 @@ function setButtonLoading(
                     "span"
                 );
 
+
             loader.className =
                 "button-loader";
+
 
             button.appendChild(
                 loader
             );
+
         }
 
 
@@ -838,6 +2145,7 @@ function setButtonLoading(
 
         button.disabled =
             false;
+
 
         text.style.display =
             "inline";
@@ -852,8 +2160,11 @@ function setButtonLoading(
         if(loader){
 
             loader.remove();
+
         }
+
     }
+
 }
 
 
@@ -868,13 +2179,18 @@ async function(){
 
     const username =
         document
-            .getElementById("username")
+            .getElementById(
+                "username"
+            )
             .value
             .trim();
 
-    const password =
+
+    const passwordValue =
         document
-            .getElementById("password")
+            .getElementById(
+                "password"
+            )
             .value;
 
 
@@ -891,10 +2207,11 @@ async function(){
         );
 
         return;
+
     }
 
 
-    if(!password){
+    if(!passwordValue){
 
         showError(
             "loginError",
@@ -902,6 +2219,7 @@ async function(){
         );
 
         return;
+
     }
 
 
@@ -918,14 +2236,17 @@ async function(){
             await fetch(
                 LOGIN_API,
                 {
+
                     method:"POST",
 
                     headers:{
+
                         "Content-Type":
                             "application/json",
 
                         "Accept":
                             "application/json"
+
                     },
 
                     body:JSON.stringify({
@@ -934,9 +2255,10 @@ async function(){
                             username,
 
                         password:
-                            password
+                            passwordValue
 
                     })
+
                 }
             );
 
@@ -954,6 +2276,7 @@ async function(){
             throw new Error(
                 "Invalid server response."
             );
+
         }
 
 
@@ -973,6 +2296,7 @@ async function(){
                 result.error ||
                 "Username or password is incorrect."
             );
+
         }
 
 
@@ -1005,6 +2329,7 @@ async function(){
             throw new Error(
                 "Server did not return user UID."
             );
+
         }
 
 
@@ -1086,6 +2411,7 @@ async function(){
             "loginButtonText",
             false
         );
+
     }
 
 };
@@ -1100,9 +2426,11 @@ VERIFY PIN
 window.verifyPIN =
 async function(){
 
-    const pin =
+    const pinValue =
         document
-            .getElementById("pin")
+            .getElementById(
+                "pin"
+            )
             .value
             .trim();
 
@@ -1112,7 +2440,7 @@ async function(){
     );
 
 
-    if(!pin){
+    if(!pinValue){
 
         showError(
             "pinError",
@@ -1120,6 +2448,7 @@ async function(){
         );
 
         return;
+
     }
 
 
@@ -1131,6 +2460,7 @@ async function(){
         );
 
         return;
+
     }
 
 
@@ -1147,14 +2477,17 @@ async function(){
             await fetch(
                 VERIFY_PIN_API,
                 {
+
                     method:"POST",
 
                     headers:{
+
                         "Content-Type":
                             "application/json",
 
                         "Accept":
                             "application/json"
+
                     },
 
                     body:JSON.stringify({
@@ -1163,9 +2496,10 @@ async function(){
                             currentUID,
 
                         pin:
-                            pin
+                            pinValue
 
                     })
+
                 }
             );
 
@@ -1183,6 +2517,7 @@ async function(){
             throw new Error(
                 "Invalid server response."
             );
+
         }
 
 
@@ -1202,6 +2537,7 @@ async function(){
                 result.error ||
                 "Incorrect PIN."
             );
+
         }
 
 
@@ -1271,6 +2607,7 @@ async function(){
             "pinButtonText",
             false
         );
+
     }
 
 };
@@ -1292,6 +2629,7 @@ function showProfile(user){
         );
 
         return;
+
     }
 
 
@@ -1454,9 +2792,13 @@ function showProfile(user){
 
     if(joinedDate){
 
+        const numericDate =
+            Number(joinedDate);
+
+
         const date =
             new Date(
-                Number(joinedDate)
+                numericDate
             );
 
 
@@ -1470,12 +2812,18 @@ function showProfile(user){
                 date.toLocaleString(
                     "en-IN",
                     {
+
                         day:"2-digit",
+
                         month:"short",
+
                         year:"numeric"
+
                     }
                 );
+
         }
+
     }
 
 
@@ -1524,11 +2872,12 @@ function showProfile(user){
     */
 
     document
-        .querySelector(
-            ".footer"
+        .getElementById(
+            "loginFooter"
         )
         .style.display =
             "none";
+
 }
 
 
@@ -1682,11 +3031,12 @@ function(){
 
 
     document
-        .querySelector(
-            ".footer"
+        .getElementById(
+            "loginFooter"
         )
         .style.display =
             "block";
+
 };
 
 
@@ -1768,6 +3118,7 @@ document
     );
 
 </script>
+
 
 </body>
 
