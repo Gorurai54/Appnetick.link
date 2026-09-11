@@ -47,6 +47,7 @@
     --success-text:#2E7D32;
 
     --shadow:0 6px 25px rgba(0,0,0,0.06);
+
 }
 
 
@@ -73,6 +74,7 @@
     --success-text:#66BB6A;
 
     --shadow:0 6px 25px rgba(0,0,0,0.28);
+
 }
 
 
@@ -113,9 +115,7 @@ body{
     overflow-x:hidden;
 
     transition:
-
         background .25s ease,
-
         color .25s ease;
 
 }
@@ -354,9 +354,7 @@ input{
     font-size:15px;
 
     transition:
-
         border .18s ease,
-
         box-shadow .18s ease;
 
 }
@@ -374,7 +372,6 @@ input{
     border-color:var(--primary);
 
     box-shadow:
-
         0 0 0 3px var(--primary-soft);
 
 }
@@ -525,9 +522,7 @@ input{
     gap:8px;
 
     transition:
-
         opacity .18s ease,
-
         transform .12s ease;
 
 }
@@ -587,15 +582,11 @@ input{
 @keyframes spin{
 
     from{
-
         transform:rotate(0deg);
-
     }
 
     to{
-
         transform:rotate(360deg);
-
     }
 
 }
@@ -998,11 +989,8 @@ input{
     .container{
 
         padding:
-
             24px
-
             16px
-
             35px;
 
     }
@@ -1534,23 +1522,21 @@ const API_BASE =
 
 
 const LOGIN_API =
-    API_BASE +
-    "/api/login";
+    API_BASE + "/api/login";
 
 
 const PIN_API =
-    API_BASE +
-    "/api/verify-pin";
+    API_BASE + "/api/verify-pin";
 
 
 const ME_API =
-    API_BASE +
-    "/api/auth/me";
+    API_BASE + "/api/auth/me";
 
 
-const LOGOUT_API =
-    API_BASE +
-    "/api/auth/logout";
+/*
+ * Logout ke liye backend API required nahi hai.
+ * Persistent browser session localStorage se clear hogi.
+ */
 
 
 /* =========================================================
@@ -1561,6 +1547,14 @@ const SESSION_KEY =
     "appnetick_auth_token";
 
 
+const USER_KEY =
+    "appnetick_user";
+
+
+const UID_KEY =
+    "appnetick_uid";
+
+
 let authToken =
     localStorage.getItem(
         SESSION_KEY
@@ -1568,7 +1562,9 @@ let authToken =
 
 
 let currentUID =
-    "";
+    localStorage.getItem(
+        UID_KEY
+    ) || "";
 
 
 let currentUserData =
@@ -1588,15 +1584,18 @@ const loginScreen =
         "loginScreen"
     );
 
+
 const pinScreen =
     document.getElementById(
         "pinScreen"
     );
 
+
 const profileScreen =
     document.getElementById(
         "profileScreen"
     );
+
 
 const loginFooter =
     document.getElementById(
@@ -1716,8 +1715,7 @@ document
 
 
             const show =
-                input.type ===
-                "password";
+                input.type === "password";
 
 
             input.type =
@@ -1760,8 +1758,7 @@ document
 
 
             const show =
-                input.type ===
-                "password";
+                input.type === "password";
 
 
             input.type =
@@ -1829,8 +1826,7 @@ function clearError(id){
 function setLoading(
     buttonId,
     textId,
-    loading,
-    loadingText
+    loading
 ){
 
     const button =
@@ -1849,16 +1845,26 @@ function setLoading(
         loading;
 
 
+    const existingLoader =
+        button.querySelector(
+            ".button-loader"
+        );
+
+
     if(loading){
 
         text.style.display =
             "none";
 
 
-        button.insertAdjacentHTML(
-            "beforeend",
-            '<span class="button-loader"></span>'
-        );
+        if(!existingLoader){
+
+            button.insertAdjacentHTML(
+                "beforeend",
+                '<span class="button-loader"></span>'
+            );
+
+        }
 
     }else{
 
@@ -1866,14 +1872,10 @@ function setLoading(
             "inline";
 
 
-        const loader =
-            button.querySelector(
-                ".button-loader"
-            );
+        if(existingLoader){
 
+            existingLoader.remove();
 
-        if(loader){
-            loader.remove();
         }
 
     }
@@ -1882,57 +1884,378 @@ function setLoading(
 
 
 /* =========================================================
-   READ API RESPONSE
+   API ERROR CLASS
 ========================================================= */
 
-async function readAPIResponse(
-    response
+class APIError extends Error{
+
+    constructor(
+        message,
+        status,
+        code
+    ){
+
+        super(message);
+
+        this.name =
+            "APIError";
+
+        this.status =
+            status || 0;
+
+        this.code =
+            code || "";
+
+    }
+
+}
+
+
+/* =========================================================
+   API REQUEST
+========================================================= */
+
+async function apiRequest(
+    url,
+    options
 ){
 
-    const contentType =
-        response.headers.get(
-            "content-type"
-        ) || "";
+    const controller =
+        new AbortController();
 
 
-    if(
-        contentType
-            .toLowerCase()
-            .includes(
-                "application/json"
-            )
-    ){
+    const timeout =
+        setTimeout(
+            function(){
+
+                controller.abort();
+
+            },
+            15000
+        );
+
+
+    try{
+
+        const requestOptions =
+            Object.assign(
+                {},
+                options || {},
+                {
+                    signal:
+                        controller.signal
+                }
+            );
+
+
+        let response;
+
 
         try{
 
-            return await response.json();
+            response =
+                await fetch(
+                    url,
+                    requestOptions
+                );
 
         }catch(error){
 
-            throw new Error(
-                "Server returned invalid JSON."
+            if(
+                error &&
+                error.name ===
+                "AbortError"
+            ){
+
+                throw new APIError(
+                    "Appnetick server request timed out. Please try again.",
+                    0,
+                    "TIMEOUT"
+                );
+
+            }
+
+
+            console.error(
+                "FETCH ERROR:",
+                error
+            );
+
+
+            throw new APIError(
+                "Cannot connect to Appnetick server. Please check your internet connection or API/CORS configuration.",
+                0,
+                "NETWORK"
+            );
+
+        }
+
+
+        const contentType =
+            (
+                response.headers.get(
+                    "content-type"
+                ) || ""
+            ).toLowerCase();
+
+
+        let data =
+            null;
+
+
+        let rawText =
+            "";
+
+
+        if(
+            contentType.includes(
+                "application/json"
+            )
+        ){
+
+            try{
+
+                data =
+                    await response.json();
+
+            }catch(error){
+
+                throw new APIError(
+                    "Appnetick API returned invalid JSON.",
+                    response.status,
+                    "INVALID_JSON"
+                );
+
+            }
+
+        }else{
+
+            try{
+
+                rawText =
+                    await response.text();
+
+            }catch(error){
+
+                rawText =
+                    "";
+
+            }
+
+
+            console.error(
+                "NON-JSON API RESPONSE:",
+                {
+                    url:url,
+                    status:response.status,
+                    body:rawText
+                }
+            );
+
+
+            if(
+                response.status === 404
+            ){
+
+                throw new APIError(
+                    "Login API not found (404). Check that api/login.js is deployed on api-appnetick.vercel.app.",
+                    404,
+                    "NOT_FOUND"
+                );
+
+            }
+
+
+            if(
+                response.status === 405
+            ){
+
+                throw new APIError(
+                    "Login API is reachable, but this request method is not allowed (405).",
+                    405,
+                    "METHOD_NOT_ALLOWED"
+                );
+
+            }
+
+
+            throw new APIError(
+                "API returned HTTP " +
+                response.status +
+                ".",
+                response.status,
+                "NON_JSON"
+            );
+
+        }
+
+
+        if(!response.ok){
+
+            const serverMessage =
+                data &&
+                (
+                    data.error ||
+                    data.message ||
+                    data.details
+                );
+
+
+            let message =
+                serverMessage ||
+                "Request failed (HTTP " +
+                response.status +
+                ").";
+
+
+            if(
+                response.status === 404
+            ){
+
+                message =
+                    serverMessage ||
+                    "API route not found (404). Check the Vercel API deployment.";
+
+            }
+
+
+            if(
+                response.status === 405
+            ){
+
+                message =
+                    serverMessage ||
+                    "API method not allowed (405).";
+
+            }
+
+
+            if(
+                response.status >= 500
+            ){
+
+                message =
+                    serverMessage ||
+                    "Appnetick server error (" +
+                    response.status +
+                    ").";
+
+            }
+
+
+            throw new APIError(
+                message,
+                response.status,
+                "HTTP_ERROR"
+            );
+
+        }
+
+
+        return data;
+
+    }finally{
+
+        clearTimeout(
+            timeout
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE SESSION
+========================================================= */
+
+function saveSession(
+    token,
+    user
+){
+
+    if(!token){
+
+        throw new Error(
+            "Server did not return a login token."
+        );
+
+    }
+
+
+    authToken =
+        token;
+
+
+    localStorage.setItem(
+        SESSION_KEY,
+        token
+    );
+
+
+    if(user){
+
+        currentUserData =
+            user;
+
+
+        currentUID =
+            user.uid ||
+            currentUID ||
+            "";
+
+
+        localStorage.setItem(
+            USER_KEY,
+            JSON.stringify(
+                user
+            )
+        );
+
+
+        if(currentUID){
+
+            localStorage.setItem(
+                UID_KEY,
+                currentUID
             );
 
         }
 
     }
 
-
-    const text =
-        await response.text();
+}
 
 
-    console.error(
-        "NON JSON API RESPONSE:",
-        text
-    );
+/* =========================================================
+   LOAD CACHED USER
+========================================================= */
+
+function loadCachedUser(){
+
+    try{
+
+        const cached =
+            localStorage.getItem(
+                USER_KEY
+            );
 
 
-    throw new Error(
-        "API returned HTTP " +
-        response.status +
-        ". Please check the API route deployment."
-    );
+        if(cached){
+
+            currentUserData =
+                JSON.parse(
+                    cached
+                );
+
+        }
+
+    }catch(error){
+
+        currentUserData =
+            null;
+
+    }
 
 }
 
@@ -1942,6 +2265,19 @@ async function readAPIResponse(
 ========================================================= */
 
 async function login(){
+
+    if(
+        document
+            .getElementById(
+                "loginButton"
+            )
+            .disabled
+    ){
+
+        return;
+
+    }
+
 
     const username =
         document
@@ -1992,60 +2328,40 @@ async function login(){
     setLoading(
         "loginButton",
         "loginButtonText",
-        true,
-        "Logging in..."
+        true
     );
 
 
     try{
 
-        let response;
-
-
-        try{
-
-            response =
-                await fetch(
-                    LOGIN_API,
-                    {
-
-                        method:"POST",
-
-                        headers:{
-
-                            "Content-Type":
-                                "application/json",
-
-                            "Accept":
-                                "application/json"
-
-                        },
-
-                        body:JSON.stringify({
-
-                            username:
-                                username,
-
-                            password:
-                                password
-
-                        })
-
-                    }
-                );
-
-        }catch(error){
-
-            throw new Error(
-                "Unable to connect to Appnetick server."
-            );
-
-        }
-
-
         const result =
-            await readAPIResponse(
-                response
+            await apiRequest(
+                LOGIN_API,
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        username:
+                            username,
+
+                        password:
+                            password
+
+                    })
+
+                }
             );
 
 
@@ -2055,35 +2371,30 @@ async function login(){
         );
 
 
-        if(!response.ok){
-
-            throw new Error(
-                result.error ||
-                result.message ||
-                "Login failed."
-            );
-
-        }
-
-
         if(
+            !result ||
             result.success !== true
         ){
 
-            throw new Error(
-                result.error ||
-                result.message ||
-                "Username or password is incorrect."
+            throw new APIError(
+                (
+                    result &&
+                    (
+                        result.error ||
+                        result.message
+                    )
+                ) ||
+                "Username or password is incorrect.",
+                200,
+                "LOGIN_FAILED"
             );
 
         }
 
 
-        /*
-        =========================================
-        PIN REQUIRED
-        =========================================
-        */
+        /* =========================================
+           PIN REQUIRED
+        ========================================= */
 
         if(
             result.requiresPin === true
@@ -2093,8 +2404,10 @@ async function login(){
                 !result.pinToken
             ){
 
-                throw new Error(
-                    "PIN token was not returned by the server."
+                throw new APIError(
+                    "Server requested PIN verification but did not return a PIN token.",
+                    200,
+                    "MISSING_PIN_TOKEN"
                 );
 
             }
@@ -2106,6 +2419,10 @@ async function login(){
 
             currentUID =
                 result.uid ||
+                (
+                    result.user &&
+                    result.user.uid
+                ) ||
                 "";
 
 
@@ -2114,12 +2431,30 @@ async function login(){
                 null;
 
 
+            if(currentUID){
+
+                localStorage.setItem(
+                    UID_KEY,
+                    currentUID
+                );
+
+            }
+
+
             loginScreen.style.display =
+                "none";
+
+
+            profileScreen.style.display =
                 "none";
 
 
             pinScreen.style.display =
                 "block";
+
+
+            loginFooter.style.display =
+                "none";
 
 
             document
@@ -2128,6 +2463,11 @@ async function login(){
                 )
                 .value =
                 "";
+
+
+            clearError(
+                "pinError"
+            );
 
 
             setTimeout(
@@ -2149,37 +2489,27 @@ async function login(){
         }
 
 
-        /*
-        =========================================
-        NO PIN
-        =========================================
-        */
+        /* =========================================
+           NO PIN
+        ========================================= */
 
         if(
-            result.token
+            !result.token
         ){
 
-            authToken =
-                result.token;
-
-
-            localStorage.setItem(
-                SESSION_KEY,
-                authToken
+            throw new APIError(
+                "Login succeeded but the server did not return an authentication token.",
+                200,
+                "MISSING_TOKEN"
             );
 
         }
 
 
-        currentUID =
-            result.uid ||
-            result.user?.uid ||
-            "";
-
-
-        currentUserData =
-            result.user ||
-            null;
+        saveSession(
+            result.token,
+            result.user || null
+        );
 
 
         if(!currentUserData){
@@ -2203,10 +2533,16 @@ async function login(){
         );
 
 
+        let message =
+            error &&
+            error.message
+                ? error.message
+                : "Unable to login right now.";
+
+
         showError(
             "loginError",
-            error.message ||
-            "Unable to login."
+            message
         );
 
     }finally{
@@ -2227,6 +2563,19 @@ async function login(){
 ========================================================= */
 
 async function verifyPIN(){
+
+    if(
+        document
+            .getElementById(
+                "pinButton"
+            )
+            .disabled
+    ){
+
+        return;
+
+    }
+
 
     const pin =
         document
@@ -2269,60 +2618,40 @@ async function verifyPIN(){
     setLoading(
         "pinButton",
         "pinButtonText",
-        true,
-        "Verifying..."
+        true
     );
 
 
     try{
 
-        let response;
-
-
-        try{
-
-            response =
-                await fetch(
-                    PIN_API,
-                    {
-
-                        method:"POST",
-
-                        headers:{
-
-                            "Content-Type":
-                                "application/json",
-
-                            "Accept":
-                                "application/json"
-
-                        },
-
-                        body:JSON.stringify({
-
-                            pinToken:
-                                pendingPinToken,
-
-                            pin:
-                                pin
-
-                        })
-
-                    }
-                );
-
-        }catch(error){
-
-            throw new Error(
-                "Unable to connect to Appnetick server."
-            );
-
-        }
-
-
         const result =
-            await readAPIResponse(
-                response
+            await apiRequest(
+                PIN_API,
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        pinToken:
+                            pendingPinToken,
+
+                        pin:
+                            pin
+
+                    })
+
+                }
             );
 
 
@@ -2332,25 +2661,22 @@ async function verifyPIN(){
         );
 
 
-        if(!response.ok){
-
-            throw new Error(
-                result.error ||
-                result.message ||
-                "PIN verification failed."
-            );
-
-        }
-
-
         if(
+            !result ||
             result.success !== true
         ){
 
-            throw new Error(
-                result.error ||
-                result.message ||
-                "Incorrect PIN."
+            throw new APIError(
+                (
+                    result &&
+                    (
+                        result.error ||
+                        result.message
+                    )
+                ) ||
+                "Incorrect PIN.",
+                200,
+                "PIN_FAILED"
             );
 
         }
@@ -2360,38 +2686,45 @@ async function verifyPIN(){
             !result.token
         ){
 
-            throw new Error(
-                "Login token was not returned by the server."
+            throw new APIError(
+                "PIN verified but the server did not return an authentication token.",
+                200,
+                "MISSING_TOKEN"
             );
 
         }
 
 
-        /*
-        =========================================
-        FINAL AUTH TOKEN
-        =========================================
-        */
+        /* =========================================
+           FINAL AUTH SESSION
+        ========================================= */
 
-        authToken =
-            result.token;
-
-
-        localStorage.setItem(
-            SESSION_KEY,
-            authToken
+        saveSession(
+            result.token,
+            result.user ||
+            currentUserData ||
+            null
         );
 
 
         currentUID =
             result.uid ||
             currentUID ||
+            (
+                result.user &&
+                result.user.uid
+            ) ||
             "";
 
 
-        currentUserData =
-            result.user ||
-            currentUserData;
+        if(currentUID){
+
+            localStorage.setItem(
+                UID_KEY,
+                currentUID
+            );
+
+        }
 
 
         pendingPinToken =
@@ -2446,76 +2779,79 @@ async function fetchCurrentUser(){
 
     if(!authToken){
 
-        throw new Error(
-            "No login session found."
-        );
-
-    }
-
-
-    let response;
-
-
-    try{
-
-        response =
-            await fetch(
-                ME_API,
-                {
-
-                    method:"GET",
-
-                    headers:{
-
-                        "Accept":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            authToken
-
-                    }
-
-                }
-            );
-
-    }catch(error){
-
-        throw new Error(
-            "Unable to connect to Appnetick server."
-        );
-
-    }
-
-
-    if(
-        response.status === 401
-    ){
-
-        clearSession();
-
-        throw new Error(
-            "Login session expired."
+        throw new APIError(
+            "No active login session.",
+            401,
+            "NO_TOKEN"
         );
 
     }
 
 
     const result =
-        await readAPIResponse(
-            response
+        await apiRequest(
+            ME_API,
+            {
+
+                method:"GET",
+
+                headers:{
+
+                    "Accept":
+                        "application/json",
+
+                    "Authorization":
+                        "Bearer " +
+                        authToken
+
+                }
+
+            }
         );
 
 
+    console.log(
+        "ME RESPONSE:",
+        result
+    );
+
+
     if(
-        !response.ok ||
+        !result ||
         result.success !== true
     ){
 
-        throw new Error(
-            result.error ||
-            result.message ||
-            "Unable to fetch account."
+        throw new APIError(
+            (
+                result &&
+                (
+                    result.error ||
+                    result.message
+                )
+            ) ||
+            "Unable to fetch account.",
+            200,
+            "ME_FAILED"
+        );
+
+    }
+
+
+    /*
+     * Backend may return a refreshed token.
+     */
+
+    if(
+        result.token
+    ){
+
+        authToken =
+            result.token;
+
+
+        localStorage.setItem(
+            SESSION_KEY,
+            authToken
         );
 
     }
@@ -2523,15 +2859,56 @@ async function fetchCurrentUser(){
 
     currentUID =
         result.uid ||
-        result.user?.uid ||
+        (
+            result.user &&
+            result.user.uid
+        ) ||
         currentUID;
 
 
-    return (
+    const user =
         result.user ||
         result.data ||
-        null
-    );
+        null;
+
+
+    if(user){
+
+        currentUserData =
+            user;
+
+
+        localStorage.setItem(
+            USER_KEY,
+            JSON.stringify(
+                user
+            )
+        );
+
+
+        if(
+            user.uid
+        ){
+
+            currentUID =
+                user.uid;
+
+        }
+
+
+        if(currentUID){
+
+            localStorage.setItem(
+                UID_KEY,
+                currentUID
+            );
+
+        }
+
+    }
+
+
+    return user;
 
 }
 
@@ -2600,6 +2977,41 @@ function showProfile(user){
 
     /*
     =========================================
+    CACHE
+    =========================================
+    */
+
+    try{
+
+        localStorage.setItem(
+            USER_KEY,
+            JSON.stringify(
+                user
+            )
+        );
+
+    }catch(error){
+
+        console.log(
+            "USER CACHE ERROR:",
+            error
+        );
+
+    }
+
+
+    if(uid){
+
+        localStorage.setItem(
+            UID_KEY,
+            uid
+        );
+
+    }
+
+
+    /*
+    =========================================
     PROFILE HEADER
     =========================================
     */
@@ -2612,6 +3024,18 @@ function showProfile(user){
 
     avatarElement.src =
         avatar;
+
+
+    avatarElement.onerror =
+        function(){
+
+            this.onerror =
+                null;
+
+            this.src =
+                "/20260313_121958.jpg";
+
+        };
 
 
     document
@@ -2645,7 +3069,8 @@ function showProfile(user){
             "pFullName"
         )
         .textContent =
-            fullName || "—";
+            fullName ||
+            "—";
 
 
     document
@@ -2653,7 +3078,8 @@ function showProfile(user){
             "pUsername"
         )
         .textContent =
-            username || "—";
+            username ||
+            "—";
 
 
     document
@@ -2661,7 +3087,8 @@ function showProfile(user){
             "pEmail"
         )
         .textContent =
-            email || "—";
+            email ||
+            "—";
 
 
     document
@@ -2669,7 +3096,8 @@ function showProfile(user){
             "pUid"
         )
         .textContent =
-            uid || "—";
+            uid ||
+            "—";
 
 
     document
@@ -2712,7 +3140,25 @@ function showProfile(user){
 
 async function checkExistingLogin(){
 
+    /*
+     * IMPORTANT:
+     * No token = directly login screen.
+     * /auth/me is never called unnecessarily.
+     */
+
     if(!authToken){
+
+        loginScreen.style.display =
+            "block";
+
+        pinScreen.style.display =
+            "none";
+
+        profileScreen.style.display =
+            "none";
+
+        loginFooter.style.display =
+            "block";
 
         return;
 
@@ -2720,6 +3166,23 @@ async function checkExistingLogin(){
 
 
     try{
+
+        /*
+         * Show cached profile only temporarily
+         * while server verifies token.
+         */
+
+        loadCachedUser();
+
+
+        if(currentUserData){
+
+            showProfile(
+                currentUserData
+            );
+
+        }
+
 
         const user =
             await fetchCurrentUser();
@@ -2731,22 +3194,74 @@ async function checkExistingLogin(){
                 user
             );
 
+        }else{
+
+            throw new APIError(
+                "Account data was not returned.",
+                200,
+                "EMPTY_USER"
+            );
+
         }
 
 
     }catch(error){
 
         console.log(
-            "NO ACTIVE SESSION:",
-            error.message
+            "SESSION CHECK:",
+            error
         );
 
 
-        clearSession();
+        /*
+         * Only clear session when the token is
+         * actually invalid/expired.
+         */
 
+        if(
+            error &&
+            (
+                error.status === 401 ||
+                error.code === "NO_TOKEN"
+            )
+        ){
+
+            clearSession();
+
+        }
+
+
+        /*
+         * Network/server error:
+         * Keep token instead of destroying the
+         * user's persistent session.
+         */
 
         loginScreen.style.display =
             "block";
+
+        pinScreen.style.display =
+            "none";
+
+        profileScreen.style.display =
+            "none";
+
+        loginFooter.style.display =
+            "block";
+
+
+        if(
+            error &&
+            error.code !== "NETWORK" &&
+            error.code !== "TIMEOUT"
+        ){
+
+            console.log(
+                "Session verification failed:",
+                error.message
+            );
+
+        }
 
     }
 
@@ -2757,54 +3272,16 @@ async function checkExistingLogin(){
    LOGOUT
 ========================================================= */
 
-async function logout(){
-
-    const tokenToLogout =
-        authToken;
-
-
-    clearSession();
-
+function logout(){
 
     /*
-     * Tell backend about logout.
-     * Local session is already removed immediately.
+     * Local logout.
+     *
+     * Backend logout API ki dependency nahi rakhi gayi,
+     * kyunki token stateless signed token hai.
      */
 
-    if(tokenToLogout){
-
-        try{
-
-            await fetch(
-                LOGOUT_API,
-                {
-
-                    method:"POST",
-
-                    headers:{
-
-                        "Accept":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            tokenToLogout
-
-                    }
-
-                }
-            );
-
-        }catch(error){
-
-            console.log(
-                "Logout API:",
-                error
-            );
-
-        }
-
-    }
+    clearSession();
 
 
     loginScreen.style.display =
@@ -2828,7 +3305,7 @@ async function logout(){
             "username"
         )
         .value =
-            "";
+        "";
 
 
     document
@@ -2836,7 +3313,7 @@ async function logout(){
             "password"
         )
         .value =
-            "";
+        "";
 
 
     document
@@ -2844,7 +3321,7 @@ async function logout(){
             "pin"
         )
         .value =
-            "";
+        "";
 
 
     clearError(
@@ -2855,6 +3332,54 @@ async function logout(){
     clearError(
         "pinError"
     );
+
+
+    /*
+     * Reset password visibility.
+     */
+
+    const password =
+        document.getElementById(
+            "password"
+        );
+
+
+    const passwordIcon =
+        document.getElementById(
+            "passwordIcon"
+        );
+
+
+    password.type =
+        "password";
+
+
+    passwordIcon.className =
+        "ph ph-eye";
+
+
+    /*
+     * Reset PIN visibility.
+     */
+
+    const pin =
+        document.getElementById(
+            "pin"
+        );
+
+
+    const pinIcon =
+        document.getElementById(
+            "pinIcon"
+        );
+
+
+    pin.type =
+        "password";
+
+
+    pinIcon.className =
+        "ph ph-eye";
 
 }
 
@@ -2868,11 +3393,14 @@ function clearSession(){
     authToken =
         null;
 
+
     currentUID =
         "";
 
+
     currentUserData =
         null;
+
 
     pendingPinToken =
         null;
@@ -2880,6 +3408,16 @@ function clearSession(){
 
     localStorage.removeItem(
         SESSION_KEY
+    );
+
+
+    localStorage.removeItem(
+        USER_KEY
+    );
+
+
+    localStorage.removeItem(
+        UID_KEY
     );
 
 }
@@ -2904,6 +3442,7 @@ document
             currentUID =
                 "";
 
+
             currentUserData =
                 null;
 
@@ -2912,7 +3451,15 @@ document
                 "none";
 
 
+            profileScreen.style.display =
+                "none";
+
+
             loginScreen.style.display =
+                "block";
+
+
+            loginFooter.style.display =
                 "block";
 
 
@@ -2921,7 +3468,7 @@ document
                     "pin"
                 )
                 .value =
-                    "";
+                "";
 
 
             clearError(
@@ -2949,6 +3496,9 @@ document
                 "Enter"
             ){
 
+                event.preventDefault();
+
+
                 document
                     .getElementById(
                         "password"
@@ -2974,6 +3524,8 @@ document
                 "Enter"
             ){
 
+                event.preventDefault();
+
                 login();
 
             }
@@ -2995,6 +3547,8 @@ document
                 "Enter"
             ){
 
+                event.preventDefault();
+
                 verifyPIN();
 
             }
@@ -3002,6 +3556,10 @@ document
         }
     );
 
+
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
 
 document
     .getElementById(
@@ -3121,7 +3679,14 @@ function formatDate(value){
    START
 ========================================================= */
 
-checkExistingLogin();
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        checkExistingLogin();
+
+    }
+);
 
 </script>
 
