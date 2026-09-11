@@ -1,0 +1,3698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Verification Requests - Appnetick</title>
+
+    <link rel="icon" type="image/jpeg" href="/20260313_121958.jpg">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+
+        /* =========================================================
+           APPNETICK THEME
+        ========================================================= */
+
+        :root {
+            --bg: #FFFFFF;
+            --surface: #FFFFFF;
+            --surface-secondary: #F7F7F7;
+
+            --text: #212121;
+            --secondary: #757575;
+            --muted: #9E9E9E;
+
+            --border: #DCDCDC;
+            --input-bg: #F5F5F5;
+
+            --primary: #2196F3;
+            --primary-soft: rgba(33,150,243,0.10);
+
+            --success: #2E7D32;
+            --success-soft: rgba(46,125,50,0.10);
+
+            --danger: #D32F2F;
+            --danger-soft: rgba(211,47,47,0.10);
+
+            --warning: #F57C00;
+            --warning-soft: rgba(245,124,0,0.10);
+
+            --shadow:
+                0 8px 30px rgba(0,0,0,0.06);
+
+            --radius: 18px;
+        }
+
+        body.dark {
+            --bg: #1E1E1E;
+            --surface: #1E1E1E;
+            --surface-secondary: #252525;
+
+            --text: #FFFFFF;
+            --secondary: #A0A0A0;
+            --muted: #777777;
+
+            --border: #424242;
+            --input-bg: #252525;
+
+            --primary: #2979FF;
+            --primary-soft: rgba(41,121,255,0.14);
+
+            --success: #66BB6A;
+            --success-soft: rgba(102,187,106,0.12);
+
+            --danger: #EF5350;
+            --danger-soft: rgba(239,83,80,0.12);
+
+            --warning: #FFB74D;
+            --warning-soft: rgba(255,183,77,0.12);
+
+            --shadow:
+                0 8px 30px rgba(0,0,0,0.25);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            min-height: 100%;
+            background: var(--bg);
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background: var(--bg);
+            color: var(--text);
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            transition:
+                background .25s ease,
+                color .25s ease;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           TOOLBAR
+        ========================================================= */
+
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            height: 64px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 16px;
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+
+            backdrop-filter: blur(16px);
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+
+            min-width: 0;
+            flex: 1;
+        }
+
+        .back-button,
+        .icon-button {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: transparent;
+            color: var(--text);
+
+            font-size: 23px;
+
+            transition:
+                background .18s ease,
+                transform .18s ease;
+        }
+
+        .back-button:active,
+        .icon-button:active {
+            transform: scale(.92);
+            background: var(--surface-secondary);
+        }
+
+        .toolbar-title {
+            margin-left: 7px;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+
+        /* =========================================================
+           PAGE
+        ========================================================= */
+
+        .page {
+            width: 100%;
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            padding:
+                28px 18px
+                50px;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .page-header {
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            margin: 0;
+
+            font-size: 27px;
+            line-height: 1.2;
+
+            font-weight: 700;
+            letter-spacing: -.5px;
+        }
+
+        .page-description {
+            margin: 8px 0 0;
+
+            color: var(--secondary);
+
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           STAT CARDS
+        ========================================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            min-width: 0;
+
+            padding: 15px 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            background: var(--surface);
+
+            box-shadow: var(--shadow);
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--primary-soft);
+            color: var(--primary);
+
+            font-size: 19px;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            margin-top: 3px;
+
+            color: var(--secondary);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        .search-box {
+            position: relative;
+
+            margin-bottom: 13px;
+        }
+
+        .search-box i {
+            position: absolute;
+
+            left: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--secondary);
+
+            font-size: 20px;
+
+            pointer-events: none;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 52px;
+
+            padding:
+                0 45px
+                0 47px;
+
+            border:
+                1px solid var(--border);
+
+            outline: none;
+
+            border-radius: 16px;
+
+            background: var(--input-bg);
+            color: var(--text);
+
+            font-size: 14px;
+
+            transition:
+                border .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .search-box input::placeholder {
+            color: var(--muted);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                var(--primary-soft);
+        }
+
+        .clear-search {
+            position: absolute;
+
+            right: 9px;
+            top: 5px;
+
+            width: 42px;
+            height: 42px;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            background: transparent;
+
+            color: var(--secondary);
+
+            font-size: 19px;
+        }
+
+
+        /* =========================================================
+           FILTERS
+        ========================================================= */
+
+        .filters {
+            display: flex;
+
+            gap: 8px;
+
+            overflow-x: auto;
+
+            padding-bottom: 4px;
+
+            margin-bottom: 20px;
+
+            scrollbar-width: none;
+        }
+
+        .filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-button {
+            flex-shrink: 0;
+
+            height: 39px;
+
+            padding: 0 16px;
+
+            border-radius: 999px;
+
+            border:
+                1px solid var(--border);
+
+            background: var(--surface);
+
+            color: var(--secondary);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: all .2s ease;
+        }
+
+        .filter-button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+
+            color: #FFFFFF;
+        }
+
+
+        /* =========================================================
+           LIST HEADER
+        ========================================================= */
+
+        .list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 11px;
+        }
+
+        .list-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .result-count {
+            color: var(--secondary);
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           REQUEST CARD
+        ========================================================= */
+
+        .requests {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .request-card {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            width: 100%;
+
+            padding: 15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            background: var(--surface);
+
+            box-shadow: var(--shadow);
+
+            cursor: pointer;
+
+            transition:
+                transform .18s ease,
+                border .18s ease,
+                background .18s ease;
+        }
+
+        .request-card:active {
+            transform: scale(.985);
+        }
+
+        .request-card:hover {
+            border-color:
+                color-mix(
+                    in srgb,
+                    var(--primary) 35%,
+                    var(--border)
+                );
+        }
+
+        .avatar {
+            width: 53px;
+            height: 53px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: var(--surface-secondary);
+
+            border:
+                1px solid var(--border);
+        }
+
+        .avatar-fallback {
+            width: 53px;
+            height: 53px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--primary-soft);
+            color: var(--primary);
+
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .request-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .request-name-row {
+            display: flex;
+            align-items: center;
+
+            gap: 5px;
+
+            min-width: 0;
+        }
+
+        .request-name {
+            min-width: 0;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .request-username {
+            margin-top: 3px;
+
+            color: var(--secondary);
+
+            font-size: 13px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .request-meta {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 7px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+        .request-status {
+            flex-shrink: 0;
+
+            padding: 6px 9px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .status-pending {
+            color: var(--warning);
+            background: var(--warning-soft);
+        }
+
+        .status-approved {
+            color: var(--success);
+            background: var(--success-soft);
+        }
+
+        .status-rejected {
+            color: var(--danger);
+            background: var(--danger-soft);
+        }
+
+        .verified-icon {
+            color: var(--primary);
+
+            font-size: 16px;
+        }
+
+        .request-arrow {
+            color: var(--muted);
+            font-size: 18px;
+        }
+
+
+        /* =========================================================
+           LOADING
+        ========================================================= */
+
+        .loading {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .skeleton {
+            height: 84px;
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--surface-secondary) 25%,
+                    var(--border) 37%,
+                    var(--surface-secondary) 63%
+                );
+
+            background-size: 400% 100%;
+
+            animation:
+                skeleton 1.3s ease infinite;
+        }
+
+        @keyframes skeleton {
+            0% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: -100% 0;
+            }
+        }
+
+
+        /* =========================================================
+           EMPTY / ERROR
+        ========================================================= */
+
+        .state {
+            display: none;
+
+            text-align: center;
+
+            padding: 55px 20px;
+        }
+
+        .state-icon {
+            width: 62px;
+            height: 62px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--surface-secondary);
+
+            color: var(--secondary);
+
+            font-size: 29px;
+        }
+
+        .state-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .state-text {
+            max-width: 350px;
+
+            margin: 7px auto 0;
+
+            color: var(--secondary);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .retry-button {
+            margin-top: 16px;
+
+            height: 42px;
+
+            padding: 0 18px;
+
+            border-radius: 999px;
+
+            background: var(--primary);
+            color: #FFFFFF;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           OVERLAY
+        ========================================================= */
+
+        .overlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 500;
+
+            display: none;
+
+            align-items: flex-end;
+            justify-content: center;
+
+            background:
+                rgba(0,0,0,.55);
+
+            padding: 0;
+        }
+
+        .overlay.show {
+            display: flex;
+        }
+
+
+        /* =========================================================
+           DETAIL SHEET
+        ========================================================= */
+
+        .detail-sheet {
+            width: 100%;
+            max-width: 650px;
+
+            max-height: 92vh;
+
+            overflow-y: auto;
+
+            background: var(--surface);
+
+            border-radius:
+                25px 25px 0 0;
+
+            animation:
+                sheetUp .25s ease;
+        }
+
+        @keyframes sheetUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .sheet-header {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+
+            display: flex;
+            align-items: center;
+
+            padding: 14px 17px;
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .sheet-title {
+            flex: 1;
+
+            margin-left: 5px;
+
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .sheet-body {
+            padding: 22px 18px 30px;
+        }
+
+
+        /* =========================================================
+           DETAIL PROFILE
+        ========================================================= */
+
+        .detail-profile {
+            display: flex;
+
+            flex-direction: column;
+            align-items: center;
+
+            text-align: center;
+
+            padding-bottom: 22px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .detail-avatar {
+            width: 84px;
+            height: 84px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border:
+                1px solid var(--border);
+
+            background: var(--surface-secondary);
+        }
+
+        .detail-name {
+            margin-top: 11px;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .detail-username {
+            margin-top: 3px;
+
+            color: var(--secondary);
+
+            font-size: 14px;
+        }
+
+        .detail-status {
+            margin-top: 10px;
+        }
+
+
+        /* =========================================================
+           DETAILS
+        ========================================================= */
+
+        .details-section {
+            padding: 20px 0;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .details-section:last-child {
+            border-bottom: 0;
+        }
+
+        .section-title {
+            margin-bottom: 13px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .detail-row {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            padding: 10px 0;
+        }
+
+        .detail-row-icon {
+            width: 34px;
+            height: 34px;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--surface-secondary);
+
+            color: var(--secondary);
+
+            font-size: 17px;
+        }
+
+        .detail-row-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .detail-label {
+            color: var(--secondary);
+
+            font-size: 11px;
+        }
+
+        .detail-value {
+            margin-top: 3px;
+
+            font-size: 14px;
+            line-height: 1.45;
+
+            word-break: break-word;
+        }
+
+        .detail-value.empty {
+            color: var(--muted);
+        }
+
+
+        /* =========================================================
+           ACTIONS
+        ========================================================= */
+
+        .detail-actions {
+            display: flex;
+
+            gap: 10px;
+
+            padding-top: 20px;
+        }
+
+        .action-button {
+            flex: 1;
+
+            height: 49px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .approve-button {
+            background: var(--primary);
+            color: #FFFFFF;
+        }
+
+        .decline-button {
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+
+        .action-button:active {
+            transform: scale(.97);
+        }
+
+
+        /* =========================================================
+           CONFIRM DIALOG
+        ========================================================= */
+
+        .dialog {
+            width:
+                min(
+                    calc(100% - 32px),
+                    430px
+                );
+
+            padding: 22px;
+
+            border-radius: 22px;
+
+            background: var(--surface);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.25);
+
+            animation:
+                dialogIn .2s ease;
+        }
+
+        @keyframes dialogIn {
+            from {
+                transform: scale(.94);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .dialog-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--danger-soft);
+
+            color: var(--danger);
+
+            font-size: 24px;
+
+            margin-bottom: 14px;
+        }
+
+        .dialog-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .dialog-text {
+            margin-top: 7px;
+
+            color: var(--secondary);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .reason-input {
+            width: 100%;
+
+            min-height: 100px;
+
+            resize: vertical;
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            outline: none;
+
+            background: var(--input-bg);
+            color: var(--text);
+
+            font-size: 13px;
+        }
+
+        .reason-input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                var(--primary-soft);
+        }
+
+        .dialog-actions {
+            display: flex;
+
+            gap: 9px;
+
+            margin-top: 15px;
+        }
+
+        .dialog-button {
+            flex: 1;
+
+            height: 44px;
+
+            border-radius: 13px;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .cancel-button {
+            background: var(--surface-secondary);
+            color: var(--text);
+        }
+
+        .confirm-decline {
+            background: var(--danger);
+            color: #FFFFFF;
+        }
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================= */
+
+        .login-screen {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: var(--bg);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 390px;
+
+            padding: 30px 22px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 24px;
+
+            background: var(--surface);
+
+            box-shadow: var(--shadow);
+
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 68px;
+            height: 68px;
+
+            border-radius: 19px;
+
+            object-fit: cover;
+
+            margin-bottom: 18px;
+        }
+
+        .login-title {
+            margin: 0;
+
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .login-description {
+            margin: 8px auto 22px;
+
+            max-width: 300px;
+
+            color: var(--secondary);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box i.left {
+            position: absolute;
+
+            left: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--secondary);
+
+            font-size: 20px;
+        }
+
+        .password-box input {
+            width: 100%;
+            height: 52px;
+
+            padding:
+                0 47px
+                0 47px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            outline: none;
+
+            background: var(--input-bg);
+            color: var(--text);
+        }
+
+        .password-box input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                var(--primary-soft);
+        }
+
+        .password-toggle {
+            position: absolute;
+
+            right: 7px;
+            top: 5px;
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: transparent;
+
+            color: var(--secondary);
+
+            font-size: 19px;
+        }
+
+        .login-button {
+            width: 100%;
+
+            height: 50px;
+
+            margin-top: 13px;
+
+            border-radius: 999px;
+
+            background: var(--primary);
+            color: #FFFFFF;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .login-error {
+            display: none;
+
+            margin-top: 12px;
+
+            padding: 10px 12px;
+
+            border-radius: 12px;
+
+            background: var(--danger-soft);
+
+            color: var(--danger);
+
+            font-size: 12px;
+
+            text-align: left;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (min-width: 700px) {
+
+            .page {
+                padding-top: 38px;
+            }
+
+            .overlay {
+                align-items: center;
+                padding: 20px;
+            }
+
+            .detail-sheet {
+                border-radius: 25px;
+
+                max-height: 90vh;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .stats {
+                gap: 7px;
+            }
+
+            .stat-card {
+                padding: 13px 10px;
+            }
+
+            .request-card {
+                padding: 13px;
+                gap: 10px;
+            }
+
+            .avatar,
+            .avatar-fallback {
+                width: 48px;
+                height: 48px;
+            }
+
+            .request-status {
+                padding: 5px 7px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     ADMIN LOGIN
+========================================================= -->
+
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-card">
+
+        <img
+            src="/20260313_121958.jpg"
+            class="login-logo"
+            alt="Appnetick">
+
+        <h1 class="login-title">
+            Verification Admin
+        </h1>
+
+        <p class="login-description">
+            Sign in to review and manage Appnetick verification requests.
+        </p>
+
+        <div class="password-box">
+
+            <i class="ph ph-lock left"></i>
+
+            <input
+                id="adminPassword"
+                type="password"
+                placeholder="Admin password"
+                autocomplete="current-password">
+
+            <button
+                class="password-toggle"
+                type="button"
+                id="passwordToggle">
+
+                <i class="ph ph-eye"></i>
+
+            </button>
+
+        </div>
+
+        <button
+            class="login-button"
+            id="loginButton">
+
+            <i class="ph ph-sign-in"></i>
+            &nbsp;
+            Sign in
+
+        </button>
+
+        <div
+            id="loginError"
+            class="login-error">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN ADMIN PAGE
+========================================================= -->
+
+<div id="app" style="display:none;">
+
+    <!-- TOOLBAR -->
+
+    <header class="toolbar">
+
+        <div class="toolbar-left">
+
+            <button
+                class="back-button"
+                onclick="goBack()">
+
+                <i class="ph ph-arrow-left"></i>
+
+            </button>
+
+            <div class="toolbar-title">
+                Verification Requests
+            </div>
+
+        </div>
+
+        <div class="toolbar-actions">
+
+            <button
+                class="icon-button"
+                id="themeButton"
+                title="Theme">
+
+                <i class="ph ph-moon"></i>
+
+            </button>
+
+            <button
+                class="icon-button"
+                id="refreshButton"
+                title="Refresh">
+
+                <i class="ph ph-arrow-clockwise"></i>
+
+            </button>
+
+            <button
+                class="icon-button"
+                id="logoutButton"
+                title="Logout">
+
+                <i class="ph ph-sign-out"></i>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- PAGE -->
+
+    <main class="page">
+
+        <section class="page-header">
+
+            <h1 class="page-title">
+                Verification requests
+            </h1>
+
+            <p class="page-description">
+                Review submitted verification applications and
+                approve or decline them.
+            </p>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="ph ph-list"></i>
+                </div>
+
+                <div
+                    id="totalCount"
+                    class="stat-number">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Total
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="ph ph-clock"></i>
+                </div>
+
+                <div
+                    id="pendingCount"
+                    class="stat-number">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Pending
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="ph ph-seal-check"></i>
+                </div>
+
+                <div
+                    id="approvedCount"
+                    class="stat-number">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Approved
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <i class="ph ph-magnifying-glass"></i>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search name, username or UID"
+                autocomplete="off">
+
+            <button
+                id="clearSearch"
+                class="clear-search"
+                type="button">
+
+                <i class="ph ph-x"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+            <button
+                class="filter-button active"
+                data-filter="all">
+
+                All
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="pending">
+
+                Pending
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="approved">
+
+                Approved
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="rejected">
+
+                Rejected
+            </button>
+
+        </div>
+
+
+        <!-- LIST HEADER -->
+
+        <div class="list-header">
+
+            <div class="list-title">
+                Requests
+            </div>
+
+            <div
+                id="resultCount"
+                class="result-count">
+                0 requests
+            </div>
+
+        </div>
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loading"
+            class="loading">
+
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+
+        </div>
+
+
+        <!-- REQUESTS -->
+
+        <div
+            id="requests"
+            class="requests">
+        </div>
+
+
+        <!-- EMPTY -->
+
+        <div
+            id="emptyState"
+            class="state">
+
+            <div class="state-icon">
+                <i class="ph ph-folder-open"></i>
+            </div>
+
+            <div class="state-title">
+                No requests found
+            </div>
+
+            <div class="state-text">
+                There are no verification requests matching
+                your current search or filter.
+            </div>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorState"
+            class="state">
+
+            <div class="state-icon">
+                <i class="ph ph-warning-circle"></i>
+            </div>
+
+            <div class="state-title">
+                Couldn't load requests
+            </div>
+
+            <div
+                id="errorText"
+                class="state-text">
+                Something went wrong.
+            </div>
+
+            <button
+                class="retry-button"
+                onclick="loadRequests()">
+
+                <i class="ph ph-arrow-clockwise"></i>
+                &nbsp;
+                Try again
+
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     DETAILS OVERLAY
+========================================================= -->
+
+<div
+    id="detailOverlay"
+    class="overlay">
+
+    <div class="detail-sheet">
+
+        <div class="sheet-header">
+
+            <button
+                class="icon-button"
+                onclick="closeDetails()">
+
+                <i class="ph ph-x"></i>
+
+            </button>
+
+            <div class="sheet-title">
+                Verification details
+            </div>
+
+        </div>
+
+        <div
+            id="detailBody"
+            class="sheet-body">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     DECLINE DIALOG
+========================================================= -->
+
+<div
+    id="declineOverlay"
+    class="overlay"
+    style="align-items:center;">
+
+    <div class="dialog">
+
+        <div class="dialog-icon">
+            <i class="ph ph-x-circle"></i>
+        </div>
+
+        <div class="dialog-title">
+            Decline verification?
+        </div>
+
+        <div class="dialog-text">
+            Please provide a reason. This reason will be
+            stored with the verification request.
+        </div>
+
+        <textarea
+            id="declineReason"
+            class="reason-input"
+            placeholder="Enter decline reason..."></textarea>
+
+        <div class="dialog-actions">
+
+            <button
+                class="dialog-button cancel-button"
+                onclick="closeDeclineDialog()">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="confirmDecline"
+                class="dialog-button confirm-decline">
+
+                Decline
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       CONFIG
+    ========================================================= */
+
+    const API_BASE =
+        "https://api-appnetick.vercel.app";
+
+    const ADMIN_TOKEN_KEY =
+        "appnetick_admin_token";
+
+    /*
+     * Token is intentionally kept only in memory.
+     *
+     * Refreshing the page requires admin login again.
+     */
+
+    let adminToken = null;
+
+    let requests = [];
+
+    let currentFilter = "all";
+
+    let currentRequest = null;
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    const app =
+        document.getElementById("app");
+
+    const adminPassword =
+        document.getElementById("adminPassword");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const loginError =
+        document.getElementById("loginError");
+
+    const passwordToggle =
+        document.getElementById("passwordToggle");
+
+    const requestsContainer =
+        document.getElementById("requests");
+
+    const loading =
+        document.getElementById("loading");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+    const errorState =
+        document.getElementById("errorState");
+
+    const errorText =
+        document.getElementById("errorText");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const clearSearch =
+        document.getElementById("clearSearch");
+
+    const resultCount =
+        document.getElementById("resultCount");
+
+    const detailOverlay =
+        document.getElementById("detailOverlay");
+
+    const detailBody =
+        document.getElementById("detailBody");
+
+    const declineOverlay =
+        document.getElementById("declineOverlay");
+
+    const declineReason =
+        document.getElementById("declineReason");
+
+    const confirmDecline =
+        document.getElementById("confirmDecline");
+
+
+    /* =========================================================
+       THEME
+    ========================================================= */
+
+    function applyTheme(theme) {
+
+        document.body.classList.toggle(
+            "dark",
+            theme === "dark"
+        );
+
+        const icon =
+            document.querySelector("#themeButton i");
+
+        if (!icon) return;
+
+        icon.className =
+            theme === "dark"
+                ? "ph ph-sun"
+                : "ph ph-moon";
+    }
+
+
+    function initTheme() {
+
+        const saved =
+            localStorage.getItem("appnetick-theme");
+
+        if (saved === "dark" ||
+            saved === "light") {
+
+            applyTheme(saved);
+            return;
+        }
+
+        const systemDark =
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches;
+
+        applyTheme(
+            systemDark
+                ? "dark"
+                : "light"
+        );
+    }
+
+
+    document
+        .getElementById("themeButton")
+        .addEventListener("click", () => {
+
+            const dark =
+                document.body.classList.contains("dark");
+
+            const theme =
+                dark
+                    ? "light"
+                    : "dark";
+
+            localStorage.setItem(
+                "appnetick-theme",
+                theme
+            );
+
+            applyTheme(theme);
+
+        });
+
+
+    initTheme();
+
+
+    /* =========================================================
+       LOGIN
+    ========================================================= */
+
+    passwordToggle.addEventListener(
+        "click",
+        () => {
+
+            const isPassword =
+                adminPassword.type === "password";
+
+            adminPassword.type =
+                isPassword
+                    ? "text"
+                    : "password";
+
+            passwordToggle.innerHTML =
+                isPassword
+                    ? '<i class="ph ph-eye-slash"></i>'
+                    : '<i class="ph ph-eye"></i>';
+
+        }
+    );
+
+
+    adminPassword.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Enter") {
+                login();
+            }
+
+        }
+    );
+
+
+    loginButton.addEventListener(
+        "click",
+        login
+    );
+
+
+    async function login() {
+
+        const password =
+            adminPassword.value.trim();
+
+        if (!password) {
+
+            showLoginError(
+                "Please enter the admin password."
+            );
+
+            return;
+        }
+
+
+        setLoginLoading(true);
+
+
+        try {
+
+            const response =
+                await fetch(
+                    API_BASE +
+                    "/api/admin/verification/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            password: password
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json()
+                    .catch(() => ({}));
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "Invalid admin password."
+                );
+            }
+
+
+            if (!data.token) {
+
+                throw new Error(
+                    "Server did not return an admin token."
+                );
+            }
+
+
+            adminToken =
+                data.token;
+
+
+            loginScreen.style.display =
+                "none";
+
+            app.style.display =
+                "block";
+
+
+            adminPassword.value = "";
+
+
+            await loadRequests();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showLoginError(
+                error.message ||
+                "Unable to sign in."
+            );
+
+        } finally {
+
+            setLoginLoading(false);
+
+        }
+
+    }
+
+
+    function setLoginLoading(loadingState) {
+
+        loginButton.disabled =
+            loadingState;
+
+        loginButton.innerHTML =
+            loadingState
+                ? '<i class="ph ph-spinner-gap ph-spin"></i> &nbsp; Signing in...'
+                : '<i class="ph ph-sign-in"></i> &nbsp; Sign in';
+
+    }
+
+
+    function showLoginError(message) {
+
+        loginError.textContent =
+            message;
+
+        loginError.style.display =
+            "block";
+
+    }
+
+
+    /* =========================================================
+       API HELPER
+    ========================================================= */
+
+    async function apiFetch(
+        endpoint,
+        options = {}
+    ) {
+
+        if (!adminToken) {
+
+            throw new Error(
+                "Admin session expired."
+            );
+        }
+
+
+        const headers = {
+            ...(options.headers || {}),
+
+            "Authorization":
+                "Bearer " + adminToken
+        };
+
+
+        const response =
+            await fetch(
+                API_BASE + endpoint,
+                {
+                    ...options,
+                    headers
+                }
+            );
+
+
+        if (response.status === 401) {
+
+            logout();
+
+            throw new Error(
+                "Admin session expired. Please sign in again."
+            );
+        }
+
+
+        const data =
+            await response.json()
+                .catch(() => ({}));
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Request failed."
+            );
+        }
+
+
+        return data;
+
+    }
+
+
+    /* =========================================================
+       LOAD REQUESTS
+    ========================================================= */
+
+    async function loadRequests() {
+
+        showLoading();
+
+        try {
+
+            const data =
+                await apiFetch(
+                    "/api/admin/verification/requests"
+                );
+
+
+            requests =
+                Array.isArray(data.requests)
+                    ? data.requests
+                    : [];
+
+
+            updateStats();
+
+            renderRequests();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                error.message ||
+                "Unable to load verification requests."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       STATS
+    ========================================================= */
+
+    function updateStats() {
+
+        const total =
+            requests.length;
+
+
+        const pending =
+            requests.filter(
+                request =>
+                    normalizeStatus(
+                        request.verification_status
+                    ) === "pending"
+            ).length;
+
+
+        const approved =
+            requests.filter(
+                request =>
+                    normalizeStatus(
+                        request.verification_status
+                    ) === "approved"
+            ).length;
+
+
+        document.getElementById(
+            "totalCount"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "pendingCount"
+        ).textContent = pending;
+
+
+        document.getElementById(
+            "approvedCount"
+        ).textContent = approved;
+
+    }
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    function normalizeStatus(status) {
+
+        const value =
+            String(status || "")
+                .toLowerCase()
+                .trim();
+
+
+        if (
+            value === "approve" ||
+            value === "approved"
+        ) {
+            return "approved";
+        }
+
+
+        if (
+            value === "reject" ||
+            value === "rejected" ||
+            value === "declined"
+        ) {
+            return "rejected";
+        }
+
+
+        return "pending";
+
+    }
+
+
+    function statusLabel(status) {
+
+        switch (
+            normalizeStatus(status)
+        ) {
+
+            case "approved":
+                return "Approved";
+
+            case "rejected":
+                return "Rejected";
+
+            default:
+                return "Pending";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RENDER
+    ========================================================= */
+
+    function renderRequests() {
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const filtered =
+            requests.filter(request => {
+
+                const status =
+                    normalizeStatus(
+                        request.verification_status
+                    );
+
+
+                if (
+                    currentFilter !== "all" &&
+                    status !== currentFilter
+                ) {
+                    return false;
+                }
+
+
+                if (!search) {
+                    return true;
+                }
+
+
+                const searchable = [
+                    request.uid,
+                    request.username,
+                    request.Username,
+                    request.full_name,
+                    request.name,
+                    request.legal_name,
+                    request.email
+                ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
+
+
+                return searchable.includes(search);
+
+            });
+
+
+        requestsContainer.innerHTML =
+            "";
+
+
+        resultCount.textContent =
+            filtered.length +
+            (
+                filtered.length === 1
+                    ? " request"
+                    : " requests"
+            );
+
+
+        loading.style.display =
+            "none";
+
+        errorState.style.display =
+            "none";
+
+
+        if (!filtered.length) {
+
+            emptyState.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        emptyState.style.display =
+            "none";
+
+
+        filtered.forEach(
+            request => {
+
+                requestsContainer.appendChild(
+                    createRequestCard(request)
+                );
+
+            }
+        );
+
+    }
+
+
+    function createRequestCard(request) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "request-card";
+
+
+        const name =
+            request.full_name ||
+            request.name ||
+            request.legal_name ||
+            "Unknown user";
+
+
+        const username =
+            request.username ||
+            request.Username ||
+            "";
+
+
+        const uid =
+            request.uid ||
+            "";
+
+
+        const status =
+            normalizeStatus(
+                request.verification_status
+            );
+
+
+        const avatar =
+            request.avatar ||
+            request.logo ||
+            request.profile ||
+            "";
+
+
+        const date =
+            formatDate(
+                request.submitted_at
+            );
+
+
+        const avatarHTML =
+            avatar
+                ? `
+                    <img
+                        class="avatar"
+                        src="${escapeAttr(avatar)}"
+                        alt=""
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+                    <div
+                        class="avatar-fallback"
+                        style="display:none;">
+                        ${escapeHtml(
+                            getInitial(name)
+                        )}
+                    </div>
+                  `
+                : `
+                    <div class="avatar-fallback">
+                        ${escapeHtml(
+                            getInitial(name)
+                        )}
+                    </div>
+                  `;
+
+
+        card.innerHTML = `
+
+            ${avatarHTML}
+
+            <div class="request-main">
+
+                <div class="request-name-row">
+
+                    <div class="request-name">
+                        ${escapeHtml(name)}
+                    </div>
+
+                </div>
+
+                <div class="request-username">
+
+                    ${username
+                        ? "@" +
+                          escapeHtml(
+                              removeAt(username)
+                          )
+                        : escapeHtml(uid)
+                    }
+
+                </div>
+
+                <div class="request-meta">
+
+                    <span>
+                        ${escapeHtml(date)}
+                    </span>
+
+                    <span>•</span>
+
+                    <span>
+                        ${escapeHtml(
+                            shortUid(uid)
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="
+                request-status
+                status-${status}
+            ">
+                ${statusLabel(status)}
+            </div>
+
+            <i class="
+                ph
+                ph-caret-right
+                request-arrow
+            "></i>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            () => openDetails(request)
+        );
+
+
+        return card;
+
+    }
+
+
+    /* =========================================================
+       DETAILS
+    ========================================================= */
+
+    function openDetails(request) {
+
+        currentRequest =
+            request;
+
+
+        const name =
+            request.full_name ||
+            request.name ||
+            request.legal_name ||
+            "Unknown user";
+
+
+        const username =
+            request.username ||
+            request.Username ||
+            "";
+
+
+        const avatar =
+            request.avatar ||
+            request.logo ||
+            request.profile ||
+            "";
+
+
+        const status =
+            normalizeStatus(
+                request.verification_status
+            );
+
+
+        const avatarHTML =
+            avatar
+                ? `
+                    <img
+                        class="detail-avatar"
+                        src="${escapeAttr(avatar)}"
+                        alt=""
+                        onerror="this.style.display='none';">
+                  `
+                : `
+                    <div
+                        class="detail-avatar"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            background:var(--primary-soft);
+                            color:var(--primary);
+                            font-size:30px;
+                            font-weight:700;">
+                        ${escapeHtml(
+                            getInitial(name)
+                        )}
+                    </div>
+                  `;
+
+
+        detailBody.innerHTML = `
+
+            <div class="detail-profile">
+
+                ${avatarHTML}
+
+                <div class="detail-name">
+                    ${escapeHtml(name)}
+                </div>
+
+                <div class="detail-username">
+
+                    ${
+                        username
+                            ? "@" +
+                              escapeHtml(
+                                  removeAt(username)
+                              )
+                            : escapeHtml(
+                                request.uid || ""
+                              )
+                    }
+
+                </div>
+
+                <div class="
+                    detail-status
+                    request-status
+                    status-${status}
+                ">
+                    ${statusLabel(status)}
+                </div>
+
+            </div>
+
+
+            ${detailSection(
+                "Account",
+                [
+                    detailItem(
+                        "Identification",
+                        "UID",
+                        request.uid,
+                        "ph-identification-card"
+                    ),
+
+                    detailItem(
+                        "User",
+                        "Username",
+                        username
+                            ? "@" + removeAt(username)
+                            : "",
+                        "ph-at"
+                    ),
+
+                    detailItem(
+                        "User",
+                        "Email",
+                        request.email,
+                        "ph-envelope"
+                    ),
+
+                    detailItem(
+                        "User",
+                        "Full name",
+                        request.full_name ||
+                        request.name,
+                        "ph-user"
+                    )
+                ]
+            )}
+
+
+            ${detailSection(
+                "Personal information",
+                [
+
+                    detailItem(
+                        "Legal",
+                        "Legal name",
+                        request.legal_name,
+                        "ph-identification-badge"
+                    ),
+
+                    detailItem(
+                        "Personal",
+                        "Date of birth",
+                        request.date_of_birth,
+                        "ph-calendar"
+                    ),
+
+                    detailItem(
+                        "Location",
+                        "Country",
+                        request.country,
+                        "ph-globe"
+                    ),
+
+                    detailItem(
+                        "Contact",
+                        "Phone number",
+                        request.phone,
+                        "ph-phone"
+                    )
+
+                ]
+            )}
+
+
+            ${detailSection(
+                "Verification",
+                [
+
+                    detailItem(
+                        "Account",
+                        "Account category",
+                        request.account_category,
+                        "ph-user-circle"
+                    ),
+
+                    detailItem(
+                        "Profession",
+                        "Profession / role",
+                        request.profession,
+                        "ph-briefcase"
+                    ),
+
+                    detailItem(
+                        "Reason",
+                        "Why should you be verified?",
+                        request.verification_reason,
+                        "ph-seal-check"
+                    ),
+
+                    detailItem(
+                        "Known for",
+                        "What are you known for?",
+                        request.known_for,
+                        "ph-star"
+                    )
+
+                ]
+            )}
+
+
+            ${detailSection(
+                "Public presence",
+                [
+
+                    detailItem(
+                        "Website",
+                        "Public profile / website",
+                        request.website,
+                        "ph-link"
+                    ),
+
+                    detailItem(
+                        "Social",
+                        "Other social profile",
+                        request.social_profile,
+                        "ph-share-network"
+                    ),
+
+                    detailItem(
+                        "Audience",
+                        "Audience size",
+                        request.audience,
+                        "ph-users"
+                    ),
+
+                    detailItem(
+                        "Content",
+                        "Content / activity category",
+                        request.content_category,
+                        "ph-video-camera"
+                    ),
+
+                    detailItem(
+                        "Achievement",
+                        "Notable achievement",
+                        request.achievement,
+                        "ph-trophy"
+                    ),
+
+                    detailItem(
+                        "Media",
+                        "Public presence / media coverage",
+                        request.public_presence,
+                        "ph-newspaper"
+                    )
+
+                ]
+            )}
+
+
+            ${detailSection(
+                "Confirmation",
+                [
+
+                    detailItem(
+                        "Authenticity",
+                        "Account authenticity",
+                        yesNo(
+                            request.authenticity_confirmed
+                        ),
+                        "ph-shield-check"
+                    ),
+
+                    detailItem(
+                        "Accuracy",
+                        "Information accuracy",
+                        yesNo(
+                            request.information_confirmed
+                        ),
+                        "ph-check-circle"
+                    ),
+
+                    detailItem(
+                        "Terms",
+                        "Verification terms",
+                        yesNo(
+                            request.terms_confirmed
+                        ),
+                        "ph-file-text"
+                    )
+
+                ]
+            )}
+
+
+            ${detailSection(
+                "Submission",
+                [
+
+                    detailItem(
+                        "Submitted",
+                        "Submitted at",
+                        formatDate(
+                            request.submitted_at
+                        ),
+                        "ph-clock"
+                    ),
+
+                    detailItem(
+                        "Reviewed",
+                        "Reviewed at",
+                        request.reviewed_at &&
+                        request.reviewed_at !== 0
+                            ? formatDate(
+                                request.reviewed_at
+                              )
+                            : "",
+                        "ph-calendar-check"
+                    ),
+
+                    detailItem(
+                        "Admin",
+                        "Reviewed by",
+                        request.reviewed_by,
+                        "ph-user-gear"
+                    ),
+
+                    detailItem(
+                        "Reason",
+                        "Rejection reason",
+                        request.rejection_reason,
+                        "ph-warning"
+                    )
+
+                ]
+            )}
+
+
+            ${
+                status === "pending"
+                    ? `
+                        <div class="detail-actions">
+
+                            <button
+                                class="
+                                    action-button
+                                    decline-button
+                                "
+                                onclick="openDeclineDialog()">
+
+                                <i class="ph ph-x"></i>
+
+                                Decline
+
+                            </button>
+
+                            <button
+                                class="
+                                    action-button
+                                    approve-button
+                                "
+                                onclick="approveRequest()">
+
+                                <i class="ph ph-seal-check"></i>
+
+                                Approve
+
+                            </button>
+
+                        </div>
+                      `
+                    : ""
+            }
+
+        `;
+
+
+        detailOverlay.classList.add(
+            "show"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    function detailSection(
+        title,
+        items
+    ) {
+
+        return `
+
+            <section class="details-section">
+
+                <div class="section-title">
+                    ${escapeHtml(title)}
+                </div>
+
+                ${items.join("")}
+
+            </section>
+
+        `;
+
+    }
+
+
+    function detailItem(
+        category,
+        label,
+        value,
+        icon
+    ) {
+
+        const empty =
+            value === undefined ||
+            value === null ||
+            String(value).trim() === "";
+
+
+        return `
+
+            <div class="detail-row">
+
+                <div class="detail-row-icon">
+
+                    <i class="
+                        ph
+                        ${icon}
+                    "></i>
+
+                </div>
+
+                <div class="detail-row-content">
+
+                    <div class="detail-label">
+                        ${escapeHtml(label)}
+                    </div>
+
+                    <div class="
+                        detail-value
+                        ${empty ? "empty" : ""}
+                    ">
+
+                        ${
+                            empty
+                                ? "Not provided"
+                                : escapeHtml(
+                                    String(value)
+                                  )
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    function closeDetails() {
+
+        detailOverlay.classList.remove(
+            "show"
+        );
+
+        document.body.style.overflow =
+            "";
+
+        currentRequest =
+            null;
+
+    }
+
+
+    /* =========================================================
+       APPROVE
+    ========================================================= */
+
+    async function approveRequest() {
+
+        if (!currentRequest) {
+            return;
+        }
+
+
+        const uid =
+            currentRequest.uid;
+
+
+        if (!uid) {
+
+            alert(
+                "Request UID is missing."
+            );
+
+            return;
+        }
+
+
+        if (
+            !confirm(
+                "Approve this verification request?"
+            )
+        ) {
+            return;
+        }
+
+
+        try {
+
+            await reviewRequest(
+                uid,
+                "approve",
+                ""
+            );
+
+
+            closeDetails();
+
+            await loadRequests();
+
+            alert(
+                "Verification approved successfully."
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                error.message ||
+                "Unable to approve request."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       DECLINE
+    ========================================================= */
+
+    function openDeclineDialog() {
+
+        declineReason.value = "";
+
+        declineOverlay.classList.add(
+            "show"
+        );
+
+    }
+
+
+    function closeDeclineDialog() {
+
+        declineOverlay.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    confirmDecline.addEventListener(
+        "click",
+        async () => {
+
+            if (!currentRequest) {
+                return;
+            }
+
+
+            const reason =
+                declineReason.value.trim();
+
+
+            if (!reason) {
+
+                declineReason.focus();
+
+                return;
+            }
+
+
+            confirmDecline.disabled =
+                true;
+
+            confirmDecline.textContent =
+                "Declining...";
+
+
+            try {
+
+                await reviewRequest(
+                    currentRequest.uid,
+                    "reject",
+                    reason
+                );
+
+
+                closeDeclineDialog();
+
+                closeDetails();
+
+                await loadRequests();
+
+                alert(
+                    "Verification request declined."
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    error.message ||
+                    "Unable to decline request."
+                );
+
+            } finally {
+
+                confirmDecline.disabled =
+                    false;
+
+                confirmDecline.textContent =
+                    "Decline";
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       REVIEW API
+    ========================================================= */
+
+    async function reviewRequest(
+        uid,
+        action,
+        reason
+    ) {
+
+        return await apiFetch(
+            "/api/admin/verification/review",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    uid: uid,
+                    action: action,
+                    reason: reason
+                })
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       FILTER
+    ========================================================= */
+
+    document
+        .querySelectorAll(".filter-button")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".filter-button"
+                        )
+                        .forEach(
+                            item =>
+                                item.classList.remove(
+                                    "active"
+                                )
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    currentFilter =
+                        button.dataset.filter;
+
+
+                    renderRequests();
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       SEARCH
+    ========================================================= */
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            clearSearch.style.display =
+                searchInput.value
+                    ? "flex"
+                    : "none";
+
+
+            renderRequests();
+
+        }
+    );
+
+
+    clearSearch.addEventListener(
+        "click",
+        () => {
+
+            searchInput.value = "";
+
+            clearSearch.style.display =
+                "none";
+
+            renderRequests();
+
+            searchInput.focus();
+
+        }
+    );
+
+
+    /* =========================================================
+       REFRESH
+    ========================================================= */
+
+    document
+        .getElementById("refreshButton")
+        .addEventListener(
+            "click",
+            async () => {
+
+                const icon =
+                    document.querySelector(
+                        "#refreshButton i"
+                    );
+
+
+                icon.classList.add(
+                    "ph-spin"
+                );
+
+
+                try {
+
+                    await loadRequests();
+
+                } finally {
+
+                    icon.classList.remove(
+                        "ph-spin"
+                    );
+
+                }
+
+            }
+        );
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    document
+        .getElementById("logoutButton")
+        .addEventListener(
+            "click",
+            logout
+        );
+
+
+    function logout() {
+
+        adminToken =
+            null;
+
+        requests =
+            [];
+
+        currentRequest =
+            null;
+
+
+        app.style.display =
+            "none";
+
+        loginScreen.style.display =
+            "flex";
+
+
+        adminPassword.value =
+            "";
+
+        loginError.style.display =
+            "none";
+
+    }
+
+
+    /* =========================================================
+       STATES
+    ========================================================= */
+
+    function showLoading() {
+
+        loading.style.display =
+            "flex";
+
+        requestsContainer.innerHTML =
+            "";
+
+        emptyState.style.display =
+            "none";
+
+        errorState.style.display =
+            "none";
+
+    }
+
+
+    function showError(message) {
+
+        loading.style.display =
+            "none";
+
+        requestsContainer.innerHTML =
+            "";
+
+        emptyState.style.display =
+            "none";
+
+        errorState.style.display =
+            "block";
+
+        errorText.textContent =
+            message;
+
+    }
+
+
+    /* =========================================================
+       HELPERS
+    ========================================================= */
+
+    function formatDate(value) {
+
+        if (
+            value === undefined ||
+            value === null ||
+            value === "" ||
+            value === 0
+        ) {
+            return "Date not available";
+        }
+
+
+        let date;
+
+
+        if (
+            typeof value === "number" ||
+            /^\d+$/.test(String(value))
+        ) {
+
+            date =
+                new Date(
+                    Number(value)
+                );
+
+        } else {
+
+            date =
+                new Date(value);
+
+        }
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return String(value);
+        }
+
+
+        return date.toLocaleString(
+            undefined,
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+
+    function shortUid(uid) {
+
+        if (!uid) {
+            return "UID unavailable";
+        }
+
+
+        const value =
+            String(uid);
+
+
+        if (value.length <= 18) {
+            return value;
+        }
+
+
+        return (
+            value.substring(0, 9) +
+            "..." +
+            value.substring(
+                value.length - 5
+            )
+        );
+
+    }
+
+
+    function getInitial(name) {
+
+        if (!name) {
+            return "?";
+        }
+
+
+        return String(name)
+            .trim()
+            .charAt(0)
+            .toUpperCase();
+
+    }
+
+
+    function removeAt(value) {
+
+        return String(value)
+            .replace(/^@/, "");
+
+    }
+
+
+    function yesNo(value) {
+
+        if (
+            value === true ||
+            value === "true" ||
+            value === 1
+        ) {
+            return "Confirmed";
+        }
+
+
+        if (
+            value === false ||
+            value === "false" ||
+            value === 0
+        ) {
+            return "Not confirmed";
+        }
+
+
+        return "";
+
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeAttr(value) {
+
+        return escapeHtml(value);
+
+    }
+
+
+    /* =========================================================
+       BACK
+    ========================================================= */
+
+    function goBack() {
+
+        if (
+            document.referrer &&
+            document.referrer !==
+                window.location.href
+        ) {
+
+            history.back();
+
+        } else {
+
+            window.location.href =
+                "/";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       OVERLAY CLICK
+    ========================================================= */
+
+    detailOverlay.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                detailOverlay
+            ) {
+                closeDetails();
+            }
+
+        }
+    );
+
+
+    declineOverlay.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                declineOverlay
+            ) {
+                closeDeclineDialog();
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ESC KEY
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key !== "Escape") {
+                return;
+            }
+
+
+            if (
+                declineOverlay.classList.contains(
+                    "show"
+                )
+            ) {
+
+                closeDeclineDialog();
+
+                return;
+            }
+
+
+            if (
+                detailOverlay.classList.contains(
+                    "show"
+                )
+            ) {
+
+                closeDetails();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
