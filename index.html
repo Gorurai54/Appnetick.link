@@ -1,93 +1,1446 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Appnetick</title>
-  <meta property="og:site_name" content="Appnetick">
 
-<meta property="og:image" content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+<title>Appnetick</title>
 
-<link rel="icon" href="/20260313_121958.jpg">
-  <meta name="google-site-verification" content="BVj6vQ1wJIa_nVVfUGg3FLCpZCWIQSzxKscdvZz2FEA" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
+<meta property="og:site_name"
+      content="Appnetick">
+
+<meta property="og:image"
+      content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+
+<meta name="twitter:card"
+      content="summary_large_image">
+
+<meta name="twitter:image"
+      content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+
+<link rel="icon"
+      href="/20260313_121958.jpg">
+
+<meta name="google-site-verification"
+      content="BVj6vQ1wJIa_nVVfUGg3FLCpZCWIQSzxKscdvZz2FEA">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  
-  <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
-  
-body{
-background:#0b141a;
-color:#fff;
-overflow-x:hidden;
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --bg: #ffffff;
+
+    --surface: #ffffff;
+
+    --surface-secondary: #f7f7f7;
+
+    --text: #212121;
+
+    --secondary: #757575;
+
+    --border: #e0e0e0;
+
+    --primary: #2196F3;
+
+    --primary-soft: rgba(33,150,243,0.10);
+
+    --danger: #e53935;
+
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+
+    --radius: 18px;
+
+    --button-radius: 30px;
 }
 
-    .social-row{
-display:flex;
-gap:15px;
-overflow-x:auto;
-padding:20px 15px;
-scrollbar-width:none;
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"] {
+
+    --bg: #1E1E1E;
+
+    --surface: #1E1E1E;
+
+    --surface-secondary: #252525;
+
+    --text: #FFFFFF;
+
+    --secondary: #A0A0A0;
+
+    --border: #424242;
+
+    --primary: #2979FF;
+
+    --primary-soft: rgba(41,121,255,0.14);
+
+    --shadow: 0 4px 20px rgba(0,0,0,0.30);
 }
 
-.social-row::-webkit-scrollbar{
-display:none;
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Inter', sans-serif;
 }
 
-.social-icon{
-min-width:60px;
-height:60px;
-background:#fff;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-color:#000;
-flex-shrink:0;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
+
+html {
+
+    scroll-behavior: smooth;
 }
 
-h1{
-font-size:27px;
-font-weight:700;
-margin-bottom:25px;
-margin-top:8px
+
+body {
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    overflow-x: hidden;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
 }
 
-/* NAVBAR */
-.navbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 15px;
-height:60px;
-background:rgba(0,0,0,0.5);
-backdrop-filter:blur(20px);
-position:sticky;
-top:0;
-z-index:1000;
+
+button {
+
+    font-family: inherit;
 }
 
-.top-banner img{
-width:100%;
-height:auto;
-display:block;
-border-radius:12px;
-margin-top:4px;   /* 🔽 upar se kam */
-margin-bottom:20px; /* 🔼 niche zyada */
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+
+    width: 100%;
+
+    height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    background: rgba(255,255,255,0.88);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid var(--border);
 }
 
-.logo{color:#2196f3;font-weight:700;font-size:20px;}
 
-.nav-icons{
-display:flex;
-gap:15px;
+[data-theme="dark"] .navbar {
+
+    background: rgba(30,30,30,0.88);
+}
+
+
+.nav-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.brand {
+
+    font-size: 22px;
+
+    font-weight: 600;
+
+    letter-spacing: -0.5px;
+}
+
+
+.brand-dot {
+
+    color: var(--primary);
+}
+
+
+.nav-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   ICON BUTTON
+========================================================= */
+
+.icon-button {
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: var(--text);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+
+.icon-button:hover {
+
+    background: var(--surface-secondary);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width: 100%;
+
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 18px 16px 60px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    text-align: center;
+
+    padding: 22px 0 30px;
+}
+
+
+.hero-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 14px;
+
+    border-radius: 30px;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 18px;
+}
+
+
+.hero-badge i {
+
+    font-size: 17px;
+}
+
+
+.hero h1 {
+
+    font-size: clamp(32px, 7vw, 52px);
+
+    line-height: 1.08;
+
+    letter-spacing: -1.5px;
+
+    font-weight: 700;
+
+    margin-bottom: 16px;
+}
+
+
+.hero h1 span {
+
+    color: var(--primary);
+}
+
+
+.hero p {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    color: var(--secondary);
+
+    font-size: 16px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   BANNER
+========================================================= */
+
+.banner-card {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    margin: 4px 0 30px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-secondary);
+}
+
+
+.banner-card img {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* =========================================================
+   PRIMARY CTA
+========================================================= */
+
+.verification-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 24px;
+
+    border-radius: 22px;
+
+    background: var(--surface-secondary);
+
+    border: 1px solid var(--border);
+
+    margin-bottom: 30px;
+}
+
+
+.verification-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    border-radius: 50%;
+
+    background: var(--primary-soft);
+
+    right: -70px;
+
+    top: -80px;
+
+    pointer-events: none;
+}
+
+
+.verification-content {
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+.verification-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 27px;
+
+    margin-bottom: 16px;
+}
+
+
+.verification-card h2 {
+
+    font-size: 22px;
+
+    margin-bottom: 8px;
+}
+
+
+.verification-card p {
+
+    color: var(--secondary);
+
+    line-height: 1.55;
+
+    font-size: 14px;
+
+    max-width: 650px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.button-row {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+
+.primary-button,
+.secondary-button {
+
+    min-height: 46px;
+
+    padding: 0 20px;
+
+    border-radius: var(--button-radius);
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+
+.primary-button {
+
+    border: none;
+
+    background: var(--primary);
+
+    color: white;
+}
+
+
+.secondary-button {
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--text);
+}
+
+
+.primary-button:hover,
+.secondary-button:hover {
+
+    opacity: 0.88;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 34px 0 14px;
+}
+
+
+.section-title h2 {
+
+    font-size: 20px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.steps {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+
+.step {
+
+    padding: 18px 14px;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    min-height: 150px;
+}
+
+
+.step-number {
+
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    margin-bottom: 16px;
+}
+
+
+.step h3 {
+
+    font-size: 15px;
+
+    margin-bottom: 7px;
+}
+
+
+.step p {
+
+    font-size: 13px;
+
+    color: var(--secondary);
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.features {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+
+.feature {
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background: var(--surface-secondary);
+
+    border: 1px solid var(--border);
+}
+
+
+.feature-icon {
+
+    font-size: 25px;
+
+    color: var(--primary);
+
+    margin-bottom: 12px;
+}
+
+
+.feature h3 {
+
+    font-size: 15px;
+
+    margin-bottom: 7px;
+}
+
+
+.feature p {
+
+    font-size: 13px;
+
+    color: var(--secondary);
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   POLICY CARDS
+========================================================= */
+
+.policy-card {
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    margin-bottom: 12px;
+}
+
+
+.policy-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+
+.policy-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    font-size: 21px;
+}
+
+
+.policy-card h3 {
+
+    font-size: 16px;
+}
+
+
+.policy-card p {
+
+    color: var(--secondary);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+.policy-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 12px;
+
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+.auth-section {
+
+    text-align: center;
+
+    padding: 35px 0 20px;
+}
+
+
+.auth-section h2 {
+
+    font-size: 22px;
+
+    margin-bottom: 8px;
+}
+
+
+.auth-section p {
+
+    color: var(--secondary);
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+
+.auth-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    border-top: 1px solid var(--border);
+
+    padding: 24px 16px;
+
+    text-align: center;
+
+    color: var(--secondary);
+
+    font-size: 12px;
+}
+
+
+.footer-links {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    margin-bottom: 12px;
+}
+
+
+.footer-links a {
+
+    color: var(--secondary);
+
+    text-decoration: none;
+}
+
+
+.footer-links a:hover {
+
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .navbar {
+
+        height: 62px;
+
+        padding: 0 14px;
+    }
+
+
+    .brand {
+
+        font-size: 21px;
+    }
+
+
+    .page {
+
+        padding: 12px 14px 50px;
+    }
+
+
+    .hero {
+
+        padding: 25px 4px 28px;
+    }
+
+
+    .hero h1 {
+
+        font-size: 34px;
+    }
+
+
+    .hero p {
+
+        font-size: 14px;
+    }
+
+
+    .banner-card {
+
+        border-radius: 16px;
+    }
+
+
+    .verification-card {
+
+        padding: 20px;
+
+        border-radius: 19px;
+    }
+
+
+    .steps {
+
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .features {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .step {
+
+        min-height: 135px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .steps {
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+    }
+
+
+    .step {
+
+        padding: 15px 12px;
+    }
+
+
+    .primary-button,
+    .secondary-button {
+
+        width: 100%;
+    }
+
+
+    .button-row {
+
+        flex-direction: column;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="nav-left">
+
+        <div class="brand">
+            Appnetick<span class="brand-dot">.</span>
+        </div>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <button
+            class="icon-button"
+            id="themeButton"
+            aria-label="Change theme">
+
+            <i
+                class="ph ph-moon"
+                id="themeIcon">
+            </i>
+
+        </button>
+
+
+        <a
+            href="/auth/user/login"
+            class="icon-button"
+            aria-label="Login">
+
+            <i class="ph ph-user"></i>
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="page">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+
+            <i class="ph ph-sparkle"></i>
+
+            The social platform for everyone
+
+        </div>
+
+
+        <h1>
+
+            Welcome to
+            <span>Appnetick</span>
+
+        </h1>
+
+
+        <p>
+
+            Connect, share and communicate with people
+            around the world through a modern social
+            experience built with privacy and simplicity
+            in mind.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- BANNER -->
+
+    <div class="banner-card">
+
+        <img
+            src="file_000000008c18722f9aaa269dbc1c3bc9.png"
+            alt="Appnetick">
+
+    </div>
+
+
+
+    <!-- =================================================
+         VERIFICATION CTA
+    ================================================== -->
+
+    <section class="verification-card">
+
+        <div class="verification-content">
+
+            <div class="verification-icon">
+
+                <i class="ph ph-seal-check"></i>
+
+            </div>
+
+
+            <h2>
+
+                Get your Appnetick badge
+
+            </h2>
+
+
+            <p>
+
+                Apply for an Appnetick verification badge
+                and establish an authentic presence on
+                the platform. Applications are reviewed
+                before verification is granted.
+
+            </p>
+
+
+            <div class="button-row">
+
+                <a
+                    href="/verification"
+                    class="primary-button">
+
+                    <i class="ph ph-seal-check"></i>
+
+                    Get Verified
+
+                </a>
+
+
+                <a
+                    href="#verification-info"
+                    class="secondary-button">
+
+                    <i class="ph ph-info"></i>
+
+                    Learn more
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         HOW VERIFICATION WORKS
+    ================================================== -->
+
+    <div
+        class="section-title"
+        id="verification-info">
+
+        <h2>
+            How verification works
+        </h2>
+
+    </div>
+
+
+    <section class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Apply
+            </h3>
+
+            <p>
+                Sign in and submit your verification
+                application.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Review
+            </h3>
+
+            <p>
+                Your information and supporting details
+                are carefully reviewed.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Decision
+            </h3>
+
+            <p>
+                Your application can be approved or
+                rejected after review.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Activate
+            </h3>
+
+            <p>
+                Approved users can activate their badge
+                inside the Appnetick app.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         APPNETICK FEATURES
+    ================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Appnetick
+        </h2>
+
+    </div>
+
+
+    <section class="features">
+
+
+        <div class="feature">
+
+            <i class="ph ph-chat-circle feature-icon"></i>
+
+            <h3>
+                Connect
+            </h3>
+
+            <p>
+                Chat and communicate with people
+                across the platform.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <i class="ph ph-image feature-icon"></i>
+
+            <h3>
+                Share
+            </h3>
+
+            <p>
+                Share photos, videos, stories and
+                other content.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <i class="ph ph-shield-check feature-icon"></i>
+
+            <h3>
+                Privacy
+            </h3>
+
+            <p>
+                Account controls and privacy-focused
+                social features.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         POLICIES
+    ================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Information
+        </h2>
+
+    </div>
+
+
+    <section>
+
+
+        <div class="policy-card">
+
+            <div class="policy-top">
+
+                <div class="policy-icon">
+
+                    <i class="ph ph-shield"></i>
+
+                </div>
+
+                <h3>
+                    Privacy Policy
+                </h3>
+
+            </div>
+
+
+            <p>
+
+                Learn how Appnetick handles information,
+                privacy and account security.
+
+            </p>
+
+
+            <a
+                href="/privacy"
+                class="policy-link">
+
+                Read Privacy Policy
+
+                <i class="ph ph-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+
+        <div class="policy-card">
+
+            <div class="policy-top">
+
+                <div class="policy-icon">
+
+                    <i class="ph ph-file-text"></i>
+
+                </div>
+
+                <h3>
+                    Terms & Conditions
+                </h3>
+
+            </div>
+
+
+            <p>
+
+                Review the rules and conditions that
+                apply when using Appnetick.
+
+            </p>
+
+
+            <a
+                href="/terms"
+                class="policy-link">
+
+                Read Terms
+
+                <i class="ph ph-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         AUTH
+    ================================================== -->
+
+    <section class="auth-section">
+
+        <h2>
+            Ready to join Appnetick?
+        </h2>
+
+
+        <p>
+            Sign in to your account or create a new one.
+        </p>
+
+
+        <div class="auth-buttons">
+
+            <a
+                href="/auth/user/login"
+                class="primary-button">
+
+                <i class="ph ph-sign-in"></i>
+
+                Login
+
+            </a>
+
+
+            <a
+                href="/auth/user/signup"
+                class="secondary-button">
+
+                gap:15px;
 font-size:22px;
 }
 
