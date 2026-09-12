@@ -1,24 +1,39 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
 
-<title>Appnetick</title><meta property="og:site_name"
-content="Appnetick">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Appnetick</title>
+
+<meta property="og:site_name"
+      content="Appnetick">
 
 <meta property="og:image"
-content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+      content="https://appnetick-link.vercel.app/20260313_121958.jpg">
 
 <meta name="twitter:card"
-content="summary_large_image">
+      content="summary_large_image">
 
 <meta name="twitter:image"
-content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+      content="https://appnetick-link.vercel.app/20260313_121958.jpg">
 
 <link rel="icon"
-      href="/20260313_121958.jpg"><meta name="google-site-verification"
-content="BVj6vQ1wJIa_nVVfUGg3FLCpZCWIQSzxKscdvZz2FEA">
+      href="/20260313_121958.jpg">
+
+<meta name="google-site-verification"
+      content="BVj6vQ1wJIa_nVVfUGg3FLCpZCWIQSzxKscdvZz2FEA">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"><script src="https://unpkg.com/@phosphor-icons/web"></script><style>
+      rel="stylesheet">
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
 
 /* =========================================================
    ROOT
@@ -538,9 +553,9 @@ button {
 
 .verification-steps-title {
 
-    margin: 28px 0 8px;
+    margin: 24px 0 4px;
 
-    font-size: 20px;
+    font-size: 18px;
 
     font-weight: 600;
 }
@@ -562,11 +577,11 @@ button {
 
     display: grid;
 
-    grid-template-columns: 44px 1fr;
+    grid-template-columns: 52px 1fr;
 
     align-items: center;
 
-    padding: 18px 0;
+    padding: 16px 0;
 }
 
 
@@ -599,16 +614,18 @@ button {
 .verification-step-content {
 
     min-width: 0;
+
+    padding-left: 6px;
 }
 
 
 .verification-step-content h3 {
 
-    font-size: 15px;
+    font-size: 14px;
 
     font-weight: 600;
 
-    margin-bottom: 6px;
+    margin-bottom: 3px;
 }
 
 
@@ -952,19 +969,15 @@ button {
 
     .verification-step {
 
-        grid-template-columns: 40px 1fr;
+        grid-template-columns: 48px 1fr;
 
-        padding: 17px 0;
+        padding: 16px 0;
     }
 
 
-    .verification-step-number {
+    .verification-step-content {
 
-        width: 30px;
-
-        height: 30px;
-
-        font-size: 12px;
+        padding-left: 6px;
     }
 
 
@@ -1005,599 +1018,649 @@ button {
 
     .verification-step {
 
-        grid-template-columns: 38px 1fr;
+        grid-template-columns: 48px 1fr;
 
-        padding: 16px 0;
+        padding: 15px 0;
+    }
+
+
+    .verification-step-number {
+
+        width: 30px;
+
+        height: 30px;
+
+        font-size: 12px;
+    }
+
+
+    .verification-step-content {
+
+        padding-left: 7px;
     }
 
 
     .verification-step-content h3 {
 
         font-size: 14px;
+
+        margin-bottom: 2px;
     }
 
 
     .verification-step-content p {
 
         font-size: 12.5px;
+
+        line-height: 1.45;
     }
 
 }
 
-</style></head><body><!-- =====================================================
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
      NAVBAR
-===================================================== --><header class="navbar"><div class="nav-left">
+===================================================== -->
 
-    <div class="brand">
+<header class="navbar">
 
-        Appnetick<span class="brand-dot">.</span>
+    <div class="nav-left">
+
+        <div class="brand">
+
+            Appnetick<span class="brand-dot">.</span>
+
+        </div>
 
     </div>
 
-</div>
+
+    <div class="nav-right">
+
+        <button
+            class="icon-button"
+            id="themeButton"
+            aria-label="Change theme">
+
+            <i
+                class="ph ph-moon"
+                id="themeIcon">
+            </i>
+
+        </button>
 
 
-<div class="nav-right">
+        <a
+            href="/auth/user/login"
+            class="icon-button"
+            aria-label="Login">
 
-    <button
-        class="icon-button"
-        id="themeButton"
-        aria-label="Change theme">
+            <i class="ph ph-user"></i>
 
-        <i
-            class="ph ph-moon"
-            id="themeIcon">
-        </i>
+        </a>
 
-    </button>
+    </div>
+
+</header>
 
 
-    <a
-        href="/auth/user/login"
-        class="icon-button"
-        aria-label="Login">
 
-        <i class="ph ph-user"></i>
-
-    </a>
-
-</div>
-
-</header><!-- =====================================================
+<!-- =====================================================
      MAIN
-===================================================== --><main class="page"><!-- =================================================
-     HERO
-================================================== -->
+===================================================== -->
 
-<section class="hero">
-
-    <div class="hero-badge">
-
-        <i class="ph ph-sparkle"></i>
-
-        The social platform for everyone
-
-    </div>
+<main class="page">
 
 
-    <h1>
+    <!-- =================================================
+         HERO
+    ================================================== -->
 
-        Welcome to
-        <span>Appnetick</span>
+    <section class="hero">
 
-    </h1>
+        <div class="hero-badge">
 
+            <i class="ph ph-sparkle"></i>
 
-    <p>
-
-        Connect, share and communicate with people
-        around the world through a modern social
-        experience built with privacy and simplicity
-        in mind.
-
-    </p>
-
-</section>
-
-
-
-<!-- =================================================
-     BANNER
-================================================== -->
-
-<div class="banner-card">
-
-    <img
-        src="file_000000008c18722f9aaa269dbc1c3bc9.png"
-        alt="Appnetick">
-
-</div>
-
-
-
-<!-- =================================================
-     VERIFICATION CARD
-================================================== -->
-
-<section class="verification-card">
-
-    <div class="verification-content">
-
-        <div class="verification-icon">
-
-            <i class="ph ph-seal-check"></i>
+            The social platform for everyone
 
         </div>
 
 
+        <h1>
+
+            Welcome to
+            <span>Appnetick</span>
+
+        </h1>
+
+
+        <p>
+
+            Connect, share and communicate with people
+            around the world through a modern social
+            experience built with privacy and simplicity
+            in mind.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         BANNER
+    ================================================== -->
+
+    <div class="banner-card">
+
+        <img
+            src="file_000000008c18722f9aaa269dbc1c3bc9.png"
+            alt="Appnetick">
+
+    </div>
+
+
+
+    <!-- =================================================
+         VERIFICATION CARD
+    ================================================== -->
+
+    <section class="verification-card">
+
+        <div class="verification-content">
+
+            <div class="verification-icon">
+
+                <i class="ph ph-seal-check"></i>
+
+            </div>
+
+
+            <h2>
+                Get your Appnetick badge
+            </h2>
+
+
+            <p>
+
+                Apply for an Appnetick verification badge
+                and establish an authentic presence on
+                the platform. Applications are reviewed
+                before verification is granted.
+
+            </p>
+
+
+            <div class="button-row">
+
+
+                <a
+                    href="/user/verification.html"
+                    class="primary-button">
+
+                    Get Verified
+
+                </a>
+
+
+                <a
+                    href="/user/verification/status.html"
+                    class="secondary-button">
+
+                    Check Status
+
+                </a>
+
+
+                <a
+                    href="#verification-info"
+                    class="secondary-button">
+
+                    Learn more
+
+                </a>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 HOW VERIFICATION WORKS
+            ================================================== -->
+
+            <div
+                class="verification-steps-title"
+                id="verification-info">
+
+                How verification works
+
+            </div>
+
+
+            <section class="verification-steps">
+
+
+                <!-- STEP 1 -->
+
+                <div class="verification-step">
+
+                    <div class="verification-step-number">
+
+                        1
+
+                    </div>
+
+
+                    <div class="verification-step-content">
+
+                        <h3>
+                            Apply
+                        </h3>
+
+                        <p>
+
+                            Sign in and submit your verification
+                            application.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="verification-step-divider"></div>
+
+
+
+                <!-- STEP 2 -->
+
+                <div class="verification-step">
+
+                    <div class="verification-step-number">
+
+                        2
+
+                    </div>
+
+
+                    <div class="verification-step-content">
+
+                        <h3>
+                            Review
+                        </h3>
+
+                        <p>
+
+                            Your information and supporting details
+                            are carefully reviewed.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="verification-step-divider"></div>
+
+
+
+                <!-- STEP 3 -->
+
+                <div class="verification-step">
+
+                    <div class="verification-step-number">
+
+                        3
+
+                    </div>
+
+
+                    <div class="verification-step-content">
+
+                        <h3>
+                            Decision
+                        </h3>
+
+                        <p>
+
+                            Your application can be approved or
+                            rejected after review.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="verification-step-divider"></div>
+
+
+
+                <!-- STEP 4 -->
+
+                <div class="verification-step">
+
+                    <div class="verification-step-number">
+
+                        4
+
+                    </div>
+
+
+                    <div class="verification-step-content">
+
+                        <h3>
+                            Activate
+                        </h3>
+
+                        <p>
+
+                            Approved users can activate their badge
+                            inside the Appnetick app.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         APPNETICK FEATURES
+    ================================================== -->
+
+    <div class="section-title">
+
         <h2>
-            Get your Appnetick badge
+            Appnetick
+        </h2>
+
+    </div>
+
+
+    <section class="features">
+
+
+        <div class="feature">
+
+            <i
+                class="ph ph-chat-circle feature-icon">
+            </i>
+
+            <h3>
+                Connect
+            </h3>
+
+            <p>
+
+                Chat and communicate with people
+                across the platform.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <i
+                class="ph ph-image feature-icon">
+            </i>
+
+            <h3>
+                Share
+            </h3>
+
+            <p>
+
+                Share photos, videos, stories and
+                other content.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <i
+                class="ph ph-shield-check feature-icon">
+            </i>
+
+            <h3>
+                Privacy
+            </h3>
+
+            <p>
+
+                Account controls and privacy-focused
+                social features.
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         POLICIES
+    ================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Information
+        </h2>
+
+    </div>
+
+
+    <section>
+
+
+        <div class="policy-card">
+
+            <div class="policy-top">
+
+                <div class="policy-icon">
+
+                    <i class="ph ph-shield"></i>
+
+                </div>
+
+                <h3>
+                    Privacy Policy
+                </h3>
+
+            </div>
+
+
+            <p>
+
+                Learn how Appnetick handles information,
+                privacy and account security.
+
+            </p>
+
+
+            <a
+                href="/privacy"
+                class="policy-link">
+
+                Read Privacy Policy
+
+                <i class="ph ph-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+
+        <div class="policy-card">
+
+            <div class="policy-top">
+
+                <div class="policy-icon">
+
+                    <i class="ph ph-file-text"></i>
+
+                </div>
+
+                <h3>
+                    Terms & Conditions
+                </h3>
+
+            </div>
+
+
+            <p>
+
+                Review the rules and conditions that
+                apply when using Appnetick.
+
+            </p>
+
+
+            <a
+                href="/terms"
+                class="policy-link">
+
+                Read Terms
+
+                <i class="ph ph-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         AUTH
+    ================================================== -->
+
+    <section class="auth-section">
+
+        <h2>
+            Ready to join Appnetick?
         </h2>
 
 
         <p>
 
-            Apply for an Appnetick verification badge
-            and establish an authentic presence on
-            the platform. Applications are reviewed
-            before verification is granted.
+            Sign in to your account or create a new one.
 
         </p>
 
 
-        <div class="button-row">
+        <div class="auth-buttons">
 
 
             <a
-                href="/user/verification.html"
+                href="/auth/user/login"
                 class="primary-button">
 
-                Get Verified
+                Login
 
             </a>
 
 
             <a
-                href="/user/verification/status.html"
+                href="/auth/user/signup"
                 class="secondary-button">
 
-                Check Status
+                Create account
 
             </a>
 
 
-            <a
-                href="#verification-info"
-                class="secondary-button">
-
-                Learn more
-
-            </a>
-
         </div>
 
+    </section>
 
 
-        <!-- =================================================
-             HOW VERIFICATION WORKS
-        ================================================== -->
+</main>
 
-        <div
-            class="verification-steps-title"
-            id="verification-info">
 
-            How verification works
 
-        </div>
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
+<footer class="footer">
 
-        <section class="verification-steps">
 
+    <div class="footer-links">
 
-            <!-- =================================================
-                 STEP 1
-            ================================================== -->
-
-            <div class="verification-step">
-
-                <div class="verification-step-number">
-
-                    1
-
-                </div>
-
-
-                <div class="verification-step-content">
-
-                    <h3>
-                        Apply
-                    </h3>
-
-                    <p>
-
-                        Sign in and submit your verification
-                        application.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="verification-step-divider"></div>
-
-
-
-            <!-- =================================================
-                 STEP 2
-            ================================================== -->
-
-            <div class="verification-step">
-
-                <div class="verification-step-number">
-
-                    2
-
-                </div>
-
-
-                <div class="verification-step-content">
-
-                    <h3>
-                        Review
-                    </h3>
-
-                    <p>
-
-                        Your information and supporting details
-                        are carefully reviewed.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="verification-step-divider"></div>
-
-
-
-            <!-- =================================================
-                 STEP 3
-            ================================================== -->
-
-            <div class="verification-step">
-
-                <div class="verification-step-number">
-
-                    3
-
-                </div>
-
-
-                <div class="verification-step-content">
-
-                    <h3>
-                        Decision
-                    </h3>
-
-                    <p>
-
-                        Your application can be approved or
-                        rejected after review.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="verification-step-divider"></div>
-
-
-
-            <!-- =================================================
-                 STEP 4
-            ================================================== -->
-
-            <div class="verification-step">
-
-                <div class="verification-step-number">
-
-                    4
-
-                </div>
-
-
-                <div class="verification-step-content">
-
-                    <h3>
-                        Activate
-                    </h3>
-
-                    <p>
-
-                        Approved users can activate their badge
-                        inside the Appnetick app.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </section>
-
-    </div>
-
-</section>
-
-
-
-<!-- =================================================
-     APPNETICK FEATURES
-================================================== -->
-
-<div class="section-title">
-
-    <h2>
-        Appnetick
-    </h2>
-
-</div>
-
-
-<section class="features">
-
-
-    <div class="feature">
-
-        <i
-            class="ph ph-chat-circle feature-icon">
-        </i>
-
-        <h3>
-            Connect
-        </h3>
-
-        <p>
-
-            Chat and communicate with people
-            across the platform.
-
-        </p>
-
-    </div>
-
-
-    <div class="feature">
-
-        <i
-            class="ph ph-image feature-icon">
-        </i>
-
-        <h3>
-            Share
-        </h3>
-
-        <p>
-
-            Share photos, videos, stories and
-            other content.
-
-        </p>
-
-    </div>
-
-
-    <div class="feature">
-
-        <i
-            class="ph ph-shield-check feature-icon">
-        </i>
-
-        <h3>
+        <a href="/privacy">
             Privacy
-        </h3>
-
-        <p>
-
-            Account controls and privacy-focused
-            social features.
-
-        </p>
-
-    </div>
+        </a>
 
 
-</section>
+        <a href="/terms">
+            Terms
+        </a>
 
 
-
-<!-- =================================================
-     POLICIES
-================================================== -->
-
-<div class="section-title">
-
-    <h2>
-        Information
-    </h2>
-
-</div>
+        <a href="/auth/user/login">
+            Login
+        </a>
 
 
-<section>
+        <a href="/user/verification.html">
+            Verification
+        </a>
 
 
-    <div class="policy-card">
-
-        <div class="policy-top">
-
-            <div class="policy-icon">
-
-                <i class="ph ph-shield"></i>
-
-            </div>
-
-            <h3>
-                Privacy Policy
-            </h3>
-
-        </div>
-
-
-        <p>
-
-            Learn how Appnetick handles information,
-            privacy and account security.
-
-        </p>
-
-
-        <a
-            href="/privacy"
-            class="policy-link">
-
-            Read Privacy Policy
-
-            <i class="ph ph-arrow-right"></i>
-
+        <a href="/user/verification/status.html">
+            Check Status
         </a>
 
     </div>
-
-
-
-    <div class="policy-card">
-
-        <div class="policy-top">
-
-            <div class="policy-icon">
-
-                <i class="ph ph-file-text"></i>
-
-            </div>
-
-            <h3>
-                Terms & Conditions
-            </h3>
-
-        </div>
-
-
-        <p>
-
-            Review the rules and conditions that
-            apply when using Appnetick.
-
-        </p>
-
-
-        <a
-            href="/terms"
-            class="policy-link">
-
-            Read Terms
-
-            <i class="ph ph-arrow-right"></i>
-
-        </a>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =================================================
-     AUTH
-================================================== -->
-
-<section class="auth-section">
-
-    <h2>
-        Ready to join Appnetick?
-    </h2>
 
 
     <p>
 
-        Sign in to your account or create a new one.
+        © 2026 Appnetick
 
     </p>
 
 
-    <div class="auth-buttons">
+</footer>
 
 
-        <a
-            href="/auth/user/login"
-            class="primary-button">
 
-            Login
-
-        </a>
-
-
-        <a
-            href="/auth/user/signup"
-            class="secondary-button">
-
-            Create account
-
-        </a>
-
-
-    </div>
-
-</section>
-
-</main><!-- =====================================================
-     FOOTER
-===================================================== --><footer class="footer"><div class="footer-links">
-
-    <a href="/privacy">
-        Privacy
-    </a>
-
-
-    <a href="/terms">
-        Terms
-    </a>
-
-
-    <a href="/auth/user/login">
-        Login
-    </a>
-
-
-    <a href="/user/verification.html">
-        Verification
-    </a>
-
-
-    <a href="/user/verification/status.html">
-        Check Status
-    </a>
-
-</div>
-
-
-<p>
-
-    © 2026 Appnetick
-
-</p>
-
-</footer><!-- =====================================================
+<!-- =====================================================
      THEME SCRIPT
-===================================================== --><script>
+===================================================== -->
+
+<script>
 
 
 /* =====================================================
@@ -1723,4 +1786,9 @@ themeButton.addEventListener(
 );
 
 
-</script></body></html>
+</script>
+
+
+</body>
+
+</html>
