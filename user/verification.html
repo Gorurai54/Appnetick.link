@@ -80,6 +80,7 @@ html[data-theme="dark"] {
     box-sizing:border-box;
 
     -webkit-tap-highlight-color:transparent;
+
 }
 
 
@@ -108,6 +109,7 @@ body {
     transition:
         background .25s ease,
         color .25s ease;
+
 }
 
 
@@ -120,6 +122,10 @@ select {
 
 }
 
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
 .toolbar {
 
@@ -193,7 +199,6 @@ select {
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     background:transparent;
@@ -221,6 +226,10 @@ select {
 }
 
 
+/* =========================================================
+   PAGE
+========================================================= */
+
 .page {
 
     width:100%;
@@ -243,6 +252,96 @@ select {
 
 }
 
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media(min-width:701px) {
+
+    .page {
+
+        max-width:720px;
+
+        padding:
+            42px
+            32px
+            60px;
+
+    }
+
+    .toolbar {
+
+        padding:
+            0 28px;
+
+    }
+
+    .toolbar-left {
+
+        gap:8px;
+
+    }
+
+    .step-title {
+
+        font-size:29px;
+
+    }
+
+    .question-label {
+
+        font-size:22px;
+
+    }
+
+    .step-description {
+
+        font-size:15px;
+
+        max-width:650px;
+
+    }
+
+    .intro-points {
+
+        max-width:650px;
+
+    }
+
+    .progress-area {
+
+        max-width:650px;
+
+        margin-left:auto;
+        margin-right:auto;
+
+    }
+
+    .step-viewport {
+
+        max-width:650px;
+
+        margin-left:auto;
+        margin-right:auto;
+
+    }
+
+    .bottom-actions {
+
+        max-width:650px;
+
+        margin-left:auto;
+        margin-right:auto;
+
+    }
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
 
 .progress-area {
 
@@ -317,6 +416,10 @@ select {
 
 }
 
+
+/* =========================================================
+   SLIDER
+========================================================= */
 
 .step-viewport {
 
@@ -401,6 +504,10 @@ select {
 
 }
 
+
+/* =========================================================
+   INTRO
+========================================================= */
 
 .intro-icon {
 
@@ -532,6 +639,10 @@ select {
 
 }
 
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
 
 .question-label {
 
@@ -666,6 +777,10 @@ select {
 }
 
 
+/* =========================================================
+   CHIPS
+========================================================= */
+
 .chips {
 
     display:flex;
@@ -710,6 +825,10 @@ select {
 
 }
 
+
+/* =========================================================
+   CONFIRM
+========================================================= */
 
 .confirm-box {
 
@@ -780,6 +899,11 @@ select {
 }
 
 
+/* =========================================================
+   BOTTOM BUTTON
+   SAME STYLE AS HOME PAGE
+========================================================= */
+
 .bottom-actions {
 
     width:100%;
@@ -795,17 +919,19 @@ select {
 
     width:100%;
 
-    min-height:54px;
+    min-height:42px;
+
+    height:42px;
 
     border:0;
 
-    border-radius:999px;
+    border-radius:30px;
 
     background:var(--primary);
 
     color:#FFFFFF;
 
-    font-size:15px;
+    font-size:14px;
 
     font-weight:600;
 
@@ -819,9 +945,18 @@ select {
 
     cursor:pointer;
 
-    box-shadow:
-        0 7px 18px
-        rgba(33,150,243,.18);
+    transition:
+        transform .15s ease,
+        opacity .15s ease;
+
+}
+
+
+.next-button:hover {
+
+    opacity:.88;
+
+    transform:translateY(-1px);
 
 }
 
@@ -839,10 +974,126 @@ select {
 
     cursor:not-allowed;
 
-    box-shadow:none;
+}
+
+
+/* =========================================================
+   BUTTON LOADING
+========================================================= */
+
+.next-button.loading {
+
+    opacity:1;
+
+    cursor:wait;
+
+    transform:none;
 
 }
 
+
+.next-button.loading .button-normal-content {
+
+    display:none;
+
+}
+
+
+.button-loading-content {
+
+    width:100%;
+
+    height:100%;
+
+    display:none;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:3px;
+
+}
+
+
+.next-button.loading .button-loading-content {
+
+    display:flex;
+
+}
+
+
+.loading-progress {
+
+    width:72px;
+
+    height:4px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,.28);
+
+}
+
+
+.loading-progress-fill {
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:inherit;
+
+    background:#FFFFFF;
+
+}
+
+
+.loading-ring {
+
+    width:11px;
+
+    height:11px;
+
+    border-radius:50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,.35);
+
+    border-top-color:#FFFFFF;
+
+    animation:
+        buttonRing .7s linear infinite;
+
+}
+
+
+@keyframes buttonRing {
+
+    from {
+
+        transform:rotate(0deg);
+
+    }
+
+    to {
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   USER PREVIEW
+========================================================= */
 
 .user-preview {
 
@@ -855,6 +1106,29 @@ select {
     border-radius:18px;
 
     background:var(--surface-secondary);
+
+    cursor:pointer;
+
+    transition:
+        border .2s ease,
+        background .2s ease,
+        transform .15s ease;
+
+}
+
+
+.user-preview:active {
+
+    transform:scale(.99);
+
+}
+
+
+.user-preview.selected {
+
+    border-color:var(--primary);
+
+    background:var(--primary-soft);
 
 }
 
@@ -932,6 +1206,41 @@ select {
 }
 
 
+.account-select-hint {
+
+    margin-top:12px;
+
+    padding-top:12px;
+
+    border-top:1px solid var(--border);
+
+    color:var(--primary);
+
+    font-size:12px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+}
+
+
+.user-preview.selected
+.account-select-hint {
+
+    color:var(--success);
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
 .status-card {
 
     margin-top:16px;
@@ -979,6 +1288,10 @@ select {
 
 }
 
+
+/* =========================================================
+   REVIEW
+========================================================= */
 
 .review-card {
 
@@ -1083,6 +1396,10 @@ select {
 }
 
 
+/* =========================================================
+   SUCCESS
+========================================================= */
+
 .success {
 
     text-align:center;
@@ -1138,6 +1455,10 @@ select {
 }
 
 
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media(max-width:360px) {
 
     .page {
@@ -1156,6 +1477,27 @@ select {
     .question-label {
 
         font-size:19px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+@keyframes spin {
+
+    from {
+
+        transform:rotate(0deg);
+
+    }
+
+    to {
+
+        transform:rotate(360deg);
 
     }
 
@@ -1217,6 +1559,7 @@ select {
 
 </header>
 
+
 <main class="page">
 
     <div class="progress-area">
@@ -1250,10 +1593,12 @@ select {
 
     </div>
 
+
     <div
         class="step-viewport"
         id="stepViewport"
     ></div>
+
 
     <div
         class="bottom-actions"
@@ -1267,20 +1612,47 @@ select {
             onclick="nextStep()"
         >
 
-            <span id="nextText">
-                Get started
+            <span
+                class="button-normal-content"
+                id="buttonNormalContent"
+            >
+
+                <span id="nextText">
+                    Get started
+                </span>
+
+                <i
+                    class="ph ph-arrow-right"
+                    id="nextIcon"
+                ></i>
+
             </span>
 
-            <i
-                class="ph ph-arrow-right"
-                id="nextIcon"
-            ></i>
+
+            <span
+                class="button-loading-content"
+                id="buttonLoadingContent"
+            >
+
+                <span class="loading-progress">
+
+                    <span
+                        class="loading-progress-fill"
+                        id="loadingProgressFill"
+                    ></span>
+
+                </span>
+
+                <span class="loading-ring"></span>
+
+            </span>
 
         </button>
 
     </div>
 
 </main>
+
 
 <script>
 
@@ -1295,12 +1667,17 @@ const API_BASE =
 const savedTheme =
     localStorage.getItem("appnetick-theme");
 
+
 if (savedTheme === "dark") {
 
     document.documentElement
-        .setAttribute("data-theme","dark");
+        .setAttribute(
+            "data-theme",
+            "dark"
+        );
 
 }
+
 
 function updateThemeIcon() {
 
@@ -1321,7 +1698,9 @@ function updateThemeIcon() {
 
 }
 
+
 updateThemeIcon();
+
 
 document
     .getElementById("themeButton")
@@ -1337,7 +1716,9 @@ document
             if (dark) {
 
                 document.documentElement
-                    .removeAttribute("data-theme");
+                    .removeAttribute(
+                        "data-theme"
+                    );
 
                 localStorage.setItem(
                     "appnetick-theme",
@@ -1410,6 +1791,19 @@ let usernameCheckInProgress = false;
 
 let foundUser = null;
 
+
+/*
+ * NEW:
+ * User must select the found account once
+ * before the first username step can continue.
+ */
+
+let foundUserSelected = false;
+
+
+/* =========================================================
+   STEPS
+========================================================= */
 
 const steps = [
 
@@ -1607,28 +2001,49 @@ let isAnimating = false;
 
 
 const viewport =
-    document.getElementById("stepViewport");
+    document.getElementById(
+        "stepViewport"
+    );
 
 const progressFill =
-    document.getElementById("progressFill");
+    document.getElementById(
+        "progressFill"
+    );
 
 const progressNumber =
-    document.getElementById("progressNumber");
+    document.getElementById(
+        "progressNumber"
+    );
 
 const progressLabel =
-    document.getElementById("progressLabel");
+    document.getElementById(
+        "progressLabel"
+    );
 
 const nextButton =
-    document.getElementById("nextButton");
+    document.getElementById(
+        "nextButton"
+    );
 
 const nextText =
-    document.getElementById("nextText");
+    document.getElementById(
+        "nextText"
+    );
 
 const nextIcon =
-    document.getElementById("nextIcon");
+    document.getElementById(
+        "nextIcon"
+    );
 
 const toolbarBack =
-    document.getElementById("toolbarBack");
+    document.getElementById(
+        "toolbarBack"
+    );
+
+const loadingProgressFill =
+    document.getElementById(
+        "loadingProgressFill"
+    );
 
 
 /* =========================================================
@@ -1662,7 +2077,9 @@ function renderStep(
 
     }
 
-    viewport.replaceChildren(element);
+    viewport.replaceChildren(
+        element
+    );
 
     restoreFieldValue();
 
@@ -1692,59 +2109,91 @@ function getStepHTML(step) {
         return `
 
             <div class="intro-icon">
+
                 <i class="ph ph-seal-check"></i>
+
             </div>
 
+
             <h1 class="step-title">
+
                 Get the Appnetick verification badge
+
             </h1>
 
+
             <p class="step-description">
+
                 Verification helps people recognize authentic
                 accounts and identify the real person, creator,
                 organization or brand behind an account.
+
             </p>
+
 
             <div class="intro-points">
 
                 <div class="intro-point">
 
                     <div class="intro-point-icon">
+
                         <i class="ph ph-shield-check"></i>
+
                     </div>
 
                     <div class="intro-point-text">
-                        <strong>Authenticity</strong>
+
+                        <strong>
+                            Authenticity
+                        </strong>
+
                         We'll review information that helps
                         establish the identity behind the account.
+
                     </div>
 
                 </div>
 
+
                 <div class="intro-point">
 
                     <div class="intro-point-icon">
+
                         <i class="ph ph-magnifying-glass"></i>
+
                     </div>
 
                     <div class="intro-point-text">
-                        <strong>Public presence</strong>
+
+                        <strong>
+                            Public presence
+                        </strong>
+
                         We'll consider information that helps
                         establish your public presence.
+
                     </div>
 
                 </div>
 
+
                 <div class="intro-point">
 
                     <div class="intro-point-icon">
+
                         <i class="ph ph-lock-key"></i>
+
                     </div>
 
                     <div class="intro-point-text">
-                        <strong>Secure review</strong>
+
+                        <strong>
+                            Secure review
+                        </strong>
+
                         Verification information is stored separately
                         from your normal account information.
+
                     </div>
 
                 </div>
@@ -1761,13 +2210,19 @@ function getStepHTML(step) {
         return `
 
             <label class="question-label">
+
                 Enter your Appnetick username
+
             </label>
 
+
             <p class="question-help">
+
                 Enter the username of the account you want to
                 verify. We'll check the account before continuing.
+
             </p>
+
 
             <div class="input-wrap">
 
@@ -1784,6 +2239,7 @@ function getStepHTML(step) {
 
             </div>
 
+
             <div
                 id="usernameStatus"
                 style="display:none;"
@@ -1799,16 +2255,24 @@ function getStepHTML(step) {
         return `
 
             <label class="question-label">
+
                 ${escapeHTML(step.title)}
+
             </label>
 
+
             <p class="question-help">
+
                 ${escapeHTML(step.help)}
+
             </p>
+
 
             <div class="input-wrap">
 
-                <i class="ph ${step.icon} input-icon"></i>
+                <i
+                    class="ph ${step.icon} input-icon"
+                ></i>
 
                 <input
                     class="form-input with-icon"
@@ -1831,16 +2295,24 @@ function getStepHTML(step) {
         return `
 
             <label class="question-label">
+
                 ${escapeHTML(step.title)}
+
             </label>
 
+
             <p class="question-help">
+
                 ${escapeHTML(step.help)}
+
             </p>
+
 
             <div class="input-wrap">
 
-                <i class="ph ${step.icon} input-icon"></i>
+                <i
+                    class="ph ${step.icon} input-icon"
+                ></i>
 
                 <input
                     class="form-input with-icon"
@@ -1860,12 +2332,18 @@ function getStepHTML(step) {
         return `
 
             <label class="question-label">
+
                 ${escapeHTML(step.title)}
+
             </label>
 
+
             <p class="question-help">
+
                 ${escapeHTML(step.help)}
+
             </p>
+
 
             <textarea
                 class="form-textarea"
@@ -1884,12 +2362,18 @@ function getStepHTML(step) {
         return `
 
             <label class="question-label">
+
                 ${escapeHTML(step.title)}
+
             </label>
 
+
             <p class="question-help">
+
                 ${escapeHTML(step.help)}
+
             </p>
+
 
             <div class="chips">
 
@@ -1902,7 +2386,9 @@ function getStepHTML(step) {
                             data-value="${escapeHTML(option)}"
                             onclick="selectChip(this)"
                         >
+
                             ${escapeHTML(option)}
+
                         </button>
 
                     `
@@ -1920,12 +2406,18 @@ function getStepHTML(step) {
         return `
 
             <label class="question-label">
+
                 ${escapeHTML(step.title)}
+
             </label>
 
+
             <p class="question-help">
+
                 Please read this confirmation carefully.
+
             </p>
+
 
             <div
                 class="confirm-box"
@@ -1939,11 +2431,16 @@ function getStepHTML(step) {
                         class="custom-check"
                         id="customCheck"
                     >
+
                         <i class="ph ph-check"></i>
+
                     </div>
 
+
                     <div class="confirm-text">
+
                         ${escapeHTML(step.text)}
+
                     </div>
 
                 </div>
@@ -1961,6 +2458,7 @@ function getStepHTML(step) {
 
     }
 
+
     return "";
 
 }
@@ -1973,29 +2471,46 @@ function getStepHTML(step) {
 function setupUsernameStep() {
 
     const input =
-        document.getElementById("usernameInput");
+        document.getElementById(
+            "usernameInput"
+        );
 
     if (!input) return;
 
+
     input.value =
         formData.username || "";
+
 
     input.addEventListener(
         "input",
         function() {
 
             formData.username =
-                normalizeUsername(input.value);
+                normalizeUsername(
+                    input.value
+                );
 
             usernameChecked =
+                false;
+
+            usernameCheckInProgress =
                 false;
 
             foundUser =
                 null;
 
-            formData.uid = "";
-            formData.fullName = "";
-            formData.email = "";
+            foundUserSelected =
+                false;
+
+            formData.uid =
+                "";
+
+            formData.fullName =
+                "";
+
+            formData.email =
+                "";
 
             renderUsernameStatus();
 
@@ -2003,6 +2518,7 @@ function setupUsernameStep() {
 
         }
     );
+
 
     renderUsernameStatus();
 
@@ -2021,7 +2537,6 @@ function normalizeUsername(value) {
 
 /* =========================================================
    USERNAME LOOKUP
-   MERGED ENDPOINT
 ========================================================= */
 
 async function checkUsername() {
@@ -2030,6 +2545,7 @@ async function checkUsername() {
         normalizeUsername(
             formData.username
         );
+
 
     if (!username) {
 
@@ -2041,6 +2557,7 @@ async function checkUsername() {
 
     }
 
+
     usernameCheckInProgress =
         true;
 
@@ -2050,6 +2567,7 @@ async function checkUsername() {
         "Checking username..."
     );
 
+
     try {
 
         const response =
@@ -2057,14 +2575,18 @@ async function checkUsername() {
                 `${API_BASE}/api/verification?action=check-username&username=${encodeURIComponent(username)}`,
                 {
                     method:"GET",
+
                     headers:{
-                        "Accept":"application/json"
+                        "Accept":
+                            "application/json"
                     }
                 }
             );
 
+
         const data =
             await response.json();
+
 
         if (!response.ok) {
 
@@ -2075,6 +2597,7 @@ async function checkUsername() {
 
         }
 
+
         if (!data.exists) {
 
             usernameChecked =
@@ -2083,29 +2606,49 @@ async function checkUsername() {
             foundUser =
                 null;
 
+            foundUserSelected =
+                false;
+
             renderUsernameNotFound();
 
             return false;
 
         }
 
+
         foundUser =
             data.user || null;
+
 
         formData.uid =
             data.user.uid || "";
 
+
         formData.username =
             data.user.username || username;
+
 
         formData.fullName =
             data.user.full_name || "";
 
+
         formData.email =
             data.user.email || "";
 
+
         usernameChecked =
             true;
+
+
+        /*
+         * Important:
+         * Account is found, but user must explicitly
+         * select the account before continuing.
+         */
+
+        foundUserSelected =
+            false;
+
 
         if (data.verification) {
 
@@ -2117,9 +2660,10 @@ async function checkUsername() {
 
         }
 
+
         renderUsernameUser();
 
-        return true;
+        return false;
 
     } catch(error) {
 
@@ -2128,12 +2672,21 @@ async function checkUsername() {
             error
         );
 
+
         usernameChecked =
             false;
+
+        foundUser =
+            null;
+
+        foundUserSelected =
+            false;
+
 
         showError(
             "Unable to check this username. Please try again."
         );
+
 
         return false;
 
@@ -2149,6 +2702,10 @@ async function checkUsername() {
 }
 
 
+/* =========================================================
+   USERNAME STATUS
+========================================================= */
+
 function renderTemporaryStatus(text) {
 
     const box =
@@ -2158,18 +2715,23 @@ function renderTemporaryStatus(text) {
 
     if (!box) return;
 
+
     box.style.display =
         "block";
 
+
     box.className =
         "status-card";
+
 
     box.innerHTML = `
 
         <i class="ph ph-spinner"></i>
 
         <span>
+
             ${escapeHTML(text)}
+
         </span>
 
     `;
@@ -2186,11 +2748,14 @@ function renderUsernameNotFound() {
 
     if (!box) return;
 
+
     box.style.display =
         "block";
 
+
     box.className =
         "status-card";
+
 
     box.innerHTML = `
 
@@ -2199,9 +2764,12 @@ function renderUsernameNotFound() {
             style="color:var(--danger);"
         ></i>
 
+
         <span>
+
             We couldn't find an Appnetick account with this username.
             Please check the username and try again.
+
         </span>
 
     `;
@@ -2218,15 +2786,28 @@ function renderUsernameUser() {
 
     if (!box || !foundUser) return;
 
+
     box.style.display =
         "block";
 
+
     box.className =
-        "user-preview";
+        "user-preview" +
+        (
+            foundUserSelected
+                ? " selected"
+                : ""
+        );
+
+
+    box.onclick =
+        selectFoundUser;
+
 
     const avatar =
         foundUser.avatar ||
         "/20260313_121958.jpg";
+
 
     box.innerHTML = `
 
@@ -2240,20 +2821,27 @@ function renderUsernameUser() {
                 "
             >
 
+
             <div>
 
                 <div class="user-preview-name">
+
                     ${escapeHTML(
                         foundUser.full_name ||
                         foundUser.username
                     )}
+
                 </div>
 
+
                 <div class="user-preview-username">
+
                     @${escapeHTML(
                         foundUser.username
                     )}
+
                 </div>
+
 
                 <div class="verified-badge">
 
@@ -2267,10 +2855,54 @@ function renderUsernameUser() {
 
         </div>
 
+
+        <div class="account-select-hint">
+
+            <i class="ph ${
+                foundUserSelected
+                    ? "ph-check-circle"
+                    : "ph-cursor-click"
+            }"></i>
+
+            ${
+                foundUserSelected
+                    ? "Account selected"
+                    : "Tap to select this account"
+            }
+
+        </div>
+
     `;
 
 }
 
+
+function selectFoundUser() {
+
+    if (
+        !foundUser ||
+        !usernameChecked
+    ) {
+
+        return;
+
+    }
+
+
+    foundUserSelected =
+        true;
+
+
+    renderUsernameUser();
+
+    updateButtons();
+
+}
+
+
+/* =========================================================
+   USERNAME STATUS RENDER
+========================================================= */
 
 function renderUsernameStatus() {
 
@@ -2281,6 +2913,7 @@ function renderUsernameStatus() {
 
     if (!box) return;
 
+
     if (!formData.username) {
 
         box.style.display =
@@ -2289,6 +2922,7 @@ function renderUsernameStatus() {
         return;
 
     }
+
 
     if (
         foundUser &&
@@ -2320,26 +2954,34 @@ function showExistingVerification(
     ).style.display =
         "none";
 
+
     toolbarBack.style.visibility =
         "visible";
+
 
     progressLabel.textContent =
         "Verification status";
 
+
     progressNumber.textContent =
         "Complete";
+
 
     progressFill.style.width =
         "100%";
 
+
     let title =
         "Verification already completed";
+
 
     let description =
         "This account already has a completed verification status.";
 
+
     let icon =
         "ph-seal-check";
+
 
     if (
         verification.verification_status
@@ -2349,13 +2991,16 @@ function showExistingVerification(
         title =
             "Application already under review";
 
+
         description =
             "A verification application for this username is already being reviewed by Appnetick.";
+
 
         icon =
             "ph-hourglass";
 
     }
+
 
     if (
         verification.verification_status
@@ -2365,22 +3010,30 @@ function showExistingVerification(
         title =
             "Previous application was rejected";
 
+
         description =
             "A previous verification application was rejected. You may be able to submit another application after the applicable review period.";
+
 
         icon =
             "ph-x-circle";
 
     }
 
+
     viewport.replaceChildren(
+
         (() => {
 
             const div =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             div.className =
                 "step";
+
 
             div.innerHTML = `
 
@@ -2392,25 +3045,37 @@ function showExistingVerification(
 
                     </div>
 
+
                     <h2>
+
                         ${escapeHTML(title)}
+
                     </h2>
 
+
                     <p>
+
                         ${escapeHTML(description)}
+
                     </p>
+
 
                     <div class="info-card">
 
                         <i class="ph ph-user-circle"></i>
 
                         <span>
+
                             Username:
+
                             <strong>
+
                                 @${escapeHTML(
                                     formData.username
                                 )}
+
                             </strong>
+
                         </span>
 
                     </div>
@@ -2419,13 +3084,19 @@ function showExistingVerification(
 
             `;
 
+
             return div;
 
         })()
+
     );
 
 }
 
+
+/* =========================================================
+   CHIPS
+========================================================= */
 
 function selectChip(element) {
 
@@ -2438,19 +3109,26 @@ function selectChip(element) {
                 )
         );
 
+
     element.classList.add(
         "selected"
     );
+
 
     formData[
         steps[currentStep].key
     ] =
         element.dataset.value;
 
+
     updateButtons();
 
 }
 
+
+/* =========================================================
+   CONFIRM
+========================================================= */
 
 function toggleConfirm() {
 
@@ -2461,26 +3139,35 @@ function toggleConfirm() {
 
     if (!box) return;
 
+
     const key =
         steps[currentStep].key;
 
+
     formData[key] =
         !formData[key];
+
 
     box.classList.toggle(
         "checked",
         formData[key]
     );
 
+
     updateButtons();
 
 }
 
 
+/* =========================================================
+   SAVE
+========================================================= */
+
 function saveCurrentValue() {
 
     const step =
         steps[currentStep];
+
 
     if (
         step.type === "input" ||
@@ -2493,6 +3180,7 @@ function saveCurrentValue() {
                 "currentInput"
             );
 
+
         if (input) {
 
             formData[step.key] =
@@ -2502,12 +3190,14 @@ function saveCurrentValue() {
 
     }
 
+
     if (step.type === "username") {
 
         const input =
             document.getElementById(
                 "usernameInput"
             );
+
 
         if (input) {
 
@@ -2523,10 +3213,15 @@ function saveCurrentValue() {
 }
 
 
+/* =========================================================
+   RESTORE
+========================================================= */
+
 function restoreFieldValue() {
 
     const step =
         steps[currentStep];
+
 
     if (
         step.type === "input" ||
@@ -2539,6 +3234,7 @@ function restoreFieldValue() {
                 "currentInput"
             );
 
+
         if (input) {
 
             input.value =
@@ -2548,12 +3244,15 @@ function restoreFieldValue() {
 
     }
 
+
     if (step.type === "chips") {
 
         const selected =
             formData[step.key];
 
+
         if (!selected) return;
+
 
         document
             .querySelectorAll(".chip")
@@ -2576,12 +3275,14 @@ function restoreFieldValue() {
 
     }
 
+
     if (step.type === "confirm") {
 
         const box =
             document.getElementById(
                 "confirmBox"
             );
+
 
         if (
             box &&
@@ -2599,10 +3300,15 @@ function restoreFieldValue() {
 }
 
 
+/* =========================================================
+   VALIDATION
+========================================================= */
+
 function validateCurrentStep() {
 
     const step =
         steps[currentStep];
+
 
     if (step.type === "intro") {
 
@@ -2610,9 +3316,11 @@ function validateCurrentStep() {
 
     }
 
+
     if (step.type === "username") {
 
         saveCurrentValue();
+
 
         if (!formData.username) {
 
@@ -2624,6 +3332,7 @@ function validateCurrentStep() {
 
         }
 
+
         if (!usernameChecked) {
 
             showError(
@@ -2634,9 +3343,27 @@ function validateCurrentStep() {
 
         }
 
+
+        /*
+         * NEW:
+         * Do not continue until account is selected.
+         */
+
+        if (!foundUserSelected) {
+
+            showError(
+                "Please select the account shown above to continue."
+            );
+
+            return false;
+
+        }
+
+
         return true;
 
     }
+
 
     if (
         step.type === "input" ||
@@ -2645,6 +3372,7 @@ function validateCurrentStep() {
     ) {
 
         saveCurrentValue();
+
 
         if (
             !formData[step.key] &&
@@ -2661,6 +3389,7 @@ function validateCurrentStep() {
 
     }
 
+
     if (step.type === "chips") {
 
         if (!formData[step.key]) {
@@ -2674,6 +3403,7 @@ function validateCurrentStep() {
         }
 
     }
+
 
     if (step.type === "confirm") {
 
@@ -2689,28 +3419,141 @@ function validateCurrentStep() {
 
     }
 
+
     return true;
 
 }
 
 
+/* =========================================================
+   3 SECOND BUTTON PROGRESS
+========================================================= */
+
+function runButtonProgress() {
+
+    return new Promise(
+        resolve => {
+
+            isAnimating =
+                true;
+
+            nextButton.disabled =
+                true;
+
+            nextButton.classList.add(
+                "loading"
+            );
+
+
+            loadingProgressFill.style.width =
+                "0%";
+
+
+            const duration =
+                3000;
+
+            const start =
+                performance.now();
+
+
+            function animateProgress(
+                now
+            ) {
+
+                const elapsed =
+                    now - start;
+
+
+                const progress =
+                    Math.min(
+                        elapsed / duration,
+                        1
+                    );
+
+
+                loadingProgressFill.style.width =
+                    `${progress * 100}%`;
+
+
+                if (progress < 1) {
+
+                    requestAnimationFrame(
+                        animateProgress
+                    );
+
+                } else {
+
+                    nextButton.classList.remove(
+                        "loading"
+                    );
+
+                    nextButton.disabled =
+                        false;
+
+                    loadingProgressFill.style.width =
+                        "0%";
+
+                    isAnimating =
+                        false;
+
+                    resolve();
+
+                }
+
+            }
+
+
+            requestAnimationFrame(
+                animateProgress
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
 async function nextStep() {
 
     if (isAnimating) return;
+
+
+    /*
+     * Username:
+     * First click checks username.
+     * It does NOT advance.
+     */
 
     if (
         currentStep === 1 &&
         !usernameChecked
     ) {
 
-        const success =
-            await checkUsername();
+        await checkUsername();
 
-        if (!success) return;
+        return;
 
     }
 
-    if (!validateCurrentStep()) return;
+
+    if (!validateCurrentStep()) {
+
+        return;
+
+    }
+
+
+    /*
+     * Every actual Continue/Get Started action
+     * now shows the 3-second button progress.
+     */
+
+    await runButtonProgress();
+
 
     if (
         currentStep >=
@@ -2723,23 +3566,18 @@ async function nextStep() {
 
     }
 
-    isAnimating = true;
 
     saveCurrentValue();
 
+
     currentStep++;
+
 
     renderStep(
         "next",
         true
     );
 
-    setTimeout(
-        () => {
-            isAnimating = false;
-        },
-        320
-    );
 
     window.scrollTo({
         top:0,
@@ -2749,9 +3587,14 @@ async function nextStep() {
 }
 
 
+/* =========================================================
+   BACK
+========================================================= */
+
 function previousStep() {
 
     if (isAnimating) return;
+
 
     if (currentStep <= 0) {
 
@@ -2761,23 +3604,33 @@ function previousStep() {
 
     }
 
+
     saveCurrentValue();
 
-    isAnimating = true;
+
+    isAnimating =
+        true;
+
 
     currentStep--;
+
 
     renderStep(
         "back",
         true
     );
 
+
     setTimeout(
         () => {
-            isAnimating = false;
+
+            isAnimating =
+                false;
+
         },
         320
     );
+
 
     window.scrollTo({
         top:0,
@@ -2787,32 +3640,48 @@ function previousStep() {
 }
 
 
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
 function updateToolbar() {
 
+    /*
+     * Back button is intentionally visible
+     * even on the first introduction page.
+     */
+
     toolbarBack.style.visibility =
-        currentStep <= 0
-            ? "hidden"
-            : "visible";
+        "visible";
 
 }
 
+
+/* =========================================================
+   PROGRESS
+========================================================= */
 
 function updateProgress() {
 
     const total =
         steps.length;
 
+
     const number =
         currentStep + 1;
+
 
     const percentage =
         (number / total) * 100;
 
+
     progressNumber.textContent =
         `${number} of ${total}`;
 
+
     progressFill.style.width =
         `${percentage}%`;
+
 
     if (currentStep === 0) {
 
@@ -2836,28 +3705,43 @@ function updateProgress() {
 }
 
 
+/* =========================================================
+   BUTTON
+========================================================= */
+
 function updateButtons() {
 
     nextButton.style.display =
         "flex";
 
+
     nextButton.disabled =
         false;
 
-    nextIcon.style.animation =
-        "";
+
+    nextButton.classList.remove(
+        "loading"
+    );
+
+
+    loadingProgressFill.style.width =
+        "0%";
+
 
     if (currentStep === 0) {
 
         nextText.textContent =
             "Get started";
 
+
         nextIcon.className =
             "ph ph-arrow-right";
+
 
         return;
 
     }
+
 
     if (currentStep === 1) {
 
@@ -2866,36 +3750,69 @@ function updateButtons() {
             nextText.textContent =
                 "Checking...";
 
+
             nextIcon.className =
                 "ph ph-spinner";
+
 
             nextIcon.style.animation =
                 "spin .8s linear infinite";
 
+
             nextButton.disabled =
                 true;
 
-        } else if (usernameChecked) {
+        } else if (
+            usernameChecked &&
+            foundUserSelected
+        ) {
 
             nextText.textContent =
                 "Continue";
 
+
             nextIcon.className =
                 "ph ph-arrow-right";
+
+
+            nextIcon.style.animation =
+                "";
+
+        } else if (
+            usernameChecked &&
+            foundUser
+        ) {
+
+            nextText.textContent =
+                "Select account";
+
+
+            nextIcon.className =
+                "ph ph-user-check";
+
+
+            nextIcon.style.animation =
+                "";
 
         } else {
 
             nextText.textContent =
                 "Check username";
 
+
             nextIcon.className =
                 "ph ph-magnifying-glass";
+
+
+            nextIcon.style.animation =
+                "";
 
         }
 
         return;
 
     }
+
 
     if (
         currentStep ===
@@ -2905,21 +3822,36 @@ function updateButtons() {
         nextText.textContent =
             "Submit application";
 
+
         nextIcon.className =
             "ph ph-paper-plane-tilt";
+
+
+        nextIcon.style.animation =
+            "";
 
         return;
 
     }
 
+
     nextText.textContent =
         "Continue";
+
 
     nextIcon.className =
         "ph ph-arrow-right";
 
+
+    nextIcon.style.animation =
+        "";
+
 }
 
+
+/* =========================================================
+   REVIEW
+========================================================= */
 
 function getReviewHTML() {
 
@@ -2939,18 +3871,25 @@ function getReviewHTML() {
 
         </div>
 
+
         <h1 class="step-title">
+
             Review your application
+
         </h1>
+
 
         <p
             class="step-description"
             style="margin-bottom:22px;"
         >
+
             Please check the information below.
             Once submitted, your verification request
             will be reviewed by Appnetick.
+
         </p>
+
 
         <div class="user-preview">
 
@@ -2967,20 +3906,26 @@ function getReviewHTML() {
                     "
                 >
 
+
                 <div>
 
                     <div class="user-preview-name">
+
                         ${escapeHTML(
                             formData.fullName ||
                             foundUser?.full_name ||
                             ""
                         )}
+
                     </div>
 
+
                     <div class="user-preview-username">
+
                         @${escapeHTML(
                             formData.username
                         )}
+
                     </div>
 
                 </div>
@@ -2989,50 +3934,97 @@ function getReviewHTML() {
 
         </div>
 
+
         <div class="review-card">
 
-            ${reviewRow("Legal name",formData.legalName)}
+            ${reviewRow(
+                "Legal name",
+                formData.legalName
+            )}
 
-            ${reviewRow("Username","@" + formData.username)}
+            ${reviewRow(
+                "Username",
+                "@" + formData.username
+            )}
 
-            ${reviewRow("Date of birth",formData.dateOfBirth)}
+            ${reviewRow(
+                "Date of birth",
+                formData.dateOfBirth
+            )}
 
-            ${reviewRow("Country",formData.country)}
+            ${reviewRow(
+                "Country",
+                formData.country
+            )}
 
-            ${reviewRow("Phone",formData.phone)}
+            ${reviewRow(
+                "Phone",
+                formData.phone
+            )}
 
-            ${reviewRow("Account category",formData.accountCategory)}
+            ${reviewRow(
+                "Account category",
+                formData.accountCategory
+            )}
 
-            ${reviewRow("Profession",formData.profession)}
+            ${reviewRow(
+                "Profession",
+                formData.profession
+            )}
 
-            ${reviewRow("Verification reason",formData.verificationReason)}
+            ${reviewRow(
+                "Verification reason",
+                formData.verificationReason
+            )}
 
-            ${reviewRow("Known for",formData.knownFor)}
+            ${reviewRow(
+                "Known for",
+                formData.knownFor
+            )}
 
             ${reviewRow(
                 "Website",
-                formData.website || "Not provided"
+                formData.website ||
+                "Not provided"
             )}
 
-            ${reviewRow("Public profile",formData.socialProfile)}
+            ${reviewRow(
+                "Public profile",
+                formData.socialProfile
+            )}
 
-            ${reviewRow("Audience",formData.audience)}
+            ${reviewRow(
+                "Audience",
+                formData.audience
+            )}
 
-            ${reviewRow("Content category",formData.contentCategory)}
+            ${reviewRow(
+                "Content category",
+                formData.contentCategory
+            )}
 
-            ${reviewRow("Achievements",formData.achievement)}
+            ${reviewRow(
+                "Achievements",
+                formData.achievement
+            )}
 
-            ${reviewRow("Public presence",formData.publicPresence)}
+            ${reviewRow(
+                "Public presence",
+                formData.publicPresence
+            )}
 
         </div>
+
 
         <div class="info-card">
 
             <i class="ph ph-shield-check"></i>
 
             <span>
+
                 Your verification request will be stored
                 separately from your normal account data.
+
             </span>
 
         </div>
@@ -3052,14 +4044,19 @@ function reviewRow(
         <div class="review-row">
 
             <div class="review-label">
+
                 ${escapeHTML(label)}
+
             </div>
 
+
             <div class="review-value">
+
                 ${escapeHTML(
                     value ||
                     "Not provided"
                 )}
+
             </div>
 
         </div>
@@ -3071,64 +4068,87 @@ function reviewRow(
 
 /* =========================================================
    SUBMIT
-   MERGED ENDPOINT
 ========================================================= */
 
 async function submitVerification() {
 
     if (isAnimating) return;
 
+
     saveCurrentValue();
+
 
     nextButton.disabled =
         true;
 
+
     nextText.textContent =
         "Submitting...";
+
 
     nextIcon.className =
         "ph ph-spinner";
 
+
     nextIcon.style.animation =
         "spin .8s linear infinite";
 
+
     const payload = {
 
-        uid:formData.uid,
+        uid:
+            formData.uid,
 
-        username:formData.username,
+        username:
+            formData.username,
 
-        full_name:formData.fullName,
+        full_name:
+            formData.fullName,
 
-        legal_name:formData.legalName,
+        legal_name:
+            formData.legalName,
 
-        email:formData.email,
+        email:
+            formData.email,
 
-        date_of_birth:formData.dateOfBirth,
+        date_of_birth:
+            formData.dateOfBirth,
 
-        country:formData.country,
+        country:
+            formData.country,
 
-        phone:formData.phone,
+        phone:
+            formData.phone,
 
-        account_category:formData.accountCategory,
+        account_category:
+            formData.accountCategory,
 
-        profession:formData.profession,
+        profession:
+            formData.profession,
 
-        verification_reason:formData.verificationReason,
+        verification_reason:
+            formData.verificationReason,
 
-        known_for:formData.knownFor,
+        known_for:
+            formData.knownFor,
 
-        website:formData.website,
+        website:
+            formData.website,
 
-        social_profile:formData.socialProfile,
+        social_profile:
+            formData.socialProfile,
 
-        audience:formData.audience,
+        audience:
+            formData.audience,
 
-        content_category:formData.contentCategory,
+        content_category:
+            formData.contentCategory,
 
-        achievement:formData.achievement,
+        achievement:
+            formData.achievement,
 
-        public_presence:formData.publicPresence,
+        public_presence:
+            formData.publicPresence,
 
         authenticity_confirmed:
             formData.authenticityConfirmed,
@@ -3140,6 +4160,7 @@ async function submitVerification() {
             formData.termsConfirmed
 
     };
+
 
     try {
 
@@ -3164,8 +4185,10 @@ async function submitVerification() {
                 }
             );
 
+
         const data =
             await response.json();
+
 
         if (!response.ok) {
 
@@ -3175,13 +4198,16 @@ async function submitVerification() {
             ) {
 
                 showExistingVerification({
+
                     verification_status:
                         "approved"
+
                 });
 
                 return;
 
             }
+
 
             if (
                 data.code ===
@@ -3189,13 +4215,16 @@ async function submitVerification() {
             ) {
 
                 showExistingVerification({
+
                     verification_status:
                         "pending"
+
                 });
 
                 return;
 
             }
+
 
             throw new Error(
                 data.error ||
@@ -3203,6 +4232,7 @@ async function submitVerification() {
             );
 
         }
+
 
         showSuccess();
 
@@ -3213,17 +4243,22 @@ async function submitVerification() {
             error
         );
 
+
         nextButton.disabled =
             false;
+
 
         nextText.textContent =
             "Submit application";
 
+
         nextIcon.className =
             "ph ph-paper-plane-tilt";
 
+
         nextIcon.style.animation =
             "";
+
 
         showError(
             error.message ||
@@ -3235,6 +4270,10 @@ async function submitVerification() {
 }
 
 
+/* =========================================================
+   SUCCESS
+========================================================= */
+
 function showSuccess() {
 
     document.getElementById(
@@ -3242,26 +4281,36 @@ function showSuccess() {
     ).style.display =
         "none";
 
+
     toolbarBack.style.visibility =
         "visible";
+
 
     progressLabel.textContent =
         "Submitted";
 
+
     progressNumber.textContent =
         "Complete";
+
 
     progressFill.style.width =
         "100%";
 
+
     viewport.replaceChildren(
+
         (() => {
 
             const div =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             div.className =
                 "step";
+
 
             div.innerHTML = `
 
@@ -3273,9 +4322,13 @@ function showSuccess() {
 
                     </div>
 
+
                     <h2>
+
                         Application submitted
+
                     </h2>
+
 
                     <p>
 
@@ -3294,13 +4347,19 @@ function showSuccess() {
 
             `;
 
+
             return div;
 
         })()
+
     );
 
 }
 
+
+/* =========================================================
+   ERROR
+========================================================= */
 
 function showError(message) {
 
@@ -3309,17 +4368,23 @@ function showError(message) {
             "formError"
         );
 
+
     if (existing) {
 
         existing.remove();
 
     }
 
+
     const error =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     error.id =
         "formError";
+
 
     error.style.cssText = `
 
@@ -3334,16 +4399,20 @@ function showError(message) {
 
     `;
 
+
     error.innerHTML = `
 
         <i class="ph ph-warning-circle"></i>
+
         ${escapeHTML(message)}
 
     `;
 
+
     viewport
         .firstElementChild
         ?.appendChild(error);
+
 
     setTimeout(
         () => {
@@ -3361,20 +4430,47 @@ function showError(message) {
 }
 
 
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
 function escapeHTML(value) {
 
     return String(
         value ?? ""
     )
 
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
+
+/* =========================================================
+   HOME
+========================================================= */
 
 function goHome() {
 
@@ -3384,32 +4480,13 @@ function goHome() {
 }
 
 
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
 renderStep(
     "next",
     false
-);
-
-const spinnerStyle =
-    document.createElement("style");
-
-spinnerStyle.textContent = `
-
-    @keyframes spin {
-
-        from {
-            transform:rotate(0deg);
-        }
-
-        to {
-            transform:rotate(360deg);
-        }
-
-    }
-
-`;
-
-document.head.appendChild(
-    spinnerStyle
 );
 
 </script>
