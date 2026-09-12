@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Verification Status • Appnetick</title>
+
+<link
+    rel="icon"
+    href="/20260313_121958.jpg"
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --bg:#FFFFFF;
+
+    --surface:#FFFFFF;
+
+    --surface-secondary:#F7F7F7;
+
+    --text:#212121;
+
+    --secondary:#757575;
+
+    --muted:#9E9E9E;
+
+    --border:#DCDCDC;
+
+    --input-bg:#F5F5F5;
+
+    --primary:#2979FF;
+
+    --primary-soft:rgba(41,121,255,0.10);
+
+    --danger:#E53935;
+
+    --success:#2E7D32;
+
+    --warning:#EF6C00;
+
+    --shadow:
+        0 8px 30px rgba(0,0,0,0.06);
+
+    --radius:18px;
+
+    --button-radius:30px;
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+html[data-theme="dark"] {
+
+    --bg:#1E1E1E;
+
+    --surface:#1E1E1E;
+
+    --surface-secondary:#252525;
+
+    --text:#FFFFFF;
+
+    --secondary:#A0A0A0;
+
+    --muted:#777777;
+
+    --border:#424242;
+
+    --input-bg:#252525;
+
+    --primary:#2979FF;
+
+    --primary-soft:rgba(41,121,255,0.14);
+
+    --danger:#EF5350;
+
+    --success:#66BB6A;
+
+    --warning:#FFA726;
+
+    --shadow:
+        0 8px 30px rgba(0,0,0,0.22);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+
+    box-sizing:border-box;
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+
+html,
+body {
+
+    margin:0;
+
+    padding:0;
+
+    width:100%;
+
+    min-height:100%;
+
+}
+
+
+body {
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:Inter,sans-serif;
+
+    overflow-x:hidden;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
+
+
+button,
+input {
+
+    font-family:inherit;
+
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+
+    height:64px;
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 12px 0 8px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    background:var(--surface);
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+.toolbar-left {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+}
+
+
+.brand {
+
+    font-size:20px;
+
+    font-weight:700;
+
+    letter-spacing:-.4px;
+
+}
+
+
+.toolbar-actions {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+}
+
+
+/* =========================================================
+   ICON BUTTON
+========================================================= */
+
+.icon-btn {
+
+    width:44px;
+
+    height:44px;
+
+    border:0;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:transparent;
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    font-size:22px;
+
+}
+
+
+.icon-btn:active {
+
+    transform:scale(.92);
+
+}
+
+
+#toolbarBack {
+
+    visibility:hidden;
+
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width:100%;
+
+    max-width:430px;
+
+    margin:0 auto;
+
+    padding:
+        28px
+        20px
+        40px;
+
+    min-height:
+        calc(100vh - 64px);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header {
+
+    text-align:center;
+
+    padding:
+        8px 0 28px;
+
+}
+
+
+.header-icon {
+
+    width:76px;
+
+    height:76px;
+
+    border-radius:23px;
+
+    margin:
+        0 auto 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+    font-size:38px;
+
+}
+
+
+.page-title {
+
+    margin:0 0 9px;
+
+    font-size:26px;
+
+    line-height:1.2;
+
+    font-weight:700;
+
+    letter-spacing:-.5px;
+
+}
+
+
+.page-description {
+
+    margin:0;
+
+    color:var(--secondary);
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   SEARCH CARD
+========================================================= */
+
+.search-card {
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+}
+
+
+.search-label {
+
+    display:block;
+
+    margin-bottom:9px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+
+.input-wrap {
+
+    position:relative;
+
+    width:100%;
+
+}
+
+
+.input-icon {
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:var(--muted);
+
+    font-size:21px;
+
+    pointer-events:none;
+
+}
+
+
+.form-input {
+
+    width:100%;
+
+    min-height:52px;
+
+    padding:
+        0 16px 0 49px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    outline:none;
+
+    background:var(--input-bg);
+
+    color:var(--text);
+
+    font-size:15px;
+
+    transition:
+        border .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.form-input::placeholder {
+
+    color:var(--muted);
+
+}
+
+
+.form-input:focus {
+
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        var(--primary-soft);
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   Same compact size as homepage
+   NO ICONS
+========================================================= */
+
+.button-row {
+
+    display:flex;
+
+    gap:9px;
+
+    margin-top:12px;
+
+}
+
+
+.primary-button,
+.secondary-button {
+
+    min-height:42px;
+
+    padding:
+        0 18px;
+
+    border-radius:
+        var(--button-radius);
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        opacity .15s ease;
+}
+
+
+.primary-button {
+
+    flex:1;
+
+    border:0;
+
+    background:var(--primary);
+
+    color:#FFFFFF;
+}
+
+
+.secondary-button {
+
+    border:1px solid var(--border);
+
+    background:var(--surface);
+
+    color:var(--primary);
+}
+
+
+.primary-button:hover,
+.secondary-button:hover {
+
+    opacity:.88;
+
+    transform:translateY(-1px);
+
+}
+
+
+.primary-button:active,
+.secondary-button:active {
+
+    transform:scale(.98);
+
+}
+
+
+.primary-button:disabled {
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-card {
+
+    display:none;
+
+    margin-top:16px;
+
+    padding:16px;
+
+    border-radius:17px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+    align-items:center;
+
+    gap:11px;
+
+}
+
+
+.loading-card i {
+
+    color:var(--primary);
+
+    font-size:21px;
+
+    animation:
+        spin .8s linear infinite;
+}
+
+
+.loading-card span {
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.result {
+
+    display:none;
+
+    margin-top:20px;
+
+}
+
+
+/* =========================================================
+   USER CARD
+========================================================= */
+
+.user-card {
+
+    padding:16px;
+
+    border-radius:19px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+}
+
+
+.user-main {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.user-avatar {
+
+    width:54px;
+
+    height:54px;
+
+    flex:0 0 54px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:var(--input-bg);
+
+}
+
+
+.user-name {
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+
+.user-username {
+
+    margin-top:3px;
+
+    font-size:13px;
+
+    color:var(--secondary);
+
+}
+
+
+/* =========================================================
+   STATUS CARD
+========================================================= */
+
+.status-card {
+
+    margin-top:12px;
+
+    padding:18px;
+
+    border-radius:19px;
+
+    border:1px solid var(--border);
+
+    background:var(--surface);
+
+}
+
+
+.status-top {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.status-icon {
+
+    width:46px;
+
+    height:46px;
+
+    flex:0 0 46px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+    font-size:24px;
+
+}
+
+
+.status-title {
+
+    font-size:17px;
+
+    font-weight:700;
+
+    color:var(--text);
+
+}
+
+
+.status-subtitle {
+
+    margin-top:3px;
+
+    font-size:12px;
+
+    color:var(--secondary);
+
+    line-height:1.4;
+
+}
+
+
+/* =========================================================
+   STATUS VARIANTS
+========================================================= */
+
+.status-card.pending .status-icon {
+
+    background:
+        rgba(255,167,38,.12);
+
+    color:var(--warning);
+
+}
+
+
+.status-card.approved .status-icon {
+
+    background:
+        rgba(46,125,50,.12);
+
+    color:var(--success);
+
+}
+
+
+.status-card.rejected .status-icon {
+
+    background:
+        rgba(229,57,53,.10);
+
+    color:var(--danger);
+
+}
+
+
+.status-description {
+
+    margin:
+        16px 0 0;
+
+    padding-top:15px;
+
+    border-top:1px solid var(--border);
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details-card {
+
+    margin-top:12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:var(--surface);
+
+}
+
+
+.detail-row {
+
+    padding:
+        14px 15px;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.detail-row:last-child {
+
+    border-bottom:0;
+
+}
+
+
+.detail-label {
+
+    margin-bottom:4px;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    color:var(--muted);
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+
+.detail-value {
+
+    font-size:14px;
+
+    color:var(--text);
+
+    line-height:1.45;
+
+    word-break:break-word;
+
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.info-card {
+
+    margin-top:12px;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+}
+
+
+.info-card i {
+
+    color:var(--primary);
+
+    font-size:19px;
+
+}
+
+
+.info-card span {
+
+    color:var(--secondary);
+
+    font-size:12px;
+
+    line-height:1.55;
+
+}
+
+
+/* =========================================================
+   ERROR / NOT FOUND
+========================================================= */
+
+.message-card {
+
+    display:none;
+
+    margin-top:16px;
+
+    padding:16px;
+
+    border-radius:17px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+    align-items:flex-start;
+
+    gap:11px;
+
+}
+
+
+.message-card i {
+
+    font-size:21px;
+
+    color:var(--danger);
+
+}
+
+
+.message-card span {
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.55;
+
+}
+
+
+/* =========================================================
+   FOOTER ACTION
+========================================================= */
+
+.footer-action {
+
+    margin-top:20px;
+
+    text-align:center;
+
+}
+
+
+.footer-action a {
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes spin {
+
+    from {
+
+        transform:rotate(0deg);
+
+    }
+
+    to {
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:400px) {
+
+    .page {
+
+        padding-left:16px;
+
+        padding-right:16px;
+
+    }
+
+
+    .page-title {
+
+        font-size:24px;
+
+    }
+
+
+    .search-card {
+
+        padding:17px;
+
+    }
+
+
+    .button-row {
+
+        flex-direction:column;
+
+    }
+
+
+    .primary-button,
+    .secondary-button {
+
+        width:100%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     TOOLBAR
+===================================================== -->
+
+<header class="toolbar">
+
+    <div class="toolbar-left">
+
+        <button
+            class="icon-btn"
+            id="toolbarBack"
+            type="button"
+            onclick="goBack()"
+            aria-label="Back"
+        >
+
+            <i class="ph ph-arrow-left"></i>
+
+        </button>
+
+
+        <div class="brand">
+            Appnetick.
+        </div>
+
+    </div>
+
+
+    <div class="toolbar-actions">
+
+        <button
+            class="icon-btn"
+            id="themeButton"
+            type="button"
+            aria-label="Change theme"
+        >
+
+            <i
+                class="ph ph-moon"
+                id="themeIcon"
+            ></i>
+
+        </button>
+
+
+        <button
+            class="icon-btn"
+            type="button"
+            onclick="goHome()"
+            aria-label="Home"
+        >
+
+            <i class="ph ph-house"></i>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE
+===================================================== -->
+
+<main class="page">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <section class="page-header">
+
+        <div class="header-icon">
+
+            <i class="ph ph-seal-check"></i>
+
+        </div>
+
+
+        <h1 class="page-title">
+            Verification Status
+        </h1>
+
+
+        <p class="page-description">
+
+            Enter your Appnetick username to check
+            the current status of your verification
+            application.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SEARCH
+    ================================================== -->
+
+    <section class="search-card">
+
+        <label
+            class="search-label"
+            for="usernameInput"
+        >
+
+            Appnetick username
+
+        </label>
+
+
+        <div class="input-wrap">
+
+            <i class="ph ph-at input-icon"></i>
+
+
+            <input
+                id="usernameInput"
+                class="form-input"
+                type="text"
+                placeholder="@username"
+                autocomplete="off"
+                maxlength="50"
+            >
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="primary-button"
+                id="checkButton"
+                type="button"
+                onclick="checkStatus()"
+            >
+
+                Check Status
+
+            </button>
+
+
+            <a
+                href="/verification"
+                class="secondary-button"
+            >
+
+                Get Verified
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LOADING
+    ================================================== -->
+
+    <div
+        class="loading-card"
+        id="loadingCard"
+    >
+
+        <i class="ph ph-spinner"></i>
+
+        <span>
+            Checking verification status...
+        </span>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MESSAGE
+    ================================================== -->
+
+    <div
+        class="message-card"
+        id="messageCard"
+    >
+
+        <i
+            class="ph ph-warning-circle"
+            id="messageIcon"
+        ></i>
+
+        <span id="messageText"></span>
+
+    </div>
+
+
+
+    <!-- =================================================
+         RESULT
+    ================================================== -->
+
+    <section
+        class="result"
+        id="result"
+    >
+
+        <!-- User card -->
+        <div
+            class="user-card"
+            id="userCard"
+        ></div>
+
+
+        <!-- Status -->
+        <div
+            class="status-card"
+            id="statusCard"
+        ></div>
+
+
+        <!-- Details -->
+        <div
+            class="details-card"
+            id="detailsCard"
+        ></div>
+
+
+        <!-- Info -->
+        <div class="info-card">
+
+            <i class="ph ph-shield-check"></i>
+
+            <span>
+
+                Verification status is based on the
+                latest review information available
+                for this Appnetick account.
+
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER ACTION
+    ================================================== -->
+
+    <div class="footer-action">
+
+        <a href="/">
+            Back to Appnetick
+        </a>
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   API
+========================================================= */
+
+const API_BASE =
+    "https://api-appnetick.vercel.app";
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const savedTheme =
+    localStorage.getItem(
+        "appnetick-theme"
+    );
+
+
+if (
+    savedTheme === "dark"
+) {
+
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            "dark"
+        );
+
+}
+
+
+function updateThemeIcon() {
+
+    const icon =
+        document
+            .getElementById(
+                "themeIcon"
+            );
+
+
+    const dark =
+        document.documentElement
+            .getAttribute(
+                "data-theme"
+            )
+            === "dark";
+
+
+    icon.className =
+        dark
+            ? "ph ph-sun"
+            : "ph ph-moon";
+
+}
+
+
+updateThemeIcon();
+
+
+document
+    .getElementById(
+        "themeButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            const dark =
+                document.documentElement
+                    .getAttribute(
+                        "data-theme"
+                    )
+                    === "dark";
+
+
+            if (dark) {
+
+                document.documentElement
+                    .removeAttribute(
+                        "data-theme"
+                    );
+
+                localStorage.setItem(
+                    "appnetick-theme",
+                    "light"
+                );
+
+            } else {
+
+                document.documentElement
+                    .setAttribute(
+                        "data-theme",
+                        "dark"
+                    );
+
+                localStorage.setItem(
+                    "appnetick-theme",
+                    "dark"
+                );
+
+            }
+
+
+            updateThemeIcon();
+
+        }
+    );
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const usernameInput =
+    document.getElementById(
+        "usernameInput"
+    );
+
+
+const checkButton =
+    document.getElementById(
+        "checkButton"
+    );
+
+
+const loadingCard =
+    document.getElementById(
+        "loadingCard"
+    );
+
+
+const messageCard =
+    document.getElementById(
+        "messageCard"
+    );
+
+
+const messageText =
+    document.getElementById(
+        "messageText"
+    );
+
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+
+const userCard =
+    document.getElementById(
+        "userCard"
+    );
+
+
+const statusCard =
+    document.getElementById(
+        "statusCard"
+    );
+
+
+const detailsCard =
+    document.getElementById(
+        "detailsCard"
+    );
+
+
+/* =========================================================
+   USERNAME
+========================================================= */
+
+function normalizeUsername(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+        .trim()
+        .replace(
+            /^@+/,
+            ""
+        )
+        .toLowerCase();
+
+}
+
+
+/* =========================================================
+   CHECK STATUS
+========================================================= */
+
+async function checkStatus() {
+
+    const username =
+        normalizeUsername(
+            usernameInput.value
+        );
+
+
+    hideMessage();
+
+    result.style.display =
+        "none";
+
+
+    if (!username) {
+
+        showMessage(
+            "Please enter your Appnetick username."
+        );
+
+        usernameInput.focus();
+
+        return;
+
+    }
+
+
+    checkButton.disabled =
+        true;
+
+
+    loadingCard.style.display =
+        "flex";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/api/verification/status?username=${encodeURIComponent(username)}`,
+                {
+
+                    method:"GET",
+
+                    headers:{
+                        "Accept":
+                            "application/json"
+                    }
+
+                }
+            );
+
+
+        let data = {};
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch(error) {
+
+            throw new Error(
+                "The server returned an invalid response."
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to check verification status."
+            );
+
+        }
+
+
+        if (
+            !data.exists
+        ) {
+
+            showMessage(
+                "We couldn't find an Appnetick account with this username. Please check the username and try again."
+            );
+
+            return;
+
+        }
+
+
+        renderResult(
+            data
+        );
+
+
+    } catch(error) {
+
+        console.error(
+            "Verification status:",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "Unable to check verification status. Please try again."
+        );
+
+    } finally {
+
+        loadingCard.style.display =
+            "none";
+
+        checkButton.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER RESULT
+========================================================= */
+
+function renderResult(
+    data
+) {
+
+    const user =
+        data.user || {};
+
+
+    const verification =
+        data.verification || null;
+
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    const avatar =
+        user.avatar ||
+        "/20260313_121958.jpg";
+
+
+    userCard.innerHTML = `
+
+        <div class="user-main">
+
+            <img
+                class="user-avatar"
+                src="${escapeHTML(avatar)}"
+                alt="Profile"
+                onerror="
+                    this.src='/20260313_121958.jpg'
+                "
+            >
+
+            <div>
+
+                <div class="user-name">
+
+                    ${escapeHTML(
+                        user.full_name ||
+                        user.name ||
+                        user.username ||
+                        "Appnetick user"
+                    )}
+
+                </div>
+
+
+                <div class="user-username">
+
+                    @${escapeHTML(
+                        user.username ||
+                        ""
+                    )}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* =====================================================
+       STATUS
+    ===================================================== */
+
+    const status =
+        String(
+            verification?.verification_status ||
+            user.verification_status ||
+            "not_submitted"
+        )
+        .toLowerCase()
+        .trim();
+
+
+    let statusTitle =
+        "Not submitted";
+
+
+    let statusSubtitle =
+        "No verification application found.";
+
+
+    let statusDescription =
+        "This account does not currently have a verification application under review.";
+
+
+    let statusIcon =
+        "ph-file-plus";
+
+
+    let statusClass =
+        "";
+
+
+    if (
+        status === "pending"
+    ) {
+
+        statusTitle =
+            "Under review";
+
+        statusSubtitle =
+            "Your verification application is pending.";
+
+        statusDescription =
+            "Your application has been submitted and is currently being reviewed by Appnetick. You don't need to submit another application while this request is under review.";
+
+        statusIcon =
+            "ph-hourglass";
+
+        statusClass =
+            "pending";
+
+    }
+
+
+    if (
+        status === "approved"
+    ) {
+
+        statusTitle =
+            "Verified";
+
+        statusSubtitle =
+            "Your verification application was approved.";
+
+        statusDescription =
+            "Your account has been approved for verification. The verification badge can be activated or displayed according to Appnetick's verification system.";
+
+        statusIcon =
+            "ph-seal-check";
+
+        statusClass =
+            "approved";
+
+    }
+
+
+    if (
+        status === "rejected"
+    ) {
+
+        statusTitle =
+            "Not approved";
+
+        statusSubtitle =
+            "Your verification application was rejected.";
+
+        statusDescription =
+            "Your previous verification request was not approved. Please review your information and Appnetick's verification requirements before submitting another request.";
+
+        statusIcon =
+            "ph-x-circle";
+
+        statusClass =
+            "rejected";
+
+    }
+
+
+    statusCard.className =
+        "status-card " +
+        statusClass;
+
+
+    statusCard.innerHTML = `
+
+        <div class="status-top">
+
+            <div class="status-icon">
+
+                <i class="ph ${statusIcon}"></i>
+
+            </div>
+
+
+            <div>
+
+                <div class="status-title">
+
+                    ${escapeHTML(
+                        statusTitle
+                    )}
+
+                </div>
+
+
+                <div class="status-subtitle">
+
+                    ${escapeHTML(
+                        statusSubtitle
+                    )}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="status-description">
+
+            ${escapeHTML(
+                statusDescription
+            )}
+
+        </p>
+
+    `;
+
+
+    /* =====================================================
+       DETAILS
+    ===================================================== */
+
+    let details = "";
+
+
+    if (verification) {
+
+        details += detailRow(
+            "Application status",
+            formatStatus(
+                verification.verification_status
+            )
+        );
+
+
+        if (
+            verification.submitted_at
+        ) {
+
+            details += detailRow(
+                "Submitted",
+                formatDate(
+                    verification.submitted_at
+                )
+            );
+
+        }
+
+
+        if (
+            verification.reviewed_at &&
+            Number(
+                verification.reviewed_at
+            ) > 0
+        ) {
+
+            details += detailRow(
+                "Reviewed",
+                formatDate(
+                    verification.reviewed_at
+                )
+            );
+
+        }
+
+
+        if (
+            verification.rejection_reason
+        ) {
+
+            details += detailRow(
+                "Review message",
+                verification.rejection_reason
+            );
+
+        }
+
+    } else {
+
+        details += detailRow(
+            "Account",
+            "@" +
+            (
+                user.username ||
+                usernameInput.value
+            )
+        );
+
+
+        details += detailRow(
+            "Verification",
+            "No application submitted"
+        );
+
+    }
+
+
+    detailsCard.innerHTML =
+        details;
+
+
+    result.style.display =
+        "block";
+
+
+    result.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* =========================================================
+   DETAIL ROW
+========================================================= */
+
+function detailRow(
+    label,
+    value
+) {
+
+    return `
+
+        <div class="detail-row">
+
+            <div class="detail-label">
+
+                ${escapeHTML(
+                    label
+                )}
+
+            </div>
+
+
+            <div class="detail-value">
+
+                ${escapeHTML(
+                    value ||
+                    "Not available"
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   FORMAT STATUS
+========================================================= */
+
+function formatStatus(
+    status
+) {
+
+    const value =
+        String(
+            status || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    if (
+        value === "pending"
+    ) return "Under review";
+
+
+    if (
+        value === "approved"
+    ) return "Approved";
+
+
+    if (
+        value === "rejected"
+    ) return "Rejected";
+
+
+    return "Not submitted";
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(
+    value
+) {
+
+    const number =
+        Number(value);
+
+
+    if (
+        !number ||
+        Number.isNaN(number)
+    ) {
+
+        return "Not available";
+
+    }
+
+
+    try {
+
+        return new Intl.DateTimeFormat(
+            "en-IN",
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric",
+                hour:"numeric",
+                minute:"2-digit"
+            }
+        ).format(
+            new Date(number)
+        );
+
+    } catch(error) {
+
+        return "Not available";
+
+    }
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+    message
+) {
+
+    messageText.textContent =
+        message;
+
+
+    messageCard.style.display =
+        "flex";
+
+}
+
+
+function hideMessage() {
+
+    messageCard.style.display =
+        "none";
+
+    messageText.textContent =
+        "";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goBack() {
+
+    if (
+        window.history.length > 1
+    ) {
+
+        window.history.back();
+
+    } else {
+
+        window.location.href =
+            "/";
+
+    }
+
+}
+
+
+function goHome() {
+
+    window.location.href =
+        "/";
+
+}
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+usernameInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            checkStatus();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
