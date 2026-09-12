@@ -12,7 +12,10 @@
 
 <title>Get Verified • Appnetick</title>
 
-<link rel="icon" href="/20260313_121958.jpg">
+<link
+    rel="icon"
+    href="/20260313_121958.jpg"
+>
 
 <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -22,6 +25,10 @@
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 <style>
+
+/* =========================================================
+   ROOT
+========================================================= */
 
 :root {
 
@@ -37,8 +44,8 @@
 
     --input-bg:#F5F5F5;
 
-    --primary:#2196F3;
-    --primary-soft:rgba(33,150,243,0.10);
+    --primary:#2979FF;
+    --primary-soft:rgba(41,121,255,0.10);
 
     --danger:#E53935;
     --success:#2E7D32;
@@ -47,8 +54,14 @@
         0 8px 30px rgba(0,0,0,0.06);
 
     --radius:18px;
+
+    --button-radius:30px;
 }
 
+
+/* =========================================================
+   DARK THEME
+========================================================= */
 
 html[data-theme="dark"] {
 
@@ -75,41 +88,46 @@ html[data-theme="dark"] {
 }
 
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
+
+    margin:0;
+    padding:0;
 
     box-sizing:border-box;
 
-    -webkit-tap-highlight-color:transparent;
+    font-family:'Inter',sans-serif;
 
+    -webkit-tap-highlight-color:transparent;
 }
 
 
-html,
+html {
+
+    scroll-behavior:smooth;
+}
+
+
 body {
 
     margin:0;
     padding:0;
 
     width:100%;
-    min-height:100%;
-
-}
-
-
-body {
+    min-height:100vh;
 
     background:var(--bg);
 
     color:var(--text);
-
-    font-family:Inter,sans-serif;
 
     overflow-x:hidden;
 
     transition:
         background .25s ease,
         color .25s ease;
-
 }
 
 
@@ -119,7 +137,6 @@ textarea,
 select {
 
     font-family:inherit;
-
 }
 
 
@@ -145,12 +162,11 @@ select {
 
     top:0;
 
-    z-index:100;
+    z-index:1000;
 
     background:var(--surface);
 
     border-bottom:1px solid var(--border);
-
 }
 
 
@@ -161,7 +177,6 @@ select {
     align-items:center;
 
     gap:4px;
-
 }
 
 
@@ -172,7 +187,6 @@ select {
     font-weight:700;
 
     letter-spacing:-.4px;
-
 }
 
 
@@ -183,7 +197,6 @@ select {
     align-items:center;
 
     gap:4px;
-
 }
 
 
@@ -199,6 +212,7 @@ select {
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     background:transparent;
@@ -209,20 +223,34 @@ select {
 
     font-size:22px;
 
+    outline:none;
+
+    -webkit-appearance:none;
+
+    appearance:none;
+
+    box-shadow:none;
+}
+
+
+.icon-btn:focus,
+.icon-btn:focus-visible {
+
+    outline:none;
+
+    box-shadow:none;
 }
 
 
 .icon-btn:active {
 
     transform:scale(.92);
-
 }
 
 
 #toolbarBack {
 
     visibility:hidden;
-
 }
 
 
@@ -234,14 +262,11 @@ select {
 
     width:100%;
 
-    max-width:430px;
+    max-width:900px;
 
     margin:0 auto;
 
-    padding:
-        24px
-        20px
-        30px;
+    padding:24px 20px 40px;
 
     min-height:
         calc(100vh - 64px);
@@ -249,106 +274,20 @@ select {
     display:flex;
 
     flex-direction:column;
-
 }
 
 
 /* =========================================================
-   DESKTOP
-========================================================= */
-
-@media(min-width:701px) {
-
-    .page {
-
-        max-width:720px;
-
-        padding:
-            42px
-            32px
-            60px;
-
-    }
-
-    .toolbar {
-
-        padding:
-            0 28px;
-
-    }
-
-    .toolbar-left {
-
-        gap:8px;
-
-    }
-
-    .step-title {
-
-        font-size:29px;
-
-    }
-
-    .question-label {
-
-        font-size:22px;
-
-    }
-
-    .step-description {
-
-        font-size:15px;
-
-        max-width:650px;
-
-    }
-
-    .intro-points {
-
-        max-width:650px;
-
-    }
-
-    .progress-area {
-
-        max-width:650px;
-
-        margin-left:auto;
-        margin-right:auto;
-
-    }
-
-    .step-viewport {
-
-        max-width:650px;
-
-        margin-left:auto;
-        margin-right:auto;
-
-    }
-
-    .bottom-actions {
-
-        max-width:650px;
-
-        margin-left:auto;
-        margin-right:auto;
-
-    }
-
-}
-
-
-/* =========================================================
-   PROGRESS
+   FORM AREA
 ========================================================= */
 
 .progress-area {
 
     width:100%;
 
-    margin-bottom:28px;
+    max-width:430px;
 
+    margin:0 auto 28px;
 }
 
 
@@ -361,7 +300,6 @@ select {
     justify-content:space-between;
 
     margin-bottom:10px;
-
 }
 
 
@@ -372,7 +310,6 @@ select {
     font-weight:600;
 
     color:var(--secondary);
-
 }
 
 
@@ -383,7 +320,6 @@ select {
     color:var(--muted);
 
     font-weight:500;
-
 }
 
 
@@ -398,7 +334,6 @@ select {
     overflow:hidden;
 
     background:var(--surface-secondary);
-
 }
 
 
@@ -408,34 +343,33 @@ select {
 
     width:5%;
 
-    border-radius:inherit;
+    border-radius:999px;
 
     background:var(--primary);
 
     transition:width .3s ease;
-
 }
 
-
-/* =========================================================
-   SLIDER
-========================================================= */
 
 .step-viewport {
 
     width:100%;
 
+    max-width:430px;
+
+    margin:0 auto;
+
     position:relative;
 
     overflow:hidden;
 
+    flex:1;
 }
 
 
 .step {
 
     width:100%;
-
 }
 
 
@@ -445,7 +379,6 @@ select {
         slideNextEnter .30s
         cubic-bezier(.22,1,.36,1)
         both;
-
 }
 
 
@@ -455,7 +388,6 @@ select {
         slideBackEnter .30s
         cubic-bezier(.22,1,.36,1)
         both;
-
 }
 
 
@@ -516,8 +448,7 @@ select {
 
     border-radius:25px;
 
-    margin:
-        8px auto 24px;
+    margin:8px auto 24px;
 
     display:flex;
 
@@ -529,7 +460,6 @@ select {
     color:var(--primary);
 
     font-size:42px;
-
 }
 
 
@@ -544,7 +474,6 @@ select {
     font-weight:700;
 
     letter-spacing:-.5px;
-
 }
 
 
@@ -557,7 +486,6 @@ select {
     font-size:15px;
 
     line-height:1.65;
-
 }
 
 
@@ -570,7 +498,6 @@ select {
     flex-direction:column;
 
     gap:11px;
-
 }
 
 
@@ -589,7 +516,6 @@ select {
     background:var(--surface-secondary);
 
     border:1px solid var(--border);
-
 }
 
 
@@ -612,7 +538,6 @@ select {
     background:var(--primary-soft);
 
     font-size:19px;
-
 }
 
 
@@ -623,7 +548,6 @@ select {
     line-height:1.5;
 
     color:var(--secondary);
-
 }
 
 
@@ -636,7 +560,6 @@ select {
     margin-bottom:3px;
 
     font-size:14px;
-
 }
 
 
@@ -648,57 +571,38 @@ select {
 
     display:block;
 
-    margin:
-        5px 0 9px;
+    margin:5px 0 9px;
 
     font-size:20px;
 
     font-weight:700;
 
     line-height:1.35;
-
 }
 
 
 .question-help {
 
-    margin:
-        0 0 20px;
+    margin:0 0 20px;
 
     color:var(--secondary);
 
     font-size:14px;
 
     line-height:1.55;
-
 }
 
+
+/* =========================================================
+   INPUTS
+   NO INPUT ICONS
+========================================================= */
 
 .input-wrap {
 
     position:relative;
 
     width:100%;
-
-}
-
-
-.input-icon {
-
-    position:absolute;
-
-    left:16px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:var(--muted);
-
-    font-size:21px;
-
-    pointer-events:none;
-
 }
 
 
@@ -707,8 +611,7 @@ select {
 
     width:100%;
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
     outline:none;
 
@@ -724,6 +627,9 @@ select {
         border .2s ease,
         box-shadow .2s ease;
 
+    -webkit-appearance:none;
+
+    appearance:none;
 }
 
 
@@ -731,16 +637,7 @@ select {
 
     min-height:54px;
 
-    padding:
-        0 16px;
-
-}
-
-
-.form-input.with-icon {
-
-    padding-left:50px;
-
+    padding:0 16px;
 }
 
 
@@ -753,7 +650,6 @@ select {
     resize:none;
 
     line-height:1.55;
-
 }
 
 
@@ -765,7 +661,6 @@ select {
     box-shadow:
         0 0 0 3px
         var(--primary-soft);
-
 }
 
 
@@ -773,7 +668,6 @@ select {
 .form-textarea::placeholder {
 
     color:var(--muted);
-
 }
 
 
@@ -788,14 +682,12 @@ select {
     flex-wrap:wrap;
 
     gap:9px;
-
 }
 
 
 .chip {
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
     background:var(--surface);
 
@@ -803,8 +695,7 @@ select {
 
     border-radius:999px;
 
-    padding:
-        11px 15px;
+    padding:11px 15px;
 
     font-size:13px;
 
@@ -812,6 +703,11 @@ select {
 
     cursor:pointer;
 
+    outline:none;
+
+    -webkit-appearance:none;
+
+    appearance:none;
 }
 
 
@@ -822,7 +718,6 @@ select {
     color:var(--primary);
 
     border-color:var(--primary);
-
 }
 
 
@@ -841,7 +736,6 @@ select {
     background:var(--surface-secondary);
 
     cursor:pointer;
-
 }
 
 
@@ -852,7 +746,6 @@ select {
     align-items:flex-start;
 
     gap:12px;
-
 }
 
 
@@ -875,7 +768,12 @@ select {
     color:#FFFFFF;
 
     font-size:15px;
+}
 
+
+.custom-check i {
+
+    opacity:0;
 }
 
 
@@ -884,7 +782,12 @@ select {
     border-color:var(--primary);
 
     background:var(--primary);
+}
 
+
+.confirm-box.checked .custom-check i {
+
+    opacity:1;
 }
 
 
@@ -895,25 +798,30 @@ select {
     font-size:13px;
 
     line-height:1.55;
-
 }
 
 
 /* =========================================================
-   BOTTOM BUTTON
-   SAME STYLE AS HOME PAGE
+   BOTTOM ACTIONS
 ========================================================= */
 
 .bottom-actions {
 
     width:100%;
 
-    margin-top:18px;
+    max-width:430px;
+
+    margin:18px auto 0;
 
     display:flex;
-
 }
 
+
+/* =========================================================
+   APPNETICK PRIMARY BUTTON
+   SAME VISUAL STYLE AS HOME PAGE
+   NO ICON
+========================================================= */
 
 .next-button {
 
@@ -923,11 +831,13 @@ select {
 
     height:42px;
 
+    padding:0 18px;
+
     border:0;
 
     border-radius:30px;
 
-    background:var(--primary);
+    background:#2979FF;
 
     color:#FFFFFF;
 
@@ -941,14 +851,23 @@ select {
 
     justify-content:center;
 
-    gap:8px;
+    position:relative;
 
     cursor:pointer;
+
+    outline:none;
+
+    box-shadow:none;
+
+    -webkit-appearance:none;
+
+    appearance:none;
+
+    overflow:hidden;
 
     transition:
         transform .15s ease,
         opacity .15s ease;
-
 }
 
 
@@ -957,20 +876,25 @@ select {
     opacity:.88;
 
     transform:translateY(-1px);
-
 }
 
 
 .next-button:active {
 
     transform:scale(.985);
+}
 
+
+.next-button:focus,
+.next-button:focus-visible {
+
+    outline:none;
+
+    box-shadow:none;
 }
 
 
 .next-button:disabled {
-
-    opacity:.5;
 
     cursor:not-allowed;
 
@@ -978,116 +902,88 @@ select {
 
 
 /* =========================================================
-   BUTTON LOADING
+   BUTTON TEXT
 ========================================================= */
 
-.next-button.loading {
+#nextText {
 
-    opacity:1;
+    display:block;
 
-    cursor:wait;
+    line-height:1;
 
-    transform:none;
+    position:relative;
 
+    z-index:2;
 }
 
 
-.next-button.loading .button-normal-content {
+/* =========================================================
+   BUTTON LOADING
+   MEDIUM WHITE ROUNDED PROGRESS BAR
+========================================================= */
+
+.button-loader {
 
     display:none;
 
-}
+    width:96px;
 
-
-.button-loading-content {
-
-    width:100%;
-
-    height:100%;
-
-    display:none;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:3px;
-
-}
-
-
-.next-button.loading .button-loading-content {
-
-    display:flex;
-
-}
-
-
-.loading-progress {
-
-    width:72px;
-
-    height:4px;
+    height:6px;
 
     border-radius:999px;
 
     overflow:hidden;
 
-    background:
-        rgba(255,255,255,.28);
+    background:rgba(255,255,255,.28);
 
+    position:relative;
+
+    z-index:3;
+
+    flex:0 0 auto;
 }
 
 
-.loading-progress-fill {
+.button-loader-fill {
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
 
     width:0%;
 
     height:100%;
 
-    border-radius:inherit;
+    border-radius:999px;
 
     background:#FFFFFF;
 
+    transition:
+        width 3s linear;
 }
 
 
-.loading-ring {
+.next-button.loading {
 
-    width:11px;
+    pointer-events:none;
 
-    height:11px;
+    opacity:1;
 
-    border-radius:50%;
-
-    border:
-        2px solid
-        rgba(255,255,255,.35);
-
-    border-top-color:#FFFFFF;
-
-    animation:
-        buttonRing .7s linear infinite;
-
+    transform:none;
 }
 
 
-@keyframes buttonRing {
+.next-button.loading #nextText {
 
-    from {
+    display:none;
+}
 
-        transform:rotate(0deg);
 
-    }
+.next-button.loading .button-loader {
 
-    to {
-
-        transform:rotate(360deg);
-
-    }
-
+    display:block;
 }
 
 
@@ -1110,17 +1006,9 @@ select {
     cursor:pointer;
 
     transition:
-        border .2s ease,
+        border-color .2s ease,
         background .2s ease,
         transform .15s ease;
-
-}
-
-
-.user-preview:active {
-
-    transform:scale(.99);
-
 }
 
 
@@ -1129,7 +1017,12 @@ select {
     border-color:var(--primary);
 
     background:var(--primary-soft);
+}
 
+
+.user-preview:active {
+
+    transform:scale(.99);
 }
 
 
@@ -1140,7 +1033,6 @@ select {
     align-items:center;
 
     gap:12px;
-
 }
 
 
@@ -1154,7 +1046,6 @@ select {
     object-fit:cover;
 
     background:var(--input-bg);
-
 }
 
 
@@ -1165,7 +1056,6 @@ select {
     font-weight:600;
 
     color:var(--text);
-
 }
 
 
@@ -1176,7 +1066,6 @@ select {
     font-size:13px;
 
     color:var(--secondary);
-
 }
 
 
@@ -1190,8 +1079,7 @@ select {
 
     margin-top:7px;
 
-    padding:
-        4px 8px;
+    padding:4px 8px;
 
     border-radius:999px;
 
@@ -1202,38 +1090,32 @@ select {
     font-size:11px;
 
     font-weight:600;
-
 }
 
 
-.account-select-hint {
+/* =========================================================
+   ACCOUNT SELECTION MESSAGE
+========================================================= */
 
-    margin-top:12px;
+.account-confirm-hint {
 
-    padding-top:12px;
+    margin-top:10px;
 
-    border-top:1px solid var(--border);
-
-    color:var(--primary);
+    color:var(--secondary);
 
     font-size:12px;
 
-    font-weight:600;
+    line-height:1.5;
 
-    display:flex;
+    text-align:center;
 
-    align-items:center;
-
-    gap:5px;
-
+    display:none;
 }
 
 
-.user-preview.selected
-.account-select-hint {
+.account-confirm-hint.visible {
 
-    color:var(--success);
-
+    display:block;
 }
 
 
@@ -1258,7 +1140,6 @@ select {
     align-items:flex-start;
 
     gap:10px;
-
 }
 
 
@@ -1267,7 +1148,6 @@ select {
     color:var(--primary);
 
     font-size:20px;
-
 }
 
 
@@ -1278,14 +1158,12 @@ select {
     font-size:13px;
 
     line-height:1.5;
-
 }
 
 
 .status-card.success i {
 
     color:var(--success);
-
 }
 
 
@@ -1295,33 +1173,27 @@ select {
 
 .review-card {
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
     background:var(--surface-secondary);
 
     border-radius:18px;
 
     overflow:hidden;
-
 }
 
 
 .review-row {
 
-    padding:
-        13px 15px;
+    padding:13px 15px;
 
-    border-bottom:
-        1px solid var(--border);
-
+    border-bottom:1px solid var(--border);
 }
 
 
 .review-row:last-child {
 
     border-bottom:0;
-
 }
 
 
@@ -1338,7 +1210,6 @@ select {
     letter-spacing:.5px;
 
     font-weight:600;
-
 }
 
 
@@ -1351,7 +1222,6 @@ select {
     line-height:1.45;
 
     word-break:break-word;
-
 }
 
 
@@ -1372,7 +1242,6 @@ select {
     gap:10px;
 
     align-items:flex-start;
-
 }
 
 
@@ -1381,7 +1250,6 @@ select {
     color:var(--primary);
 
     font-size:19px;
-
 }
 
 
@@ -1392,7 +1260,6 @@ select {
     font-size:12px;
 
     line-height:1.55;
-
 }
 
 
@@ -1405,7 +1272,6 @@ select {
     text-align:center;
 
     padding-top:35px;
-
 }
 
 
@@ -1414,8 +1280,7 @@ select {
     width:86px;
     height:86px;
 
-    margin:
-        0 auto 24px;
+    margin:0 auto 24px;
 
     border-radius:50%;
 
@@ -1429,7 +1294,6 @@ select {
     background:var(--primary-soft);
 
     font-size:44px;
-
 }
 
 
@@ -1438,7 +1302,6 @@ select {
     margin:0 0 10px;
 
     font-size:25px;
-
 }
 
 
@@ -1451,6 +1314,80 @@ select {
     font-size:14px;
 
     line-height:1.65;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:701px) {
+
+    .toolbar {
+
+        height:68px;
+
+        padding:0 24px;
+    }
+
+
+    .page {
+
+        max-width:900px;
+
+        padding:
+            34px
+            32px
+            50px;
+    }
+
+
+    .progress-area {
+
+        max-width:560px;
+
+        margin-bottom:34px;
+    }
+
+
+    .step-viewport {
+
+        max-width:560px;
+    }
+
+
+    .bottom-actions {
+
+        max-width:560px;
+
+        margin-top:26px;
+    }
+
+
+    .step-title {
+
+        font-size:28px;
+    }
+
+
+    .question-label {
+
+        font-size:22px;
+    }
+
+
+    .form-input {
+
+        min-height:56px;
+    }
+
+
+    .next-button {
+
+        min-height:42px;
+
+        height:42px;
+    }
 
 }
 
@@ -1459,46 +1396,90 @@ select {
    MOBILE
 ========================================================= */
 
-@media(max-width:360px) {
+@media (max-width:700px) {
+
+    .toolbar {
+
+        height:62px;
+
+        padding:0 14px;
+    }
+
+
+    .brand {
+
+        font-size:21px;
+    }
+
 
     .page {
 
-        padding-left:16px;
-        padding-right:16px;
+        max-width:430px;
 
+        padding:
+            24px
+            14px
+            30px;
     }
+
+
+    .progress-area {
+
+        margin-bottom:28px;
+    }
+
+
+    .step-viewport {
+
+        max-width:430px;
+    }
+
+
+    .bottom-actions {
+
+        max-width:430px;
+    }
+
 
     .step-title {
 
-        font-size:23px;
-
-    }
-
-    .question-label {
-
-        font-size:19px;
-
+        font-size:25px;
     }
 
 }
 
 
 /* =========================================================
-   SPINNER
+   SMALL MOBILE
 ========================================================= */
 
-@keyframes spin {
+@media (max-width:400px) {
 
-    from {
+    .page {
 
-        transform:rotate(0deg);
+        padding-left:16px;
 
+        padding-right:16px;
     }
 
-    to {
 
-        transform:rotate(360deg);
+    .step-title {
 
+        font-size:23px;
+    }
+
+
+    .question-label {
+
+        font-size:19px;
+    }
+
+
+    .button-loader {
+
+        width:92px;
+
+        height:6px;
     }
 
 }
@@ -1508,6 +1489,11 @@ select {
 </head>
 
 <body>
+
+
+<!-- =====================================================
+     TOOLBAR
+===================================================== -->
 
 <header class="toolbar">
 
@@ -1525,11 +1511,13 @@ select {
 
         </button>
 
+
         <div class="brand">
             Appnetick.
         </div>
 
     </div>
+
 
     <div class="toolbar-actions">
 
@@ -1543,6 +1531,7 @@ select {
             <i class="ph ph-moon"></i>
 
         </button>
+
 
         <button
             class="icon-btn"
@@ -1560,7 +1549,12 @@ select {
 </header>
 
 
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
 <main class="page">
+
 
     <div class="progress-area">
 
@@ -1573,6 +1567,7 @@ select {
                 Verification
             </span>
 
+
             <span
                 class="progress-number"
                 id="progressNumber"
@@ -1581,6 +1576,7 @@ select {
             </span>
 
         </div>
+
 
         <div class="progress-track">
 
@@ -1612,40 +1608,22 @@ select {
             onclick="nextStep()"
         >
 
-            <span
-                class="button-normal-content"
-                id="buttonNormalContent"
-            >
-
-                <span id="nextText">
-                    Get started
-                </span>
-
-                <i
-                    class="ph ph-arrow-right"
-                    id="nextIcon"
-                ></i>
-
+            <span id="nextText">
+                Get started
             </span>
 
 
-            <span
-                class="button-loading-content"
-                id="buttonLoadingContent"
+            <div
+                class="button-loader"
+                id="buttonLoader"
             >
 
-                <span class="loading-progress">
+                <div
+                    class="button-loader-fill"
+                    id="buttonLoaderFill"
+                ></div>
 
-                    <span
-                        class="loading-progress-fill"
-                        id="loadingProgressFill"
-                    ></span>
-
-                </span>
-
-                <span class="loading-ring"></span>
-
-            </span>
+            </div>
 
         </button>
 
@@ -1656,6 +1634,10 @@ select {
 
 <script>
 
+/* =========================================================
+   API
+========================================================= */
+
 const API_BASE =
     "https://api-appnetick.vercel.app";
 
@@ -1664,86 +1646,86 @@ const API_BASE =
    THEME
 ========================================================= */
 
-const savedTheme =
-    localStorage.getItem("appnetick-theme");
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
 
 
-if (savedTheme === "dark") {
+const themeIcon =
+    document.getElementById(
+        "themeButton"
+    ).querySelector("i");
 
-    document.documentElement
-        .setAttribute(
-            "data-theme",
-            "dark"
-        );
+
+const systemDark =
+    window.matchMedia &&
+    window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches;
+
+
+let savedTheme =
+    localStorage.getItem(
+        "appnetick-theme"
+    );
+
+
+if (!savedTheme) {
+
+    savedTheme =
+        systemDark
+            ? "dark"
+            : "light";
 
 }
 
 
-function updateThemeIcon() {
+applyTheme(savedTheme);
 
-    const icon =
-        document
-            .getElementById("themeButton")
-            .querySelector("i");
 
-    const dark =
-        document.documentElement
-            .getAttribute("data-theme")
-            === "dark";
+function applyTheme(theme) {
 
-    icon.className =
-        dark
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
+        );
+
+
+    localStorage.setItem(
+        "appnetick-theme",
+        theme
+    );
+
+
+    themeIcon.className =
+        theme === "dark"
             ? "ph ph-sun"
             : "ph ph-moon";
 
 }
 
 
-updateThemeIcon();
+themeButton.addEventListener(
+    "click",
+    function() {
 
-
-document
-    .getElementById("themeButton")
-    .addEventListener(
-        "click",
-        function() {
-
-            const dark =
-                document.documentElement
-                    .getAttribute("data-theme")
-                    === "dark";
-
-            if (dark) {
-
-                document.documentElement
-                    .removeAttribute(
-                        "data-theme"
-                    );
-
-                localStorage.setItem(
-                    "appnetick-theme",
-                    "light"
+        const current =
+            document.documentElement
+                .getAttribute(
+                    "data-theme"
                 );
 
-            } else {
 
-                document.documentElement
-                    .setAttribute(
-                        "data-theme",
-                        "dark"
-                    );
+        applyTheme(
+            current === "dark"
+                ? "light"
+                : "dark"
+        );
 
-                localStorage.setItem(
-                    "appnetick-theme",
-                    "dark"
-                );
-
-            }
-
-            updateThemeIcon();
-
-        }
-    );
+    }
+);
 
 
 /* =========================================================
@@ -1791,14 +1773,7 @@ let usernameCheckInProgress = false;
 
 let foundUser = null;
 
-
-/*
- * NEW:
- * User must select the found account once
- * before the first username step can continue.
- */
-
-let foundUserSelected = false;
+let accountSelected = false;
 
 
 /* =========================================================
@@ -1816,7 +1791,6 @@ const steps = [
         key:"legalName",
         title:"What is your legal name?",
         help:"Enter your full legal name exactly as it appears on your official records.",
-        icon:"ph-user",
         placeholder:"Enter your legal name"
     },
 
@@ -1824,8 +1798,7 @@ const steps = [
         type:"date",
         key:"dateOfBirth",
         title:"What is your date of birth?",
-        help:"Your date of birth helps us establish that the account belongs to a real person.",
-        icon:"ph-calendar-blank"
+        help:"Your date of birth helps us establish that the account belongs to a real person."
     },
 
     {
@@ -1849,7 +1822,6 @@ const steps = [
         key:"phone",
         title:"What is your phone number?",
         help:"Use a phone number that you control.",
-        icon:"ph-phone",
         placeholder:"+91 XXXXX XXXXX",
         inputType:"tel"
     },
@@ -1878,7 +1850,6 @@ const steps = [
         key:"profession",
         title:"What is your profession or role?",
         help:"Tell us what you currently do publicly or professionally.",
-        icon:"ph-briefcase",
         placeholder:"Example: Photographer"
     },
 
@@ -1903,7 +1874,6 @@ const steps = [
         key:"website",
         title:"Do you have an official website?",
         help:"Add a website that can help us confirm your public presence. This can be skipped.",
-        icon:"ph-globe",
         placeholder:"https://example.com",
         inputType:"url",
         optional:true
@@ -1914,7 +1884,6 @@ const steps = [
         key:"socialProfile",
         title:"Add another public profile",
         help:"Provide one public social profile or professional page.",
-        icon:"ph-link",
         placeholder:"https://..."
     },
 
@@ -2000,49 +1969,61 @@ let currentStep = 0;
 let isAnimating = false;
 
 
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
 const viewport =
     document.getElementById(
         "stepViewport"
     );
+
 
 const progressFill =
     document.getElementById(
         "progressFill"
     );
 
+
 const progressNumber =
     document.getElementById(
         "progressNumber"
     );
+
 
 const progressLabel =
     document.getElementById(
         "progressLabel"
     );
 
+
 const nextButton =
     document.getElementById(
         "nextButton"
     );
+
 
 const nextText =
     document.getElementById(
         "nextText"
     );
 
-const nextIcon =
+
+const buttonLoader =
     document.getElementById(
-        "nextIcon"
+        "buttonLoader"
     );
+
+
+const buttonLoaderFill =
+    document.getElementById(
+        "buttonLoaderFill"
+    );
+
 
 const toolbarBack =
     document.getElementById(
         "toolbarBack"
-    );
-
-const loadingProgressFill =
-    document.getElementById(
-        "loadingProgressFill"
     );
 
 
@@ -2058,14 +2039,18 @@ function renderStep(
     const step =
         steps[currentStep];
 
+
     const element =
         document.createElement("div");
+
 
     element.className =
         "step";
 
+
     element.innerHTML =
         getStepHTML(step);
+
 
     if (animate) {
 
@@ -2077,9 +2062,11 @@ function renderStep(
 
     }
 
+
     viewport.replaceChildren(
         element
     );
+
 
     restoreFieldValue();
 
@@ -2088,6 +2075,7 @@ function renderStep(
     updateButtons();
 
     updateToolbar();
+
 
     if (step.type === "username") {
 
@@ -2141,6 +2129,7 @@ function getStepHTML(step) {
 
                     </div>
 
+
                     <div class="intro-point-text">
 
                         <strong>
@@ -2162,6 +2151,7 @@ function getStepHTML(step) {
                         <i class="ph ph-magnifying-glass"></i>
 
                     </div>
+
 
                     <div class="intro-point-text">
 
@@ -2185,14 +2175,15 @@ function getStepHTML(step) {
 
                     </div>
 
+
                     <div class="intro-point-text">
 
                         <strong>
                             Secure review
                         </strong>
 
-                        Verification information is stored separately
-                        from your normal account information.
+                        Verification information is stored
+                        separately from your normal account information.
 
                     </div>
 
@@ -2226,10 +2217,8 @@ function getStepHTML(step) {
 
             <div class="input-wrap">
 
-                <i class="ph ph-at input-icon"></i>
-
                 <input
-                    class="form-input with-icon"
+                    class="form-input"
                     id="usernameInput"
                     type="text"
                     placeholder="@username"
@@ -2244,6 +2233,14 @@ function getStepHTML(step) {
                 id="usernameStatus"
                 style="display:none;"
             ></div>
+
+
+            <div
+                id="accountConfirmHint"
+                class="account-confirm-hint"
+            >
+                Tap the account above if this is your account.
+            </div>
 
         `;
 
@@ -2270,12 +2267,8 @@ function getStepHTML(step) {
 
             <div class="input-wrap">
 
-                <i
-                    class="ph ${step.icon} input-icon"
-                ></i>
-
                 <input
-                    class="form-input with-icon"
+                    class="form-input"
                     id="currentInput"
                     type="${step.inputType || "text"}"
                     placeholder="${escapeHTML(step.placeholder || "")}"
@@ -2310,12 +2303,8 @@ function getStepHTML(step) {
 
             <div class="input-wrap">
 
-                <i
-                    class="ph ${step.icon} input-icon"
-                ></i>
-
                 <input
-                    class="form-input with-icon"
+                    class="form-input"
                     id="currentInput"
                     type="date"
                 >
@@ -2475,6 +2464,7 @@ function setupUsernameStep() {
             "usernameInput"
         );
 
+
     if (!input) return;
 
 
@@ -2491,26 +2481,25 @@ function setupUsernameStep() {
                     input.value
                 );
 
+
             usernameChecked =
                 false;
 
-            usernameCheckInProgress =
-                false;
 
             foundUser =
                 null;
 
-            foundUserSelected =
+
+            accountSelected =
                 false;
 
-            formData.uid =
-                "";
 
-            formData.fullName =
-                "";
+            formData.uid = "";
 
-            formData.email =
-                "";
+            formData.fullName = "";
+
+            formData.email = "";
+
 
             renderUsernameStatus();
 
@@ -2525,6 +2514,10 @@ function setupUsernameStep() {
 }
 
 
+/* =========================================================
+   NORMALIZE USERNAME
+========================================================= */
+
 function normalizeUsername(value) {
 
     return String(value || "")
@@ -2536,7 +2529,7 @@ function normalizeUsername(value) {
 
 
 /* =========================================================
-   USERNAME LOOKUP
+   CHECK USERNAME
 ========================================================= */
 
 async function checkUsername() {
@@ -2561,7 +2554,9 @@ async function checkUsername() {
     usernameCheckInProgress =
         true;
 
+
     updateButtons();
+
 
     renderTemporaryStatus(
         "Checking username..."
@@ -2575,10 +2570,8 @@ async function checkUsername() {
                 `${API_BASE}/api/verification?action=check-username&username=${encodeURIComponent(username)}`,
                 {
                     method:"GET",
-
                     headers:{
-                        "Accept":
-                            "application/json"
+                        "Accept":"application/json"
                     }
                 }
             );
@@ -2606,7 +2599,7 @@ async function checkUsername() {
             foundUser =
                 null;
 
-            foundUserSelected =
+            accountSelected =
                 false;
 
             renderUsernameNotFound();
@@ -2640,13 +2633,7 @@ async function checkUsername() {
             true;
 
 
-        /*
-         * Important:
-         * Account is found, but user must explicitly
-         * select the account before continuing.
-         */
-
-        foundUserSelected =
+        accountSelected =
             false;
 
 
@@ -2663,7 +2650,8 @@ async function checkUsername() {
 
         renderUsernameUser();
 
-        return false;
+
+        return true;
 
     } catch(error) {
 
@@ -2674,12 +2662,6 @@ async function checkUsername() {
 
 
         usernameChecked =
-            false;
-
-        foundUser =
-            null;
-
-        foundUserSelected =
             false;
 
 
@@ -2695,6 +2677,7 @@ async function checkUsername() {
         usernameCheckInProgress =
             false;
 
+
         updateButtons();
 
     }
@@ -2703,7 +2686,7 @@ async function checkUsername() {
 
 
 /* =========================================================
-   USERNAME STATUS
+   TEMPORARY STATUS
 ========================================================= */
 
 function renderTemporaryStatus(text) {
@@ -2712,6 +2695,7 @@ function renderTemporaryStatus(text) {
         document.getElementById(
             "usernameStatus"
         );
+
 
     if (!box) return;
 
@@ -2729,9 +2713,7 @@ function renderTemporaryStatus(text) {
         <i class="ph ph-spinner"></i>
 
         <span>
-
             ${escapeHTML(text)}
-
         </span>
 
     `;
@@ -2739,12 +2721,17 @@ function renderTemporaryStatus(text) {
 }
 
 
+/* =========================================================
+   USER NOT FOUND
+========================================================= */
+
 function renderUsernameNotFound() {
 
     const box =
         document.getElementById(
             "usernameStatus"
         );
+
 
     if (!box) return;
 
@@ -2764,7 +2751,6 @@ function renderUsernameNotFound() {
             style="color:var(--danger);"
         ></i>
 
-
         <span>
 
             We couldn't find an Appnetick account with this username.
@@ -2777,12 +2763,23 @@ function renderUsernameNotFound() {
 }
 
 
+/* =========================================================
+   USER FOUND
+========================================================= */
+
 function renderUsernameUser() {
 
     const box =
         document.getElementById(
             "usernameStatus"
         );
+
+
+    const hint =
+        document.getElementById(
+            "accountConfirmHint"
+        );
+
 
     if (!box || !foundUser) return;
 
@@ -2792,16 +2789,7 @@ function renderUsernameUser() {
 
 
     box.className =
-        "user-preview" +
-        (
-            foundUserSelected
-                ? " selected"
-                : ""
-        );
-
-
-    box.onclick =
-        selectFoundUser;
+        "user-preview";
 
 
     const avatar =
@@ -2855,53 +2843,50 @@ function renderUsernameUser() {
 
         </div>
 
-
-        <div class="account-select-hint">
-
-            <i class="ph ${
-                foundUserSelected
-                    ? "ph-check-circle"
-                    : "ph-cursor-click"
-            }"></i>
-
-            ${
-                foundUserSelected
-                    ? "Account selected"
-                    : "Tap to select this account"
-            }
-
-        </div>
-
     `;
 
-}
+
+    box.onclick =
+        function() {
+
+            accountSelected =
+                !accountSelected;
 
 
-function selectFoundUser() {
+            box.classList.toggle(
+                "selected",
+                accountSelected
+            );
 
-    if (
-        !foundUser ||
-        !usernameChecked
-    ) {
 
-        return;
+            if (hint) {
+
+                hint.classList.toggle(
+                    "visible",
+                    !accountSelected
+                );
+
+            }
+
+
+            updateButtons();
+
+        };
+
+
+    if (hint) {
+
+        hint.classList.add(
+            "visible"
+        );
 
     }
-
-
-    foundUserSelected =
-        true;
-
-
-    renderUsernameUser();
-
-    updateButtons();
 
 }
 
 
 /* =========================================================
-   USERNAME STATUS RENDER
+   USERNAME STATUS
 ========================================================= */
 
 function renderUsernameStatus() {
@@ -2910,6 +2895,7 @@ function renderUsernameStatus() {
         document.getElementById(
             "usernameStatus"
         );
+
 
     if (!box) return;
 
@@ -3026,9 +3012,7 @@ function showExistingVerification(
         (() => {
 
             const div =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
 
             div.className =
@@ -3095,7 +3079,7 @@ function showExistingVerification(
 
 
 /* =========================================================
-   CHIPS
+   CHIP
 ========================================================= */
 
 function selectChip(element) {
@@ -3137,6 +3121,7 @@ function toggleConfirm() {
             "confirmBox"
         );
 
+
     if (!box) return;
 
 
@@ -3160,7 +3145,7 @@ function toggleConfirm() {
 
 
 /* =========================================================
-   SAVE
+   SAVE CURRENT VALUE
 ========================================================= */
 
 function saveCurrentValue() {
@@ -3344,15 +3329,10 @@ function validateCurrentStep() {
         }
 
 
-        /*
-         * NEW:
-         * Do not continue until account is selected.
-         */
-
-        if (!foundUserSelected) {
+        if (!accountSelected) {
 
             showError(
-                "Please select the account shown above to continue."
+                "Please select the account shown above if this is your account."
             );
 
             return false;
@@ -3426,85 +3406,75 @@ function validateCurrentStep() {
 
 
 /* =========================================================
-   3 SECOND BUTTON PROGRESS
+   BUTTON 3 SECOND LOADING
 ========================================================= */
 
-function runButtonProgress() {
+function startButtonProgress() {
 
     return new Promise(
         resolve => {
-
-            isAnimating =
-                true;
-
-            nextButton.disabled =
-                true;
 
             nextButton.classList.add(
                 "loading"
             );
 
 
-            loadingProgressFill.style.width =
+            nextButton.disabled =
+                true;
+
+
+            buttonLoaderFill.style.transition =
+                "none";
+
+
+            buttonLoaderFill.style.width =
                 "0%";
 
 
-            const duration =
-                3000;
-
-            const start =
-                performance.now();
-
-
-            function animateProgress(
-                now
-            ) {
-
-                const elapsed =
-                    now - start;
-
-
-                const progress =
-                    Math.min(
-                        elapsed / duration,
-                        1
-                    );
-
-
-                loadingProgressFill.style.width =
-                    `${progress * 100}%`;
-
-
-                if (progress < 1) {
+            requestAnimationFrame(
+                () => {
 
                     requestAnimationFrame(
-                        animateProgress
+                        () => {
+
+                            buttonLoaderFill.style.transition =
+                                "width 3s linear";
+
+
+                            buttonLoaderFill.style.width =
+                                "100%";
+
+                        }
                     );
 
-                } else {
+                }
+            );
+
+
+            setTimeout(
+                () => {
 
                     nextButton.classList.remove(
                         "loading"
                     );
 
+
+                    buttonLoaderFill.style.transition =
+                        "none";
+
+
+                    buttonLoaderFill.style.width =
+                        "0%";
+
+
                     nextButton.disabled =
                         false;
 
-                    loadingProgressFill.style.width =
-                        "0%";
-
-                    isAnimating =
-                        false;
 
                     resolve();
 
-                }
-
-            }
-
-
-            requestAnimationFrame(
-                animateProgress
+                },
+                3000
             );
 
         }
@@ -3522,37 +3492,24 @@ async function nextStep() {
     if (isAnimating) return;
 
 
-    /*
-     * Username:
-     * First click checks username.
-     * It does NOT advance.
-     */
-
     if (
         currentStep === 1 &&
         !usernameChecked
     ) {
 
-        await checkUsername();
+        const success =
+            await checkUsername();
+
+
+        if (!success) return;
+
 
         return;
 
     }
 
 
-    if (!validateCurrentStep()) {
-
-        return;
-
-    }
-
-
-    /*
-     * Every actual Continue/Get Started action
-     * now shows the 3-second button progress.
-     */
-
-    await runButtonProgress();
+    if (!validateCurrentStep()) return;
 
 
     if (
@@ -3567,7 +3524,14 @@ async function nextStep() {
     }
 
 
+    isAnimating =
+        true;
+
+
     saveCurrentValue();
+
+
+    await startButtonProgress();
 
 
     currentStep++;
@@ -3576,6 +3540,17 @@ async function nextStep() {
     renderStep(
         "next",
         true
+    );
+
+
+    setTimeout(
+        () => {
+
+            isAnimating =
+                false;
+
+        },
+        320
     );
 
 
@@ -3588,7 +3563,7 @@ async function nextStep() {
 
 
 /* =========================================================
-   BACK
+   PREVIOUS
 ========================================================= */
 
 function previousStep() {
@@ -3613,6 +3588,14 @@ function previousStep() {
 
 
     currentStep--;
+
+
+    if (currentStep !== 1) {
+
+        accountSelected =
+            false;
+
+    }
 
 
     renderStep(
@@ -3647,9 +3630,9 @@ function previousStep() {
 function updateToolbar() {
 
     /*
-     * Back button is intentionally visible
-     * even on the first introduction page.
-     */
+       Back button is intentionally visible
+       even on the first introduction page.
+    */
 
     toolbarBack.style.visibility =
         "visible";
@@ -3706,7 +3689,7 @@ function updateProgress() {
 
 
 /* =========================================================
-   BUTTON
+   BUTTON STATE
 ========================================================= */
 
 function updateButtons() {
@@ -3724,7 +3707,11 @@ function updateButtons() {
     );
 
 
-    loadingProgressFill.style.width =
+    buttonLoaderFill.style.transition =
+        "none";
+
+
+    buttonLoaderFill.style.width =
         "0%";
 
 
@@ -3732,11 +3719,6 @@ function updateButtons() {
 
         nextText.textContent =
             "Get started";
-
-
-        nextIcon.className =
-            "ph ph-arrow-right";
-
 
         return;
 
@@ -3751,63 +3733,24 @@ function updateButtons() {
                 "Checking...";
 
 
-            nextIcon.className =
-                "ph ph-spinner";
-
-
-            nextIcon.style.animation =
-                "spin .8s linear infinite";
-
-
             nextButton.disabled =
                 true;
 
         } else if (
             usernameChecked &&
-            foundUserSelected
+            accountSelected
         ) {
 
             nextText.textContent =
                 "Continue";
-
-
-            nextIcon.className =
-                "ph ph-arrow-right";
-
-
-            nextIcon.style.animation =
-                "";
-
-        } else if (
-            usernameChecked &&
-            foundUser
-        ) {
-
-            nextText.textContent =
-                "Select account";
-
-
-            nextIcon.className =
-                "ph ph-user-check";
-
-
-            nextIcon.style.animation =
-                "";
 
         } else {
 
             nextText.textContent =
                 "Check username";
 
-
-            nextIcon.className =
-                "ph ph-magnifying-glass";
-
-
-            nextIcon.style.animation =
-                "";
-
         }
+
 
         return;
 
@@ -3823,13 +3766,6 @@ function updateButtons() {
             "Submit application";
 
 
-        nextIcon.className =
-            "ph ph-paper-plane-tilt";
-
-
-        nextIcon.style.animation =
-            "";
-
         return;
 
     }
@@ -3837,14 +3773,6 @@ function updateButtons() {
 
     nextText.textContent =
         "Continue";
-
-
-    nextIcon.className =
-        "ph ph-arrow-right";
-
-
-    nextIcon.style.animation =
-        "";
 
 }
 
@@ -3942,45 +3870,54 @@ function getReviewHTML() {
                 formData.legalName
             )}
 
+
             ${reviewRow(
                 "Username",
                 "@" + formData.username
             )}
+
 
             ${reviewRow(
                 "Date of birth",
                 formData.dateOfBirth
             )}
 
+
             ${reviewRow(
                 "Country",
                 formData.country
             )}
+
 
             ${reviewRow(
                 "Phone",
                 formData.phone
             )}
 
+
             ${reviewRow(
                 "Account category",
                 formData.accountCategory
             )}
+
 
             ${reviewRow(
                 "Profession",
                 formData.profession
             )}
 
+
             ${reviewRow(
                 "Verification reason",
                 formData.verificationReason
             )}
 
+
             ${reviewRow(
                 "Known for",
                 formData.knownFor
             )}
+
 
             ${reviewRow(
                 "Website",
@@ -3988,25 +3925,30 @@ function getReviewHTML() {
                 "Not provided"
             )}
 
+
             ${reviewRow(
                 "Public profile",
                 formData.socialProfile
             )}
+
 
             ${reviewRow(
                 "Audience",
                 formData.audience
             )}
 
+
             ${reviewRow(
                 "Content category",
                 formData.contentCategory
             )}
 
+
             ${reviewRow(
                 "Achievements",
                 formData.achievement
             )}
+
 
             ${reviewRow(
                 "Public presence",
@@ -4033,6 +3975,10 @@ function getReviewHTML() {
 
 }
 
+
+/* =========================================================
+   REVIEW ROW
+========================================================= */
 
 function reviewRow(
     label,
@@ -4086,45 +4032,27 @@ async function submitVerification() {
         "Submitting...";
 
 
-    nextIcon.className =
-        "ph ph-spinner";
-
-
-    nextIcon.style.animation =
-        "spin .8s linear infinite";
-
-
     const payload = {
 
-        uid:
-            formData.uid,
+        uid:formData.uid,
 
-        username:
-            formData.username,
+        username:formData.username,
 
-        full_name:
-            formData.fullName,
+        full_name:formData.fullName,
 
-        legal_name:
-            formData.legalName,
+        legal_name:formData.legalName,
 
-        email:
-            formData.email,
+        email:formData.email,
 
-        date_of_birth:
-            formData.dateOfBirth,
+        date_of_birth:formData.dateOfBirth,
 
-        country:
-            formData.country,
+        country:formData.country,
 
-        phone:
-            formData.phone,
+        phone:formData.phone,
 
-        account_category:
-            formData.accountCategory,
+        account_category:formData.accountCategory,
 
-        profession:
-            formData.profession,
+        profession:formData.profession,
 
         verification_reason:
             formData.verificationReason,
@@ -4198,10 +4126,8 @@ async function submitVerification() {
             ) {
 
                 showExistingVerification({
-
                     verification_status:
                         "approved"
-
                 });
 
                 return;
@@ -4215,10 +4141,8 @@ async function submitVerification() {
             ) {
 
                 showExistingVerification({
-
                     verification_status:
                         "pending"
-
                 });
 
                 return;
@@ -4250,14 +4174,6 @@ async function submitVerification() {
 
         nextText.textContent =
             "Submit application";
-
-
-        nextIcon.className =
-            "ph ph-paper-plane-tilt";
-
-
-        nextIcon.style.animation =
-            "";
 
 
         showError(
@@ -4303,9 +4219,7 @@ function showSuccess() {
         (() => {
 
             const div =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
 
             div.className =
@@ -4377,9 +4291,7 @@ function showError(message) {
 
 
     const error =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     error.id =
@@ -4440,30 +4352,11 @@ function escapeHTML(value) {
         value ?? ""
     )
 
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
@@ -4492,4 +4385,5 @@ renderStep(
 </script>
 
 </body>
+
 </html>
