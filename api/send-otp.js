@@ -30,7 +30,9 @@ export default async function handler(req, res) {
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Basic email validation
+    /*
+     * Basic email validation
+     */
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(normalizedEmail)) {
@@ -50,7 +52,8 @@ export default async function handler(req, res) {
     /*
      * Redis key
      */
-    const redisKey = `appnetick:otp:${normalizedEmail}`;
+    const redisKey =
+      `appnetick:otp:${normalizedEmail}`;
 
     /*
      * Save OTP for 5 minutes
@@ -68,17 +71,16 @@ export default async function handler(req, res) {
     );
 
     /*
-     * Email logo
+     * Appnetick logo
      *
-     * IMPORTANT:
-     * This must be a PUBLIC HTTPS URL.
+     * Public HTTPS URL required.
+     *
+     * LOGO_URL can be stored in Vercel
+     * environment variables.
      *
      * Example:
-     * https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/logo.png
      *
-     * Put that URL in Vercel:
-     *
-     * LOGO_URL=https://...
+     * LOGO_URL=https://appnetick-link.vercel.app/20260313_121958.jpg
      */
     const logoUrl = process.env.LOGO_URL;
 
@@ -86,26 +88,31 @@ export default async function handler(req, res) {
      * Gmail transporter
      */
     const transporter = nodemailer.createTransport({
+
       service: "gmail",
 
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
       }
+
     });
 
     /*
-     * Send email
+     * Send OTP email
      */
     await transporter.sendMail({
 
-      from: `"Appnetick" <${process.env.EMAIL_USER}>`,
+      from:
+        `"Appnetick" <${process.env.EMAIL_USER}>`,
 
       to: normalizedEmail,
 
-      subject: "Your Appnetick verification code",
+      subject:
+        "Your Appnetick verification code",
 
       html: `
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -121,15 +128,15 @@ export default async function handler(req, res) {
 
 <meta
   name="color-scheme"
-  content="light"
+  content="light dark"
 >
 
 <meta
   name="supported-color-schemes"
-  content="light"
+  content="light dark"
 >
 
-<title>Appnetick</title>
+<title>Appnetick Verification</title>
 
 </head>
 
@@ -138,14 +145,24 @@ export default async function handler(req, res) {
   style="
     margin:0;
     padding:0;
-    background:#ffffff;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    color:#000000;
+    width:100%;
+    background:#FFFFFF;
+    color:#212121;
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif;
   "
 >
 
 
-<!-- Main wrapper -->
+<!-- =====================================================
+     OUTER WRAPPER
+===================================================== -->
 
 <table
   width="100%"
@@ -154,7 +171,7 @@ export default async function handler(req, res) {
   border="0"
   style="
     width:100%;
-    background:#ffffff;
+    background:#FFFFFF;
   "
 >
 
@@ -163,12 +180,14 @@ export default async function handler(req, res) {
 <td
   align="center"
   style="
-    padding:42px 20px 50px;
+    padding:28px 14px 40px;
   "
 >
 
 
-<!-- Email content -->
+<!-- =====================================================
+     EMAIL CONTAINER
+===================================================== -->
 
 <table
   width="100%"
@@ -178,50 +197,77 @@ export default async function handler(req, res) {
   style="
     width:100%;
     max-width:620px;
-    background:#ffffff;
   "
 >
 
 
-<!-- Logo -->
+<!-- =====================================================
+     TOP TOOLBAR
+===================================================== -->
 
 <tr>
 
 <td
-  align="left"
   style="
-    padding:0 0 46px 0;
+    padding:0 0 18px 0;
   "
 >
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    height:62px;
+    background:#FFFFFF;
+    border:1px solid #DCDCDC;
+    border-radius:18px;
+  "
+>
+
+<tr>
+
+<td
+  valign="middle"
+  style="
+    padding:0 18px;
+  "
+>
+
+
+<!-- LOGO -->
 
 ${
   logoUrl
     ? `
 <img
   src="${logoUrl}"
-  width="92"
-  height="92"
+  width="42"
+  height="42"
   alt="Appnetick"
   style="
     display:block;
-    width:92px;
-    height:92px;
+    width:42px;
+    height:42px;
     object-fit:contain;
     border:0;
+    border-radius:12px;
   "
 >
 `
     : `
 <div
   style="
-    width:92px;
-    height:92px;
-    line-height:92px;
+    width:42px;
+    height:42px;
+    line-height:42px;
     text-align:center;
-    background:#2463e8;
-    border-radius:27px;
-    color:#ffffff;
-    font-size:42px;
+    background:#2979FF;
+    border-radius:12px;
+    color:#FFFFFF;
+    font-size:20px;
     font-weight:700;
   "
 >
@@ -230,171 +276,422 @@ A
 `
 }
 
+
+</td>
+
+</tr>
+
+</table>
+
 </td>
 
 </tr>
 
 
-<!-- Brand -->
+<!-- =====================================================
+     MAIN CARD
+===================================================== -->
+
+<tr>
+
+<td>
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    background:#F7F7F7;
+    border:1px solid #DCDCDC;
+    border-radius:22px;
+  "
+>
 
 <tr>
 
 <td
-  align="left"
   style="
-    padding:0 0 34px 0;
+    padding:30px 24px 28px;
   "
 >
 
+
+<!-- =====================================================
+     VERIFICATION BADGE
+===================================================== -->
+
+<table
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+>
+
+<tr>
+
+<td
+  style="
+    background:rgba(41,121,255,0.10);
+    border-radius:30px;
+    padding:8px 13px;
+    color:#2979FF;
+    font-size:13px;
+    font-weight:600;
+    line-height:1;
+  "
+>
+
+Email verification
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- =====================================================
+     HEADING
+===================================================== -->
+
 <div
   style="
-    color:#000000;
-    font-size:31px;
-    line-height:1.2;
+    margin-top:20px;
+    color:#212121;
+    font-size:26px;
+    line-height:1.25;
     font-weight:700;
-    letter-spacing:-1.2px;
+    letter-spacing:-0.7px;
   "
 >
-Appnetick
+
+Verify your email
+
 </div>
 
-</td>
 
-</tr>
-
-
-<!-- Heading -->
-
-<tr>
-
-<td
-  align="left"
-  style="
-    padding:0 0 18px 0;
-  "
->
+<!-- =====================================================
+     DESCRIPTION
+===================================================== -->
 
 <div
   style="
-    color:#000000;
-    font-size:24px;
-    line-height:1.35;
-    font-weight:700;
-    letter-spacing:-0.4px;
-  "
->
-Use the code below to verify your email
-</div>
-
-</td>
-
-</tr>
-
-
-<!-- OTP -->
-
-<tr>
-
-<td
-  align="left"
-  style="
-    padding:10px 0 32px 0;
-  "
->
-
-<div
-  style="
-    color:#000000;
-    font-size:42px;
-    line-height:1.2;
-    font-weight:700;
-    letter-spacing:2px;
-  "
->
-${otp}
-</div>
-
-</td>
-
-</tr>
-
-
-<!-- Security message -->
-
-<tr>
-
-<td
-  align="left"
-  style="
-    padding:0 0 42px 0;
-  "
->
-
-<div
-  style="
-    color:#111111;
-    font-size:16px;
-    line-height:1.55;
-    font-weight:400;
-  "
->
-If you did not request this OTP, please ignore this email
-and do not share the OTP with anyone.
-</div>
-
-</td>
-
-</tr>
-
-
-<!-- Expiry -->
-
-<tr>
-
-<td
-  align="left"
-  style="
-    padding:0 0 34px 0;
-  "
->
-
-<div
-  style="
-    color:#777777;
+    margin-top:10px;
+    color:#757575;
     font-size:14px;
+    line-height:1.65;
+  "
+>
+
+Use the verification code below to
+continue with your Appnetick account.
+
+</div>
+
+
+<!-- =====================================================
+     OTP CARD
+===================================================== -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    margin-top:24px;
+    background:#FFFFFF;
+    border:1px solid #DCDCDC;
+    border-radius:18px;
+  "
+>
+
+<tr>
+
+<td
+  align="center"
+  style="
+    padding:25px 16px 23px;
+  "
+>
+
+<div
+  style="
+    color:#757575;
+    font-size:12px;
+    line-height:1.4;
+    font-weight:500;
+    margin-bottom:8px;
+  "
+>
+
+YOUR VERIFICATION CODE
+
+</div>
+
+
+<div
+  style="
+    color:#2979FF;
+    font-size:38px;
+    line-height:1.25;
+    font-weight:700;
+    letter-spacing:7px;
+    padding-left:7px;
+  "
+>
+
+${otp}
+
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- =====================================================
+     EXPIRY
+===================================================== -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    margin-top:14px;
+  "
+>
+
+<tr>
+
+<td
+  style="
+    padding:0;
+  "
+>
+
+<div
+  style="
+    color:#757575;
+    font-size:13px;
+    line-height:1.5;
+  "
+>
+
+This code expires in
+<strong style="color:#212121;">
+5 minutes
+</strong>.
+
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- =====================================================
+     SECURITY CARD
+===================================================== -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    margin-top:22px;
+    background:#FFFFFF;
+    border:1px solid #DCDCDC;
+    border-radius:18px;
+  "
+>
+
+<tr>
+
+<td
+  style="
+    padding:17px 18px;
+  "
+>
+
+<table
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+>
+
+<tr>
+
+<td
+  valign="top"
+  style="
+    width:34px;
+    padding-right:12px;
+  "
+>
+
+<div
+  style="
+    width:32px;
+    height:32px;
+    line-height:32px;
+    text-align:center;
+    background:rgba(41,121,255,0.10);
+    border-radius:10px;
+    color:#2979FF;
+    font-size:15px;
+    font-weight:700;
+  "
+>
+
+✓
+
+</div>
+
+</td>
+
+
+<td
+  valign="top"
+>
+
+<div
+  style="
+    color:#212121;
+    font-size:14px;
+    line-height:1.45;
+    font-weight:600;
+    margin-bottom:3px;
+  "
+>
+
+Keep your code private
+
+</div>
+
+
+<div
+  style="
+    color:#757575;
+    font-size:13px;
+    line-height:1.55;
+  "
+>
+
+Appnetick will never ask you to share
+your verification code with anyone.
+
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- =====================================================
+     NOT REQUESTED MESSAGE
+===================================================== -->
+
+<div
+  style="
+    margin-top:22px;
+    color:#757575;
+    font-size:13px;
     line-height:1.6;
   "
 >
-This verification code expires in 5 minutes.
+
+If you did not request this code,
+you can safely ignore this email.
+
 </div>
+
+
+</td>
+
+</tr>
+
+</table>
 
 </td>
 
 </tr>
 
 
-<!-- Footer -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <tr>
 
 <td
-  align="left"
+  align="center"
   style="
-    padding:28px 0 0 0;
-    border-top:1px solid #eeeeee;
+    padding:24px 12px 0;
   "
 >
+
 
 <div
   style="
-    color:#999999;
+    color:#9E9E9E;
     font-size:12px;
-    line-height:1.7;
+    line-height:1.6;
   "
 >
-© ${new Date().getFullYear()} Appnetick
+
+Appnetick
+
 </div>
 
+
+<div
+  style="
+    margin-top:4px;
+    color:#9E9E9E;
+    font-size:11px;
+    line-height:1.6;
+  "
+>
+
+This is an automated verification email.
+Please do not reply to this message.
+
+</div>
+
+
+<div
+  style="
+    margin-top:10px;
+    color:#B0B0B0;
+    font-size:11px;
+    line-height:1.6;
+  "
+>
+
+© ${new Date().getFullYear()} Appnetick
+
+</div>
+
+
 </td>
 
 </tr>
@@ -402,7 +699,7 @@ This verification code expires in 5 minutes.
 
 </table>
 
-<!-- End email content -->
+<!-- END EMAIL CONTAINER -->
 
 
 </td>
@@ -411,32 +708,45 @@ This verification code expires in 5 minutes.
 
 </table>
 
-<!-- End main wrapper -->
+<!-- END OUTER WRAPPER -->
 
 
 </body>
 
 </html>
+
       `
     });
 
+
     /*
-     * IMPORTANT:
      * OTP is never returned to the app.
      */
     return res.status(200).json({
+
       success: true,
-      message: "OTP sent successfully"
+
+      message:
+        "OTP sent successfully"
+
     });
 
   } catch (error) {
 
-    console.error("Send OTP Error:", error);
+    console.error(
+      "Send OTP Error:",
+      error
+    );
 
     return res.status(500).json({
+
       success: false,
-      message: "Failed to send OTP"
+
+      message:
+        "Failed to send OTP"
+
     });
 
   }
+
 }
