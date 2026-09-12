@@ -41,23 +41,25 @@
 
 :root {
 
-    --bg: #ffffff;
+    --bg: #FFFFFF;
 
-    --surface: #ffffff;
+    --surface: #FFFFFF;
 
-    --surface-secondary: #f7f7f7;
+    --surface-secondary: #F7F7F7;
 
     --text: #212121;
 
     --secondary: #757575;
 
-    --border: #e0e0e0;
+    --muted: #9E9E9E;
 
-    --primary: #2196F3;
+    --border: #DCDCDC;
 
-    --primary-soft: rgba(33,150,243,0.10);
+    --primary: #2979FF;
 
-    --danger: #e53935;
+    --primary-soft: rgba(41,121,255,0.10);
+
+    --danger: #E53935;
 
     --shadow: 0 4px 20px rgba(0,0,0,0.06);
 
@@ -82,6 +84,8 @@
     --text: #FFFFFF;
 
     --secondary: #A0A0A0;
+
+    --muted: #777777;
 
     --border: #424242;
 
@@ -372,7 +376,7 @@ button {
 
 
 /* =========================================================
-   PRIMARY CTA
+   VERIFICATION CARD
 ========================================================= */
 
 .verification-card {
@@ -439,7 +443,7 @@ button {
 
     background: var(--primary);
 
-    color: white;
+    color: #FFFFFF;
 
     font-size: 27px;
 
@@ -471,6 +475,7 @@ button {
 
 /* =========================================================
    BUTTONS
+   No icons inside buttons
 ========================================================= */
 
 .button-row {
@@ -479,16 +484,16 @@ button {
 
     flex-wrap: wrap;
 
-    gap: 10px;
+    gap: 9px;
 }
 
 
 .primary-button,
 .secondary-button {
 
-    min-height: 46px;
+    min-height: 42px;
 
-    padding: 0 20px;
+    padding: 0 18px;
 
     border-radius: var(--button-radius);
 
@@ -497,8 +502,6 @@ button {
     align-items: center;
 
     justify-content: center;
-
-    gap: 8px;
 
     font-size: 14px;
 
@@ -520,7 +523,7 @@ button {
 
     background: var(--primary);
 
-    color: white;
+    color: #FFFFFF;
 }
 
 
@@ -530,7 +533,7 @@ button {
 
     background: var(--surface);
 
-    color: var(--text);
+    color: var(--primary);
 }
 
 
@@ -817,7 +820,7 @@ button {
 
     justify-content: center;
 
-    gap: 10px;
+    gap: 9px;
 
     flex-wrap: wrap;
 }
@@ -1101,9 +1104,7 @@ button {
 
 
             <h2>
-
                 Get your Appnetick badge
-
             </h2>
 
 
@@ -1123,9 +1124,16 @@ button {
                     href="/verification"
                     class="primary-button">
 
-                    <i class="ph ph-seal-check"></i>
-
                     Get Verified
+
+                </a>
+
+
+                <a
+                    href="/verification/status"
+                    class="secondary-button">
+
+                    Check Status
 
                 </a>
 
@@ -1133,8 +1141,6 @@ button {
                 <a
                     href="#verification-info"
                     class="secondary-button">
-
-                    <i class="ph ph-info"></i>
 
                     Learn more
 
@@ -1429,8 +1435,6 @@ button {
                 href="/auth/user/login"
                 class="primary-button">
 
-                <i class="ph ph-sign-in"></i>
-
                 Login
 
             </a>
@@ -1439,8 +1443,6 @@ button {
             <a
                 href="/auth/user/signup"
                 class="secondary-button">
-
-                <i class="ph ph-user-plus"></i>
 
                 Create account
 
@@ -1478,6 +1480,10 @@ button {
 
         <a href="/verification">
             Verification
+        </a>
+
+        <a href="/verification/status">
+            Check Status
         </a>
 
     </div>
