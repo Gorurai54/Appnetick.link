@@ -33,36 +33,24 @@
 :root {
 
     --bg:#FFFFFF;
-
     --surface:#FFFFFF;
-
     --surface-secondary:#F7F7F7;
 
     --text:#212121;
-
     --secondary:#757575;
-
     --muted:#9E9E9E;
 
     --border:#DCDCDC;
-
     --input-bg:#F5F5F5;
 
-    --primary:#2979FF;
-
-    --primary-soft:rgba(41,121,255,0.10);
+    --primary:#2196F3;
+    --primary-soft:rgba(33,150,243,0.10);
 
     --danger:#E53935;
-
     --success:#2E7D32;
-
     --warning:#EF6C00;
 
-    --shadow:
-        0 8px 30px rgba(0,0,0,0.06);
-
-    --radius:18px;
-
+    --button-height:48px;
     --button-radius:30px;
 }
 
@@ -74,33 +62,22 @@
 html[data-theme="dark"] {
 
     --bg:#1E1E1E;
-
     --surface:#1E1E1E;
-
     --surface-secondary:#252525;
 
     --text:#FFFFFF;
-
     --secondary:#A0A0A0;
-
     --muted:#777777;
 
     --border:#424242;
-
     --input-bg:#252525;
 
     --primary:#2979FF;
-
     --primary-soft:rgba(41,121,255,0.14);
 
     --danger:#EF5350;
-
     --success:#66BB6A;
-
     --warning:#FFA726;
-
-    --shadow:
-        0 8px 30px rgba(0,0,0,0.22);
 }
 
 
@@ -116,25 +93,20 @@ html[data-theme="dark"] {
 
 }
 
-
 html,
 body {
 
     margin:0;
-
     padding:0;
 
     width:100%;
-
     min-height:100%;
 
 }
 
-
 body {
 
     background:var(--bg);
-
     color:var(--text);
 
     font-family:Inter,sans-serif;
@@ -144,8 +116,8 @@ body {
     transition:
         background .25s ease,
         color .25s ease;
-}
 
+}
 
 button,
 input {
@@ -161,20 +133,16 @@ input {
 
 .toolbar {
 
+    width:100%;
     height:64px;
 
-    width:100%;
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
     padding:0 12px 0 8px;
 
     position:sticky;
-
     top:0;
 
     z-index:100;
@@ -185,33 +153,27 @@ input {
 
 }
 
-
 .toolbar-left {
 
     display:flex;
-
     align-items:center;
 
     gap:4px;
 
 }
 
-
 .brand {
 
     font-size:20px;
-
     font-weight:700;
 
     letter-spacing:-.4px;
 
 }
 
-
 .toolbar-actions {
 
     display:flex;
-
     align-items:center;
 
     gap:4px;
@@ -220,23 +182,21 @@ input {
 
 
 /* =========================================================
-   ICON BUTTON
+   TOOLBAR BUTTON
 ========================================================= */
 
 .icon-btn {
 
     width:44px;
-
     height:44px;
 
-    border:0;
+    padding:0;
 
+    border:0;
     border-radius:50%;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     background:transparent;
@@ -249,17 +209,9 @@ input {
 
 }
 
-
 .icon-btn:active {
 
     transform:scale(.92);
-
-}
-
-
-#toolbarBack {
-
-    visibility:hidden;
 
 }
 
@@ -271,76 +223,56 @@ input {
 .page {
 
     width:100%;
-
     max-width:430px;
 
     margin:0 auto;
 
     padding:
-        28px
+        30px
         20px
-        40px;
-
-    min-height:
-        calc(100vh - 64px);
+        42px;
 
 }
 
 
 /* =========================================================
-   HEADER
+   QUESTION HEADER
 ========================================================= */
 
-.page-header {
-
-    text-align:center;
+.question-header {
 
     padding:
-        8px 0 28px;
+        4px 0 24px;
 
 }
 
+.question-number {
 
-.header-icon {
+    margin-bottom:10px;
 
-    width:76px;
+    font-size:13px;
 
-    height:76px;
-
-    border-radius:23px;
-
-    margin:
-        0 auto 20px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:var(--primary-soft);
+    font-weight:600;
 
     color:var(--primary);
 
-    font-size:38px;
-
 }
-
 
 .page-title {
 
-    margin:0 0 9px;
+    margin:0 0 10px;
 
-    font-size:26px;
+    font-size:27px;
 
-    line-height:1.2;
+    line-height:1.22;
 
     font-weight:700;
 
-    letter-spacing:-.5px;
+    letter-spacing:-.6px;
+
+    text-align:left;
 
 }
-
 
 .page-description {
 
@@ -352,27 +284,22 @@ input {
 
     line-height:1.6;
 
+    text-align:left;
+
 }
 
 
 /* =========================================================
-   SEARCH CARD
+   FORM
 ========================================================= */
 
-.search-card {
+.form-section {
 
-    padding:20px;
-
-    border-radius:20px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
+    width:100%;
 
 }
 
-
-.search-label {
+.input-label {
 
     display:block;
 
@@ -386,43 +313,16 @@ input {
 
 }
 
-
-.input-wrap {
-
-    position:relative;
-
-    width:100%;
-
-}
-
-
-.input-icon {
-
-    position:absolute;
-
-    left:16px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:var(--muted);
-
-    font-size:21px;
-
-    pointer-events:none;
-
-}
-
-
 .form-input {
 
     width:100%;
 
+    height:52px;
+
     min-height:52px;
 
     padding:
-        0 16px 0 49px;
+        0 16px;
 
     border:
         1px solid var(--border);
@@ -440,15 +340,14 @@ input {
     transition:
         border .2s ease,
         box-shadow .2s ease;
-}
 
+}
 
 .form-input::placeholder {
 
     color:var(--muted);
 
 }
-
 
 .form-input:focus {
 
@@ -462,92 +361,61 @@ input {
 
 
 /* =========================================================
-   BUTTONS
-   Same compact size as homepage
-   NO ICONS
+   BUTTON
+   SAME HEIGHT AS HOMEPAGE
+   NO ICON
 ========================================================= */
 
-.button-row {
+.primary-button {
 
-    display:flex;
+    width:100%;
 
-    gap:9px;
+    height:var(--button-height);
+
+    min-height:var(--button-height);
 
     margin-top:12px;
 
-}
+    padding:0 20px;
 
+    border:0;
 
-.primary-button,
-.secondary-button {
+    border-radius:var(--button-radius);
 
-    min-height:42px;
+    background:var(--primary);
 
-    padding:
-        0 18px;
+    color:#FFFFFF;
 
-    border-radius:
-        var(--button-radius);
-
-    display:inline-flex;
+    display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     font-size:14px;
 
     font-weight:600;
 
-    text-decoration:none;
-
     cursor:pointer;
 
     transition:
         transform .15s ease,
         opacity .15s ease;
+
 }
 
+.primary-button:hover {
 
-.primary-button {
-
-    flex:1;
-
-    border:0;
-
-    background:var(--primary);
-
-    color:#FFFFFF;
-}
-
-
-.secondary-button {
-
-    border:1px solid var(--border);
-
-    background:var(--surface);
-
-    color:var(--primary);
-}
-
-
-.primary-button:hover,
-.secondary-button:hover {
-
-    opacity:.88;
+    opacity:.9;
 
     transform:translateY(-1px);
 
 }
 
-
-.primary-button:active,
-.secondary-button:active {
+.primary-button:active {
 
     transform:scale(.98);
 
 }
-
 
 .primary-button:disabled {
 
@@ -564,248 +432,45 @@ input {
    LOADING
 ========================================================= */
 
-.loading-card {
+.loading {
+
+    display:none;
+
+    margin-top:15px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+.loading-icon {
+
+    display:inline-block;
+
+    margin-right:7px;
+
+    color:var(--primary);
+
+    animation:
+        spin .8s linear infinite;
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message {
 
     display:none;
 
     margin-top:16px;
 
-    padding:16px;
-
-    border-radius:17px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-    align-items:center;
-
-    gap:11px;
-
-}
-
-
-.loading-card i {
-
-    color:var(--primary);
-
-    font-size:21px;
-
-    animation:
-        spin .8s linear infinite;
-}
-
-
-.loading-card span {
-
-    color:var(--secondary);
-
-    font-size:13px;
-
-}
-
-
-/* =========================================================
-   RESULT
-========================================================= */
-
-.result {
-
-    display:none;
-
-    margin-top:20px;
-
-}
-
-
-/* =========================================================
-   USER CARD
-========================================================= */
-
-.user-card {
-
-    padding:16px;
-
-    border-radius:19px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-}
-
-
-.user-main {
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-
-.user-avatar {
-
-    width:54px;
-
-    height:54px;
-
-    flex:0 0 54px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    background:var(--input-bg);
-
-}
-
-
-.user-name {
-
-    font-size:16px;
-
-    font-weight:600;
-
-    color:var(--text);
-
-}
-
-
-.user-username {
-
-    margin-top:3px;
-
-    font-size:13px;
-
-    color:var(--secondary);
-
-}
-
-
-/* =========================================================
-   STATUS CARD
-========================================================= */
-
-.status-card {
-
-    margin-top:12px;
-
-    padding:18px;
-
-    border-radius:19px;
-
-    border:1px solid var(--border);
-
-    background:var(--surface);
-
-}
-
-
-.status-top {
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-
-.status-icon {
-
-    width:46px;
-
-    height:46px;
-
-    flex:0 0 46px;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:var(--primary-soft);
-
-    color:var(--primary);
-
-    font-size:24px;
-
-}
-
-
-.status-title {
-
-    font-size:17px;
-
-    font-weight:700;
-
-    color:var(--text);
-
-}
-
-
-.status-subtitle {
-
-    margin-top:3px;
-
-    font-size:12px;
-
-    color:var(--secondary);
-
-    line-height:1.4;
-
-}
-
-
-/* =========================================================
-   STATUS VARIANTS
-========================================================= */
-
-.status-card.pending .status-icon {
-
-    background:
-        rgba(255,167,38,.12);
-
-    color:var(--warning);
-
-}
-
-
-.status-card.approved .status-icon {
-
-    background:
-        rgba(46,125,50,.12);
-
-    color:var(--success);
-
-}
-
-
-.status-card.rejected .status-icon {
-
-    background:
-        rgba(229,57,53,.10);
-
-    color:var(--danger);
-
-}
-
-
-.status-description {
-
-    margin:
-        16px 0 0;
-
-    padding-top:15px;
-
-    border-top:1px solid var(--border);
+    padding:14px 0;
 
     color:var(--secondary);
 
@@ -815,48 +480,76 @@ input {
 
 }
 
+.message.error {
 
-/* =========================================================
-   DETAILS
-========================================================= */
-
-.details-card {
-
-    margin-top:12px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    background:var(--surface);
+    color:var(--danger);
 
 }
 
 
-.detail-row {
+/* =========================================================
+   STATUS RESULT
+========================================================= */
+
+.result {
+
+    display:none;
+
+    margin-top:30px;
+
+}
+
+.result-title {
+
+    margin:0 0 9px;
+
+    font-size:23px;
+
+    line-height:1.25;
+
+    font-weight:700;
+
+    letter-spacing:-.4px;
+
+}
+
+.result-description {
+
+    margin:0 0 20px;
+
+    color:var(--secondary);
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-line {
 
     padding:
-        14px 15px;
+        16px 0;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+.status-line:last-child {
 
     border-bottom:
         1px solid var(--border);
 
 }
 
+.status-label {
 
-.detail-row:last-child {
-
-    border-bottom:0;
-
-}
-
-
-.detail-label {
-
-    margin-bottom:4px;
+    margin-bottom:5px;
 
     font-size:11px;
 
@@ -870,124 +563,101 @@ input {
 
 }
 
+.status-value {
 
-.detail-value {
+    font-size:15px;
 
-    font-size:14px;
+    line-height:1.5;
+
+    font-weight:500;
 
     color:var(--text);
 
-    line-height:1.45;
+}
 
-    word-break:break-word;
+.status-value.pending {
+
+    color:var(--warning);
 
 }
 
+.status-value.approved {
 
-/* =========================================================
-   INFO
-========================================================= */
-
-.info-card {
-
-    margin-top:12px;
-
-    padding:14px;
-
-    border-radius:16px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:10px;
+    color:var(--success);
 
 }
 
-
-.info-card i {
-
-    color:var(--primary);
-
-    font-size:19px;
-
-}
-
-
-.info-card span {
-
-    color:var(--secondary);
-
-    font-size:12px;
-
-    line-height:1.55;
-
-}
-
-
-/* =========================================================
-   ERROR / NOT FOUND
-========================================================= */
-
-.message-card {
-
-    display:none;
-
-    margin-top:16px;
-
-    padding:16px;
-
-    border-radius:17px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-    align-items:flex-start;
-
-    gap:11px;
-
-}
-
-
-.message-card i {
-
-    font-size:21px;
+.status-value.rejected {
 
     color:var(--danger);
 
 }
 
 
-.message-card span {
+/* =========================================================
+   USERNAME
+========================================================= */
+
+.account-name {
+
+    margin-bottom:5px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+.account-username {
 
     color:var(--secondary);
 
     font-size:13px;
 
-    line-height:1.55;
-
 }
 
 
 /* =========================================================
-   FOOTER ACTION
+   FOOTER
 ========================================================= */
 
-.footer-action {
+.footer {
 
-    margin-top:20px;
+    margin-top:48px;
+
+    padding-top:22px;
+
+    border-top:1px solid var(--border);
 
     text-align:center;
 
 }
 
+.footer-brand {
 
-.footer-action a {
+    font-size:16px;
+
+    font-weight:700;
+
+}
+
+.footer-text {
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    line-height:1.5;
+
+}
+
+.footer-link {
+
+    display:inline-block;
+
+    margin-top:12px;
 
     color:var(--primary);
 
@@ -1007,15 +677,11 @@ input {
 @keyframes spin {
 
     from {
-
         transform:rotate(0deg);
-
     }
 
     to {
-
         transform:rotate(360deg);
-
     }
 
 }
@@ -1030,37 +696,13 @@ input {
     .page {
 
         padding-left:16px;
-
         padding-right:16px;
 
     }
 
-
     .page-title {
 
-        font-size:24px;
-
-    }
-
-
-    .search-card {
-
-        padding:17px;
-
-    }
-
-
-    .button-row {
-
-        flex-direction:column;
-
-    }
-
-
-    .primary-button,
-    .secondary-button {
-
-        width:100%;
+        font-size:25px;
 
     }
 
@@ -1084,7 +726,6 @@ input {
 
         <button
             class="icon-btn"
-            id="toolbarBack"
             type="button"
             onclick="goBack()"
             aria-label="Back"
@@ -1135,7 +776,6 @@ input {
 </header>
 
 
-
 <!-- =====================================================
      PAGE
 ===================================================== -->
@@ -1144,43 +784,40 @@ input {
 
 
     <!-- =================================================
-         HEADER
+         QUESTION HEADER
     ================================================== -->
 
-    <section class="page-header">
+    <section class="question-header">
 
-        <div class="header-icon">
-
-            <i class="ph ph-seal-check"></i>
-
+        <div class="question-number">
+            Verification
         </div>
 
 
         <h1 class="page-title">
-            Verification Status
+            Check your verification status
         </h1>
 
 
         <p class="page-description">
 
-            Enter your Appnetick username to check
-            the current status of your verification
-            application.
+            Enter your Appnetick username below to
+            check the current status of your
+            verification application.
 
         </p>
 
     </section>
 
 
-
     <!-- =================================================
-         SEARCH
+         INPUT
     ================================================== -->
 
-    <section class="search-card">
+    <section class="form-section">
 
         <label
-            class="search-label"
+            class="input-label"
             for="usernameInput"
         >
 
@@ -1189,89 +826,49 @@ input {
         </label>
 
 
-        <div class="input-wrap">
-
-            <i class="ph ph-at input-icon"></i>
-
-
-            <input
-                id="usernameInput"
-                class="form-input"
-                type="text"
-                placeholder="@username"
-                autocomplete="off"
-                maxlength="50"
-            >
-
-        </div>
+        <input
+            id="usernameInput"
+            class="form-input"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            maxlength="50"
+            placeholder="@username"
+        >
 
 
-        <div class="button-row">
+        <button
+            id="checkButton"
+            class="primary-button"
+            type="button"
+            onclick="checkStatus()"
+        >
 
-            <button
-                class="primary-button"
-                id="checkButton"
-                type="button"
-                onclick="checkStatus()"
-            >
+            Check Status
 
-                Check Status
-
-            </button>
+        </button>
 
 
-            <a
-                href="/verification"
-                class="secondary-button"
-            >
+        <div
+            class="loading"
+            id="loading"
+        >
 
-                Get Verified
+            <i class="ph ph-spinner loading-icon"></i>
 
-            </a>
+            Checking verification status...
 
         </div>
+
+
+        <div
+            class="message"
+            id="message"
+        ></div>
 
     </section>
-
-
-
-    <!-- =================================================
-         LOADING
-    ================================================== -->
-
-    <div
-        class="loading-card"
-        id="loadingCard"
-    >
-
-        <i class="ph ph-spinner"></i>
-
-        <span>
-            Checking verification status...
-        </span>
-
-    </div>
-
-
-
-    <!-- =================================================
-         MESSAGE
-    ================================================== -->
-
-    <div
-        class="message-card"
-        id="messageCard"
-    >
-
-        <i
-            class="ph ph-warning-circle"
-            id="messageIcon"
-        ></i>
-
-        <span id="messageText"></span>
-
-    </div>
-
 
 
     <!-- =================================================
@@ -1283,61 +880,135 @@ input {
         id="result"
     >
 
-        <!-- User card -->
+        <h2 class="result-title">
+            Verification status
+        </h2>
+
+
+        <p
+            class="result-description"
+            id="resultDescription"
+        ></p>
+
+
         <div
-            class="user-card"
-            id="userCard"
-        ></div>
+            class="status-line"
+            id="accountLine"
+        >
+
+            <div class="status-label">
+                Account
+            </div>
+
+            <div
+                class="status-value"
+                id="accountValue"
+            ></div>
+
+        </div>
 
 
-        <!-- Status -->
         <div
-            class="status-card"
-            id="statusCard"
-        ></div>
+            class="status-line"
+            id="statusLine"
+        >
+
+            <div class="status-label">
+                Status
+            </div>
+
+            <div
+                class="status-value"
+                id="statusValue"
+            ></div>
+
+        </div>
 
 
-        <!-- Details -->
         <div
-            class="details-card"
-            id="detailsCard"
-        ></div>
+            class="status-line"
+            id="submittedLine"
+            style="display:none;"
+        >
+
+            <div class="status-label">
+                Submitted
+            </div>
+
+            <div
+                class="status-value"
+                id="submittedValue"
+            ></div>
+
+        </div>
 
 
-        <!-- Info -->
-        <div class="info-card">
+        <div
+            class="status-line"
+            id="reviewedLine"
+            style="display:none;"
+        >
 
-            <i class="ph ph-shield-check"></i>
+            <div class="status-label">
+                Reviewed
+            </div>
 
-            <span>
+            <div
+                class="status-value"
+                id="reviewedValue"
+            ></div>
 
-                Verification status is based on the
-                latest review information available
-                for this Appnetick account.
+        </div>
 
-            </span>
+
+        <div
+            class="status-line"
+            id="messageLine"
+            style="display:none;"
+        >
+
+            <div class="status-label">
+                Review message
+            </div>
+
+            <div
+                class="status-value"
+                id="reviewMessage"
+            ></div>
 
         </div>
 
     </section>
 
 
-
     <!-- =================================================
-         FOOTER ACTION
+         FOOTER
     ================================================== -->
 
-    <div class="footer-action">
+    <footer class="footer">
 
-        <a href="/">
+        <div class="footer-brand">
+            Appnetick.
+        </div>
+
+        <div class="footer-text">
+
+            Social. Connect. Share.
+
+        </div>
+
+        <a
+            class="footer-link"
+            href="/"
+        >
+
             Back to Appnetick
+
         </a>
 
-    </div>
-
+    </footer>
 
 </main>
-
 
 
 <script>
@@ -1376,22 +1047,19 @@ if (
 function updateThemeIcon() {
 
     const icon =
-        document
-            .getElementById(
-                "themeIcon"
-            );
+        document.getElementById(
+            "themeIcon"
+        );
 
-
-    const dark =
+    const isDark =
         document.documentElement
             .getAttribute(
                 "data-theme"
-            )
-            === "dark";
+            ) === "dark";
 
 
     icon.className =
-        dark
+        isDark
             ? "ph ph-sun"
             : "ph ph-moon";
 
@@ -1409,15 +1077,14 @@ document
         "click",
         function() {
 
-            const dark =
+            const isDark =
                 document.documentElement
                     .getAttribute(
                         "data-theme"
-                    )
-                    === "dark";
+                    ) === "dark";
 
 
-            if (dark) {
+            if (isDark) {
 
                 document.documentElement
                     .removeAttribute(
@@ -1460,72 +1127,87 @@ const usernameInput =
         "usernameInput"
     );
 
-
 const checkButton =
     document.getElementById(
         "checkButton"
     );
 
-
-const loadingCard =
+const loading =
     document.getElementById(
-        "loadingCard"
+        "loading"
     );
 
-
-const messageCard =
+const message =
     document.getElementById(
-        "messageCard"
+        "message"
     );
-
-
-const messageText =
-    document.getElementById(
-        "messageText"
-    );
-
 
 const result =
     document.getElementById(
         "result"
     );
 
-
-const userCard =
+const resultDescription =
     document.getElementById(
-        "userCard"
+        "resultDescription"
     );
 
-
-const statusCard =
+const accountValue =
     document.getElementById(
-        "statusCard"
+        "accountValue"
     );
 
-
-const detailsCard =
+const statusValue =
     document.getElementById(
-        "detailsCard"
+        "statusValue"
+    );
+
+const submittedLine =
+    document.getElementById(
+        "submittedLine"
+    );
+
+const submittedValue =
+    document.getElementById(
+        "submittedValue"
+    );
+
+const reviewedLine =
+    document.getElementById(
+        "reviewedLine"
+    );
+
+const reviewedValue =
+    document.getElementById(
+        "reviewedValue"
+    );
+
+const messageLine =
+    document.getElementById(
+        "messageLine"
+    );
+
+const reviewMessage =
+    document.getElementById(
+        "reviewMessage"
     );
 
 
 /* =========================================================
-   USERNAME
+   NORMALIZE USERNAME
 ========================================================= */
 
-function normalizeUsername(
-    value
-) {
+function normalizeUsername(value) {
 
     return String(
         value || ""
     )
-        .trim()
-        .replace(
-            /^@+/,
-            ""
-        )
-        .toLowerCase();
+    .trim()
+    .replace(
+        /^@+/,
+        ""
+    )
+    .toLowerCase();
 
 }
 
@@ -1551,7 +1233,8 @@ async function checkStatus() {
     if (!username) {
 
         showMessage(
-            "Please enter your Appnetick username."
+            "Please enter your Appnetick username.",
+            true
         );
 
         usernameInput.focus();
@@ -1564,30 +1247,29 @@ async function checkStatus() {
     checkButton.disabled =
         true;
 
-
-    loadingCard.style.display =
-        "flex";
+    loading.style.display =
+        "block";
 
 
     try {
 
         const response =
             await fetch(
-                `${API_BASE}/api/verification/status?username=${encodeURIComponent(username)}`,
+                API_BASE +
+                "/api/verification/status?username=" +
+                encodeURIComponent(username),
                 {
-
                     method:"GET",
-
                     headers:{
                         "Accept":
                             "application/json"
                     }
-
                 }
             );
 
 
-        let data = {};
+        let data;
+
 
         try {
 
@@ -1617,16 +1299,14 @@ async function checkStatus() {
             !data.exists
         ) {
 
-            showMessage(
-                "We couldn't find an Appnetick account with this username. Please check the username and try again."
+            throw new Error(
+                "We couldn't find an Appnetick account with this username."
             );
-
-            return;
 
         }
 
 
-        renderResult(
+        renderStatus(
             data
         );
 
@@ -1634,19 +1314,20 @@ async function checkStatus() {
     } catch(error) {
 
         console.error(
-            "Verification status:",
+            "Verification status error:",
             error
         );
 
 
         showMessage(
             error.message ||
-            "Unable to check verification status. Please try again."
+            "Unable to check verification status. Please try again.",
+            true
         );
 
     } finally {
 
-        loadingCard.style.display =
+        loading.style.display =
             "none";
 
         checkButton.disabled =
@@ -1658,305 +1339,205 @@ async function checkStatus() {
 
 
 /* =========================================================
-   RENDER RESULT
+   RENDER STATUS
 ========================================================= */
 
-function renderResult(
-    data
-) {
+function renderStatus(data) {
 
     const user =
         data.user || {};
-
 
     const verification =
         data.verification || null;
 
 
-    /* =====================================================
-       USER
-    ===================================================== */
-
-    const avatar =
-        user.avatar ||
-        "/20260313_121958.jpg";
+    const username =
+        user.username ||
+        data.username ||
+        usernameInput.value;
 
 
-    userCard.innerHTML = `
-
-        <div class="user-main">
-
-            <img
-                class="user-avatar"
-                src="${escapeHTML(avatar)}"
-                alt="Profile"
-                onerror="
-                    this.src='/20260313_121958.jpg'
-                "
-            >
-
-            <div>
-
-                <div class="user-name">
-
-                    ${escapeHTML(
-                        user.full_name ||
-                        user.name ||
-                        user.username ||
-                        "Appnetick user"
-                    )}
-
-                </div>
+    accountValue.textContent =
+        user.full_name
+            ? user.full_name +
+              "  @" +
+              username
+            : "@" + username;
 
 
-                <div class="user-username">
-
-                    @${escapeHTML(
-                        user.username ||
-                        ""
-                    )}
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
+    let status =
+        "not_submitted";
 
 
-    /* =====================================================
-       STATUS
-    ===================================================== */
+    if (
+        verification &&
+        verification.verification_status
+    ) {
 
-    const status =
-        String(
-            verification?.verification_status ||
-            user.verification_status ||
-            "not_submitted"
-        )
-        .toLowerCase()
-        .trim();
+        status =
+            String(
+                verification.verification_status
+            )
+            .toLowerCase()
+            .trim();
 
-
-    let statusTitle =
-        "Not submitted";
+    }
 
 
-    let statusSubtitle =
-        "No verification application found.";
-
-
-    let statusDescription =
-        "This account does not currently have a verification application under review.";
-
-
-    let statusIcon =
-        "ph-file-plus";
-
-
-    let statusClass =
-        "";
+    statusValue.className =
+        "status-value";
 
 
     if (
         status === "pending"
     ) {
 
-        statusTitle =
+        statusValue.textContent =
             "Under review";
 
-        statusSubtitle =
-            "Your verification application is pending.";
+        statusValue.classList.add(
+            "pending"
+        );
 
-        statusDescription =
-            "Your application has been submitted and is currently being reviewed by Appnetick. You don't need to submit another application while this request is under review.";
-
-        statusIcon =
-            "ph-hourglass";
-
-        statusClass =
-            "pending";
+        resultDescription.textContent =
+            "Your verification application has been submitted and is currently being reviewed by Appnetick. Please wait for the review to be completed.";
 
     }
 
 
-    if (
+    else if (
         status === "approved"
     ) {
 
-        statusTitle =
-            "Verified";
+        statusValue.textContent =
+            "Approved";
 
-        statusSubtitle =
-            "Your verification application was approved.";
+        statusValue.classList.add(
+            "approved"
+        );
 
-        statusDescription =
-            "Your account has been approved for verification. The verification badge can be activated or displayed according to Appnetick's verification system.";
-
-        statusIcon =
-            "ph-seal-check";
-
-        statusClass =
-            "approved";
+        resultDescription.textContent =
+            "Your verification application has been approved by Appnetick.";
 
     }
 
 
-    if (
+    else if (
         status === "rejected"
     ) {
 
-        statusTitle =
+        statusValue.textContent =
             "Not approved";
 
-        statusSubtitle =
-            "Your verification application was rejected.";
+        statusValue.classList.add(
+            "rejected"
+        );
 
-        statusDescription =
-            "Your previous verification request was not approved. Please review your information and Appnetick's verification requirements before submitting another request.";
-
-        statusIcon =
-            "ph-x-circle";
-
-        statusClass =
-            "rejected";
+        resultDescription.textContent =
+            "Your verification application was not approved. Please review the information and verification requirements before submitting another application.";
 
     }
 
 
-    statusCard.className =
-        "status-card " +
-        statusClass;
+    else {
 
+        statusValue.textContent =
+            "Not submitted";
 
-    statusCard.innerHTML = `
+        resultDescription.textContent =
+            "There is currently no verification application submitted for this account.";
 
-        <div class="status-top">
-
-            <div class="status-icon">
-
-                <i class="ph ${statusIcon}"></i>
-
-            </div>
-
-
-            <div>
-
-                <div class="status-title">
-
-                    ${escapeHTML(
-                        statusTitle
-                    )}
-
-                </div>
-
-
-                <div class="status-subtitle">
-
-                    ${escapeHTML(
-                        statusSubtitle
-                    )}
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <p class="status-description">
-
-            ${escapeHTML(
-                statusDescription
-            )}
-
-        </p>
-
-    `;
+    }
 
 
     /* =====================================================
-       DETAILS
+       SUBMITTED
     ===================================================== */
 
-    let details = "";
+    submittedLine.style.display =
+        "none";
 
+    if (
+        verification &&
+        verification.submitted_at
+    ) {
 
-    if (verification) {
-
-        details += detailRow(
-            "Application status",
-            formatStatus(
-                verification.verification_status
-            )
-        );
-
-
-        if (
-            verification.submitted_at
-        ) {
-
-            details += detailRow(
-                "Submitted",
-                formatDate(
-                    verification.submitted_at
-                )
+        const date =
+            formatDate(
+                verification.submitted_at
             );
 
-        }
 
+        if (date) {
 
-        if (
-            verification.reviewed_at &&
-            Number(
-                verification.reviewed_at
-            ) > 0
-        ) {
+            submittedValue.textContent =
+                date;
 
-            details += detailRow(
-                "Reviewed",
-                formatDate(
-                    verification.reviewed_at
-                )
-            );
+            submittedLine.style.display =
+                "block";
 
         }
-
-
-        if (
-            verification.rejection_reason
-        ) {
-
-            details += detailRow(
-                "Review message",
-                verification.rejection_reason
-            );
-
-        }
-
-    } else {
-
-        details += detailRow(
-            "Account",
-            "@" +
-            (
-                user.username ||
-                usernameInput.value
-            )
-        );
-
-
-        details += detailRow(
-            "Verification",
-            "No application submitted"
-        );
 
     }
 
 
-    detailsCard.innerHTML =
-        details;
+    /* =====================================================
+       REVIEWED
+    ===================================================== */
+
+    reviewedLine.style.display =
+        "none";
+
+    if (
+        verification &&
+        verification.reviewed_at &&
+        Number(
+            verification.reviewed_at
+        ) > 0
+    ) {
+
+        const date =
+            formatDate(
+                verification.reviewed_at
+            );
+
+
+        if (date) {
+
+            reviewedValue.textContent =
+                date;
+
+            reviewedLine.style.display =
+                "block";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       REVIEW MESSAGE
+    ===================================================== */
+
+    messageLine.style.display =
+        "none";
+
+    reviewMessage.textContent =
+        "";
+
+
+    if (
+        verification &&
+        verification.rejection_reason
+    ) {
+
+        reviewMessage.textContent =
+            verification.rejection_reason;
+
+        messageLine.style.display =
+            "block";
+
+    }
 
 
     result.style.display =
@@ -1972,97 +1553,21 @@ function renderResult(
 
 
 /* =========================================================
-   DETAIL ROW
+   DATE
 ========================================================= */
 
-function detailRow(
-    label,
-    value
-) {
+function formatDate(value) {
 
-    return `
-
-        <div class="detail-row">
-
-            <div class="detail-label">
-
-                ${escapeHTML(
-                    label
-                )}
-
-            </div>
-
-
-            <div class="detail-value">
-
-                ${escapeHTML(
-                    value ||
-                    "Not available"
-                )}
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   FORMAT STATUS
-========================================================= */
-
-function formatStatus(
-    status
-) {
-
-    const value =
-        String(
-            status || ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    if (
-        value === "pending"
-    ) return "Under review";
-
-
-    if (
-        value === "approved"
-    ) return "Approved";
-
-
-    if (
-        value === "rejected"
-    ) return "Rejected";
-
-
-    return "Not submitted";
-
-}
-
-
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-function formatDate(
-    value
-) {
-
-    const number =
+    const timestamp =
         Number(value);
 
 
     if (
-        !number ||
-        Number.isNaN(number)
+        !timestamp ||
+        Number.isNaN(timestamp)
     ) {
 
-        return "Not available";
+        return "";
 
     }
 
@@ -2079,12 +1584,12 @@ function formatDate(
                 minute:"2-digit"
             }
         ).format(
-            new Date(number)
+            new Date(timestamp)
         );
 
     } catch(error) {
 
-        return "Not available";
+        return "";
 
     }
 
@@ -2096,66 +1601,31 @@ function formatDate(
 ========================================================= */
 
 function showMessage(
-    message
+    text,
+    isError
 ) {
 
-    messageText.textContent =
-        message;
+    message.textContent =
+        text;
 
+    message.className =
+        isError
+            ? "message error"
+            : "message";
 
-    messageCard.style.display =
-        "flex";
+    message.style.display =
+        "block";
 
 }
 
 
 function hideMessage() {
 
-    messageCard.style.display =
-        "none";
-
-    messageText.textContent =
+    message.textContent =
         "";
 
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value ?? ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    message.style.display =
+        "none";
 
 }
 
@@ -2191,7 +1661,7 @@ function goHome() {
 
 
 /* =========================================================
-   ENTER KEY
+   ENTER
 ========================================================= */
 
 usernameInput.addEventListener(
@@ -2210,6 +1680,40 @@ usernameInput.addEventListener(
 
     }
 );
+
+
+/* =========================================================
+   AUTO USERNAME FROM URL
+   Example:
+   /verification/status?username=test
+========================================================= */
+
+(function loadUsernameFromURL() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const username =
+        params.get(
+            "username"
+        );
+
+
+    if (username) {
+
+        usernameInput.value =
+            "@" + normalizeUsername(
+                username
+            );
+
+        checkStatus();
+
+    }
+
+})();
 
 </script>
 
