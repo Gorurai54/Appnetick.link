@@ -121,10 +121,6 @@ select {
 }
 
 
-/* =========================================================
-   TOOLBAR
-========================================================= */
-
 .toolbar {
 
     height:64px;
@@ -225,10 +221,6 @@ select {
 }
 
 
-/* =========================================================
-   PAGE
-========================================================= */
-
 .page {
 
     width:100%;
@@ -251,10 +243,6 @@ select {
 
 }
 
-
-/* =========================================================
-   PROGRESS
-========================================================= */
 
 .progress-area {
 
@@ -330,10 +318,6 @@ select {
 }
 
 
-/* =========================================================
-   STEP VIEWPORT
-========================================================= */
-
 .step-viewport {
 
     width:100%;
@@ -351,10 +335,6 @@ select {
 
 }
 
-
-/* =========================================================
-   SLIDE
-========================================================= */
 
 .slide-next-enter {
 
@@ -421,10 +401,6 @@ select {
 
 }
 
-
-/* =========================================================
-   STEP CONTENT
-========================================================= */
 
 .intro-icon {
 
@@ -557,10 +533,6 @@ select {
 }
 
 
-/* =========================================================
-   QUESTION
-========================================================= */
-
 .question-label {
 
     display:block;
@@ -590,10 +562,6 @@ select {
 
 }
 
-
-/* =========================================================
-   INPUT
-========================================================= */
 
 .input-wrap {
 
@@ -698,10 +666,6 @@ select {
 }
 
 
-/* =========================================================
-   CHIPS
-========================================================= */
-
 .chips {
 
     display:flex;
@@ -746,10 +710,6 @@ select {
 
 }
 
-
-/* =========================================================
-   CONFIRM
-========================================================= */
 
 .confirm-box {
 
@@ -820,12 +780,6 @@ select {
 }
 
 
-/* =========================================================
-   BUTTON AREA
-   IMPORTANT:
-   Button stays directly below current option/input.
-========================================================= */
-
 .bottom-actions {
 
     width:100%;
@@ -889,10 +843,6 @@ select {
 
 }
 
-
-/* =========================================================
-   USER PREVIEW
-========================================================= */
 
 .user-preview {
 
@@ -982,10 +932,6 @@ select {
 }
 
 
-/* =========================================================
-   STATUS
-========================================================= */
-
 .status-card {
 
     margin-top:16px;
@@ -1033,10 +979,6 @@ select {
 
 }
 
-
-/* =========================================================
-   REVIEW
-========================================================= */
 
 .review-card {
 
@@ -1100,10 +1042,6 @@ select {
 }
 
 
-/* =========================================================
-   INFO
-========================================================= */
-
 .info-card {
 
     margin-top:16px;
@@ -1144,10 +1082,6 @@ select {
 
 }
 
-
-/* =========================================================
-   SUCCESS
-========================================================= */
 
 .success {
 
@@ -1231,13 +1165,7 @@ select {
 
 </head>
 
-
 <body>
-
-
-<!-- =======================================================
-     TOOLBAR
-======================================================= -->
 
 <header class="toolbar">
 
@@ -1260,7 +1188,6 @@ select {
         </div>
 
     </div>
-
 
     <div class="toolbar-actions">
 
@@ -1290,13 +1217,7 @@ select {
 
 </header>
 
-
 <main class="page">
-
-
-    <!-- ===================================================
-         PROGRESS
-    =================================================== -->
 
     <div class="progress-area">
 
@@ -1318,7 +1239,6 @@ select {
 
         </div>
 
-
         <div class="progress-track">
 
             <div
@@ -1330,22 +1250,10 @@ select {
 
     </div>
 
-
-    <!-- ===================================================
-         ONLY ONE STEP EXISTS HERE
-         This fixes duplicate pages.
-    =================================================== -->
-
     <div
         class="step-viewport"
         id="stepViewport"
     ></div>
-
-
-    <!-- ===================================================
-         CURRENT STEP BUTTON
-         Moved dynamically directly below option/input.
-    =================================================== -->
 
     <div
         class="bottom-actions"
@@ -1372,15 +1280,9 @@ select {
 
     </div>
 
-
 </main>
 
-
 <script>
-
-/* =========================================================
-   API
-========================================================= */
 
 const API_BASE =
     "https://api-appnetick.vercel.app";
@@ -1393,17 +1295,12 @@ const API_BASE =
 const savedTheme =
     localStorage.getItem("appnetick-theme");
 
-
 if (savedTheme === "dark") {
 
     document.documentElement
-        .setAttribute(
-            "data-theme",
-            "dark"
-        );
+        .setAttribute("data-theme","dark");
 
 }
-
 
 function updateThemeIcon() {
 
@@ -1424,9 +1321,7 @@ function updateThemeIcon() {
 
 }
 
-
 updateThemeIcon();
-
 
 document
     .getElementById("themeButton")
@@ -1442,9 +1337,7 @@ document
             if (dark) {
 
                 document.documentElement
-                    .removeAttribute(
-                        "data-theme"
-                    );
+                    .removeAttribute("data-theme");
 
                 localStorage.setItem(
                     "appnetick-theme",
@@ -1511,10 +1404,6 @@ const formData = {
 };
 
 
-/* =========================================================
-   VERIFIED USER
-========================================================= */
-
 let usernameChecked = false;
 
 let usernameCheckInProgress = false;
@@ -1522,62 +1411,34 @@ let usernameCheckInProgress = false;
 let foundUser = null;
 
 
-/* =========================================================
-   STEPS
-========================================================= */
-
 const steps = [
 
-    {
-        type:"intro"
-    },
+    { type:"intro" },
 
-
-    {
-        type:"username"
-    },
-
+    { type:"username" },
 
     {
         type:"input",
-
         key:"legalName",
-
         title:"What is your legal name?",
-
-        help:
-            "Enter your full legal name exactly as it appears on your official records.",
-
+        help:"Enter your full legal name exactly as it appears on your official records.",
         icon:"ph-user",
-
         placeholder:"Enter your legal name"
     },
 
-
     {
         type:"date",
-
         key:"dateOfBirth",
-
         title:"What is your date of birth?",
-
-        help:
-            "Your date of birth helps us establish that the account belongs to a real person.",
-
+        help:"Your date of birth helps us establish that the account belongs to a real person.",
         icon:"ph-calendar-blank"
     },
 
-
     {
         type:"chips",
-
         key:"country",
-
         title:"Where are you based?",
-
-        help:
-            "Select the country that best represents your current primary location.",
-
+        help:"Select the country that best represents your current primary location.",
         options:[
             "India",
             "United States",
@@ -1589,35 +1450,21 @@ const steps = [
         ]
     },
 
-
     {
         type:"input",
-
         key:"phone",
-
         title:"What is your phone number?",
-
-        help:
-            "Use a phone number that you control.",
-
+        help:"Use a phone number that you control.",
         icon:"ph-phone",
-
         placeholder:"+91 XXXXX XXXXX",
-
         inputType:"tel"
     },
 
-
     {
         type:"chips",
-
         key:"accountCategory",
-
         title:"What best describes your account?",
-
-        help:
-            "Choose the category that most accurately represents your public presence.",
-
+        help:"Choose the category that most accurately represents your public presence.",
         options:[
             "Creator",
             "Public Figure",
@@ -1632,99 +1479,56 @@ const steps = [
         ]
     },
 
-
     {
         type:"input",
-
         key:"profession",
-
         title:"What is your profession or role?",
-
-        help:
-            "Tell us what you currently do publicly or professionally.",
-
+        help:"Tell us what you currently do publicly or professionally.",
         icon:"ph-briefcase",
-
         placeholder:"Example: Photographer"
     },
 
-
     {
         type:"textarea",
-
         key:"verificationReason",
-
         title:"Why should this account be verified?",
-
-        help:
-            "Explain why people may search for or recognize you.",
-
-        placeholder:
-            "Tell us why this account deserves verification..."
+        help:"Explain why people may search for or recognize you.",
+        placeholder:"Tell us why this account deserves verification..."
     },
-
 
     {
         type:"textarea",
-
         key:"knownFor",
-
         title:"What are you known for?",
-
-        help:
-            "Describe your main work, public identity, achievements or contribution.",
-
-        placeholder:
-            "Example: I create educational technology content..."
+        help:"Describe your main work, public identity, achievements or contribution.",
+        placeholder:"Example: I create educational technology content..."
     },
-
 
     {
         type:"input",
-
         key:"website",
-
         title:"Do you have an official website?",
-
-        help:
-            "Add a website that can help us confirm your public presence. This can be skipped.",
-
+        help:"Add a website that can help us confirm your public presence. This can be skipped.",
         icon:"ph-globe",
-
         placeholder:"https://example.com",
-
         inputType:"url",
-
         optional:true
     },
 
-
     {
         type:"input",
-
         key:"socialProfile",
-
         title:"Add another public profile",
-
-        help:
-            "Provide one public social profile or professional page.",
-
+        help:"Provide one public social profile or professional page.",
         icon:"ph-link",
-
         placeholder:"https://..."
     },
 
-
     {
         type:"chips",
-
         key:"audience",
-
         title:"What is your approximate audience size?",
-
-        help:
-            "Choose the closest range.",
-
+        help:"Choose the closest range.",
         options:[
             "Under 1K",
             "1K – 10K",
@@ -1736,17 +1540,11 @@ const steps = [
         ]
     },
 
-
     {
         type:"chips",
-
         key:"contentCategory",
-
         title:"What type of content do you primarily share?",
-
-        help:
-            "Select the category that best describes your public activity.",
-
+        help:"Select the category that best describes your public activity.",
         options:[
             "Education",
             "Entertainment",
@@ -1761,76 +1559,44 @@ const steps = [
         ]
     },
 
-
     {
         type:"textarea",
-
         key:"achievement",
-
         title:"Tell us about your notable achievements",
-
-        help:
-            "Mention awards, professional accomplishments, major projects or other meaningful achievements.",
-
-        placeholder:
-            "Describe your achievements..."
+        help:"Mention awards, professional accomplishments, major projects or other meaningful achievements.",
+        placeholder:"Describe your achievements..."
     },
-
 
     {
         type:"textarea",
-
         key:"publicPresence",
-
         title:"Where can your public presence be verified?",
-
-        help:
-            "Mention publications, interviews, websites, events or organizations.",
-
-        placeholder:
-            "Example: Featured by..., interviewed by..."
+        help:"Mention publications, interviews, websites, events or organizations.",
+        placeholder:"Example: Featured by..., interviewed by..."
     },
-
 
     {
         type:"confirm",
-
         key:"authenticityConfirmed",
-
         title:"Confirm account authenticity",
-
-        text:
-            "I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
+        text:"I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
     },
-
 
     {
         type:"confirm",
-
         key:"informationConfirmed",
-
         title:"Confirm your information",
-
-        text:
-            "I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
+        text:"I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
     },
-
 
     {
         type:"confirm",
-
         key:"termsConfirmed",
-
         title:"Verification declaration",
-
-        text:
-            "I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
+        text:"I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
     },
 
-
-    {
-        type:"review"
-    }
+    { type:"review" }
 
 ];
 
@@ -1840,56 +1606,33 @@ let currentStep = 0;
 let isAnimating = false;
 
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
 const viewport =
-    document.getElementById(
-        "stepViewport"
-    );
+    document.getElementById("stepViewport");
 
 const progressFill =
-    document.getElementById(
-        "progressFill"
-    );
+    document.getElementById("progressFill");
 
 const progressNumber =
-    document.getElementById(
-        "progressNumber"
-    );
+    document.getElementById("progressNumber");
 
 const progressLabel =
-    document.getElementById(
-        "progressLabel"
-    );
+    document.getElementById("progressLabel");
 
 const nextButton =
-    document.getElementById(
-        "nextButton"
-    );
+    document.getElementById("nextButton");
 
 const nextText =
-    document.getElementById(
-        "nextText"
-    );
+    document.getElementById("nextText");
 
 const nextIcon =
-    document.getElementById(
-        "nextIcon"
-    );
+    document.getElementById("nextIcon");
 
 const toolbarBack =
-    document.getElementById(
-        "toolbarBack"
-    );
+    document.getElementById("toolbarBack");
 
 
 /* =========================================================
    RENDER
-   IMPORTANT:
-   Existing element is REPLACED.
-   It is never appended.
 ========================================================= */
 
 function renderStep(
@@ -1900,20 +1643,14 @@ function renderStep(
     const step =
         steps[currentStep];
 
-
     const element =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     element.className =
         "step";
 
-
     element.innerHTML =
         getStepHTML(step);
-
 
     if (animate) {
 
@@ -1925,11 +1662,7 @@ function renderStep(
 
     }
 
-
-    viewport.replaceChildren(
-        element
-    );
-
+    viewport.replaceChildren(element);
 
     restoreFieldValue();
 
@@ -1939,10 +1672,7 @@ function renderStep(
 
     updateToolbar();
 
-
-    if (
-        step.type === "username"
-    ) {
+    if (step.type === "username") {
 
         setupUsernameStep();
 
@@ -1952,7 +1682,7 @@ function renderStep(
 
 
 /* =========================================================
-   HTML
+   STEP HTML
 ========================================================= */
 
 function getStepHTML(step) {
@@ -1984,16 +1714,12 @@ function getStepHTML(step) {
                     </div>
 
                     <div class="intro-point-text">
-
                         <strong>Authenticity</strong>
-
                         We'll review information that helps
                         establish the identity behind the account.
-
                     </div>
 
                 </div>
-
 
                 <div class="intro-point">
 
@@ -2002,16 +1728,12 @@ function getStepHTML(step) {
                     </div>
 
                     <div class="intro-point-text">
-
                         <strong>Public presence</strong>
-
                         We'll consider information that helps
                         establish your public presence.
-
                     </div>
 
                 </div>
-
 
                 <div class="intro-point">
 
@@ -2020,12 +1742,9 @@ function getStepHTML(step) {
                     </div>
 
                     <div class="intro-point-text">
-
                         <strong>Secure review</strong>
-
                         Verification information is stored separately
                         from your normal account information.
-
                     </div>
 
                 </div>
@@ -2242,44 +1961,41 @@ function getStepHTML(step) {
 
     }
 
-
     return "";
 
 }
 
 
 /* =========================================================
-   USERNAME STEP
+   USERNAME
 ========================================================= */
 
 function setupUsernameStep() {
 
     const input =
-        document.getElementById(
-            "usernameInput"
-        );
+        document.getElementById("usernameInput");
 
     if (!input) return;
 
-
     input.value =
         formData.username || "";
-
 
     input.addEventListener(
         "input",
         function() {
 
             formData.username =
-                normalizeUsername(
-                    input.value
-                );
+                normalizeUsername(input.value);
 
             usernameChecked =
                 false;
 
             foundUser =
                 null;
+
+            formData.uid = "";
+            formData.fullName = "";
+            formData.email = "";
 
             renderUsernameStatus();
 
@@ -2288,15 +2004,10 @@ function setupUsernameStep() {
         }
     );
 
-
     renderUsernameStatus();
 
 }
 
-
-/* =========================================================
-   USERNAME NORMALIZE
-========================================================= */
 
 function normalizeUsername(value) {
 
@@ -2310,6 +2021,7 @@ function normalizeUsername(value) {
 
 /* =========================================================
    USERNAME LOOKUP
+   MERGED ENDPOINT
 ========================================================= */
 
 async function checkUsername() {
@@ -2318,7 +2030,6 @@ async function checkUsername() {
         normalizeUsername(
             formData.username
         );
-
 
     if (!username) {
 
@@ -2330,36 +2041,30 @@ async function checkUsername() {
 
     }
 
-
     usernameCheckInProgress =
         true;
 
     updateButtons();
 
-
     renderTemporaryStatus(
         "Checking username..."
     );
-
 
     try {
 
         const response =
             await fetch(
-                `${API_BASE}/api/verification/check-username?username=${encodeURIComponent(username)}`,
+                `${API_BASE}/api/verification?action=check-username&username=${encodeURIComponent(username)}`,
                 {
                     method:"GET",
-
                     headers:{
                         "Accept":"application/json"
                     }
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -2369,7 +2074,6 @@ async function checkUsername() {
             );
 
         }
-
 
         if (!data.exists) {
 
@@ -2385,36 +2089,23 @@ async function checkUsername() {
 
         }
 
-
         foundUser =
             data.user || null;
-
 
         formData.uid =
             data.user.uid || "";
 
-
         formData.username =
             data.user.username || username;
-
 
         formData.fullName =
             data.user.full_name || "";
 
-
         formData.email =
             data.user.email || "";
 
-
         usernameChecked =
             true;
-
-
-        /*
-         * VERY IMPORTANT:
-         * If verification already exists,
-         * stop before application continues.
-         */
 
         if (data.verification) {
 
@@ -2426,11 +2117,9 @@ async function checkUsername() {
 
         }
 
-
         renderUsernameUser();
 
         return true;
-
 
     } catch(error) {
 
@@ -2448,7 +2137,6 @@ async function checkUsername() {
 
         return false;
 
-
     } finally {
 
         usernameCheckInProgress =
@@ -2461,10 +2149,6 @@ async function checkUsername() {
 }
 
 
-/* =========================================================
-   USERNAME STATUS
-========================================================= */
-
 function renderTemporaryStatus(text) {
 
     const box =
@@ -2474,13 +2158,11 @@ function renderTemporaryStatus(text) {
 
     if (!box) return;
 
-
     box.style.display =
         "block";
 
     box.className =
         "status-card";
-
 
     box.innerHTML = `
 
@@ -2504,13 +2186,11 @@ function renderUsernameNotFound() {
 
     if (!box) return;
 
-
     box.style.display =
         "block";
 
     box.className =
         "status-card";
-
 
     box.innerHTML = `
 
@@ -2538,18 +2218,15 @@ function renderUsernameUser() {
 
     if (!box || !foundUser) return;
 
-
     box.style.display =
         "block";
 
     box.className =
         "user-preview";
 
-
     const avatar =
         foundUser.avatar ||
         "/20260313_121958.jpg";
-
 
     box.innerHTML = `
 
@@ -2604,7 +2281,6 @@ function renderUsernameStatus() {
 
     if (!box) return;
 
-
     if (!formData.username) {
 
         box.style.display =
@@ -2614,9 +2290,10 @@ function renderUsernameStatus() {
 
     }
 
-
-    if (foundUser &&
-        usernameChecked) {
+    if (
+        foundUser &&
+        usernameChecked
+    ) {
 
         renderUsernameUser();
 
@@ -2643,22 +2320,17 @@ function showExistingVerification(
     ).style.display =
         "none";
 
-
     toolbarBack.style.visibility =
         "visible";
-
 
     progressLabel.textContent =
         "Verification status";
 
-
     progressNumber.textContent =
         "Complete";
 
-
     progressFill.style.width =
         "100%";
-
 
     let title =
         "Verification already completed";
@@ -2668,7 +2340,6 @@ function showExistingVerification(
 
     let icon =
         "ph-seal-check";
-
 
     if (
         verification.verification_status
@@ -2686,7 +2357,6 @@ function showExistingVerification(
 
     }
 
-
     if (
         verification.verification_status
         === "rejected"
@@ -2703,50 +2373,59 @@ function showExistingVerification(
 
     }
 
+    viewport.replaceChildren(
+        (() => {
 
-    viewport.innerHTML = `
+            const div =
+                document.createElement("div");
 
-        <div class="success">
+            div.className =
+                "step";
 
-            <div class="success-icon">
+            div.innerHTML = `
 
-                <i class="ph ${icon}"></i>
+                <div class="success">
 
-            </div>
+                    <div class="success-icon">
 
-            <h2>
-                ${escapeHTML(title)}
-            </h2>
+                        <i class="ph ${icon}"></i>
 
-            <p>
-                ${escapeHTML(description)}
-            </p>
+                    </div>
 
-            <div class="info-card">
+                    <h2>
+                        ${escapeHTML(title)}
+                    </h2>
 
-                <i class="ph ph-user-circle"></i>
+                    <p>
+                        ${escapeHTML(description)}
+                    </p>
 
-                <span>
-                    Username:
-                    <strong>
-                        @${escapeHTML(
-                            formData.username
-                        )}
-                    </strong>
-                </span>
+                    <div class="info-card">
 
-            </div>
+                        <i class="ph ph-user-circle"></i>
 
-        </div>
+                        <span>
+                            Username:
+                            <strong>
+                                @${escapeHTML(
+                                    formData.username
+                                )}
+                            </strong>
+                        </span>
 
-    `;
+                    </div>
+
+                </div>
+
+            `;
+
+            return div;
+
+        })()
+    );
 
 }
 
-
-/* =========================================================
-   CHIP
-========================================================= */
 
 function selectChip(element) {
 
@@ -2759,26 +2438,19 @@ function selectChip(element) {
                 )
         );
 
-
     element.classList.add(
         "selected"
     );
-
 
     formData[
         steps[currentStep].key
     ] =
         element.dataset.value;
 
-
     updateButtons();
 
 }
 
-
-/* =========================================================
-   CONFIRM
-========================================================= */
 
 function toggleConfirm() {
 
@@ -2787,38 +2459,28 @@ function toggleConfirm() {
             "confirmBox"
         );
 
-
     if (!box) return;
-
 
     const key =
         steps[currentStep].key;
 
-
     formData[key] =
         !formData[key];
-
 
     box.classList.toggle(
         "checked",
         formData[key]
     );
 
-
     updateButtons();
 
 }
 
 
-/* =========================================================
-   SAVE CURRENT VALUE
-========================================================= */
-
 function saveCurrentValue() {
 
     const step =
         steps[currentStep];
-
 
     if (
         step.type === "input" ||
@@ -2831,7 +2493,6 @@ function saveCurrentValue() {
                 "currentInput"
             );
 
-
         if (input) {
 
             formData[step.key] =
@@ -2841,16 +2502,12 @@ function saveCurrentValue() {
 
     }
 
-
-    if (
-        step.type === "username"
-    ) {
+    if (step.type === "username") {
 
         const input =
             document.getElementById(
                 "usernameInput"
             );
-
 
         if (input) {
 
@@ -2866,15 +2523,10 @@ function saveCurrentValue() {
 }
 
 
-/* =========================================================
-   RESTORE
-========================================================= */
-
 function restoreFieldValue() {
 
     const step =
         steps[currentStep];
-
 
     if (
         step.type === "input" ||
@@ -2887,28 +2539,21 @@ function restoreFieldValue() {
                 "currentInput"
             );
 
-
-        if (
-            input &&
-            formData[step.key]
-        ) {
+        if (input) {
 
             input.value =
-                formData[step.key];
+                formData[step.key] || "";
 
         }
 
     }
-
 
     if (step.type === "chips") {
 
         const selected =
             formData[step.key];
 
-
         if (!selected) return;
-
 
         document
             .querySelectorAll(".chip")
@@ -2916,8 +2561,8 @@ function restoreFieldValue() {
                 chip => {
 
                     if (
-                        chip.dataset.value
-                        === selected
+                        chip.dataset.value ===
+                        selected
                     ) {
 
                         chip.classList.add(
@@ -2931,14 +2576,12 @@ function restoreFieldValue() {
 
     }
 
-
     if (step.type === "confirm") {
 
         const box =
             document.getElementById(
                 "confirmBox"
             );
-
 
         if (
             box &&
@@ -2956,35 +2599,22 @@ function restoreFieldValue() {
 }
 
 
-/* =========================================================
-   VALIDATION
-========================================================= */
-
 function validateCurrentStep() {
 
     const step =
         steps[currentStep];
 
-
-    if (
-        step.type === "intro"
-    ) {
+    if (step.type === "intro") {
 
         return true;
 
     }
 
-
-    if (
-        step.type === "username"
-    ) {
+    if (step.type === "username") {
 
         saveCurrentValue();
 
-
-        if (
-            !formData.username
-        ) {
+        if (!formData.username) {
 
             showError(
                 "Please enter your username."
@@ -2994,10 +2624,7 @@ function validateCurrentStep() {
 
         }
 
-
-        if (
-            !usernameChecked
-        ) {
+        if (!usernameChecked) {
 
             showError(
                 "Please check your username before continuing."
@@ -3007,11 +2634,9 @@ function validateCurrentStep() {
 
         }
 
-
         return true;
 
     }
-
 
     if (
         step.type === "input" ||
@@ -3020,7 +2645,6 @@ function validateCurrentStep() {
     ) {
 
         saveCurrentValue();
-
 
         if (
             !formData[step.key] &&
@@ -3037,12 +2661,9 @@ function validateCurrentStep() {
 
     }
 
-
     if (step.type === "chips") {
 
-        if (
-            !formData[step.key]
-        ) {
+        if (!formData[step.key]) {
 
             showError(
                 "Please select one option to continue."
@@ -3054,12 +2675,9 @@ function validateCurrentStep() {
 
     }
 
-
     if (step.type === "confirm") {
 
-        if (
-            !formData[step.key]
-        ) {
+        if (!formData[step.key]) {
 
             showError(
                 "Please confirm this before continuing."
@@ -3071,20 +2689,14 @@ function validateCurrentStep() {
 
     }
 
-
     return true;
 
 }
 
 
-/* =========================================================
-   NEXT
-========================================================= */
-
 async function nextStep() {
 
     if (isAnimating) return;
-
 
     if (
         currentStep === 1 &&
@@ -3094,24 +2706,11 @@ async function nextStep() {
         const success =
             await checkUsername();
 
-
-        if (!success) {
-
-            return;
-
-        }
+        if (!success) return;
 
     }
 
-
-    if (
-        !validateCurrentStep()
-    ) {
-
-        return;
-
-    }
-
+    if (!validateCurrentStep()) return;
 
     if (
         currentStep >=
@@ -3124,33 +2723,23 @@ async function nextStep() {
 
     }
 
-
-    isAnimating =
-        true;
-
+    isAnimating = true;
 
     saveCurrentValue();
 
-
     currentStep++;
-
 
     renderStep(
         "next",
         true
     );
 
-
     setTimeout(
         () => {
-
-            isAnimating =
-                false;
-
+            isAnimating = false;
         },
         320
     );
-
 
     window.scrollTo({
         top:0,
@@ -3160,19 +2749,9 @@ async function nextStep() {
 }
 
 
-/* =========================================================
-   BACK
-========================================================= */
-
 function previousStep() {
 
     if (isAnimating) return;
-
-
-    /*
-     * If current screen is first step,
-     * go home.
-     */
 
     if (currentStep <= 0) {
 
@@ -3182,33 +2761,23 @@ function previousStep() {
 
     }
 
-
     saveCurrentValue();
 
-
-    isAnimating =
-        true;
-
+    isAnimating = true;
 
     currentStep--;
-
 
     renderStep(
         "back",
         true
     );
 
-
     setTimeout(
         () => {
-
-            isAnimating =
-                false;
-
+            isAnimating = false;
         },
         320
     );
-
 
     window.scrollTo({
         top:0,
@@ -3218,58 +2787,34 @@ function previousStep() {
 }
 
 
-/* =========================================================
-   TOOLBAR
-========================================================= */
-
 function updateToolbar() {
 
-    if (
+    toolbarBack.style.visibility =
         currentStep <= 0
-    ) {
-
-        toolbarBack.style.visibility =
-            "hidden";
-
-    } else {
-
-        toolbarBack.style.visibility =
-            "visible";
-
-    }
+            ? "hidden"
+            : "visible";
 
 }
 
-
-/* =========================================================
-   PROGRESS
-========================================================= */
 
 function updateProgress() {
 
     const total =
         steps.length;
 
-
     const number =
         currentStep + 1;
-
 
     const percentage =
         (number / total) * 100;
 
-
     progressNumber.textContent =
         `${number} of ${total}`;
-
 
     progressFill.style.width =
         `${percentage}%`;
 
-
-    if (
-        currentStep === 0
-    ) {
+    if (currentStep === 0) {
 
         progressLabel.textContent =
             "Verification";
@@ -3291,48 +2836,32 @@ function updateProgress() {
 }
 
 
-/* =========================================================
-   BUTTON
-========================================================= */
-
 function updateButtons() {
 
     nextButton.style.display =
         "flex";
 
-
     nextButton.disabled =
         false;
-
 
     nextIcon.style.animation =
         "";
 
-
-    if (
-        currentStep === 0
-    ) {
+    if (currentStep === 0) {
 
         nextText.textContent =
             "Get started";
 
-
         nextIcon.className =
             "ph ph-arrow-right";
-
 
         return;
 
     }
 
+    if (currentStep === 1) {
 
-    if (
-        currentStep === 1
-    ) {
-
-        if (
-            usernameCheckInProgress
-        ) {
+        if (usernameCheckInProgress) {
 
             nextText.textContent =
                 "Checking...";
@@ -3346,9 +2875,7 @@ function updateButtons() {
             nextButton.disabled =
                 true;
 
-        } else if (
-            usernameChecked
-        ) {
+        } else if (usernameChecked) {
 
             nextText.textContent =
                 "Continue";
@@ -3370,7 +2897,6 @@ function updateButtons() {
 
     }
 
-
     if (
         currentStep ===
         steps.length - 1
@@ -3386,7 +2912,6 @@ function updateButtons() {
 
     }
 
-
     nextText.textContent =
         "Continue";
 
@@ -3395,10 +2920,6 @@ function updateButtons() {
 
 }
 
-
-/* =========================================================
-   REVIEW
-========================================================= */
 
 function getReviewHTML() {
 
@@ -3418,23 +2939,18 @@ function getReviewHTML() {
 
         </div>
 
-
         <h1 class="step-title">
             Review your application
         </h1>
-
 
         <p
             class="step-description"
             style="margin-bottom:22px;"
         >
-
             Please check the information below.
             Once submitted, your verification request
             will be reviewed by Appnetick.
-
         </p>
-
 
         <div class="user-preview">
 
@@ -3473,87 +2989,42 @@ function getReviewHTML() {
 
         </div>
 
-
         <div class="review-card">
 
-            ${reviewRow(
-                "Legal name",
-                formData.legalName
-            )}
+            ${reviewRow("Legal name",formData.legalName)}
 
-            ${reviewRow(
-                "Username",
-                "@" + formData.username
-            )}
+            ${reviewRow("Username","@" + formData.username)}
 
-            ${reviewRow(
-                "Date of birth",
-                formData.dateOfBirth
-            )}
+            ${reviewRow("Date of birth",formData.dateOfBirth)}
 
-            ${reviewRow(
-                "Country",
-                formData.country
-            )}
+            ${reviewRow("Country",formData.country)}
 
-            ${reviewRow(
-                "Phone",
-                formData.phone
-            )}
+            ${reviewRow("Phone",formData.phone)}
 
-            ${reviewRow(
-                "Account category",
-                formData.accountCategory
-            )}
+            ${reviewRow("Account category",formData.accountCategory)}
 
-            ${reviewRow(
-                "Profession",
-                formData.profession
-            )}
+            ${reviewRow("Profession",formData.profession)}
 
-            ${reviewRow(
-                "Verification reason",
-                formData.verificationReason
-            )}
+            ${reviewRow("Verification reason",formData.verificationReason)}
 
-            ${reviewRow(
-                "Known for",
-                formData.knownFor
-            )}
+            ${reviewRow("Known for",formData.knownFor)}
 
             ${reviewRow(
                 "Website",
-                formData.website ||
-                "Not provided"
+                formData.website || "Not provided"
             )}
 
-            ${reviewRow(
-                "Public profile",
-                formData.socialProfile
-            )}
+            ${reviewRow("Public profile",formData.socialProfile)}
 
-            ${reviewRow(
-                "Audience",
-                formData.audience
-            )}
+            ${reviewRow("Audience",formData.audience)}
 
-            ${reviewRow(
-                "Content category",
-                formData.contentCategory
-            )}
+            ${reviewRow("Content category",formData.contentCategory)}
 
-            ${reviewRow(
-                "Achievements",
-                formData.achievement
-            )}
+            ${reviewRow("Achievements",formData.achievement)}
 
-            ${reviewRow(
-                "Public presence",
-                formData.publicPresence
-            )}
+            ${reviewRow("Public presence",formData.publicPresence)}
 
         </div>
-
 
         <div class="info-card">
 
@@ -3600,87 +3071,64 @@ function reviewRow(
 
 /* =========================================================
    SUBMIT
+   MERGED ENDPOINT
 ========================================================= */
 
 async function submitVerification() {
 
     if (isAnimating) return;
 
-
     saveCurrentValue();
-
 
     nextButton.disabled =
         true;
 
-
     nextText.textContent =
         "Submitting...";
-
 
     nextIcon.className =
         "ph ph-spinner";
 
-
     nextIcon.style.animation =
         "spin .8s linear infinite";
 
-
     const payload = {
 
-        uid:
-            formData.uid,
+        uid:formData.uid,
 
-        username:
-            formData.username,
+        username:formData.username,
 
-        full_name:
-            formData.fullName,
+        full_name:formData.fullName,
 
-        legal_name:
-            formData.legalName,
+        legal_name:formData.legalName,
 
-        email:
-            formData.email,
+        email:formData.email,
 
-        date_of_birth:
-            formData.dateOfBirth,
+        date_of_birth:formData.dateOfBirth,
 
-        country:
-            formData.country,
+        country:formData.country,
 
-        phone:
-            formData.phone,
+        phone:formData.phone,
 
-        account_category:
-            formData.accountCategory,
+        account_category:formData.accountCategory,
 
-        profession:
-            formData.profession,
+        profession:formData.profession,
 
-        verification_reason:
-            formData.verificationReason,
+        verification_reason:formData.verificationReason,
 
-        known_for:
-            formData.knownFor,
+        known_for:formData.knownFor,
 
-        website:
-            formData.website,
+        website:formData.website,
 
-        social_profile:
-            formData.socialProfile,
+        social_profile:formData.socialProfile,
 
-        audience:
-            formData.audience,
+        audience:formData.audience,
 
-        content_category:
-            formData.contentCategory,
+        content_category:formData.contentCategory,
 
-        achievement:
-            formData.achievement,
+        achievement:formData.achievement,
 
-        public_presence:
-            formData.publicPresence,
+        public_presence:formData.publicPresence,
 
         authenticity_confirmed:
             formData.authenticityConfirmed,
@@ -3693,12 +3141,11 @@ async function submitVerification() {
 
     };
 
-
     try {
 
         const response =
             await fetch(
-                `${API_BASE}/api/verification/submit`,
+                `${API_BASE}/api/verification?action=submit`,
                 {
 
                     method:"POST",
@@ -3712,17 +3159,13 @@ async function submitVerification() {
                     },
 
                     body:
-                        JSON.stringify(
-                            payload
-                        )
+                        JSON.stringify(payload)
 
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -3740,7 +3183,6 @@ async function submitVerification() {
 
             }
 
-
             if (
                 data.code ===
                 "ALREADY_PENDING"
@@ -3755,14 +3197,12 @@ async function submitVerification() {
 
             }
 
-
             throw new Error(
                 data.error ||
                 "Unable to submit application."
             );
 
         }
-
 
         showSuccess();
 
@@ -3773,22 +3213,17 @@ async function submitVerification() {
             error
         );
 
-
         nextButton.disabled =
             false;
-
 
         nextText.textContent =
             "Submit application";
 
-
         nextIcon.className =
             "ph ph-paper-plane-tilt";
 
-
         nextIcon.style.animation =
             "";
-
 
         showError(
             error.message ||
@@ -3800,10 +3235,6 @@ async function submitVerification() {
 }
 
 
-/* =========================================================
-   SUCCESS
-========================================================= */
-
 function showSuccess() {
 
     document.getElementById(
@@ -3811,60 +3242,65 @@ function showSuccess() {
     ).style.display =
         "none";
 
-
     toolbarBack.style.visibility =
         "visible";
-
 
     progressLabel.textContent =
         "Submitted";
 
-
     progressNumber.textContent =
         "Complete";
-
 
     progressFill.style.width =
         "100%";
 
+    viewport.replaceChildren(
+        (() => {
 
-    viewport.innerHTML = `
+            const div =
+                document.createElement("div");
 
-        <div class="success">
+            div.className =
+                "step";
 
-            <div class="success-icon">
+            div.innerHTML = `
 
-                <i class="ph ph-check"></i>
+                <div class="success">
 
-            </div>
+                    <div class="success-icon">
 
-            <h2>
-                Application submitted
-            </h2>
+                        <i class="ph ph-check"></i>
 
-            <p>
+                    </div>
 
-                Your verification request has been
-                submitted successfully.
+                    <h2>
+                        Application submitted
+                    </h2>
 
-                <br><br>
+                    <p>
 
-                Appnetick will review the information
-                provided and update the verification
-                status when the review is complete.
+                        Your verification request has been
+                        submitted successfully.
 
-            </p>
+                        <br><br>
 
-        </div>
+                        Appnetick will review the information
+                        provided and update the verification
+                        status when the review is complete.
 
-    `;
+                    </p>
+
+                </div>
+
+            `;
+
+            return div;
+
+        })()
+    );
 
 }
 
-
-/* =========================================================
-   ERROR
-========================================================= */
 
 function showError(message) {
 
@@ -3873,23 +3309,17 @@ function showError(message) {
             "formError"
         );
 
-
     if (existing) {
 
         existing.remove();
 
     }
 
-
     const error =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     error.id =
         "formError";
-
 
     error.style.cssText = `
 
@@ -3904,7 +3334,6 @@ function showError(message) {
 
     `;
 
-
     error.innerHTML = `
 
         <i class="ph ph-warning-circle"></i>
@@ -3912,18 +3341,14 @@ function showError(message) {
 
     `;
 
-
     viewport
         .firstElementChild
         ?.appendChild(error);
 
-
     setTimeout(
         () => {
 
-            if (
-                error.parentNode
-            ) {
+            if (error.parentNode) {
 
                 error.remove();
 
@@ -3936,47 +3361,20 @@ function showError(message) {
 }
 
 
-/* =========================================================
-   ESCAPE
-========================================================= */
-
 function escapeHTML(value) {
 
     return String(
         value ?? ""
     )
 
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
-
-/* =========================================================
-   HOME
-========================================================= */
 
 function goHome() {
 
@@ -3986,25 +3384,13 @@ function goHome() {
 }
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
 renderStep(
     "next",
     false
 );
 
-
-/* =========================================================
-   SPINNER
-========================================================= */
-
 const spinnerStyle =
-    document.createElement(
-        "style"
-    );
-
+    document.createElement("style");
 
 spinnerStyle.textContent = `
 
@@ -4022,7 +3408,6 @@ spinnerStyle.textContent = `
 
 `;
 
-
 document.head.appendChild(
     spinnerStyle
 );
@@ -4030,5 +3415,4 @@ document.head.appendChild(
 </script>
 
 </body>
-
 </html>
