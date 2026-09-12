@@ -322,6 +322,8 @@ button {
     font-weight: 700;
 
     margin-bottom: 16px;
+
+    white-space: nowrap;
 }
 
 
@@ -546,32 +548,18 @@ button {
 
 
 /* =========================================================
-   SECTION TITLE
+   VERIFICATION STEPS INSIDE CARD
 ========================================================= */
 
-.section-title {
+.verification-steps-title {
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin: 34px 0 14px;
-}
-
-
-.section-title h2 {
+    margin: 28px 0 14px;
 
     font-size: 20px;
 
     font-weight: 600;
 }
 
-
-/* =========================================================
-   HOW IT WORKS
-========================================================= */
 
 .steps {
 
@@ -692,6 +680,30 @@ button {
     color: var(--secondary);
 
     line-height: 1.5;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 34px 0 14px;
+}
+
+
+.section-title h2 {
+
+    font-size: 20px;
+
+    font-weight: 600;
 }
 
 
@@ -906,6 +918,8 @@ button {
     .hero h1 {
 
         font-size: 34px;
+
+        white-space: nowrap;
     }
 
 
@@ -945,6 +959,7 @@ button {
 
         min-height: 135px;
     }
+
 }
 
 
@@ -953,6 +968,14 @@ button {
 ========================================================= */
 
 @media (max-width: 400px) {
+
+    .hero h1 {
+
+        font-size: 29px;
+
+        white-space: nowrap;
+    }
+
 
     .steps {
 
@@ -1127,8 +1150,6 @@ button {
             <div class="button-row">
 
 
-                <!-- UPDATED LOCATION -->
-
                 <a
                     href="/user/verification.html"
                     class="primary-button">
@@ -1137,8 +1158,6 @@ button {
 
                 </a>
 
-
-                <!-- UPDATED LOCATION -->
 
                 <a
                     href="/user/verification/status.html"
@@ -1159,109 +1178,106 @@ button {
 
             </div>
 
-        </div>
 
-    </section>
+            <!-- =================================================
+                 VERIFICATION SYSTEM — INSIDE SAME CARD
+            ================================================== -->
 
+            <div
+                class="verification-steps-title"
+                id="verification-info">
 
+                How verification works
 
-    <!-- =================================================
-         HOW VERIFICATION WORKS
-    ================================================== -->
-
-    <div
-        class="section-title"
-        id="verification-info">
-
-        <h2>
-            How verification works
-        </h2>
-
-    </div>
-
-
-    <section class="steps">
-
-
-        <div class="step">
-
-            <div class="step-number">
-                1
             </div>
 
-            <h3>
-                Apply
-            </h3>
 
-            <p>
+            <section class="steps">
 
-                Sign in and submit your verification
-                application.
 
-            </p>
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h3>
+                        Apply
+                    </h3>
+
+                    <p>
+
+                        Sign in and submit your verification
+                        application.
+
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h3>
+                        Review
+                    </h3>
+
+                    <p>
+
+                        Your information and supporting details
+                        are carefully reviewed.
+
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h3>
+                        Decision
+                    </h3>
+
+                    <p>
+
+                        Your application can be approved or
+                        rejected after review.
+
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <h3>
+                        Activate
+                    </h3>
+
+                    <p>
+
+                        Approved users can activate their badge
+                        inside the Appnetick app.
+
+                    </p>
+
+                </div>
+
+
+            </section>
 
         </div>
-
-
-        <div class="step">
-
-            <div class="step-number">
-                2
-            </div>
-
-            <h3>
-                Review
-            </h3>
-
-            <p>
-
-                Your information and supporting details
-                are carefully reviewed.
-
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-number">
-                3
-            </div>
-
-            <h3>
-                Decision
-            </h3>
-
-            <p>
-
-                Your application can be approved or
-                rejected after review.
-
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-number">
-                4
-            </div>
-
-            <h3>
-                Activate
-            </h3>
-
-            <p>
-
-                Approved users can activate their badge
-                inside the Appnetick app.
-
-            </p>
-
-        </div>
-
 
     </section>
 
@@ -1516,14 +1532,10 @@ button {
         </a>
 
 
-        <!-- UPDATED LOCATION -->
-
         <a href="/user/verification.html">
             Verification
         </a>
 
-
-        <!-- UPDATED LOCATION -->
 
         <a href="/user/verification/status.html">
             Check Status
