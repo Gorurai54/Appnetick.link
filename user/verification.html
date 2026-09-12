@@ -102,6 +102,7 @@ html[data-theme="dark"] {
 }
 
 html {
+
     scroll-behavior:smooth;
 }
 
@@ -114,6 +115,7 @@ body {
     min-height:100vh;
 
     background:var(--bg);
+
     color:var(--text);
 
     overflow-x:hidden;
@@ -127,6 +129,7 @@ button,
 input,
 textarea,
 select {
+
     font-family:inherit;
 }
 
@@ -148,6 +151,7 @@ select {
 
     position:sticky;
     top:0;
+
     z-index:1000;
 
     background:var(--surface);
@@ -219,6 +223,11 @@ select {
     transform:scale(.92);
 }
 
+#toolbarBack {
+
+    visibility:hidden;
+}
+
 
 /* =========================================================
    PAGE
@@ -227,6 +236,7 @@ select {
 .page {
 
     width:100%;
+
     max-width:900px;
 
     margin:0 auto;
@@ -237,6 +247,7 @@ select {
         calc(100vh - 64px);
 
     display:flex;
+
     flex-direction:column;
 }
 
@@ -248,6 +259,7 @@ select {
 .progress-area {
 
     width:100%;
+
     max-width:430px;
 
     margin:0 auto 28px;
@@ -256,7 +268,9 @@ select {
 .progress-top {
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     margin-bottom:10px;
@@ -265,6 +279,7 @@ select {
 .progress-label {
 
     font-size:13px;
+
     font-weight:600;
 
     color:var(--secondary);
@@ -282,6 +297,7 @@ select {
 .progress-track {
 
     width:100%;
+
     height:5px;
 
     border-radius:999px;
@@ -294,6 +310,7 @@ select {
 .progress-fill {
 
     height:100%;
+
     width:5%;
 
     border-radius:999px;
@@ -303,17 +320,10 @@ select {
     transition:width .3s ease;
 }
 
-
-/*
-   IMPORTANT:
-   Viewport ab flex:1 nahi hai.
-   Isliye button page ke bottom par push nahi hoga.
-   Button content/input ke turant baad rahega.
-*/
-
 .step-viewport {
 
     width:100%;
+
     max-width:430px;
 
     margin:0 auto;
@@ -322,6 +332,10 @@ select {
 
     overflow:hidden;
 
+    /*
+     * Do not stretch to the bottom.
+     * Button stays directly below step content.
+     */
     flex:none;
 }
 
@@ -399,6 +413,7 @@ select {
     margin:8px auto 24px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -438,6 +453,7 @@ select {
     margin-top:26px;
 
     display:flex;
+
     flex-direction:column;
 
     gap:11px;
@@ -470,6 +486,7 @@ select {
     border-radius:11px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -636,6 +653,7 @@ select {
     outline:none;
 
     -webkit-appearance:none;
+
     appearance:none;
 }
 
@@ -724,9 +742,7 @@ select {
 
 
 /* =========================================================
-   ACTION BUTTON
-   INPUT / CONTENT KE IMMEDIATELY NICHE
-   NOT FIXED AT BOTTOM
+   BOTTOM ACTIONS
 ========================================================= */
 
 .bottom-actions {
@@ -738,14 +754,12 @@ select {
     margin:18px auto 0;
 
     display:flex;
-
-    flex:none;
 }
 
 
 /* =========================================================
    APPNETICK PRIMARY BUTTON
-   SAME AS HOME PAGE
+   SAME VISUAL STYLE AS HOME PAGE
    NO ICON
 ========================================================= */
 
@@ -754,6 +768,7 @@ select {
     width:100%;
 
     min-height:42px;
+
     height:42px;
 
     padding:0 18px;
@@ -785,15 +800,16 @@ select {
     box-shadow:none;
 
     -webkit-appearance:none;
-    appearance:none;
 
-    -webkit-tap-highlight-color:transparent;
+    appearance:none;
 
     overflow:hidden;
 
+    -webkit-tap-highlight-color:transparent;
+
     transition:
-        opacity .15s ease,
-        transform .15s ease;
+        transform .15s ease,
+        opacity .15s ease;
 }
 
 .next-button:hover {
@@ -840,36 +856,42 @@ select {
 
 
 /* =========================================================
-   CIRCULAR 3 SECOND PROGRESS
-   NO ICON
+   TELEGRAM / ANDROID STYLE
+   CIRCULAR PROGRESS
 ========================================================= */
 
 .button-loader {
 
-    width:25px;
-    height:25px;
-
     display:none;
 
-    align-items:center;
-    justify-content:center;
+    width:26px;
+
+    height:26px;
 
     position:relative;
 
-    z-index:3;
+    flex:0 0 26px;
 
-    flex:0 0 25px;
+    z-index:3;
 }
 
 .button-loader svg {
 
-    width:25px;
-    height:25px;
+    width:26px;
+
+    height:26px;
 
     display:block;
 
-    transform:rotate(-90deg);
+    overflow:visible;
+
+    transform-origin:50% 50%;
 }
+
+
+/*
+ * Full faint circular track.
+ */
 
 .button-loader-track {
 
@@ -877,23 +899,75 @@ select {
 
     stroke:rgba(255,255,255,.28);
 
-    stroke-width:3.2;
+    stroke-width:2;
+
 }
 
-.button-loader-fill {
+
+/*
+ * Animated Telegram-style arc.
+ *
+ * The arc does NOT simply travel from 0% to 100%.
+ *
+ * Its length continuously grows and shrinks while
+ * the whole circle continuously rotates.
+ */
+
+.button-loader-progress {
 
     fill:none;
 
     stroke:#FFFFFF;
 
-    stroke-width:3.2;
+    stroke-width:2;
 
     stroke-linecap:round;
 
-    stroke-dasharray:59.69;
+    stroke-linejoin:round;
 
-    stroke-dashoffset:59.69;
+    stroke-dasharray:8 70.54;
+
+    stroke-dashoffset:0;
+
+    transform-origin:50% 50%;
+
+    transform:rotate(-90deg);
 }
+
+
+/*
+ * Rotate the complete progress ring.
+ */
+
+.button-loader svg.animate {
+
+    animation:
+        telegramRotate
+        2s
+        linear
+        infinite;
+}
+
+
+/*
+ * Grow -> shrink -> reposition the arc.
+ *
+ * Circumference of r=11:
+ * approximately 69.12px
+ *
+ * Values intentionally change the arc length instead
+ * of filling the circle like a normal progress bar.
+ */
+
+.button-loader-progress.animate {
+
+    animation:
+        telegramArc
+        1.15s
+        cubic-bezier(.4,0,.2,1)
+        infinite;
+}
+
 
 .next-button.loading {
 
@@ -911,28 +985,97 @@ select {
 
 .next-button.loading .button-loader {
 
-    display:flex;
+    display:block;
 }
 
-.next-button.loading .button-loader-fill {
 
-    animation:
-        circularButtonProgress
-        3s
-        linear
-        forwards;
-}
+/* =========================================================
+   TELEGRAM CIRCULAR ROTATION
+========================================================= */
 
-@keyframes circularButtonProgress {
+@keyframes telegramRotate {
 
-    from {
+    0% {
 
-        stroke-dashoffset:59.69;
+        transform:
+            rotate(0deg);
     }
 
-    to {
+    100% {
 
-        stroke-dashoffset:0;
+        transform:
+            rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   TELEGRAM ARC GROW / SHRINK
+========================================================= */
+
+@keyframes telegramArc {
+
+    0% {
+
+        stroke-dasharray:
+            7 62.12;
+
+        stroke-dashoffset:
+            0;
+    }
+
+    20% {
+
+        stroke-dasharray:
+            18 51.12;
+
+        stroke-dashoffset:
+            -2;
+    }
+
+    40% {
+
+        stroke-dasharray:
+            36 33.12;
+
+        stroke-dashoffset:
+            -8;
+    }
+
+    55% {
+
+        stroke-dasharray:
+            47 22.12;
+
+        stroke-dashoffset:
+            -17;
+    }
+
+    70% {
+
+        stroke-dasharray:
+            32 37.12;
+
+        stroke-dashoffset:
+            -34;
+    }
+
+    85% {
+
+        stroke-dasharray:
+            16 53.12;
+
+        stroke-dashoffset:
+            -48;
+    }
+
+    100% {
+
+        stroke-dasharray:
+            7 62.12;
+
+        stroke-dashoffset:
+            -69.12;
     }
 }
 
@@ -1387,16 +1530,18 @@ select {
 
     .button-loader {
 
-        width:24px;
+        width:26px;
 
-        height:24px;
+        height:26px;
+
+        flex-basis:26px;
     }
 
     .button-loader svg {
 
-        width:24px;
+        width:26px;
 
-        height:24px;
+        height:26px;
     }
 }
 
@@ -1483,7 +1628,9 @@ select {
                 class="progress-label"
                 id="progressLabel"
             >
+
                 Verification
+
             </span>
 
 
@@ -1491,7 +1638,9 @@ select {
                 class="progress-number"
                 id="progressNumber"
             >
+
                 1 of 20
+
             </span>
 
         </div>
@@ -1515,12 +1664,6 @@ select {
     ></div>
 
 
-    <!--
-        Button intentionally placed immediately
-        after step content.
-        It is NOT fixed at the bottom.
-    -->
-
     <div
         class="bottom-actions"
         id="bottomActions"
@@ -1538,31 +1681,32 @@ select {
             </span>
 
 
+            <!-- Telegram / Android style circular loader -->
+
             <div
                 class="button-loader"
                 id="buttonLoader"
-                aria-hidden="true"
             >
 
                 <svg
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 26 26"
                     aria-hidden="true"
                 >
 
                     <circle
                         class="button-loader-track"
-                        cx="12"
-                        cy="12"
-                        r="9.5"
+                        cx="13"
+                        cy="13"
+                        r="11"
                     ></circle>
 
 
                     <circle
-                        class="button-loader-fill"
-                        id="buttonLoaderFill"
-                        cx="12"
-                        cy="12"
-                        r="9.5"
+                        class="button-loader-progress"
+                        id="buttonLoaderProgress"
+                        cx="13"
+                        cy="13"
+                        r="11"
                     ></circle>
 
                 </svg>
@@ -1597,11 +1741,9 @@ const themeButton =
     );
 
 const themeIcon =
-    document
-        .getElementById(
-            "themeButton"
-        )
-        .querySelector("i");
+    document.getElementById(
+        "themeButton"
+    ).querySelector("i");
 
 const systemDark =
     window.matchMedia &&
@@ -1621,7 +1763,6 @@ if (!savedTheme) {
             ? "dark"
             : "light";
 }
-
 
 applyTheme(savedTheme);
 
@@ -1719,57 +1860,31 @@ let accountSelected = false;
 
 const steps = [
 
-    {
-        type:"intro"
-    },
+    { type:"intro" },
 
-
-    {
-        type:"username"
-    },
-
+    { type:"username" },
 
     {
         type:"input",
-
         key:"legalName",
-
         title:"What is your legal name?",
-
-        help:
-            "Enter your full legal name exactly as it appears on your official records.",
-
-        placeholder:
-            "Enter your legal name"
+        help:"Enter your full legal name exactly as it appears on your official records.",
+        placeholder:"Enter your legal name"
     },
-
 
     {
         type:"date",
-
         key:"dateOfBirth",
-
-        title:
-            "What is your date of birth?",
-
-        help:
-            "Your date of birth helps us establish that the account belongs to a real person."
+        title:"What is your date of birth?",
+        help:"Your date of birth helps us establish that the account belongs to a real person."
     },
-
 
     {
         type:"chips",
-
         key:"country",
-
-        title:
-            "Where are you based?",
-
-        help:
-            "Select the country that best represents your current primary location.",
-
+        title:"Where are you based?",
+        help:"Select the country that best represents your current primary location.",
         options:[
-
             "India",
             "United States",
             "United Kingdom",
@@ -1780,39 +1895,21 @@ const steps = [
         ]
     },
 
-
     {
         type:"input",
-
         key:"phone",
-
-        title:
-            "What is your phone number?",
-
-        help:
-            "Use a phone number that you control.",
-
-        placeholder:
-            "+91 XXXXX XXXXX",
-
-        inputType:
-            "tel"
+        title:"What is your phone number?",
+        help:"Use a phone number that you control.",
+        placeholder:"+91 XXXXX XXXXX",
+        inputType:"tel"
     },
-
 
     {
         type:"chips",
-
         key:"accountCategory",
-
-        title:
-            "What best describes your account?",
-
-        help:
-            "Choose the category that most accurately represents your public presence.",
-
+        title:"What best describes your account?",
+        help:"Choose the category that most accurately represents your public presence.",
         options:[
-
             "Creator",
             "Public Figure",
             "Artist",
@@ -1826,105 +1923,54 @@ const steps = [
         ]
     },
 
-
     {
         type:"input",
-
         key:"profession",
-
-        title:
-            "What is your profession or role?",
-
-        help:
-            "Tell us what you currently do publicly or professionally.",
-
-        placeholder:
-            "Example: Photographer"
+        title:"What is your profession or role?",
+        help:"Tell us what you currently do publicly or professionally.",
+        placeholder:"Example: Photographer"
     },
-
 
     {
         type:"textarea",
-
         key:"verificationReason",
-
-        title:
-            "Why should this account be verified?",
-
-        help:
-            "Explain why people may search for or recognize you.",
-
-        placeholder:
-            "Tell us why this account deserves verification..."
+        title:"Why should this account be verified?",
+        help:"Explain why people may search for or recognize you.",
+        placeholder:"Tell us why this account deserves verification..."
     },
-
 
     {
         type:"textarea",
-
         key:"knownFor",
-
-        title:
-            "What are you known for?",
-
-        help:
-            "Describe your main work, public identity, achievements or contribution.",
-
-        placeholder:
-            "Example: I create educational technology content..."
+        title:"What are you known for?",
+        help:"Describe your main work, public identity, achievements or contribution.",
+        placeholder:"Example: I create educational technology content..."
     },
-
 
     {
         type:"input",
-
         key:"website",
-
-        title:
-            "Do you have an official website?",
-
-        help:
-            "Add a website that can help us confirm your public presence. This can be skipped.",
-
-        placeholder:
-            "https://example.com",
-
-        inputType:
-            "url",
-
+        title:"Do you have an official website?",
+        help:"Add a website that can help us confirm your public presence. This can be skipped.",
+        placeholder:"https://example.com",
+        inputType:"url",
         optional:true
     },
 
-
     {
         type:"input",
-
         key:"socialProfile",
-
-        title:
-            "Add another public profile",
-
-        help:
-            "Provide one public social profile or professional page.",
-
-        placeholder:
-            "https://..."
+        title:"Add another public profile",
+        help:"Provide one public social profile or professional page.",
+        placeholder:"https://..."
     },
-
 
     {
         type:"chips",
-
         key:"audience",
-
-        title:
-            "What is your approximate audience size?",
-
-        help:
-            "Choose the closest range.",
-
+        title:"What is your approximate audience size?",
+        help:"Choose the closest range.",
         options:[
-
             "Under 1K",
             "1K – 10K",
             "10K – 50K",
@@ -1935,20 +1981,12 @@ const steps = [
         ]
     },
 
-
     {
         type:"chips",
-
         key:"contentCategory",
-
-        title:
-            "What type of content do you primarily share?",
-
-        help:
-            "Select the category that best describes your public activity.",
-
+        title:"What type of content do you primarily share?",
+        help:"Select the category that best describes your public activity.",
         options:[
-
             "Education",
             "Entertainment",
             "Technology",
@@ -1962,77 +2000,42 @@ const steps = [
         ]
     },
 
-
     {
         type:"textarea",
-
         key:"achievement",
-
-        title:
-            "Tell us about your notable achievements",
-
-        help:
-            "Mention awards, professional accomplishments, major projects or other meaningful achievements.",
-
-        placeholder:
-            "Describe your achievements..."
+        title:"Tell us about your notable achievements",
+        help:"Mention awards, professional accomplishments, major projects or other meaningful achievements.",
+        placeholder:"Describe your achievements..."
     },
-
 
     {
         type:"textarea",
-
         key:"publicPresence",
-
-        title:
-            "Where can your public presence be verified?",
-
-        help:
-            "Mention publications, interviews, websites, events or organizations.",
-
-        placeholder:
-            "Example: Featured by..., interviewed by..."
+        title:"Where can your public presence be verified?",
+        help:"Mention publications, interviews, websites, events or organizations.",
+        placeholder:"Example: Featured by..., interviewed by..."
     },
-
 
     {
         type:"confirm",
-
         key:"authenticityConfirmed",
-
-        title:
-            "Confirm account authenticity",
-
-        text:
-            "I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
+        title:"Confirm account authenticity",
+        text:"I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
     },
-
 
     {
         type:"confirm",
-
         key:"informationConfirmed",
-
-        title:
-            "Confirm your information",
-
-        text:
-            "I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
+        title:"Confirm your information",
+        text:"I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
     },
-
 
     {
         type:"confirm",
-
         key:"termsConfirmed",
-
-        title:
-            "Verification declaration",
-
-        text:
-            "I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
+        title:"Verification declaration",
+        text:"I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
     },
-
 
     {
         type:"review"
@@ -2085,9 +2088,14 @@ const buttonLoader =
         "buttonLoader"
     );
 
-const buttonLoaderFill =
+const buttonLoaderProgress =
     document.getElementById(
-        "buttonLoaderFill"
+        "buttonLoaderProgress"
+    );
+
+const buttonLoaderSvg =
+    buttonLoader.querySelector(
+        "svg"
     );
 
 const toolbarBack =
@@ -2108,18 +2116,14 @@ function renderStep(
     const step =
         steps[currentStep];
 
-
     const element =
         document.createElement("div");
-
 
     element.className =
         "step";
 
-
     element.innerHTML =
         getStepHTML(step);
-
 
     if (animate) {
 
@@ -2131,11 +2135,9 @@ function renderStep(
         );
     }
 
-
     viewport.replaceChildren(
         element
     );
-
 
     restoreFieldValue();
 
@@ -2144,7 +2146,6 @@ function renderStep(
     updateButtons();
 
     updateToolbar();
-
 
     if (step.type === "username") {
 
@@ -2158,7 +2159,6 @@ function renderStep(
 ========================================================= */
 
 function getStepHTML(step) {
-
 
     if (step.type === "intro") {
 
@@ -2528,13 +2528,10 @@ function setupUsernameStep() {
             "usernameInput"
         );
 
-
     if (!input) return;
-
 
     input.value =
         formData.username || "";
-
 
     input.addEventListener(
         "input",
@@ -2545,18 +2542,14 @@ function setupUsernameStep() {
                     input.value
                 );
 
-
             usernameChecked =
                 false;
-
 
             foundUser =
                 null;
 
-
             accountSelected =
                 false;
-
 
             formData.uid = "";
 
@@ -2564,14 +2557,12 @@ function setupUsernameStep() {
 
             formData.email = "";
 
-
             renderUsernameStatus();
 
             updateButtons();
 
         }
     );
-
 
     renderUsernameStatus();
 }
@@ -2601,7 +2592,6 @@ async function checkUsername() {
             formData.username
         );
 
-
     if (!username) {
 
         showError(
@@ -2611,33 +2601,25 @@ async function checkUsername() {
         return false;
     }
 
-
     usernameCheckInProgress =
         true;
 
-
     updateButtons();
-
 
     renderTemporaryStatus(
         "Checking username..."
     );
 
-
     try {
 
         const response =
             await fetch(
-
                 `${API_BASE}/api/verification?action=check-username&username=${encodeURIComponent(username)}`,
-
                 {
-
                     method:"GET",
 
                     headers:{
-                        "Accept":
-                            "application/json"
+                        "Accept":"application/json"
                     }
                 }
             );
@@ -2650,7 +2632,6 @@ async function checkUsername() {
         if (!response.ok) {
 
             throw new Error(
-
                 data.error ||
                 "Unable to check username."
             );
@@ -2714,13 +2695,6 @@ async function checkUsername() {
 
         renderUsernameUser();
 
-
-        /*
-           IMPORTANT:
-           Account milne ke baad yahin rukega.
-           Automatically next step par nahi jayega.
-        */
-
         return true;
 
 
@@ -2731,15 +2705,12 @@ async function checkUsername() {
             error
         );
 
-
         usernameChecked =
             false;
-
 
         showError(
             "Unable to check this username. Please try again."
         );
-
 
         return false;
 
@@ -2748,7 +2719,6 @@ async function checkUsername() {
 
         usernameCheckInProgress =
             false;
-
 
         updateButtons();
     }
@@ -2766,17 +2736,13 @@ function renderTemporaryStatus(text) {
             "usernameStatus"
         );
 
-
     if (!box) return;
-
 
     box.style.display =
         "block";
 
-
     box.className =
         "status-card";
-
 
     box.innerHTML = `
 
@@ -2803,17 +2769,13 @@ function renderUsernameNotFound() {
             "usernameStatus"
         );
 
-
     if (!box) return;
-
 
     box.style.display =
         "block";
 
-
     box.className =
         "status-card";
-
 
     box.innerHTML = `
 
@@ -2844,23 +2806,18 @@ function renderUsernameUser() {
             "usernameStatus"
         );
 
-
     const hint =
         document.getElementById(
             "accountConfirmHint"
         );
 
-
     if (!box || !foundUser) return;
-
 
     box.style.display =
         "block";
 
-
     box.className =
         "user-preview";
-
 
     const avatar =
         foundUser.avatar ||
@@ -2922,7 +2879,6 @@ function renderUsernameUser() {
             accountSelected =
                 !accountSelected;
 
-
             box.classList.toggle(
                 "selected",
                 accountSelected
@@ -2961,7 +2917,6 @@ function renderUsernameStatus() {
         document.getElementById(
             "usernameStatus"
         );
-
 
     if (!box) return;
 
@@ -3075,10 +3030,8 @@ function showExistingVerification(
             const div =
                 document.createElement("div");
 
-
             div.className =
                 "step";
-
 
             div.innerHTML = `
 
@@ -3129,10 +3082,10 @@ function showExistingVerification(
 
             `;
 
-
             return div;
 
         })()
+
     );
 }
 
@@ -3146,7 +3099,6 @@ function selectChip(element) {
     document
         .querySelectorAll(".chip")
         .forEach(
-
             chip =>
                 chip.classList.remove(
                     "selected"
@@ -3179,7 +3131,6 @@ function toggleConfirm() {
         document.getElementById(
             "confirmBox"
         );
-
 
     if (!box) return;
 
@@ -3293,7 +3244,6 @@ function restoreFieldValue() {
         document
             .querySelectorAll(".chip")
             .forEach(
-
                 chip => {
 
                     if (
@@ -3441,74 +3391,89 @@ function validateCurrentStep() {
 
 
 /* =========================================================
-   BUTTON 3 SECOND CIRCULAR PROGRESS
+   BUTTON 3 SECOND TELEGRAM STYLE CIRCULAR LOADING
 ========================================================= */
 
 function startButtonProgress() {
 
     return new Promise(
-
         resolve => {
 
             nextButton.classList.add(
                 "loading"
             );
 
-
             nextButton.disabled =
                 true;
 
 
             /*
-               Animation ko har click par
-               fresh start karne ke liye
-               SVG node clone kiya ja raha hai.
-            */
+             * Reset both animations.
+             */
 
-            const oldLoader =
-                document.getElementById(
-                    "buttonLoaderFill"
+            buttonLoaderSvg
+                .classList.remove(
+                    "animate"
+                );
+
+            buttonLoaderProgress
+                .classList.remove(
+                    "animate"
                 );
 
 
-            if (oldLoader) {
+            /*
+             * Force browser reflow.
+             *
+             * This guarantees that every new
+             * 3-second loading cycle starts
+             * from the same animation state.
+             */
 
-                const newLoader =
-                    oldLoader.cloneNode(true);
+            void buttonLoaderSvg.offsetWidth;
+
+            void buttonLoaderProgress.offsetWidth;
 
 
-                oldLoader.replaceWith(
-                    newLoader
+            /*
+             * Start Telegram-style continuous
+             * rotation and changing arc length.
+             */
+
+            buttonLoaderSvg
+                .classList.add(
+                    "animate"
                 );
-            }
+
+            buttonLoaderProgress
+                .classList.add(
+                    "animate"
+                );
 
 
-            requestAnimationFrame(
-
-                () => {
-
-                    requestAnimationFrame(
-
-                        () => {
-
-                            nextButton.classList.add(
-                                "loading"
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
+            /*
+             * Keep the original exact
+             * 3-second button loading time.
+             */
 
             setTimeout(
-
                 () => {
 
                     nextButton.classList.remove(
                         "loading"
                     );
+
+
+                    buttonLoaderSvg
+                        .classList.remove(
+                            "animate"
+                        );
+
+
+                    buttonLoaderProgress
+                        .classList.remove(
+                            "animate"
+                        );
 
 
                     nextButton.disabled =
@@ -3518,7 +3483,6 @@ function startButtonProgress() {
                     resolve();
 
                 },
-
                 3000
             );
 
@@ -3535,12 +3499,6 @@ async function nextStep() {
 
     if (isAnimating) return;
 
-
-    /*
-       Username step:
-       First click = check username.
-       Account milne ke baad same step par rukna.
-    */
 
     if (
         currentStep === 1 &&
@@ -3592,14 +3550,12 @@ async function nextStep() {
 
 
     setTimeout(
-
         () => {
 
             isAnimating =
                 false;
 
         },
-
         320
     );
 
@@ -3609,6 +3565,7 @@ async function nextStep() {
         top:0,
 
         behavior:"smooth"
+
     });
 }
 
@@ -3621,10 +3578,6 @@ function previousStep() {
 
     if (isAnimating) return;
 
-
-    /*
-       First step se Back = Home
-    */
 
     if (currentStep <= 0) {
 
@@ -3658,14 +3611,12 @@ function previousStep() {
 
 
     setTimeout(
-
         () => {
 
             isAnimating =
                 false;
 
         },
-
         320
     );
 
@@ -3675,6 +3626,7 @@ function previousStep() {
         top:0,
 
         behavior:"smooth"
+
     });
 }
 
@@ -3684,11 +3636,6 @@ function previousStep() {
 ========================================================= */
 
 function updateToolbar() {
-
-    /*
-       Back button har step par visible rahega.
-       First step par click karne se Home open hoga.
-    */
 
     toolbarBack.style.visibility =
         "visible";
@@ -3751,11 +3698,25 @@ function updateButtons() {
         "flex";
 
 
-    if (!nextButton.classList.contains("loading")) {
+    nextButton.disabled =
+        false;
 
-        nextButton.disabled =
-            false;
-    }
+
+    nextButton.classList.remove(
+        "loading"
+    );
+
+
+    buttonLoaderSvg
+        .classList.remove(
+            "animate"
+        );
+
+
+    buttonLoaderProgress
+        .classList.remove(
+            "animate"
+        );
 
 
     if (currentStep === 0) {
@@ -3773,6 +3734,7 @@ function updateButtons() {
 
             nextText.textContent =
                 "Checking...";
+
 
             nextButton.disabled =
                 true;
@@ -4068,29 +4030,22 @@ async function submitVerification() {
 
     const payload = {
 
-        uid:
-            formData.uid,
+        uid:formData.uid,
 
-        username:
-            formData.username,
+        username:formData.username,
 
-        full_name:
-            formData.fullName,
+        full_name:formData.fullName,
 
-        legal_name:
-            formData.legalName,
+        legal_name:formData.legalName,
 
-        email:
-            formData.email,
+        email:formData.email,
 
         date_of_birth:
             formData.dateOfBirth,
 
-        country:
-            formData.country,
+        country:formData.country,
 
-        phone:
-            formData.phone,
+        phone:formData.phone,
 
         account_category:
             formData.accountCategory,
@@ -4137,9 +4092,7 @@ async function submitVerification() {
 
         const response =
             await fetch(
-
                 `${API_BASE}/api/verification?action=submit`,
-
                 {
 
                     method:"POST",
@@ -4154,7 +4107,9 @@ async function submitVerification() {
                     },
 
                     body:
-                        JSON.stringify(payload)
+                        JSON.stringify(
+                            payload
+                        )
                 }
             );
 
@@ -4174,6 +4129,7 @@ async function submitVerification() {
 
                     verification_status:
                         "approved"
+
                 });
 
                 return;
@@ -4189,6 +4145,7 @@ async function submitVerification() {
 
                     verification_status:
                         "pending"
+
                 });
 
                 return;
@@ -4196,7 +4153,6 @@ async function submitVerification() {
 
 
             throw new Error(
-
                 data.error ||
                 "Unable to submit application."
             );
@@ -4223,7 +4179,6 @@ async function submitVerification() {
 
 
         showError(
-
             error.message ||
             "Something went wrong. Please try again."
         );
@@ -4310,6 +4265,7 @@ function showSuccess() {
             return div;
 
         })()
+
     );
 }
 
@@ -4348,12 +4304,9 @@ function showError(message) {
 
         border-radius:14px;
 
-        background:
-            rgba(229,57,53,0.10);
+        background:rgba(229,57,53,0.10);
 
-        border:
-            1px solid
-            rgba(229,57,53,0.25);
+        border:1px solid rgba(229,57,53,0.25);
 
         color:var(--danger);
 
@@ -4379,7 +4332,6 @@ function showError(message) {
 
 
     setTimeout(
-
         () => {
 
             if (error.parentNode) {
@@ -4388,7 +4340,6 @@ function showError(message) {
             }
 
         },
-
         3500
     );
 }
@@ -4404,30 +4355,15 @@ function escapeHTML(value) {
         value ?? ""
     )
 
-    .replace(
-        /&/g,
-        "&amp;"
-    )
+    .replace(/&/g,"&amp;")
 
-    .replace(
-        /</g,
-        "&lt;"
-    )
+    .replace(/</g,"&lt;")
 
-    .replace(
-        />/g,
-        "&gt;"
-    )
+    .replace(/>/g,"&gt;")
 
-    .replace(
-        /"/g,
-        "&quot;"
-    )
+    .replace(/"/g,"&quot;")
 
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    .replace(/'/g,"&#039;");
 }
 
 
