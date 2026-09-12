@@ -1,39 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Appnetick</title>
-
-<meta property="og:site_name"
-      content="Appnetick">
+<title>Appnetick</title><meta property="og:site_name"
+content="Appnetick">
 
 <meta property="og:image"
-      content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+content="https://appnetick-link.vercel.app/20260313_121958.jpg">
 
 <meta name="twitter:card"
-      content="summary_large_image">
+content="summary_large_image">
 
 <meta name="twitter:image"
-      content="https://appnetick-link.vercel.app/20260313_121958.jpg">
+content="https://appnetick-link.vercel.app/20260313_121958.jpg">
 
 <link rel="icon"
-      href="/20260313_121958.jpg">
-
-<meta name="google-site-verification"
-      content="BVj6vQ1wJIa_nVVfUGg3FLCpZCWIQSzxKscdvZz2FEA">
+      href="/20260313_121958.jpg"><meta name="google-site-verification"
+content="BVj6vQ1wJIa_nVVfUGg3FLCpZCWIQSzxKscdvZz2FEA">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
-
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-<style>
+      rel="stylesheet"><script src="https://unpkg.com/@phosphor-icons/web"></script><style>
 
 /* =========================================================
    ROOT
@@ -548,12 +533,12 @@ button {
 
 
 /* =========================================================
-   VERIFICATION STEPS INSIDE CARD
+   HOW VERIFICATION WORKS
 ========================================================= */
 
 .verification-steps-title {
 
-    margin: 28px 0 14px;
+    margin: 28px 0 8px;
 
     font-size: 20px;
 
@@ -561,35 +546,37 @@ button {
 }
 
 
-.steps {
+.verification-steps {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.verification-step {
+
+    width: 100%;
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 44px 1fr;
 
-    gap: 12px;
+    align-items: center;
+
+    padding: 18px 0;
 }
 
 
-.step {
+.verification-step-number {
 
-    padding: 18px 14px;
+    width: 32px;
 
-    border-radius: 18px;
+    height: 32px;
 
-    border: 1px solid var(--border);
-
-    background: var(--surface);
-
-    min-height: 150px;
-}
-
-
-.step-number {
-
-    width: 34px;
-
-    height: 34px;
+    border-radius: 50%;
 
     display: flex;
 
@@ -597,35 +584,55 @@ button {
 
     justify-content: center;
 
-    border-radius: 50%;
-
     background: var(--primary-soft);
 
     color: var(--primary);
 
-    font-size: 14px;
+    font-size: 13px;
 
     font-weight: 700;
 
-    margin-bottom: 16px;
+    justify-self: center;
 }
 
 
-.step h3 {
+.verification-step-content {
+
+    min-width: 0;
+}
+
+
+.verification-step-content h3 {
 
     font-size: 15px;
 
-    margin-bottom: 7px;
+    font-weight: 600;
+
+    margin-bottom: 6px;
 }
 
 
-.step p {
+.verification-step-content p {
 
-    font-size: 13px;
+    margin: 0;
+
+    max-width: 650px;
 
     color: var(--secondary);
 
+    font-size: 13px;
+
     line-height: 1.5;
+}
+
+
+.verification-step-divider {
+
+    width: 100%;
+
+    height: 1px;
+
+    background: var(--border);
 }
 
 
@@ -943,21 +950,27 @@ button {
     }
 
 
-    .steps {
+    .verification-step {
 
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 40px 1fr;
+
+        padding: 17px 0;
+    }
+
+
+    .verification-step-number {
+
+        width: 30px;
+
+        height: 30px;
+
+        font-size: 12px;
     }
 
 
     .features {
 
         grid-template-columns: 1fr;
-    }
-
-
-    .step {
-
-        min-height: 135px;
     }
 
 }
@@ -977,20 +990,6 @@ button {
     }
 
 
-    .steps {
-
-        grid-template-columns: 1fr 1fr;
-
-        gap: 8px;
-    }
-
-
-    .step {
-
-        padding: 15px 12px;
-    }
-
-
     .primary-button,
     .secondary-button {
 
@@ -1003,203 +1002,212 @@ button {
         flex-direction: column;
     }
 
+
+    .verification-step {
+
+        grid-template-columns: 38px 1fr;
+
+        padding: 16px 0;
+    }
+
+
+    .verification-step-content h3 {
+
+        font-size: 14px;
+    }
+
+
+    .verification-step-content p {
+
+        font-size: 12.5px;
+    }
+
 }
 
-</style>
-
-</head>
-
-
-<body>
-
-
-<!-- =====================================================
+</style></head><body><!-- =====================================================
      NAVBAR
-===================================================== -->
+===================================================== --><header class="navbar"><div class="nav-left">
 
-<header class="navbar">
+    <div class="brand">
 
-    <div class="nav-left">
-
-        <div class="brand">
-
-            Appnetick<span class="brand-dot">.</span>
-
-        </div>
+        Appnetick<span class="brand-dot">.</span>
 
     </div>
 
-
-    <div class="nav-right">
-
-        <button
-            class="icon-button"
-            id="themeButton"
-            aria-label="Change theme">
-
-            <i
-                class="ph ph-moon"
-                id="themeIcon">
-            </i>
-
-        </button>
+</div>
 
 
-        <a
-            href="/auth/user/login"
-            class="icon-button"
-            aria-label="Login">
+<div class="nav-right">
 
-            <i class="ph ph-user"></i>
+    <button
+        class="icon-button"
+        id="themeButton"
+        aria-label="Change theme">
 
-        </a>
+        <i
+            class="ph ph-moon"
+            id="themeIcon">
+        </i>
 
-    </div>
-
-</header>
+    </button>
 
 
+    <a
+        href="/auth/user/login"
+        class="icon-button"
+        aria-label="Login">
 
-<!-- =====================================================
+        <i class="ph ph-user"></i>
+
+    </a>
+
+</div>
+
+</header><!-- =====================================================
      MAIN
-===================================================== -->
+===================================================== --><main class="page"><!-- =================================================
+     HERO
+================================================== -->
 
-<main class="page">
+<section class="hero">
+
+    <div class="hero-badge">
+
+        <i class="ph ph-sparkle"></i>
+
+        The social platform for everyone
+
+    </div>
 
 
-    <!-- =================================================
-         HERO
-    ================================================== -->
+    <h1>
 
-    <section class="hero">
+        Welcome to
+        <span>Appnetick</span>
 
-        <div class="hero-badge">
+    </h1>
 
-            <i class="ph ph-sparkle"></i>
 
-            The social platform for everyone
+    <p>
+
+        Connect, share and communicate with people
+        around the world through a modern social
+        experience built with privacy and simplicity
+        in mind.
+
+    </p>
+
+</section>
+
+
+
+<!-- =================================================
+     BANNER
+================================================== -->
+
+<div class="banner-card">
+
+    <img
+        src="file_000000008c18722f9aaa269dbc1c3bc9.png"
+        alt="Appnetick">
+
+</div>
+
+
+
+<!-- =================================================
+     VERIFICATION CARD
+================================================== -->
+
+<section class="verification-card">
+
+    <div class="verification-content">
+
+        <div class="verification-icon">
+
+            <i class="ph ph-seal-check"></i>
 
         </div>
 
 
-        <h1>
-
-            Welcome to
-            <span>Appnetick</span>
-
-        </h1>
+        <h2>
+            Get your Appnetick badge
+        </h2>
 
 
         <p>
 
-            Connect, share and communicate with people
-            around the world through a modern social
-            experience built with privacy and simplicity
-            in mind.
+            Apply for an Appnetick verification badge
+            and establish an authentic presence on
+            the platform. Applications are reviewed
+            before verification is granted.
 
         </p>
 
-    </section>
+
+        <div class="button-row">
+
+
+            <a
+                href="/user/verification.html"
+                class="primary-button">
+
+                Get Verified
+
+            </a>
+
+
+            <a
+                href="/user/verification/status.html"
+                class="secondary-button">
+
+                Check Status
+
+            </a>
+
+
+            <a
+                href="#verification-info"
+                class="secondary-button">
+
+                Learn more
+
+            </a>
+
+        </div>
 
 
 
-    <!-- =================================================
-         BANNER
-    ================================================== -->
+        <!-- =================================================
+             HOW VERIFICATION WORKS
+        ================================================== -->
 
-    <div class="banner-card">
+        <div
+            class="verification-steps-title"
+            id="verification-info">
 
-        <img
-            src="file_000000008c18722f9aaa269dbc1c3bc9.png"
-            alt="Appnetick">
+            How verification works
 
-    </div>
-
-
-
-    <!-- =================================================
-         VERIFICATION CARD
-    ================================================== -->
-
-    <section class="verification-card">
-
-        <div class="verification-content">
-
-            <div class="verification-icon">
-
-                <i class="ph ph-seal-check"></i>
-
-            </div>
+        </div>
 
 
-            <h2>
-                Get your Appnetick badge
-            </h2>
-
-
-            <p>
-
-                Apply for an Appnetick verification badge
-                and establish an authentic presence on
-                the platform. Applications are reviewed
-                before verification is granted.
-
-            </p>
-
-
-            <div class="button-row">
-
-
-                <a
-                    href="/user/verification.html"
-                    class="primary-button">
-
-                    Get Verified
-
-                </a>
-
-
-                <a
-                    href="/user/verification/status.html"
-                    class="secondary-button">
-
-                    Check Status
-
-                </a>
-
-
-                <a
-                    href="#verification-info"
-                    class="secondary-button">
-
-                    Learn more
-
-                </a>
-
-            </div>
+        <section class="verification-steps">
 
 
             <!-- =================================================
-                 VERIFICATION SYSTEM — INSIDE SAME CARD
+                 STEP 1
             ================================================== -->
 
-            <div
-                class="verification-steps-title"
-                id="verification-info">
+            <div class="verification-step">
 
-                How verification works
+                <div class="verification-step-number">
 
-            </div>
+                    1
 
-
-            <section class="steps">
+                </div>
 
 
-                <div class="step">
-
-                    <div class="step-number">
-                        1
-                    </div>
+                <div class="verification-step-content">
 
                     <h3>
                         Apply
@@ -1214,12 +1222,27 @@ button {
 
                 </div>
 
+            </div>
 
-                <div class="step">
 
-                    <div class="step-number">
-                        2
-                    </div>
+            <div class="verification-step-divider"></div>
+
+
+
+            <!-- =================================================
+                 STEP 2
+            ================================================== -->
+
+            <div class="verification-step">
+
+                <div class="verification-step-number">
+
+                    2
+
+                </div>
+
+
+                <div class="verification-step-content">
 
                     <h3>
                         Review
@@ -1234,12 +1257,27 @@ button {
 
                 </div>
 
+            </div>
 
-                <div class="step">
 
-                    <div class="step-number">
-                        3
-                    </div>
+            <div class="verification-step-divider"></div>
+
+
+
+            <!-- =================================================
+                 STEP 3
+            ================================================== -->
+
+            <div class="verification-step">
+
+                <div class="verification-step-number">
+
+                    3
+
+                </div>
+
+
+                <div class="verification-step-content">
 
                     <h3>
                         Decision
@@ -1254,12 +1292,27 @@ button {
 
                 </div>
 
+            </div>
 
-                <div class="step">
 
-                    <div class="step-number">
-                        4
-                    </div>
+            <div class="verification-step-divider"></div>
+
+
+
+            <!-- =================================================
+                 STEP 4
+            ================================================== -->
+
+            <div class="verification-step">
+
+                <div class="verification-step-number">
+
+                    4
+
+                </div>
+
+
+                <div class="verification-step-content">
 
                     <h3>
                         Activate
@@ -1274,292 +1327,277 @@ button {
 
                 </div>
 
-
-            </section>
-
-        </div>
-
-    </section>
+            </div>
 
 
+        </section>
 
-    <!-- =================================================
-         APPNETICK FEATURES
-    ================================================== -->
+    </div>
 
-    <div class="section-title">
+</section>
 
-        <h2>
-            Appnetick
-        </h2>
+
+
+<!-- =================================================
+     APPNETICK FEATURES
+================================================== -->
+
+<div class="section-title">
+
+    <h2>
+        Appnetick
+    </h2>
+
+</div>
+
+
+<section class="features">
+
+
+    <div class="feature">
+
+        <i
+            class="ph ph-chat-circle feature-icon">
+        </i>
+
+        <h3>
+            Connect
+        </h3>
+
+        <p>
+
+            Chat and communicate with people
+            across the platform.
+
+        </p>
 
     </div>
 
 
-    <section class="features">
+    <div class="feature">
 
+        <i
+            class="ph ph-image feature-icon">
+        </i>
 
-        <div class="feature">
+        <h3>
+            Share
+        </h3>
 
-            <i
-                class="ph ph-chat-circle feature-icon">
-            </i>
+        <p>
 
-            <h3>
-                Connect
-            </h3>
+            Share photos, videos, stories and
+            other content.
 
-            <p>
-
-                Chat and communicate with people
-                across the platform.
-
-            </p>
-
-        </div>
-
-
-        <div class="feature">
-
-            <i
-                class="ph ph-image feature-icon">
-            </i>
-
-            <h3>
-                Share
-            </h3>
-
-            <p>
-
-                Share photos, videos, stories and
-                other content.
-
-            </p>
-
-        </div>
-
-
-        <div class="feature">
-
-            <i
-                class="ph ph-shield-check feature-icon">
-            </i>
-
-            <h3>
-                Privacy
-            </h3>
-
-            <p>
-
-                Account controls and privacy-focused
-                social features.
-
-            </p>
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         POLICIES
-    ================================================== -->
-
-    <div class="section-title">
-
-        <h2>
-            Information
-        </h2>
+        </p>
 
     </div>
 
 
-    <section>
+    <div class="feature">
+
+        <i
+            class="ph ph-shield-check feature-icon">
+        </i>
+
+        <h3>
+            Privacy
+        </h3>
+
+        <p>
+
+            Account controls and privacy-focused
+            social features.
+
+        </p>
+
+    </div>
 
 
-        <div class="policy-card">
-
-            <div class="policy-top">
-
-                <div class="policy-icon">
-
-                    <i class="ph ph-shield"></i>
-
-                </div>
-
-                <h3>
-                    Privacy Policy
-                </h3>
-
-            </div>
-
-
-            <p>
-
-                Learn how Appnetick handles information,
-                privacy and account security.
-
-            </p>
-
-
-            <a
-                href="/privacy"
-                class="policy-link">
-
-                Read Privacy Policy
-
-                <i class="ph ph-arrow-right"></i>
-
-            </a>
-
-        </div>
+</section>
 
 
 
-        <div class="policy-card">
+<!-- =================================================
+     POLICIES
+================================================== -->
 
-            <div class="policy-top">
+<div class="section-title">
 
-                <div class="policy-icon">
+    <h2>
+        Information
+    </h2>
 
-                    <i class="ph ph-file-text"></i>
+</div>
 
-                </div>
 
-                <h3>
-                    Terms & Conditions
-                </h3>
+<section>
+
+
+    <div class="policy-card">
+
+        <div class="policy-top">
+
+            <div class="policy-icon">
+
+                <i class="ph ph-shield"></i>
 
             </div>
 
-
-            <p>
-
-                Review the rules and conditions that
-                apply when using Appnetick.
-
-            </p>
-
-
-            <a
-                href="/terms"
-                class="policy-link">
-
-                Read Terms
-
-                <i class="ph ph-arrow-right"></i>
-
-            </a>
+            <h3>
+                Privacy Policy
+            </h3>
 
         </div>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         AUTH
-    ================================================== -->
-
-    <section class="auth-section">
-
-        <h2>
-            Ready to join Appnetick?
-        </h2>
 
 
         <p>
 
-            Sign in to your account or create a new one.
+            Learn how Appnetick handles information,
+            privacy and account security.
 
         </p>
 
 
-        <div class="auth-buttons">
+        <a
+            href="/privacy"
+            class="policy-link">
 
+            Read Privacy Policy
 
-            <a
-                href="/auth/user/login"
-                class="primary-button">
+            <i class="ph ph-arrow-right"></i>
 
-                Login
-
-            </a>
-
-
-            <a
-                href="/auth/user/signup"
-                class="secondary-button">
-
-                Create account
-
-            </a>
-
-
-        </div>
-
-    </section>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="footer">
-
-
-    <div class="footer-links">
-
-        <a href="/privacy">
-            Privacy
-        </a>
-
-
-        <a href="/terms">
-            Terms
-        </a>
-
-
-        <a href="/auth/user/login">
-            Login
-        </a>
-
-
-        <a href="/user/verification.html">
-            Verification
-        </a>
-
-
-        <a href="/user/verification/status.html">
-            Check Status
         </a>
 
     </div>
 
 
+
+    <div class="policy-card">
+
+        <div class="policy-top">
+
+            <div class="policy-icon">
+
+                <i class="ph ph-file-text"></i>
+
+            </div>
+
+            <h3>
+                Terms & Conditions
+            </h3>
+
+        </div>
+
+
+        <p>
+
+            Review the rules and conditions that
+            apply when using Appnetick.
+
+        </p>
+
+
+        <a
+            href="/terms"
+            class="policy-link">
+
+            Read Terms
+
+            <i class="ph ph-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =================================================
+     AUTH
+================================================== -->
+
+<section class="auth-section">
+
+    <h2>
+        Ready to join Appnetick?
+    </h2>
+
+
     <p>
 
-        © 2026 Appnetick
+        Sign in to your account or create a new one.
 
     </p>
 
 
-</footer>
+    <div class="auth-buttons">
 
 
+        <a
+            href="/auth/user/login"
+            class="primary-button">
 
-<!-- =====================================================
+            Login
+
+        </a>
+
+
+        <a
+            href="/auth/user/signup"
+            class="secondary-button">
+
+            Create account
+
+        </a>
+
+
+    </div>
+
+</section>
+
+</main><!-- =====================================================
+     FOOTER
+===================================================== --><footer class="footer"><div class="footer-links">
+
+    <a href="/privacy">
+        Privacy
+    </a>
+
+
+    <a href="/terms">
+        Terms
+    </a>
+
+
+    <a href="/auth/user/login">
+        Login
+    </a>
+
+
+    <a href="/user/verification.html">
+        Verification
+    </a>
+
+
+    <a href="/user/verification/status.html">
+        Check Status
+    </a>
+
+</div>
+
+
+<p>
+
+    © 2026 Appnetick
+
+</p>
+
+</footer><!-- =====================================================
      THEME SCRIPT
-===================================================== -->
-
-<script>
+===================================================== --><script>
 
 
 /* =====================================================
@@ -1685,9 +1723,5 @@ themeButton.addEventListener(
 );
 
 
-</script>
-
-
-</body>
-
-</html>
+</script></body></html>
+```Ab layout exactly list style mein hoga: (1) Apply → description → full-width separator → (2) Review → description → separator... aur numbering title/description ke beech vertically center mein rahegi.
