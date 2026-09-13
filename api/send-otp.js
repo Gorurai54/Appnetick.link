@@ -1,74 +1,999 @@
 import { Redis } from "@upstash/redis";
 import nodemailer from "nodemailer";
 
+
+/*
+============================================================
+REDIS
+============================================================
+*/
+
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN
+
+  url:
+    process.env.UPSTASH_REDIS_REST_URL,
+
+  token:
+    process.env.UPSTASH_REDIS_REST_TOKEN
+
 });
+
 
 const OTP_EXPIRY = 5 * 60; // 5 minutes
 
+
+/*
+============================================================
+HELPERS
+============================================================
+*/
+
+
+function safeString(value) {
+
+  return String(value || "").trim();
+
+}
+
+
+/*
+------------------------------------------------------------
+HTML ESCAPE
+------------------------------------------------------------
+
+Used only for custom email content.
+
+OTP email remains unchanged.
+------------------------------------------------------------
+*/
+
+function escapeHtml(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+------------------------------------------------------------
+TEXT TO HTML
+------------------------------------------------------------
+*/
+
+function textToHtml(value) {
+
+  return escapeHtml(value)
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .replace(/\n/g, "<br>");
+
+}
+
+
+/*
+============================================================
+MAIN HANDLER
+============================================================
+*/
+
 export default async function handler(req, res) {
 
+
+  /*
+  ==========================================================
+  METHOD
+  ==========================================================
+  */
+
   if (req.method !== "POST") {
+
     return res.status(405).json({
+
       success: false,
-      message: "POST only allowed"
+
+      message:
+        "POST only allowed"
+
     });
+
   }
+
 
   try {
 
-    const { email } = req.body || {};
 
-    if (!email) {
-      return res.status(400).json({
-        success: false,
-        message: "Email is required"
-      });
+    /*
+    ========================================================
+    REQUEST BODY
+    ========================================================
+    */
+
+    const body =
+      req.body || {};
+
+
+    /*
+    ========================================================
+    CUSTOM EMAIL MODE
+    ========================================================
+
+    This branch is ONLY used when:
+
+    type = "custom"
+
+    Existing OTP requests do not enter this branch.
+
+    Existing app sends only:
+
+    {
+      "email": "example@gmail.com"
     }
 
-    const normalizedEmail = email.trim().toLowerCase();
+    Therefore OTP behavior remains unchanged.
+    ========================================================
+    */
+
+    const emailType =
+      safeString(body.type)
+        .toLowerCase();
+
+
+    if (
+      emailType === "custom"
+    ) {
+
+
+      /*
+      ======================================================
+      ADMIN SECRET
+      ======================================================
+
+      Create this Vercel Environment Variable:
+
+      EMAIL_ADMIN_SECRET
+
+      Example:
+
+      EMAIL_ADMIN_SECRET=your-private-secret
+
+      The admin page will send this value.
+
+      NEVER put this secret inside the normal public app.
+      ======================================================
+      */
+
+      const adminSecret =
+        safeString(
+          body.admin_secret
+        );
+
+
+      const serverSecret =
+        safeString(
+          process.env.EMAIL_ADMIN_SECRET
+        );
+
+
+      if (
+        !serverSecret ||
+        !adminSecret ||
+        adminSecret !== serverSecret
+      ) {
+
+        return res.status(401).json({
+
+          success: false,
+
+          message:
+            "Unauthorized"
+
+        });
+
+      }
+
+
+      /*
+      ======================================================
+      CUSTOM EMAIL DATA
+      ======================================================
+      */
+
+      const email =
+        safeString(
+          body.email
+        );
+
+
+      const subject =
+        safeString(
+          body.subject
+        );
+
+
+      const title =
+        safeString(
+          body.title
+        );
+
+
+      const message =
+        safeString(
+          body.message
+        );
+
+
+      const details =
+        safeString(
+          body.details
+        );
+
+
+      const footerMessage =
+        safeString(
+          body.footer_message
+        );
+
+
+      /*
+      ======================================================
+      VALIDATION
+      ======================================================
+      */
+
+      if (!email) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Email is required"
+
+        });
+
+      }
+
+
+      const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+      if (
+        !emailRegex.test(
+          email
+        )
+      ) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Invalid email address"
+
+        });
+
+      }
+
+
+      if (!subject) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Subject is required"
+
+        });
+
+      }
+
+
+      if (!title) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Title is required"
+
+        });
+
+      }
+
+
+      if (!message) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Message is required"
+
+        });
+
+      }
+
+
+      /*
+      ======================================================
+      NORMALIZE
+      ======================================================
+      */
+
+      const normalizedEmail =
+        email
+          .trim()
+          .toLowerCase();
+
+
+      /*
+      ======================================================
+      LOGO
+      ======================================================
+      */
+
+      const logoUrl =
+        process.env.LOGO_URL;
+
+
+      /*
+      ======================================================
+      GMAIL TRANSPORTER
+      ======================================================
+      */
+
+      const transporter =
+        nodemailer.createTransport({
+
+          service: "gmail",
+
+          auth: {
+
+            user:
+              process.env.EMAIL_USER,
+
+            pass:
+              process.env.EMAIL_PASS
+
+          }
+
+        });
+
+
+      /*
+      ======================================================
+      CUSTOM DETAILS CARD
+      ======================================================
+      */
+
+      const detailsHtml =
+        details
+          ? `
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    margin-top:22px;
+    background:#FFFFFF;
+    border:1px solid #DCDCDC;
+    border-radius:18px;
+  "
+>
+
+<tr>
+
+<td
+  style="
+    padding:18px;
+    color:#212121;
+    font-size:14px;
+    line-height:1.65;
+  "
+>
+
+${textToHtml(details)}
+
+</td>
+
+</tr>
+
+</table>
+
+`
+          : "";
+
+
+      /*
+      ======================================================
+      CUSTOM FOOTER MESSAGE
+      ======================================================
+      */
+
+      const footerHtml =
+        footerMessage
+          ? `
+
+<div
+  style="
+    margin-top:22px;
+    color:#757575;
+    font-size:13px;
+    line-height:1.6;
+  "
+>
+
+${textToHtml(footerMessage)}
+
+</div>
+
+`
+          : "";
+
+
+      /*
+      ======================================================
+      SEND CUSTOM EMAIL
+      ======================================================
+      */
+
+      await transporter.sendMail({
+
+        from:
+          `"Appnetick" <${process.env.EMAIL_USER}>`,
+
+        to:
+          normalizedEmail,
+
+        subject:
+          subject,
+
+        html: `
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+  name="color-scheme"
+  content="light dark"
+>
+
+<meta
+  name="supported-color-schemes"
+  content="light dark"
+>
+
+<title>Appnetick</title>
+
+</head>
+
+
+<body
+  style="
+    margin:0;
+    padding:0;
+    width:100%;
+    background:#FFFFFF;
+    color:#212121;
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif;
+  "
+>
+
+
+<!-- =====================================================
+     OUTER WRAPPER
+===================================================== -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    background:#FFFFFF;
+  "
+>
+
+<tr>
+
+<td
+  align="center"
+  style="
+    padding:28px 14px 40px;
+  "
+>
+
+
+<!-- =====================================================
+     EMAIL CONTAINER
+===================================================== -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    max-width:620px;
+  "
+>
+
+
+<!-- =====================================================
+     TOP TOOLBAR
+===================================================== -->
+
+<tr>
+
+<td
+  style="
+    padding:0 0 18px 0;
+  "
+>
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    height:62px;
+    background:#FFFFFF;
+    border:1px solid #DCDCDC;
+    border-radius:18px;
+  "
+>
+
+<tr>
+
+<td
+  valign="middle"
+  style="
+    padding:0 18px;
+  "
+>
+
+
+<!-- LOGO -->
+
+${
+  logoUrl
+    ? `
+
+<img
+  src="${escapeHtml(logoUrl)}"
+  width="42"
+  height="42"
+  alt="Appnetick"
+  style="
+    display:block;
+    width:42px;
+    height:42px;
+    object-fit:contain;
+    border:0;
+    border-radius:12px;
+  "
+>
+
+`
+    : `
+
+<div
+  style="
+    width:42px;
+    height:42px;
+    line-height:42px;
+    text-align:center;
+    background:#2979FF;
+    border-radius:12px;
+    color:#FFFFFF;
+    font-size:20px;
+    font-weight:700;
+  "
+>
+
+A
+
+</div>
+
+`
+}
+
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+
+<!-- =====================================================
+     MAIN CARD
+===================================================== -->
+
+<tr>
+
+<td>
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    width:100%;
+    background:#F7F7F7;
+    border:1px solid #DCDCDC;
+    border-radius:22px;
+  "
+>
+
+<tr>
+
+<td
+  style="
+    padding:30px 24px 28px;
+  "
+>
+
+
+<!-- =====================================================
+     APPNETICK BADGE
+===================================================== -->
+
+<table
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+>
+
+<tr>
+
+<td
+  style="
+    background:rgba(41,121,255,0.10);
+    border-radius:30px;
+    padding:8px 13px;
+    color:#2979FF;
+    font-size:13px;
+    font-weight:600;
+    line-height:1;
+  "
+>
+
+Appnetick
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- =====================================================
+     HEADING
+===================================================== -->
+
+<div
+  style="
+    margin-top:20px;
+    color:#212121;
+    font-size:26px;
+    line-height:1.25;
+    font-weight:700;
+    letter-spacing:-0.7px;
+  "
+>
+
+${escapeHtml(title)}
+
+</div>
+
+
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
+
+<div
+  style="
+    margin-top:10px;
+    color:#757575;
+    font-size:14px;
+    line-height:1.65;
+  "
+>
+
+${textToHtml(message)}
+
+</div>
+
+
+<!-- =====================================================
+     DETAILS
+===================================================== -->
+
+${detailsHtml}
+
+
+<!-- =====================================================
+     FOOTER MESSAGE
+===================================================== -->
+
+${footerHtml}
+
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<tr>
+
+<td
+  align="center"
+  style="
+    padding:24px 12px 0;
+  "
+>
+
+
+<div
+  style="
+    color:#9E9E9E;
+    font-size:12px;
+    line-height:1.6;
+  "
+>
+
+Appnetick
+
+</div>
+
+
+<div
+  style="
+    margin-top:4px;
+    color:#9E9E9E;
+    font-size:11px;
+    line-height:1.6;
+  "
+>
+
+This is an automated email from Appnetick.
+Please do not reply to this message.
+
+</div>
+
+
+<div
+  style="
+    margin-top:10px;
+    color:#B0B0B0;
+    font-size:11px;
+    line-height:1.6;
+  "
+>
+
+© ${new Date().getFullYear()} Appnetick
+
+</div>
+
+
+</td>
+
+</tr>
+
+
+</table>
+
+<!-- END EMAIL CONTAINER -->
+
+
+</td>
+
+</tr>
+
+</table>
+
+<!-- END OUTER WRAPPER -->
+
+
+</body>
+
+</html>
+
+        `
+
+      });
+
+
+      /*
+      ======================================================
+      CUSTOM EMAIL SUCCESS
+      ======================================================
+      */
+
+      return res.status(200).json({
+
+        success: true,
+
+        message:
+          "Email sent successfully"
+
+      });
+
+    }
+
+
+    /*
+    ========================================================
+    EXISTING OTP SYSTEM
+    ========================================================
+
+    IMPORTANT:
+
+    Everything below this point is the original OTP
+    functionality.
+
+    Existing Appnetick app does NOT need to change.
+
+    Request:
+
+    POST /api/send-otp
+
+    {
+      "email":"example@gmail.com"
+    }
+
+    ========================================================
+    */
+
+
+    const email =
+      body.email;
+
+
+    if (!email) {
+
+      return res.status(400).json({
+
+        success: false,
+
+        message:
+          "Email is required"
+
+      });
+
+    }
+
+
+    const normalizedEmail =
+      email
+        .trim()
+        .toLowerCase();
+
 
     /*
      * Basic email validation
      */
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(normalizedEmail)) {
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if (
+      !emailRegex.test(
+        normalizedEmail
+      )
+    ) {
+
       return res.status(400).json({
+
         success: false,
-        message: "Invalid email address"
+
+        message:
+          "Invalid email address"
+
       });
+
     }
+
 
     /*
      * Generate 6-digit OTP
      */
-    const otp = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+
+    const otp =
+      Math.floor(
+        100000 +
+        Math.random() * 900000
+      ).toString();
+
 
     /*
      * Redis key
      */
+
     const redisKey =
       `appnetick:otp:${normalizedEmail}`;
+
 
     /*
      * Save OTP for 5 minutes
      */
+
     await redis.set(
+
       redisKey,
+
       JSON.stringify({
-        otp: otp,
-        attempts: 0,
-        createdAt: Date.now()
+
+        otp:
+          otp,
+
+        attempts:
+          0,
+
+        createdAt:
+          Date.now()
+
       }),
+
       {
-        ex: OTP_EXPIRY
+
+        ex:
+          OTP_EXPIRY
+
       }
+
     );
+
 
     /*
      * Appnetick logo
@@ -82,31 +1007,45 @@ export default async function handler(req, res) {
      *
      * LOGO_URL=https://appnetick-link.vercel.app/20260313_121958.jpg
      */
-    const logoUrl = process.env.LOGO_URL;
+
+    const logoUrl =
+      process.env.LOGO_URL;
+
 
     /*
      * Gmail transporter
      */
-    const transporter = nodemailer.createTransport({
 
-      service: "gmail",
+    const transporter =
+      nodemailer.createTransport({
 
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
+        service:
+          "gmail",
 
-    });
+        auth: {
+
+          user:
+            process.env.EMAIL_USER,
+
+          pass:
+            process.env.EMAIL_PASS
+
+        }
+
+      });
+
 
     /*
      * Send OTP email
      */
+
     await transporter.sendMail({
 
       from:
         `"Appnetick" <${process.env.EMAIL_USER}>`,
 
-      to: normalizedEmail,
+      to:
+        normalizedEmail,
 
       subject:
         "Your Appnetick verification code",
@@ -716,12 +1655,14 @@ Please do not reply to this message.
 </html>
 
       `
+
     });
 
 
     /*
      * OTP is never returned to the app.
      */
+
     return res.status(200).json({
 
       success: true,
@@ -731,12 +1672,15 @@ Please do not reply to this message.
 
     });
 
+
   } catch (error) {
+
 
     console.error(
       "Send OTP Error:",
       error
     );
+
 
     return res.status(500).json({
 
