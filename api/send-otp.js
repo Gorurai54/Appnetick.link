@@ -28,7 +28,6 @@ HELPERS
 ============================================================
 */
 
-
 function safeString(value) {
 
   return String(value || "").trim();
@@ -39,11 +38,6 @@ function safeString(value) {
 /*
 ------------------------------------------------------------
 HTML ESCAPE
-------------------------------------------------------------
-
-Used only for custom email content.
-
-OTP email remains unchanged.
 ------------------------------------------------------------
 */
 
@@ -76,308 +70,83 @@ function textToHtml(value) {
 
 
 /*
+------------------------------------------------------------
+EMAIL VALIDATION
+------------------------------------------------------------
+*/
+
+function isValidEmail(email) {
+
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+}
+
+
+/*
 ============================================================
-MAIN HANDLER
+CREATE TRANSPORTER
+============================================================
+
+Both OTP and custom emails use the SAME Gmail account.
 ============================================================
 */
 
-export default async function handler(req, res) {
+function createTransporter() {
+
+  return nodemailer.createTransport({
+
+    service: "gmail",
+
+    auth: {
+
+      user:
+        process.env.EMAIL_USER,
+
+      pass:
+        process.env.EMAIL_PASS
+
+    }
+
+  });
+
+}
+
+
+/*
+============================================================
+CUSTOM EMAIL SENDER
+============================================================
+*/
+
+async function sendCustomEmail({
+
+  email,
+  subject,
+  title,
+  message,
+  details,
+  footerMessage
+
+}) {
+
+
+  const logoUrl =
+    process.env.LOGO_URL;
+
+
+  const transporter =
+    createTransporter();
 
 
   /*
-  ==========================================================
-  METHOD
-  ==========================================================
+  ----------------------------------------------------------
+  OPTIONAL DETAILS CARD
+  ----------------------------------------------------------
   */
 
-  if (req.method !== "POST") {
-
-    return res.status(405).json({
-
-      success: false,
-
-      message:
-        "POST only allowed"
-
-    });
-
-  }
-
-
-  try {
-
-
-    /*
-    ========================================================
-    REQUEST BODY
-    ========================================================
-    */
-
-    const body =
-      req.body || {};
-
-
-    /*
-    ========================================================
-    CUSTOM EMAIL MODE
-    ========================================================
-
-    This branch is ONLY used when:
-
-    type = "custom"
-
-    Existing OTP requests do not enter this branch.
-
-    Existing app sends only:
-
-    {
-      "email": "example@gmail.com"
-    }
-
-    Therefore OTP behavior remains unchanged.
-    ========================================================
-    */
-
-    const emailType =
-      safeString(body.type)
-        .toLowerCase();
-
-
-    if (
-      emailType === "custom"
-    ) {
-
-
-      /*
-      ======================================================
-      ADMIN SECRET
-      ======================================================
-
-      Create this Vercel Environment Variable:
-
-      EMAIL_ADMIN_SECRET
-
-      Example:
-
-      EMAIL_ADMIN_SECRET=your-private-secret
-
-      The admin page will send this value.
-
-      NEVER put this secret inside the normal public app.
-      ======================================================
-      */
-
-      const adminSecret =
-        safeString(
-          body.admin_secret
-        );
-
-
-      const serverSecret =
-        safeString(
-          process.env.EMAIL_ADMIN_SECRET
-        );
-
-
-      if (
-        !serverSecret ||
-        !adminSecret ||
-        adminSecret !== serverSecret
-      ) {
-
-        return res.status(401).json({
-
-          success: false,
-
-          message:
-            "Unauthorized"
-
-        });
-
-      }
-
-
-      /*
-      ======================================================
-      CUSTOM EMAIL DATA
-      ======================================================
-      */
-
-      const email =
-        safeString(
-          body.email
-        );
-
-
-      const subject =
-        safeString(
-          body.subject
-        );
-
-
-      const title =
-        safeString(
-          body.title
-        );
-
-
-      const message =
-        safeString(
-          body.message
-        );
-
-
-      const details =
-        safeString(
-          body.details
-        );
-
-
-      const footerMessage =
-        safeString(
-          body.footer_message
-        );
-
-
-      /*
-      ======================================================
-      VALIDATION
-      ======================================================
-      */
-
-      if (!email) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Email is required"
-
-        });
-
-      }
-
-
-      const emailRegex =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-      if (
-        !emailRegex.test(
-          email
-        )
-      ) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Invalid email address"
-
-        });
-
-      }
-
-
-      if (!subject) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Subject is required"
-
-        });
-
-      }
-
-
-      if (!title) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Title is required"
-
-        });
-
-      }
-
-
-      if (!message) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Message is required"
-
-        });
-
-      }
-
-
-      /*
-      ======================================================
-      NORMALIZE
-      ======================================================
-      */
-
-      const normalizedEmail =
-        email
-          .trim()
-          .toLowerCase();
-
-
-      /*
-      ======================================================
-      LOGO
-      ======================================================
-      */
-
-      const logoUrl =
-        process.env.LOGO_URL;
-
-
-      /*
-      ======================================================
-      GMAIL TRANSPORTER
-      ======================================================
-      */
-
-      const transporter =
-        nodemailer.createTransport({
-
-          service: "gmail",
-
-          auth: {
-
-            user:
-              process.env.EMAIL_USER,
-
-            pass:
-              process.env.EMAIL_PASS
-
-          }
-
-        });
-
-
-      /*
-      ======================================================
-      CUSTOM DETAILS CARD
-      ======================================================
-      */
-
-      const detailsHtml =
-        details
-          ? `
+  const detailsHtml =
+    details
+      ? `
 
 <table
   width="100%"
@@ -413,18 +182,18 @@ ${textToHtml(details)}
 </table>
 
 `
-          : "";
+      : "";
 
 
-      /*
-      ======================================================
-      CUSTOM FOOTER MESSAGE
-      ======================================================
-      */
+  /*
+  ----------------------------------------------------------
+  OPTIONAL FOOTER MESSAGE
+  ----------------------------------------------------------
+  */
 
-      const footerHtml =
-        footerMessage
-          ? `
+  const footerHtml =
+    footerMessage
+      ? `
 
 <div
   style="
@@ -440,27 +209,27 @@ ${textToHtml(footerMessage)}
 </div>
 
 `
-          : "";
+      : "";
 
 
-      /*
-      ======================================================
-      SEND CUSTOM EMAIL
-      ======================================================
-      */
+  /*
+  ----------------------------------------------------------
+  SEND
+  ----------------------------------------------------------
+  */
 
-      await transporter.sendMail({
+  await transporter.sendMail({
 
-        from:
-          `"Appnetick" <${process.env.EMAIL_USER}>`,
+    from:
+      `"Appnetick" <${process.env.EMAIL_USER}>`,
 
-        to:
-          normalizedEmail,
+    to:
+      email,
 
-        subject:
-          subject,
+    subject:
+      subject,
 
-        html: `
+    html: `
 
 <!DOCTYPE html>
 
@@ -848,20 +617,286 @@ Please do not reply to this message.
 
 </html>
 
-        `
+    `
+
+  });
+
+}
+
+
+/*
+============================================================
+MAIN HANDLER
+============================================================
+*/
+
+export default async function handler(req, res) {
+
+
+  /*
+  ==========================================================
+  METHOD
+  ==========================================================
+  */
+
+  if (req.method !== "POST") {
+
+    return res.status(405).json({
+
+      success:false,
+
+      message:
+        "POST only allowed"
+
+    });
+
+  }
+
+
+  try {
+
+
+    /*
+    ========================================================
+    REQUEST BODY
+    ========================================================
+    */
+
+    const body =
+      req.body || {};
+
+
+    /*
+    ========================================================
+    EMAIL TYPE
+    ========================================================
+    */
+
+    const emailType =
+      safeString(
+        body.type
+      )
+      .toLowerCase();
+
+
+    /*
+    ========================================================
+    CUSTOM EMAIL MODE
+    ========================================================
+
+    This mode does NOT generate any OTP/code.
+
+    Whatever page/backend calls this endpoint provides
+    the complete email content.
+
+    Example:
+
+    {
+      "type":"custom",
+      "email":"user@gmail.com",
+      "subject":"Application received",
+      "title":"Verification application received",
+      "message":"Your application was received.",
+      "details":"Status code: 123456789012",
+      "footer_message":"Keep this code safe."
+    }
+
+    The sender decides what goes inside the email.
+    ========================================================
+    */
+
+    if (
+      emailType === "custom"
+    ) {
+
+
+      /*
+      ------------------------------------------------------
+      ADMIN SECRET
+      ------------------------------------------------------
+      */
+
+      const adminSecret =
+        safeString(
+          body.admin_secret
+        );
+
+
+      const serverSecret =
+        safeString(
+          process.env.EMAIL_ADMIN_SECRET
+        );
+
+
+      if (
+        !serverSecret ||
+        !adminSecret ||
+        adminSecret !== serverSecret
+      ) {
+
+        return res.status(401).json({
+
+          success:false,
+
+          message:
+            "Unauthorized"
+
+        });
+
+      }
+
+
+      /*
+      ------------------------------------------------------
+      DATA
+      ------------------------------------------------------
+      */
+
+      const email =
+        safeString(
+          body.email
+        )
+        .toLowerCase();
+
+
+      const subject =
+        safeString(
+          body.subject
+        );
+
+
+      const title =
+        safeString(
+          body.title
+        );
+
+
+      const message =
+        safeString(
+          body.message
+        );
+
+
+      const details =
+        safeString(
+          body.details
+        );
+
+
+      const footerMessage =
+        safeString(
+          body.footer_message
+        );
+
+
+      /*
+      ------------------------------------------------------
+      VALIDATION
+      ------------------------------------------------------
+      */
+
+      if (!email) {
+
+        return res.status(400).json({
+
+          success:false,
+
+          message:
+            "Email is required"
+
+        });
+
+      }
+
+
+      if (!isValidEmail(email)) {
+
+        return res.status(400).json({
+
+          success:false,
+
+          message:
+            "Invalid email address"
+
+        });
+
+      }
+
+
+      if (!subject) {
+
+        return res.status(400).json({
+
+          success:false,
+
+          message:
+            "Subject is required"
+
+        });
+
+      }
+
+
+      if (!title) {
+
+        return res.status(400).json({
+
+          success:false,
+
+          message:
+            "Title is required"
+
+        });
+
+      }
+
+
+      if (!message) {
+
+        return res.status(400).json({
+
+          success:false,
+
+          message:
+            "Message is required"
+
+        });
+
+      }
+
+
+      /*
+      ------------------------------------------------------
+      SEND CUSTOM EMAIL
+      ------------------------------------------------------
+      */
+
+      await sendCustomEmail({
+
+        email,
+
+        subject,
+
+        title,
+
+        message,
+
+        details,
+
+        footerMessage
 
       });
 
 
       /*
-      ======================================================
-      CUSTOM EMAIL SUCCESS
-      ======================================================
+      ------------------------------------------------------
+      SUCCESS
+      ------------------------------------------------------
       */
 
       return res.status(200).json({
 
-        success: true,
+        success:true,
 
         message:
           "Email sent successfully"
@@ -878,12 +913,9 @@ Please do not reply to this message.
 
     IMPORTANT:
 
-    Everything below this point is the original OTP
-    functionality.
+    This branch remains the normal Appnetick OTP system.
 
-    Existing Appnetick app does NOT need to change.
-
-    Request:
+    Existing request:
 
     POST /api/send-otp
 
@@ -896,14 +928,16 @@ Please do not reply to this message.
 
 
     const email =
-      body.email;
+      safeString(
+        body.email
+      );
 
 
     if (!email) {
 
       return res.status(400).json({
 
-        success: false,
+        success:false,
 
         message:
           "Email is required"
@@ -913,6 +947,12 @@ Please do not reply to this message.
     }
 
 
+    /*
+    --------------------------------------------------------
+    NORMALIZE EMAIL
+    --------------------------------------------------------
+    */
+
     const normalizedEmail =
       email
         .trim()
@@ -920,22 +960,20 @@ Please do not reply to this message.
 
 
     /*
-     * Basic email validation
-     */
-
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    --------------------------------------------------------
+    VALIDATE EMAIL
+    --------------------------------------------------------
+    */
 
     if (
-      !emailRegex.test(
+      !isValidEmail(
         normalizedEmail
       )
     ) {
 
       return res.status(400).json({
 
-        success: false,
+        success:false,
 
         message:
           "Invalid email address"
@@ -946,27 +984,34 @@ Please do not reply to this message.
 
 
     /*
-     * Generate 6-digit OTP
-     */
+    --------------------------------------------------------
+    GENERATE 6-DIGIT OTP
+    --------------------------------------------------------
+    */
 
     const otp =
       Math.floor(
         100000 +
         Math.random() * 900000
-      ).toString();
+      )
+      .toString();
 
 
     /*
-     * Redis key
-     */
+    --------------------------------------------------------
+    REDIS KEY
+    --------------------------------------------------------
+    */
 
     const redisKey =
       `appnetick:otp:${normalizedEmail}`;
 
 
     /*
-     * Save OTP for 5 minutes
-     */
+    --------------------------------------------------------
+    SAVE OTP FOR 5 MINUTES
+    --------------------------------------------------------
+    */
 
     await redis.set(
 
@@ -996,48 +1041,30 @@ Please do not reply to this message.
 
 
     /*
-     * Appnetick logo
-     *
-     * Public HTTPS URL required.
-     *
-     * LOGO_URL can be stored in Vercel
-     * environment variables.
-     *
-     * Example:
-     *
-     * LOGO_URL=https://appnetick-link.vercel.app/20260313_121958.jpg
-     */
+    --------------------------------------------------------
+    LOGO
+    --------------------------------------------------------
+    */
 
     const logoUrl =
       process.env.LOGO_URL;
 
 
     /*
-     * Gmail transporter
-     */
+    --------------------------------------------------------
+    TRANSPORTER
+    --------------------------------------------------------
+    */
 
     const transporter =
-      nodemailer.createTransport({
-
-        service:
-          "gmail",
-
-        auth: {
-
-          user:
-            process.env.EMAIL_USER,
-
-          pass:
-            process.env.EMAIL_PASS
-
-        }
-
-      });
+      createTransporter();
 
 
     /*
-     * Send OTP email
-     */
+    ========================================================
+    EXISTING OTP EMAIL
+    ========================================================
+    */
 
     await transporter.sendMail({
 
@@ -1099,10 +1126,6 @@ Please do not reply to this message.
 >
 
 
-<!-- =====================================================
-     OUTER WRAPPER
-===================================================== -->
-
 <table
   width="100%"
   cellpadding="0"
@@ -1124,10 +1147,6 @@ Please do not reply to this message.
 >
 
 
-<!-- =====================================================
-     EMAIL CONTAINER
-===================================================== -->
-
 <table
   width="100%"
   cellpadding="0"
@@ -1140,9 +1159,7 @@ Please do not reply to this message.
 >
 
 
-<!-- =====================================================
-     TOP TOOLBAR
-===================================================== -->
+<!-- TOOLBAR -->
 
 <tr>
 
@@ -1175,14 +1192,12 @@ Please do not reply to this message.
   "
 >
 
-
-<!-- LOGO -->
-
 ${
   logoUrl
     ? `
+
 <img
-  src="${logoUrl}"
+  src="${escapeHtml(logoUrl)}"
   width="42"
   height="42"
   alt="Appnetick"
@@ -1195,8 +1210,10 @@ ${
     border-radius:12px;
   "
 >
+
 `
     : `
+
 <div
   style="
     width:42px;
@@ -1212,9 +1229,9 @@ ${
 >
 A
 </div>
+
 `
 }
-
 
 </td>
 
@@ -1227,9 +1244,7 @@ A
 </tr>
 
 
-<!-- =====================================================
-     MAIN CARD
-===================================================== -->
+<!-- MAIN CARD -->
 
 <tr>
 
@@ -1257,9 +1272,7 @@ A
 >
 
 
-<!-- =====================================================
-     VERIFICATION BADGE
-===================================================== -->
+<!-- BADGE -->
 
 <table
   cellpadding="0"
@@ -1290,9 +1303,7 @@ Email verification
 </table>
 
 
-<!-- =====================================================
-     HEADING
-===================================================== -->
+<!-- HEADING -->
 
 <div
   style="
@@ -1310,9 +1321,7 @@ Verify your email
 </div>
 
 
-<!-- =====================================================
-     DESCRIPTION
-===================================================== -->
+<!-- DESCRIPTION -->
 
 <div
   style="
@@ -1329,9 +1338,7 @@ continue with your Appnetick account.
 </div>
 
 
-<!-- =====================================================
-     OTP CARD
-===================================================== -->
+<!-- OTP CARD -->
 
 <table
   width="100%"
@@ -1393,9 +1400,7 @@ ${otp}
 </table>
 
 
-<!-- =====================================================
-     EXPIRY
-===================================================== -->
+<!-- EXPIRY -->
 
 <table
   width="100%"
@@ -1437,9 +1442,7 @@ This code expires in
 </table>
 
 
-<!-- =====================================================
-     SECURITY CARD
-===================================================== -->
+<!-- SECURITY CARD -->
 
 <table
   width="100%"
@@ -1545,9 +1548,7 @@ your verification code with anyone.
 </table>
 
 
-<!-- =====================================================
-     NOT REQUESTED MESSAGE
-===================================================== -->
+<!-- NOT REQUESTED -->
 
 <div
   style="
@@ -1575,9 +1576,7 @@ you can safely ignore this email.
 </tr>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+<!-- FOOTER -->
 
 <tr>
 
@@ -1638,16 +1637,12 @@ Please do not reply to this message.
 
 </table>
 
-<!-- END EMAIL CONTAINER -->
-
 
 </td>
 
 </tr>
 
 </table>
-
-<!-- END OUTER WRAPPER -->
 
 
 </body>
@@ -1660,12 +1655,14 @@ Please do not reply to this message.
 
 
     /*
-     * OTP is never returned to the app.
-     */
+    ========================================================
+    OTP SUCCESS
+    ========================================================
+    */
 
     return res.status(200).json({
 
-      success: true,
+      success:true,
 
       message:
         "OTP sent successfully"
@@ -1684,10 +1681,10 @@ Please do not reply to this message.
 
     return res.status(500).json({
 
-      success: false,
+      success:false,
 
       message:
-        "Failed to send OTP"
+        "Failed to send email"
 
     });
 
