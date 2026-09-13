@@ -332,10 +332,6 @@ select {
 
     overflow:hidden;
 
-    /*
-     * Do not stretch to the bottom.
-     * Button stays directly below step content.
-     */
     flex:none;
 }
 
@@ -549,7 +545,6 @@ select {
 
 /* =========================================================
    INPUTS
-   NO INPUT ICONS
 ========================================================= */
 
 .input-wrap {
@@ -758,9 +753,7 @@ select {
 
 
 /* =========================================================
-   APPNETICK PRIMARY BUTTON
-   SAME VISUAL STYLE AS HOME PAGE
-   NO ICON
+   PRIMARY BUTTON
 ========================================================= */
 
 .next-button {
@@ -856,8 +849,7 @@ select {
 
 
 /* =========================================================
-   TELEGRAM / ANDROID STYLE
-   CIRCULAR PROGRESS
+   LOADER
 ========================================================= */
 
 .button-loader {
@@ -888,11 +880,6 @@ select {
     transform-origin:50% 50%;
 }
 
-
-/*
- * Full faint circular track.
- */
-
 .button-loader-track {
 
     fill:none;
@@ -900,18 +887,7 @@ select {
     stroke:rgba(255,255,255,.28);
 
     stroke-width:2;
-
 }
-
-
-/*
- * Animated Telegram-style arc.
- *
- * The arc does NOT simply travel from 0% to 100%.
- *
- * Its length continuously grows and shrinks while
- * the whole circle continuously rotates.
- */
 
 .button-loader-progress {
 
@@ -934,11 +910,6 @@ select {
     transform:rotate(-90deg);
 }
 
-
-/*
- * Rotate the complete progress ring.
- */
-
 .button-loader svg.animate {
 
     animation:
@@ -948,17 +919,6 @@ select {
         infinite;
 }
 
-
-/*
- * Grow -> shrink -> reposition the arc.
- *
- * Circumference of r=11:
- * approximately 69.12px
- *
- * Values intentionally change the arc length instead
- * of filling the circle like a normal progress bar.
- */
-
 .button-loader-progress.animate {
 
     animation:
@@ -967,7 +927,6 @@ select {
         cubic-bezier(.4,0,.2,1)
         infinite;
 }
-
 
 .next-button.loading {
 
@@ -988,11 +947,6 @@ select {
     display:block;
 }
 
-
-/* =========================================================
-   TELEGRAM CIRCULAR ROTATION
-========================================================= */
-
 @keyframes telegramRotate {
 
     0% {
@@ -1007,11 +961,6 @@ select {
             rotate(360deg);
     }
 }
-
-
-/* =========================================================
-   TELEGRAM ARC GROW / SHRINK
-========================================================= */
 
 @keyframes telegramArc {
 
@@ -1077,130 +1026,6 @@ select {
         stroke-dashoffset:
             -69.12;
     }
-}
-
-
-/* =========================================================
-   USER PREVIEW
-========================================================= */
-
-.user-preview {
-
-    margin-top:18px;
-
-    padding:15px;
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    background:var(--surface-secondary);
-
-    cursor:pointer;
-
-    transition:
-        border-color .2s ease,
-        background .2s ease,
-        transform .15s ease;
-}
-
-.user-preview.selected {
-
-    border-color:var(--primary);
-
-    background:var(--primary-soft);
-}
-
-.user-preview:active {
-
-    transform:scale(.99);
-}
-
-.user-preview-main {
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-}
-
-.user-avatar {
-
-    width:52px;
-    height:52px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    background:var(--input-bg);
-}
-
-.user-preview-name {
-
-    font-size:15px;
-
-    font-weight:600;
-
-    color:var(--text);
-}
-
-.user-preview-username {
-
-    margin-top:3px;
-
-    font-size:13px;
-
-    color:var(--secondary);
-}
-
-.verified-badge {
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:4px;
-
-    margin-top:7px;
-
-    padding:4px 8px;
-
-    border-radius:999px;
-
-    background:var(--primary-soft);
-
-    color:var(--primary);
-
-    font-size:11px;
-
-    font-weight:600;
-}
-
-
-/* =========================================================
-   ACCOUNT SELECTION MESSAGE
-========================================================= */
-
-.account-confirm-hint {
-
-    margin-top:10px;
-
-    color:var(--secondary);
-
-    font-size:12px;
-
-    line-height:1.5;
-
-    text-align:center;
-
-    display:none;
-}
-
-.account-confirm-hint.visible {
-
-    display:block;
 }
 
 
@@ -1681,8 +1506,6 @@ select {
             </span>
 
 
-            <!-- Telegram / Android style circular loader -->
-
             <div
                 class="button-loader"
                 id="buttonLoader"
@@ -1813,10 +1636,15 @@ themeButton.addEventListener(
 
 const formData = {
 
+    /*
+     * UID is NOT entered by the user.
+     *
+     * The backend should bind the request to the
+     * authenticated account/session.
+     */
     uid:"",
-    username:"",
+
     fullName:"",
-    email:"",
 
     legalName:"",
     dateOfBirth:"",
@@ -1841,17 +1669,13 @@ const formData = {
 
     authenticityConfirmed:false,
     informationConfirmed:false,
-    termsConfirmed:false
+    termsConfirmed:false,
+
+    /*
+     * This is intentionally the LAST user-entered field.
+     */
+    email:""
 };
-
-
-let usernameChecked = false;
-
-let usernameCheckInProgress = false;
-
-let foundUser = null;
-
-let accountSelected = false;
 
 
 /* =========================================================
@@ -1860,9 +1684,14 @@ let accountSelected = false;
 
 const steps = [
 
-    { type:"intro" },
+    /* 1 */
 
-    { type:"username" },
+    {
+        type:"intro"
+    },
+
+
+    /* 2 */
 
     {
         type:"input",
@@ -1872,12 +1701,18 @@ const steps = [
         placeholder:"Enter your legal name"
     },
 
+
+    /* 3 */
+
     {
         type:"date",
         key:"dateOfBirth",
         title:"What is your date of birth?",
         help:"Your date of birth helps us establish that the account belongs to a real person."
     },
+
+
+    /* 4 */
 
     {
         type:"chips",
@@ -1895,6 +1730,9 @@ const steps = [
         ]
     },
 
+
+    /* 5 */
+
     {
         type:"input",
         key:"phone",
@@ -1903,6 +1741,9 @@ const steps = [
         placeholder:"+91 XXXXX XXXXX",
         inputType:"tel"
     },
+
+
+    /* 6 */
 
     {
         type:"chips",
@@ -1923,6 +1764,9 @@ const steps = [
         ]
     },
 
+
+    /* 7 */
+
     {
         type:"input",
         key:"profession",
@@ -1930,6 +1774,9 @@ const steps = [
         help:"Tell us what you currently do publicly or professionally.",
         placeholder:"Example: Photographer"
     },
+
+
+    /* 8 */
 
     {
         type:"textarea",
@@ -1939,6 +1786,9 @@ const steps = [
         placeholder:"Tell us why this account deserves verification..."
     },
 
+
+    /* 9 */
+
     {
         type:"textarea",
         key:"knownFor",
@@ -1946,6 +1796,9 @@ const steps = [
         help:"Describe your main work, public identity, achievements or contribution.",
         placeholder:"Example: I create educational technology content..."
     },
+
+
+    /* 10 */
 
     {
         type:"input",
@@ -1957,6 +1810,9 @@ const steps = [
         optional:true
     },
 
+
+    /* 11 */
+
     {
         type:"input",
         key:"socialProfile",
@@ -1964,6 +1820,9 @@ const steps = [
         help:"Provide one public social profile or professional page.",
         placeholder:"https://..."
     },
+
+
+    /* 12 */
 
     {
         type:"chips",
@@ -1980,6 +1839,9 @@ const steps = [
             "1M+"
         ]
     },
+
+
+    /* 13 */
 
     {
         type:"chips",
@@ -2000,6 +1862,9 @@ const steps = [
         ]
     },
 
+
+    /* 14 */
+
     {
         type:"textarea",
         key:"achievement",
@@ -2007,6 +1872,9 @@ const steps = [
         help:"Mention awards, professional accomplishments, major projects or other meaningful achievements.",
         placeholder:"Describe your achievements..."
     },
+
+
+    /* 15 */
 
     {
         type:"textarea",
@@ -2016,12 +1884,18 @@ const steps = [
         placeholder:"Example: Featured by..., interviewed by..."
     },
 
+
+    /* 16 */
+
     {
         type:"confirm",
         key:"authenticityConfirmed",
         title:"Confirm account authenticity",
         text:"I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
     },
+
+
+    /* 17 */
 
     {
         type:"confirm",
@@ -2030,12 +1904,30 @@ const steps = [
         text:"I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
     },
 
+
+    /* 18 */
+
     {
         type:"confirm",
         key:"termsConfirmed",
         title:"Verification declaration",
         text:"I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
     },
+
+
+    /* 19 */
+
+    {
+        type:"input",
+        key:"email",
+        title:"Where should we send your verification updates?",
+        help:"Enter an email address that you actively control. We'll send your application confirmation and status information to this address.",
+        placeholder:"Enter your email address",
+        inputType:"email"
+    },
+
+
+    /* 20 */
 
     {
         type:"review"
@@ -2146,11 +2038,6 @@ function renderStep(
     updateButtons();
 
     updateToolbar();
-
-    if (step.type === "username") {
-
-        setupUsernameStep();
-    }
 }
 
 
@@ -2258,58 +2145,6 @@ function getStepHTML(step) {
 
                 </div>
 
-
-            </div>
-
-        `;
-    }
-
-
-    if (step.type === "username") {
-
-        return `
-
-            <label class="question-label">
-
-                Enter your Appnetick username
-
-            </label>
-
-
-            <p class="question-help">
-
-                Enter the username of the account you want to
-                verify. We'll check the account before continuing.
-
-            </p>
-
-
-            <div class="input-wrap">
-
-                <input
-                    class="form-input"
-                    id="usernameInput"
-                    type="text"
-                    placeholder="@username"
-                    autocomplete="off"
-                    maxlength="50"
-                >
-
-            </div>
-
-
-            <div
-                id="usernameStatus"
-                style="display:none;"
-            ></div>
-
-
-            <div
-                id="accountConfirmHint"
-                class="account-confirm-hint"
-            >
-
-                Tap the account above if this is your account.
 
             </div>
 
@@ -2518,579 +2353,6 @@ function getStepHTML(step) {
 
 
 /* =========================================================
-   USERNAME
-========================================================= */
-
-function setupUsernameStep() {
-
-    const input =
-        document.getElementById(
-            "usernameInput"
-        );
-
-    if (!input) return;
-
-    input.value =
-        formData.username || "";
-
-    input.addEventListener(
-        "input",
-        function() {
-
-            formData.username =
-                normalizeUsername(
-                    input.value
-                );
-
-            usernameChecked =
-                false;
-
-            foundUser =
-                null;
-
-            accountSelected =
-                false;
-
-            formData.uid = "";
-
-            formData.fullName = "";
-
-            formData.email = "";
-
-            renderUsernameStatus();
-
-            updateButtons();
-
-        }
-    );
-
-    renderUsernameStatus();
-}
-
-
-/* =========================================================
-   NORMALIZE USERNAME
-========================================================= */
-
-function normalizeUsername(value) {
-
-    return String(value || "")
-        .trim()
-        .replace(/^@+/, "")
-        .toLowerCase();
-}
-
-
-/* =========================================================
-   CHECK USERNAME
-========================================================= */
-
-async function checkUsername() {
-
-    const username =
-        normalizeUsername(
-            formData.username
-        );
-
-    if (!username) {
-
-        showError(
-            "Please enter your Appnetick username."
-        );
-
-        return false;
-    }
-
-    usernameCheckInProgress =
-        true;
-
-    updateButtons();
-
-    renderTemporaryStatus(
-        "Checking username..."
-    );
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_BASE}/api/verification?action=check-username&username=${encodeURIComponent(username)}`,
-                {
-                    method:"GET",
-
-                    headers:{
-                        "Accept":"application/json"
-                    }
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.error ||
-                "Unable to check username."
-            );
-        }
-
-
-        if (!data.exists) {
-
-            usernameChecked =
-                false;
-
-            foundUser =
-                null;
-
-            accountSelected =
-                false;
-
-            renderUsernameNotFound();
-
-            return false;
-        }
-
-
-        foundUser =
-            data.user || null;
-
-
-        formData.uid =
-            data.user.uid || "";
-
-
-        formData.username =
-            data.user.username || username;
-
-
-        formData.fullName =
-            data.user.full_name || "";
-
-
-        formData.email =
-            data.user.email || "";
-
-
-        usernameChecked =
-            true;
-
-
-        accountSelected =
-            false;
-
-
-        if (data.verification) {
-
-            showExistingVerification(
-                data.verification
-            );
-
-            return false;
-        }
-
-
-        renderUsernameUser();
-
-        return true;
-
-
-    } catch(error) {
-
-        console.error(
-            "Username check:",
-            error
-        );
-
-        usernameChecked =
-            false;
-
-        showError(
-            "Unable to check this username. Please try again."
-        );
-
-        return false;
-
-
-    } finally {
-
-        usernameCheckInProgress =
-            false;
-
-        updateButtons();
-    }
-}
-
-
-/* =========================================================
-   TEMPORARY STATUS
-========================================================= */
-
-function renderTemporaryStatus(text) {
-
-    const box =
-        document.getElementById(
-            "usernameStatus"
-        );
-
-    if (!box) return;
-
-    box.style.display =
-        "block";
-
-    box.className =
-        "status-card";
-
-    box.innerHTML = `
-
-        <i class="ph ph-spinner"></i>
-
-        <span>
-
-            ${escapeHTML(text)}
-
-        </span>
-
-    `;
-}
-
-
-/* =========================================================
-   USER NOT FOUND
-========================================================= */
-
-function renderUsernameNotFound() {
-
-    const box =
-        document.getElementById(
-            "usernameStatus"
-        );
-
-    if (!box) return;
-
-    box.style.display =
-        "block";
-
-    box.className =
-        "status-card";
-
-    box.innerHTML = `
-
-        <i
-            class="ph ph-warning-circle"
-            style="color:var(--danger);"
-        ></i>
-
-        <span>
-
-            We couldn't find an Appnetick account with this username.
-            Please check the username and try again.
-
-        </span>
-
-    `;
-}
-
-
-/* =========================================================
-   USER FOUND
-========================================================= */
-
-function renderUsernameUser() {
-
-    const box =
-        document.getElementById(
-            "usernameStatus"
-        );
-
-    const hint =
-        document.getElementById(
-            "accountConfirmHint"
-        );
-
-    if (!box || !foundUser) return;
-
-    box.style.display =
-        "block";
-
-    box.className =
-        "user-preview";
-
-    const avatar =
-        foundUser.avatar ||
-        "/20260313_121958.jpg";
-
-
-    box.innerHTML = `
-
-        <div class="user-preview-main">
-
-            <img
-                class="user-avatar"
-                src="${escapeHTML(avatar)}"
-                onerror="
-                    this.src='/20260313_121958.jpg'
-                "
-            >
-
-
-            <div>
-
-                <div class="user-preview-name">
-
-                    ${escapeHTML(
-                        foundUser.full_name ||
-                        foundUser.username
-                    )}
-
-                </div>
-
-
-                <div class="user-preview-username">
-
-                    @${escapeHTML(
-                        foundUser.username
-                    )}
-
-                </div>
-
-
-                <div class="verified-badge">
-
-                    <i class="ph ph-check-circle"></i>
-
-                    Account found
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    box.onclick =
-        function() {
-
-            accountSelected =
-                !accountSelected;
-
-            box.classList.toggle(
-                "selected",
-                accountSelected
-            );
-
-
-            if (hint) {
-
-                hint.classList.toggle(
-                    "visible",
-                    !accountSelected
-                );
-            }
-
-
-            updateButtons();
-        };
-
-
-    if (hint) {
-
-        hint.classList.add(
-            "visible"
-        );
-    }
-}
-
-
-/* =========================================================
-   USERNAME STATUS
-========================================================= */
-
-function renderUsernameStatus() {
-
-    const box =
-        document.getElementById(
-            "usernameStatus"
-        );
-
-    if (!box) return;
-
-
-    if (!formData.username) {
-
-        box.style.display =
-            "none";
-
-        return;
-    }
-
-
-    if (
-        foundUser &&
-        usernameChecked
-    ) {
-
-        renderUsernameUser();
-
-    } else {
-
-        box.style.display =
-            "none";
-    }
-}
-
-
-/* =========================================================
-   EXISTING VERIFICATION
-========================================================= */
-
-function showExistingVerification(
-    verification
-) {
-
-    document.getElementById(
-        "bottomActions"
-    ).style.display =
-        "none";
-
-
-    toolbarBack.style.visibility =
-        "visible";
-
-
-    progressLabel.textContent =
-        "Verification status";
-
-
-    progressNumber.textContent =
-        "Complete";
-
-
-    progressFill.style.width =
-        "100%";
-
-
-    let title =
-        "Verification already completed";
-
-
-    let description =
-        "This account already has a completed verification status.";
-
-
-    let icon =
-        "ph-seal-check";
-
-
-    if (
-        verification.verification_status
-        === "pending"
-    ) {
-
-        title =
-            "Application already under review";
-
-
-        description =
-            "A verification application for this username is already being reviewed by Appnetick.";
-
-
-        icon =
-            "ph-hourglass";
-    }
-
-
-    if (
-        verification.verification_status
-        === "rejected"
-    ) {
-
-        title =
-            "Previous application was rejected";
-
-
-        description =
-            "A previous verification application was rejected. You may be able to submit another application after the applicable review period.";
-
-
-        icon =
-            "ph-x-circle";
-    }
-
-
-    viewport.replaceChildren(
-
-        (() => {
-
-            const div =
-                document.createElement("div");
-
-            div.className =
-                "step";
-
-            div.innerHTML = `
-
-                <div class="success">
-
-                    <div class="success-icon">
-
-                        <i class="ph ${icon}"></i>
-
-                    </div>
-
-
-                    <h2>
-
-                        ${escapeHTML(title)}
-
-                    </h2>
-
-
-                    <p>
-
-                        ${escapeHTML(description)}
-
-                    </p>
-
-
-                    <div class="info-card">
-
-                        <i class="ph ph-user-circle"></i>
-
-                        <span>
-
-                            Username:
-
-                            <strong>
-
-                                @${escapeHTML(
-                                    formData.username
-                                )}
-
-                            </strong>
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-            `;
-
-            return div;
-
-        })()
-
-    );
-}
-
-
-/* =========================================================
    CHIP
 ========================================================= */
 
@@ -3179,24 +2441,6 @@ function saveCurrentValue() {
 
             formData[step.key] =
                 input.value.trim();
-        }
-    }
-
-
-    if (step.type === "username") {
-
-        const input =
-            document.getElementById(
-                "usernameInput"
-            );
-
-
-        if (input) {
-
-            formData.username =
-                normalizeUsername(
-                    input.value
-                );
         }
     }
 }
@@ -3298,45 +2542,6 @@ function validateCurrentStep() {
     }
 
 
-    if (step.type === "username") {
-
-        saveCurrentValue();
-
-
-        if (!formData.username) {
-
-            showError(
-                "Please enter your username."
-            );
-
-            return false;
-        }
-
-
-        if (!usernameChecked) {
-
-            showError(
-                "Please check your username before continuing."
-            );
-
-            return false;
-        }
-
-
-        if (!accountSelected) {
-
-            showError(
-                "Please select the account shown above if this is your account."
-            );
-
-            return false;
-        }
-
-
-        return true;
-    }
-
-
     if (
         step.type === "input" ||
         step.type === "date" ||
@@ -3356,6 +2561,39 @@ function validateCurrentStep() {
             );
 
             return false;
+        }
+
+
+        /*
+         * Email-specific validation.
+         */
+
+        if (step.key === "email") {
+
+            const email =
+                String(
+                    formData.email || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (!emailPattern.test(email)) {
+
+                showError(
+                    "Please enter a valid email address."
+                );
+
+                return false;
+            }
+
+
+            formData.email =
+                email;
         }
     }
 
@@ -3391,7 +2629,7 @@ function validateCurrentStep() {
 
 
 /* =========================================================
-   BUTTON 3 SECOND TELEGRAM STYLE CIRCULAR LOADING
+   BUTTON 3 SECOND LOADING
 ========================================================= */
 
 function startButtonProgress() {
@@ -3407,10 +2645,6 @@ function startButtonProgress() {
                 true;
 
 
-            /*
-             * Reset both animations.
-             */
-
             buttonLoaderSvg
                 .classList.remove(
                     "animate"
@@ -3421,25 +2655,12 @@ function startButtonProgress() {
                     "animate"
                 );
 
-
-            /*
-             * Force browser reflow.
-             *
-             * This guarantees that every new
-             * 3-second loading cycle starts
-             * from the same animation state.
-             */
 
             void buttonLoaderSvg.offsetWidth;
 
             void buttonLoaderProgress.offsetWidth;
 
 
-            /*
-             * Start Telegram-style continuous
-             * rotation and changing arc length.
-             */
-
             buttonLoaderSvg
                 .classList.add(
                     "animate"
@@ -3450,11 +2671,6 @@ function startButtonProgress() {
                     "animate"
                 );
 
-
-            /*
-             * Keep the original exact
-             * 3-second button loading time.
-             */
 
             setTimeout(
                 () => {
@@ -3500,23 +2716,10 @@ async function nextStep() {
     if (isAnimating) return;
 
 
-    if (
-        currentStep === 1 &&
-        !usernameChecked
-    ) {
-
-        const success =
-            await checkUsername();
-
-
-        if (!success) return;
-
+    if (!validateCurrentStep()) {
 
         return;
     }
-
-
-    if (!validateCurrentStep()) return;
 
 
     if (
@@ -3597,13 +2800,6 @@ function previousStep() {
     currentStep--;
 
 
-    if (currentStep !== 1) {
-
-        accountSelected =
-            false;
-    }
-
-
     renderStep(
         "back",
         true
@@ -3680,6 +2876,13 @@ function updateProgress() {
         progressLabel.textContent =
             "Review";
 
+    } else if (
+        steps[currentStep].key === "email"
+    ) {
+
+        progressLabel.textContent =
+            "Contact";
+
     } else {
 
         progressLabel.textContent =
@@ -3723,36 +2926,6 @@ function updateButtons() {
 
         nextText.textContent =
             "Get started";
-
-        return;
-    }
-
-
-    if (currentStep === 1) {
-
-        if (usernameCheckInProgress) {
-
-            nextText.textContent =
-                "Checking...";
-
-
-            nextButton.disabled =
-                true;
-
-        } else if (
-            usernameChecked &&
-            accountSelected
-        ) {
-
-            nextText.textContent =
-                "Continue";
-
-        } else {
-
-            nextText.textContent =
-                "Check username";
-        }
-
 
         return;
     }
@@ -3817,61 +2990,12 @@ function getReviewHTML() {
         </p>
 
 
-        <div class="user-preview">
-
-            <div class="user-preview-main">
-
-                <img
-                    class="user-avatar"
-                    src="${escapeHTML(
-                        foundUser?.avatar ||
-                        "/20260313_121958.jpg"
-                    )}"
-                    onerror="
-                        this.src='/20260313_121958.jpg'
-                    "
-                >
-
-
-                <div>
-
-                    <div class="user-preview-name">
-
-                        ${escapeHTML(
-                            formData.fullName ||
-                            foundUser?.full_name ||
-                            ""
-                        )}
-
-                    </div>
-
-
-                    <div class="user-preview-username">
-
-                        @${escapeHTML(
-                            formData.username
-                        )}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
         <div class="review-card">
+
 
             ${reviewRow(
                 "Legal name",
                 formData.legalName
-            )}
-
-
-            ${reviewRow(
-                "Username",
-                "@" + formData.username
             )}
 
 
@@ -3953,6 +3077,30 @@ function getReviewHTML() {
                 formData.publicPresence
             )}
 
+
+            ${reviewRow(
+                "Email",
+                formData.email
+            )}
+
+        </div>
+
+
+        <div class="info-card">
+
+            <i class="ph ph-envelope-simple"></i>
+
+            <span>
+
+                After submitting your application, Appnetick
+                will send a confirmation email to the email
+                address provided above. The email will contain
+                your private status code, which can be used
+                later to check the status of this verification
+                request.
+
+            </span>
+
         </div>
 
 
@@ -4017,7 +3165,21 @@ async function submitVerification() {
     if (isAnimating) return;
 
 
+    /*
+     * The final email field must be saved.
+     */
+
     saveCurrentValue();
+
+
+    /*
+     * Final validation.
+     */
+
+    if (!validateCurrentStep()) {
+
+        return;
+    }
 
 
     nextButton.disabled =
@@ -4028,63 +3190,151 @@ async function submitVerification() {
         "Submitting...";
 
 
+    /*
+     * IMPORTANT:
+     *
+     * No username is sent.
+     *
+     * No status code is generated here.
+     *
+     * The backend must generate the secure 12-digit
+     * status code and bind it to:
+     *
+     *     authenticated UID
+     *     verification request
+     *     application
+     *
+     * The email notification information is included
+     * so the backend can use the same generic email
+     * system for this and future email types.
+     */
+
     const payload = {
 
+        /*
+         * UID is not taken from a username.
+         *
+         * If your authenticated WebView/session already
+         * provides a verified UID, the backend should
+         * obtain it from that authentication mechanism.
+         */
         uid:formData.uid,
 
-        username:formData.username,
 
         full_name:formData.fullName,
 
-        legal_name:formData.legalName,
 
-        email:formData.email,
+        legal_name:
+            formData.legalName,
+
+
+        email:
+            formData.email,
+
 
         date_of_birth:
             formData.dateOfBirth,
 
-        country:formData.country,
 
-        phone:formData.phone,
+        country:
+            formData.country,
+
+
+        phone:
+            formData.phone,
+
 
         account_category:
             formData.accountCategory,
 
+
         profession:
             formData.profession,
+
 
         verification_reason:
             formData.verificationReason,
 
+
         known_for:
             formData.knownFor,
+
 
         website:
             formData.website,
 
+
         social_profile:
             formData.socialProfile,
+
 
         audience:
             formData.audience,
 
+
         content_category:
             formData.contentCategory,
+
 
         achievement:
             formData.achievement,
 
+
         public_presence:
             formData.publicPresence,
+
 
         authenticity_confirmed:
             formData.authenticityConfirmed,
 
+
         information_confirmed:
             formData.informationConfirmed,
 
+
         terms_confirmed:
-            formData.termsConfirmed
+            formData.termsConfirmed,
+
+
+        /*
+         * Generic email system compatibility.
+         *
+         * Backend can use these values with the same
+         * Nodemailer/custom-email template.
+         *
+         * Future email types can use the same structure.
+         */
+
+        email_notification: {
+
+            enabled:true,
+
+            type:
+                "verification_application_submitted",
+
+            template:
+                "verification",
+
+            recipient:
+                formData.email,
+
+            subject:
+                "Your Appnetick verification application has been received",
+
+            title:
+                "Verification application received",
+
+            message:
+                "Thank you for submitting your Appnetick verification application. We have successfully received your request and it is now ready for review. Our team will carefully review the information provided in your application to determine whether the account meets Appnetick's verification requirements. Your application status can be checked later using the private status code included in this email. Please keep that code safe and do not share it publicly. If your application is approved in the future, you will receive another email containing the private verification key required to activate the Appnetick verification badge through the Appnetick app.",
+
+            details_intro:
+                "Your verification request has been successfully registered.",
+
+            footer_message:
+                "Please keep this email for your records. Appnetick will use this email address to send important updates about your verification application."
+
+        }
+
     };
 
 
@@ -4125,12 +3375,9 @@ async function submitVerification() {
                 "ALREADY_VERIFIED"
             ) {
 
-                showExistingVerification({
-
-                    verification_status:
-                        "approved"
-
-                });
+                showExistingVerification(
+                    "approved"
+                );
 
                 return;
             }
@@ -4141,12 +3388,9 @@ async function submitVerification() {
                 "ALREADY_PENDING"
             ) {
 
-                showExistingVerification({
-
-                    verification_status:
-                        "pending"
-
-                });
+                showExistingVerification(
+                    "pending"
+                );
 
                 return;
             }
@@ -4159,7 +3403,9 @@ async function submitVerification() {
         }
 
 
-        showSuccess();
+        showSuccess(
+            data
+        );
 
 
     } catch(error) {
@@ -4187,10 +3433,144 @@ async function submitVerification() {
 
 
 /* =========================================================
+   EXISTING APPLICATION
+========================================================= */
+
+function showExistingVerification(
+    status
+) {
+
+    document.getElementById(
+        "bottomActions"
+    ).style.display =
+        "none";
+
+
+    toolbarBack.style.visibility =
+        "visible";
+
+
+    progressLabel.textContent =
+        "Verification status";
+
+
+    progressNumber.textContent =
+        "Complete";
+
+
+    progressFill.style.width =
+        "100%";
+
+
+    let title =
+        "Verification already completed";
+
+
+    let description =
+        "This account already has a completed verification status.";
+
+
+    let icon =
+        "ph-seal-check";
+
+
+    if (status === "pending") {
+
+        title =
+            "Application already under review";
+
+
+        description =
+            "A verification application for this account is already being reviewed by Appnetick.";
+
+
+        icon =
+            "ph-hourglass";
+    }
+
+
+    if (status === "rejected") {
+
+        title =
+            "Previous application was rejected";
+
+
+        description =
+            "A previous verification application was rejected. You may be able to submit another application after the applicable review period.";
+
+
+        icon =
+            "ph-x-circle";
+    }
+
+
+    viewport.replaceChildren(
+
+        (() => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "step";
+
+            div.innerHTML = `
+
+                <div class="success">
+
+                    <div class="success-icon">
+
+                        <i class="ph ${icon}"></i>
+
+                    </div>
+
+
+                    <h2>
+
+                        ${escapeHTML(title)}
+
+                    </h2>
+
+
+                    <p>
+
+                        ${escapeHTML(description)}
+
+                    </p>
+
+
+                    <div class="info-card">
+
+                        <i class="ph ph-envelope-simple"></i>
+
+                        <span>
+
+                            Please check the email address
+                            associated with your verification
+                            application for any available
+                            verification updates.
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            return div;
+
+        })()
+
+    );
+}
+
+
+/* =========================================================
    SUCCESS
 ========================================================= */
 
-function showSuccess() {
+function showSuccess(data) {
 
     document.getElementById(
         "bottomActions"
@@ -4251,9 +3631,28 @@ function showSuccess() {
 
                         <br><br>
 
+                        A confirmation email has been sent to:
+
+                        <br>
+
+                        <strong>
+                            ${escapeHTML(
+                                formData.email
+                            )}
+                        </strong>
+
+                        <br><br>
+
+                        The email contains your private
+                        status code. Keep this code safe because
+                        it will be used to check the status of
+                        this verification request later.
+
+                        <br><br>
+
                         Appnetick will review the information
-                        provided and update the verification
-                        status when the review is complete.
+                        provided and send further updates to
+                        the same email address.
 
                     </p>
 
