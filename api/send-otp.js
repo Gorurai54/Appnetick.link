@@ -1,25 +1,13 @@
-import { Redis } from "@upstash/redis";
-import nodemailer from "nodemailer";
+const {
+    usersDB,
+    dataDB
+} = require("../lib/firebase");
 
+const cors =
+    require("../lib/cors");
 
-/*
-============================================================
-REDIS
-============================================================
-*/
-
-const redis = new Redis({
-
-  url:
-    process.env.UPSTASH_REDIS_REST_URL,
-
-  token:
-    process.env.UPSTASH_REDIS_REST_TOKEN
-
-});
-
-
-const OTP_EXPIRY = 5 * 60; // 5 minutes
+const crypto =
+    require("crypto");
 
 
 /*
@@ -28,598 +16,550 @@ HELPERS
 ============================================================
 */
 
+
+function normalizeUsername(value) {
+
+    return String(value || "")
+        .trim()
+        .replace(/^@+/, "")
+        .toLowerCase();
+
+}
+
+
 function safeString(value) {
 
-  return String(value || "").trim();
+    return String(value || "").trim();
 
 }
 
 
 /*
-------------------------------------------------------------
-HTML ESCAPE
-------------------------------------------------------------
-*/
-
-function escapeHtml(value) {
-
-  return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/*
-------------------------------------------------------------
-TEXT TO HTML
-------------------------------------------------------------
-*/
-
-function textToHtml(value) {
-
-  return escapeHtml(value)
-    .replace(/\r\n/g, "\n")
-    .replace(/\r/g, "\n")
-    .replace(/\n/g, "<br>");
-
-}
-
-
-/*
-------------------------------------------------------------
+============================================================
 EMAIL VALIDATION
-------------------------------------------------------------
+============================================================
 */
 
 function isValidEmail(email) {
 
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email
+    );
 
 }
 
 
 /*
 ============================================================
-CREATE TRANSPORTER
+GENERATE SECURE 12-DIGIT STATUS CODE
 ============================================================
 
-Both OTP and custom emails use the SAME Gmail account.
+Uses crypto.randomInt instead of Math.random().
+
 ============================================================
 */
 
-function createTransporter() {
+function generateStatusCode() {
 
-  return nodemailer.createTransport({
+    let code = "";
 
-    service: "gmail",
+    for (let i = 0; i < 3; i++) {
 
-    auth: {
-
-      user:
-        process.env.EMAIL_USER,
-
-      pass:
-        process.env.EMAIL_PASS
+        code += String(
+            crypto.randomInt(
+                0,
+                10000
+            )
+        ).padStart(4, "0");
 
     }
 
-  });
+    return code;
 
 }
 
 
 /*
 ============================================================
-CUSTOM EMAIL SENDER
+HASH STATUS CODE
 ============================================================
 */
 
-async function sendCustomEmail({
+function hashStatusCode(code) {
+
+    return crypto
+        .createHash("sha256")
+        .update(
+            String(code),
+            "utf8"
+        )
+        .digest("hex");
 
-  email,
-  subject,
-  title,
-  message,
-  details,
-  footerMessage
-
-}) {
-
-
-  const logoUrl =
-    process.env.LOGO_URL;
-
-
-  const transporter =
-    createTransporter();
-
-
-  /*
-  ----------------------------------------------------------
-  OPTIONAL DETAILS CARD
-  ----------------------------------------------------------
-  */
-
-  const detailsHtml =
-    details
-      ? `
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    margin-top:22px;
-    background:#FFFFFF;
-    border:1px solid #DCDCDC;
-    border-radius:18px;
-  "
->
-
-<tr>
-
-<td
-  style="
-    padding:18px;
-    color:#212121;
-    font-size:14px;
-    line-height:1.65;
-  "
->
-
-${textToHtml(details)}
-
-</td>
-
-</tr>
-
-</table>
-
-`
-      : "";
-
-
-  /*
-  ----------------------------------------------------------
-  OPTIONAL FOOTER MESSAGE
-  ----------------------------------------------------------
-  */
-
-  const footerHtml =
-    footerMessage
-      ? `
-
-<div
-  style="
-    margin-top:22px;
-    color:#757575;
-    font-size:13px;
-    line-height:1.6;
-  "
->
-
-${textToHtml(footerMessage)}
-
-</div>
-
-`
-      : "";
-
-
-  /*
-  ----------------------------------------------------------
-  SEND
-  ----------------------------------------------------------
-  */
-
-  await transporter.sendMail({
-
-    from:
-      `"Appnetick" <${process.env.EMAIL_USER}>`,
-
-    to:
-      email,
-
-    subject:
-      subject,
-
-    html: `
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<meta
-  name="color-scheme"
-  content="light dark"
->
-
-<meta
-  name="supported-color-schemes"
-  content="light dark"
->
-
-<title>Appnetick</title>
-
-</head>
-
-
-<body
-  style="
-    margin:0;
-    padding:0;
-    width:100%;
-    background:#FFFFFF;
-    color:#212121;
-    font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      Helvetica,
-      Arial,
-      sans-serif;
-  "
->
-
-
-<!-- =====================================================
-     OUTER WRAPPER
-===================================================== -->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    background:#FFFFFF;
-  "
->
-
-<tr>
-
-<td
-  align="center"
-  style="
-    padding:28px 14px 40px;
-  "
->
-
-
-<!-- =====================================================
-     EMAIL CONTAINER
-===================================================== -->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    max-width:620px;
-  "
->
-
-
-<!-- =====================================================
-     TOP TOOLBAR
-===================================================== -->
-
-<tr>
-
-<td
-  style="
-    padding:0 0 18px 0;
-  "
->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    height:62px;
-    background:#FFFFFF;
-    border:1px solid #DCDCDC;
-    border-radius:18px;
-  "
->
-
-<tr>
-
-<td
-  valign="middle"
-  style="
-    padding:0 18px;
-  "
->
-
-
-<!-- LOGO -->
-
-${
-  logoUrl
-    ? `
-
-<img
-  src="${escapeHtml(logoUrl)}"
-  width="42"
-  height="42"
-  alt="Appnetick"
-  style="
-    display:block;
-    width:42px;
-    height:42px;
-    object-fit:contain;
-    border:0;
-    border-radius:12px;
-  "
->
-
-`
-    : `
-
-<div
-  style="
-    width:42px;
-    height:42px;
-    line-height:42px;
-    text-align:center;
-    background:#2979FF;
-    border-radius:12px;
-    color:#FFFFFF;
-    font-size:20px;
-    font-weight:700;
-  "
->
-
-A
-
-</div>
-
-`
 }
 
 
-</td>
+/*
+============================================================
+GENERATE REQUEST ID
+============================================================
+*/
 
-</tr>
+function generateRequestId() {
 
-</table>
+    return (
+        "REQ_" +
+        crypto
+            .randomBytes(10)
+            .toString("hex")
+            .toUpperCase()
+    );
 
-</td>
+}
 
-</tr>
 
+/*
+============================================================
+FIND USER
+============================================================
 
-<!-- =====================================================
-     MAIN CARD
-===================================================== -->
+Priority:
 
-<tr>
+1. UsernameIndex/{username}
+2. Users/{uid}
+3. Firebase exact Username search
+4. Case-insensitive fallback
 
-<td>
+============================================================
+*/
 
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    background:#F7F7F7;
-    border:1px solid #DCDCDC;
-    border-radius:22px;
-  "
->
 
-<tr>
+async function findUser(username) {
 
-<td
-  style="
-    padding:30px 24px 28px;
-  "
->
+    /*
+    --------------------------------------------------------
+    UsernameIndex
+    --------------------------------------------------------
+    */
 
+    const indexSnapshot =
+        await usersDB
+            .ref(
+                "UsernameIndex/" +
+                username
+            )
+            .once("value");
 
-<!-- =====================================================
-     APPNETICK BADGE
-===================================================== -->
 
-<table
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
->
+    let uid = null;
 
-<tr>
 
-<td
-  style="
-    background:rgba(41,121,255,0.10);
-    border-radius:30px;
-    padding:8px 13px;
-    color:#2979FF;
-    font-size:13px;
-    font-weight:600;
-    line-height:1;
-  "
->
+    if (
+        indexSnapshot.exists()
+    ) {
 
-Appnetick
+        uid =
+            String(
+                indexSnapshot.val()
+            ).trim();
 
-</td>
+    }
 
-</tr>
 
-</table>
+    /*
+    --------------------------------------------------------
+    If index gave UID, load user directly
+    --------------------------------------------------------
+    */
 
+    if (uid) {
 
-<!-- =====================================================
-     HEADING
-===================================================== -->
+        const userSnapshot =
+            await usersDB
+                .ref(
+                    "Users/" +
+                    uid
+                )
+                .once("value");
 
-<div
-  style="
-    margin-top:20px;
-    color:#212121;
-    font-size:26px;
-    line-height:1.25;
-    font-weight:700;
-    letter-spacing:-0.7px;
-  "
->
 
-${escapeHtml(title)}
+        if (
+            userSnapshot.exists()
+        ) {
 
-</div>
+            const value =
+                userSnapshot.val() || {};
 
 
-<!-- =====================================================
-     MESSAGE
-===================================================== -->
+            return {
 
-<div
-  style="
-    margin-top:10px;
-    color:#757575;
-    font-size:14px;
-    line-height:1.65;
-  "
->
+                uid:
+                    value.uid ||
+                    uid,
 
-${textToHtml(message)}
+                username:
+                    value.Username ||
+                    value.username ||
+                    username,
 
-</div>
+                full_name:
+                    value.full_name ||
+                    "",
 
+                email:
+                    value.email ||
+                    "",
 
-<!-- =====================================================
-     DETAILS
-===================================================== -->
+                avatar:
+                    value.avatar ||
+                    "",
 
-${detailsHtml}
+                verified:
+                    value.verified === true ||
+                    value.verify === true
 
+            };
 
-<!-- =====================================================
-     FOOTER MESSAGE
-===================================================== -->
+        }
 
-${footerHtml}
+    }
 
 
-</td>
+    /*
+    --------------------------------------------------------
+    Firebase indexed search
+    --------------------------------------------------------
+    */
 
-</tr>
+    const snapshot =
+        await usersDB
+            .ref("Users")
+            .orderByChild("Username")
+            .equalTo(username)
+            .limitToFirst(1)
+            .once("value");
 
-</table>
 
-</td>
+    let user = null;
 
-</tr>
 
+    snapshot.forEach(
+        child => {
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+            if (user) {
+                return;
+            }
 
-<tr>
 
-<td
-  align="center"
-  style="
-    padding:24px 12px 0;
-  "
->
+            const value =
+                child.val() || {};
 
 
-<div
-  style="
-    color:#9E9E9E;
-    font-size:12px;
-    line-height:1.6;
-  "
->
+            user = {
 
-Appnetick
+                uid:
+                    value.uid ||
+                    child.key,
 
-</div>
+                username:
+                    value.Username ||
+                    value.username ||
+                    username,
 
+                full_name:
+                    value.full_name ||
+                    "",
 
-<div
-  style="
-    margin-top:4px;
-    color:#9E9E9E;
-    font-size:11px;
-    line-height:1.6;
-  "
->
+                email:
+                    value.email ||
+                    "",
 
-This is an automated email from Appnetick.
-Please do not reply to this message.
+                avatar:
+                    value.avatar ||
+                    "",
 
-</div>
+                verified:
+                    value.verified === true ||
+                    value.verify === true
 
+            };
 
-<div
-  style="
-    margin-top:10px;
-    color:#B0B0B0;
-    font-size:11px;
-    line-height:1.6;
-  "
->
+        }
+    );
 
-© ${new Date().getFullYear()} Appnetick
 
-</div>
+    if (user) {
 
+        return user;
 
-</td>
+    }
 
-</tr>
 
+    /*
+    --------------------------------------------------------
+    Case-insensitive fallback
+    --------------------------------------------------------
+    */
 
-</table>
+    const allSnapshot =
+        await usersDB
+            .ref("Users")
+            .once("value");
 
-<!-- END EMAIL CONTAINER -->
 
+    allSnapshot.forEach(
+        child => {
 
-</td>
+            if (user) {
+                return;
+            }
 
-</tr>
 
-</table>
+            const value =
+                child.val() || {};
 
-<!-- END OUTER WRAPPER -->
 
+            const storedUsername =
+                normalizeUsername(
+                    value.Username ||
+                    value.username ||
+                    ""
+                );
 
-</body>
 
-</html>
+            if (
+                storedUsername ===
+                username
+            ) {
 
-    `
+                user = {
 
-  });
+                    uid:
+                        value.uid ||
+                        child.key,
+
+                    username:
+                        value.Username ||
+                        value.username ||
+                        username,
+
+                    full_name:
+                        value.full_name ||
+                        "",
+
+                    email:
+                        value.email ||
+                        "",
+
+                    avatar:
+                        value.avatar ||
+                        "",
+
+                    verified:
+                        value.verified === true ||
+                        value.verify === true
+
+                };
+
+            }
+
+        }
+    );
+
+
+    return user;
+
+}
+
+
+/*
+============================================================
+SAFE VERIFICATION DATA
+============================================================
+
+Never expose private verification key or status code.
+
+============================================================
+*/
+
+
+function safeVerificationData(
+    value
+) {
+
+    if (!value) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        request_id:
+            value.request_id ||
+            "",
+
+        verification_status:
+            value.verification_status ||
+            "pending",
+
+        submitted_at:
+            value.submitted_at ||
+            0,
+
+        reviewed_at:
+            value.reviewed_at ||
+            0,
+
+        rejection_reason:
+            value.rejection_reason ||
+            ""
+
+    };
+
+}
+
+
+/*
+============================================================
+SEND CUSTOM EMAIL
+============================================================
+
+Uses existing Appnetick /api/send-otp.js custom email
+system.
+
+IMPORTANT:
+
+EMAIL_ADMIN_SECRET remains server-side only.
+
+============================================================
+*/
+
+
+async function sendCustomEmail({
+
+    email,
+    subject,
+    title,
+    message,
+    details,
+    footerMessage
+
+}) {
+
+    const secret =
+        safeString(
+            process.env.EMAIL_ADMIN_SECRET
+        );
+
+
+    const endpoint =
+        safeString(
+            process.env.APPNETICK_EMAIL_ENDPOINT
+        ) ||
+        "https://appnetick-link.vercel.app/api/send-otp.js";
+
+
+    if (!secret) {
+
+        throw new Error(
+            "EMAIL_ADMIN_SECRET is not configured."
+        );
+
+    }
+
+
+    if (!email || !isValidEmail(email)) {
+
+        throw new Error(
+            "Invalid recipient email."
+        );
+
+    }
+
+
+    const response =
+        await fetch(
+            endpoint,
+            {
+
+                method:
+                    "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        type:
+                            "custom",
+
+                        admin_secret:
+                            secret,
+
+                        email:
+                            email,
+
+                        subject:
+                            subject,
+
+                        title:
+                            title,
+
+                        message:
+                            message,
+
+                        details:
+                            details,
+
+                        footer_message:
+                            footerMessage
+
+                    })
+
+            }
+        );
+
+
+    let result = null;
+
+
+    try {
+
+        result =
+            await response.json();
+
+    } catch (e) {
+
+        result = null;
+
+    }
+
+
+    if (
+        !response.ok ||
+        !result ||
+        result.success !== true
+    ) {
+
+        console.error(
+            "Custom verification email failed:",
+            result
+        );
+
+        throw new Error(
+            "Unable to send verification email."
+        );
+
+    }
+
+
+    return true;
 
 }
 
@@ -630,1064 +570,1287 @@ MAIN HANDLER
 ============================================================
 */
 
-export default async function handler(req, res) {
 
-
-  /*
-  ==========================================================
-  METHOD
-  ==========================================================
-  */
-
-  if (req.method !== "POST") {
-
-    return res.status(405).json({
-
-      success:false,
-
-      message:
-        "POST only allowed"
-
-    });
-
-  }
-
-
-  try {
+module.exports =
+    async function handler(
+        req,
+        res
+    ) {
 
 
     /*
     ========================================================
-    REQUEST BODY
-    ========================================================
-    */
-
-    const body =
-      req.body || {};
-
-
-    /*
-    ========================================================
-    EMAIL TYPE
-    ========================================================
-    */
-
-    const emailType =
-      safeString(
-        body.type
-      )
-      .toLowerCase();
-
-
-    /*
-    ========================================================
-    CUSTOM EMAIL MODE
-    ========================================================
-
-    This mode does NOT generate any OTP/code.
-
-    Whatever page/backend calls this endpoint provides
-    the complete email content.
-
-    Example:
-
-    {
-      "type":"custom",
-      "email":"user@gmail.com",
-      "subject":"Application received",
-      "title":"Verification application received",
-      "message":"Your application was received.",
-      "details":"Status code: 123456789012",
-      "footer_message":"Keep this code safe."
-    }
-
-    The sender decides what goes inside the email.
+    CORS
     ========================================================
     */
 
     if (
-      emailType === "custom"
+        cors(req, res)
     ) {
 
-
-      /*
-      ------------------------------------------------------
-      ADMIN SECRET
-      ------------------------------------------------------
-      */
-
-      const adminSecret =
-        safeString(
-          body.admin_secret
-        );
-
-
-      const serverSecret =
-        safeString(
-          process.env.EMAIL_ADMIN_SECRET
-        );
-
-
-      if (
-        !serverSecret ||
-        !adminSecret ||
-        adminSecret !== serverSecret
-      ) {
-
-        return res.status(401).json({
-
-          success:false,
-
-          message:
-            "Unauthorized"
-
-        });
-
-      }
-
-
-      /*
-      ------------------------------------------------------
-      DATA
-      ------------------------------------------------------
-      */
-
-      const email =
-        safeString(
-          body.email
-        )
-        .toLowerCase();
-
-
-      const subject =
-        safeString(
-          body.subject
-        );
-
-
-      const title =
-        safeString(
-          body.title
-        );
-
-
-      const message =
-        safeString(
-          body.message
-        );
-
-
-      const details =
-        safeString(
-          body.details
-        );
-
-
-      const footerMessage =
-        safeString(
-          body.footer_message
-        );
-
-
-      /*
-      ------------------------------------------------------
-      VALIDATION
-      ------------------------------------------------------
-      */
-
-      if (!email) {
-
-        return res.status(400).json({
-
-          success:false,
-
-          message:
-            "Email is required"
-
-        });
-
-      }
-
-
-      if (!isValidEmail(email)) {
-
-        return res.status(400).json({
-
-          success:false,
-
-          message:
-            "Invalid email address"
-
-        });
-
-      }
-
-
-      if (!subject) {
-
-        return res.status(400).json({
-
-          success:false,
-
-          message:
-            "Subject is required"
-
-        });
-
-      }
-
-
-      if (!title) {
-
-        return res.status(400).json({
-
-          success:false,
-
-          message:
-            "Title is required"
-
-        });
-
-      }
-
-
-      if (!message) {
-
-        return res.status(400).json({
-
-          success:false,
-
-          message:
-            "Message is required"
-
-        });
-
-      }
-
-
-      /*
-      ------------------------------------------------------
-      SEND CUSTOM EMAIL
-      ------------------------------------------------------
-      */
-
-      await sendCustomEmail({
-
-        email,
-
-        subject,
-
-        title,
-
-        message,
-
-        details,
-
-        footerMessage
-
-      });
-
-
-      /*
-      ------------------------------------------------------
-      SUCCESS
-      ------------------------------------------------------
-      */
-
-      return res.status(200).json({
-
-        success:true,
-
-        message:
-          "Email sent successfully"
-
-      });
+        return;
 
     }
 
 
     /*
     ========================================================
-    EXISTING OTP SYSTEM
-    ========================================================
-
-    IMPORTANT:
-
-    This branch remains the normal Appnetick OTP system.
-
-    Existing request:
-
-    POST /api/send-otp
-
-    {
-      "email":"example@gmail.com"
-    }
-
+    DETERMINE ACTION
     ========================================================
     */
 
-
-    const email =
-      safeString(
-        body.email
-      );
-
-
-    if (!email) {
-
-      return res.status(400).json({
-
-        success:false,
-
-        message:
-          "Email is required"
-
-      });
-
-    }
+    const action =
+        typeof req.query.action === "string"
+            ? req.query.action
+                .trim()
+                .toLowerCase()
+            : "";
 
 
     /*
-    --------------------------------------------------------
-    NORMALIZE EMAIL
-    --------------------------------------------------------
-    */
-
-    const normalizedEmail =
-      email
-        .trim()
-        .toLowerCase();
-
-
-    /*
-    --------------------------------------------------------
-    VALIDATE EMAIL
-    --------------------------------------------------------
+    ========================================================
+    CHECK USERNAME
+    ========================================================
     */
 
     if (
-      !isValidEmail(
-        normalizedEmail
-      )
+        action === "check-username"
     ) {
 
-      return res.status(400).json({
 
-        success:false,
+        if (
+            req.method !== "GET"
+        ) {
 
-        message:
-          "Invalid email address"
+            return res
+                .status(405)
+                .json({
 
-      });
+                    success:false,
+
+                    error:
+                        "Method not allowed."
+
+                });
+
+        }
+
+
+        try {
+
+            let username =
+                req.query.username;
+
+
+            if (
+                !username ||
+                typeof username !== "string"
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+
+                        success:false,
+
+                        error:
+                            "Username is required."
+
+                    });
+
+            }
+
+
+            username =
+                normalizeUsername(
+                    username
+                );
+
+
+            if (!username) {
+
+                return res
+                    .status(400)
+                    .json({
+
+                        success:false,
+
+                        error:
+                            "Invalid username."
+
+                    });
+
+            }
+
+
+            if (
+                username.length > 50
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+
+                        success:false,
+
+                        error:
+                            "Invalid username."
+
+                    });
+
+            }
+
+
+            const user =
+                await findUser(
+                    username
+                );
+
+
+            if (!user) {
+
+                return res
+                    .status(200)
+                    .json({
+
+                        success:true,
+
+                        exists:false
+
+                    });
+
+            }
+
+
+            const verificationSnapshot =
+                await dataDB
+                    .ref(
+                        `VerificationRequests/${user.uid}`
+                    )
+                    .once("value");
+
+
+            let verification =
+                null;
+
+
+            if (
+                verificationSnapshot.exists()
+            ) {
+
+                verification =
+                    safeVerificationData(
+                        verificationSnapshot.val()
+                    );
+
+            }
+
+
+            return res
+                .status(200)
+                .json({
+
+                    success:true,
+
+                    exists:true,
+
+                    user:user,
+
+                    verification:
+                        verification
+
+                });
+
+
+        } catch(error) {
+
+            console.error(
+                "verification check-username:",
+                error
+            );
+
+
+            return res
+                .status(500)
+                .json({
+
+                    success:false,
+
+                    error:
+                        "Internal server error."
+
+                });
+
+        }
 
     }
 
 
     /*
-    --------------------------------------------------------
-    GENERATE 6-DIGIT OTP
-    --------------------------------------------------------
+    ========================================================
+    STATUS
+    ========================================================
+
+    NEW:
+
+    GET /api/verification?action=status&status_code=123456789012
+
+    Username is NOT required.
+
+    ========================================================
     */
 
-    const otp =
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      )
-      .toString();
+    if (
+        action === "status"
+    ) {
 
 
-    /*
-    --------------------------------------------------------
-    REDIS KEY
-    --------------------------------------------------------
-    */
+        if (
+            req.method !== "GET"
+        ) {
 
-    const redisKey =
-      `appnetick:otp:${normalizedEmail}`;
+            return res
+                .status(405)
+                .json({
 
+                    success:false,
 
-    /*
-    --------------------------------------------------------
-    SAVE OTP FOR 5 MINUTES
-    --------------------------------------------------------
-    */
+                    error:
+                        "Method not allowed."
 
-    await redis.set(
+                });
 
-      redisKey,
-
-      JSON.stringify({
-
-        otp:
-          otp,
-
-        attempts:
-          0,
-
-        createdAt:
-          Date.now()
-
-      }),
-
-      {
-
-        ex:
-          OTP_EXPIRY
-
-      }
-
-    );
+        }
 
 
-    /*
-    --------------------------------------------------------
-    LOGO
-    --------------------------------------------------------
-    */
+        try {
 
-    const logoUrl =
-      process.env.LOGO_URL;
+            /*
+            ------------------------------------------------
+            STATUS CODE
+            ------------------------------------------------
+            */
+
+            const rawStatusCode =
+                typeof req.query.status_code === "string"
+                    ? req.query.status_code.trim()
+                    : "";
 
 
-    /*
-    --------------------------------------------------------
-    TRANSPORTER
-    --------------------------------------------------------
-    */
+            if (!rawStatusCode) {
 
-    const transporter =
-      createTransporter();
+                return res
+                    .status(400)
+                    .json({
+
+                        success:false,
+
+                        error:
+                            "Status code is required."
+
+                    });
+
+            }
+
+
+            /*
+            ------------------------------------------------
+            Exactly 12 digits
+            ------------------------------------------------
+            */
+
+            if (
+                !/^\d{12}$/.test(
+                    rawStatusCode
+                )
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+
+                        success:false,
+
+                        code:
+                            "INVALID_STATUS_CODE",
+
+                        error:
+                            "Invalid verification status code."
+
+                    });
+
+            }
+
+
+            /*
+            ------------------------------------------------
+            HASH
+            ------------------------------------------------
+            */
+
+            const statusHash =
+                hashStatusCode(
+                    rawStatusCode
+                );
+
+
+            /*
+            ------------------------------------------------
+            LOOKUP STATUS CODE
+            ------------------------------------------------
+            */
+
+            const codeSnapshot =
+                await dataDB
+                    .ref(
+                        `VerificationStatusCodes/${statusHash}`
+                    )
+                    .once("value");
+
+
+            if (
+                !codeSnapshot.exists()
+            ) {
+
+                return res
+                    .status(200)
+                    .json({
+
+                        valid:false,
+
+                        code:
+                            "INVALID_STATUS_CODE",
+
+                        error:
+                            "Invalid verification status code."
+
+                    });
+
+            }
+
+
+            const codeData =
+                codeSnapshot.val() || {};
+
+
+            const uid =
+                safeString(
+                    codeData.uid
+                );
+
+
+            const requestId =
+                safeString(
+                    codeData.request_id
+                );
+
+
+            if (
+                !uid ||
+                !requestId
+            ) {
+
+                return res
+                    .status(200)
+                    .json({
+
+                        valid:false,
+
+                        code:
+                            "INVALID_STATUS_CODE",
+
+                        error:
+                            "Invalid verification status code."
+
+                    });
+
+            }
+
+
+            /*
+            ------------------------------------------------
+            LOAD USER
+            ------------------------------------------------
+            */
+
+            const userSnapshot =
+                await usersDB
+                    .ref(
+                        `Users/${uid}`
+                    )
+                    .once("value");
+
+
+            if (
+                !userSnapshot.exists()
+            ) {
+
+                return res
+                    .status(200)
+                    .json({
+
+                        valid:false,
+
+                        code:
+                            "ACCOUNT_NOT_FOUND",
+
+                        error:
+                            "Account not found."
+
+                    });
+
+            }
+
+
+            const userData =
+                userSnapshot.val() || {};
+
+
+            /*
+            ------------------------------------------------
+            LOAD VERIFICATION REQUEST
+            ------------------------------------------------
+            */
+
+            const verificationSnapshot =
+                await dataDB
+                    .ref(
+                        `VerificationRequests/${uid}`
+                    )
+                    .once("value");
+
+
+            if (
+                !verificationSnapshot.exists()
+            ) {
+
+                return res
+                    .status(200)
+                    .json({
+
+                        valid:false,
+
+                        code:
+                            "REQUEST_NOT_FOUND",
+
+                        error:
+                            "Verification request not found."
+
+                    });
+
+            }
+
+
+            const verification =
+                verificationSnapshot.val() || {};
+
+
+            /*
+            ------------------------------------------------
+            ENSURE CODE BELONGS TO SAME REQUEST
+            ------------------------------------------------
+            */
+
+            if (
+                String(
+                    verification.request_id ||
+                    ""
+                ) !== requestId
+            ) {
+
+                return res
+                    .status(200)
+                    .json({
+
+                        valid:false,
+
+                        code:
+                            "INVALID_STATUS_CODE",
+
+                        error:
+                            "Invalid verification status code."
+
+                    });
+
+            }
+
+
+            /*
+            ------------------------------------------------
+            SAFE RESPONSE
+            ------------------------------------------------
+
+            NEVER return:
+
+            - status code
+            - status hash
+            - private verification key
+            - email
+            - phone
+            - legal name
+
+            ------------------------------------------------
+            */
+
+            const safeUser = {
+
+                username:
+                    userData.Username ||
+                    userData.username ||
+                    "",
+
+                full_name:
+                    userData.full_name ||
+                    "",
+
+                avatar:
+                    userData.avatar ||
+                    ""
+
+            };
+
+
+            return res
+                .status(200)
+                .json({
+
+                    valid:true,
+
+                    status:
+                        verification.verification_status ||
+                        "pending",
+
+                    user:
+                        safeUser,
+
+                    verification: {
+
+                        request_id:
+                            verification.request_id ||
+                            requestId,
+
+                        verification_status:
+                            verification.verification_status ||
+                            "pending",
+
+                        submitted_at:
+                            verification.submitted_at ||
+                            0,
+
+                        reviewed_at:
+                            verification.reviewed_at ||
+                            0,
+
+                        rejection_reason:
+                            verification.rejection_reason ||
+                            ""
+
+                    }
+
+                });
+
+
+        } catch(error) {
+
+            console.error(
+                "verification status:",
+                error
+            );
+
+
+            return res
+                .status(500)
+                .json({
+
+                    success:false,
+
+                    error:
+                        "Unable to fetch verification status."
+
+                });
+
+        }
+
+    }
 
 
     /*
     ========================================================
-    EXISTING OTP EMAIL
+    SUBMIT
     ========================================================
     */
 
-    await transporter.sendMail({
-
-      from:
-        `"Appnetick" <${process.env.EMAIL_USER}>`,
+    if (
+        action === "submit"
+    ) {
 
-      to:
-        normalizedEmail,
-
-      subject:
-        "Your Appnetick verification code",
-
-      html: `
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<meta
-  name="color-scheme"
-  content="light dark"
->
-
-<meta
-  name="supported-color-schemes"
-  content="light dark"
->
-
-<title>Appnetick Verification</title>
-
-</head>
-
-
-<body
-  style="
-    margin:0;
-    padding:0;
-    width:100%;
-    background:#FFFFFF;
-    color:#212121;
-    font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      Helvetica,
-      Arial,
-      sans-serif;
-  "
->
-
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    background:#FFFFFF;
-  "
->
-
-<tr>
-
-<td
-  align="center"
-  style="
-    padding:28px 14px 40px;
-  "
->
-
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    max-width:620px;
-  "
->
-
-
-<!-- TOOLBAR -->
-
-<tr>
-
-<td
-  style="
-    padding:0 0 18px 0;
-  "
->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    height:62px;
-    background:#FFFFFF;
-    border:1px solid #DCDCDC;
-    border-radius:18px;
-  "
->
-
-<tr>
-
-<td
-  valign="middle"
-  style="
-    padding:0 18px;
-  "
->
-
-${
-  logoUrl
-    ? `
-
-<img
-  src="${escapeHtml(logoUrl)}"
-  width="42"
-  height="42"
-  alt="Appnetick"
-  style="
-    display:block;
-    width:42px;
-    height:42px;
-    object-fit:contain;
-    border:0;
-    border-radius:12px;
-  "
->
-
-`
-    : `
-
-<div
-  style="
-    width:42px;
-    height:42px;
-    line-height:42px;
-    text-align:center;
-    background:#2979FF;
-    border-radius:12px;
-    color:#FFFFFF;
-    font-size:20px;
-    font-weight:700;
-  "
->
-A
-</div>
-
-`
-}
-
-</td>
-
-</tr>
-
-</table>
-
-</td>
-
-</tr>
-
-
-<!-- MAIN CARD -->
-
-<tr>
-
-<td>
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    background:#F7F7F7;
-    border:1px solid #DCDCDC;
-    border-radius:22px;
-  "
->
-
-<tr>
-
-<td
-  style="
-    padding:30px 24px 28px;
-  "
->
-
-
-<!-- BADGE -->
-
-<table
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
->
-
-<tr>
-
-<td
-  style="
-    background:rgba(41,121,255,0.10);
-    border-radius:30px;
-    padding:8px 13px;
-    color:#2979FF;
-    font-size:13px;
-    font-weight:600;
-    line-height:1;
-  "
->
-
-Email verification
-
-</td>
-
-</tr>
-
-</table>
-
-
-<!-- HEADING -->
-
-<div
-  style="
-    margin-top:20px;
-    color:#212121;
-    font-size:26px;
-    line-height:1.25;
-    font-weight:700;
-    letter-spacing:-0.7px;
-  "
->
-
-Verify your email
-
-</div>
-
-
-<!-- DESCRIPTION -->
-
-<div
-  style="
-    margin-top:10px;
-    color:#757575;
-    font-size:14px;
-    line-height:1.65;
-  "
->
-
-Use the verification code below to
-continue with your Appnetick account.
-
-</div>
-
-
-<!-- OTP CARD -->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    margin-top:24px;
-    background:#FFFFFF;
-    border:1px solid #DCDCDC;
-    border-radius:18px;
-  "
->
-
-<tr>
-
-<td
-  align="center"
-  style="
-    padding:25px 16px 23px;
-  "
->
-
-<div
-  style="
-    color:#757575;
-    font-size:12px;
-    line-height:1.4;
-    font-weight:500;
-    margin-bottom:8px;
-  "
->
-
-YOUR VERIFICATION CODE
-
-</div>
-
-
-<div
-  style="
-    color:#2979FF;
-    font-size:38px;
-    line-height:1.25;
-    font-weight:700;
-    letter-spacing:7px;
-    padding-left:7px;
-  "
->
-
-${otp}
-
-</div>
-
-</td>
-
-</tr>
-
-</table>
-
-
-<!-- EXPIRY -->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    margin-top:14px;
-  "
->
-
-<tr>
-
-<td
-  style="
-    padding:0;
-  "
->
-
-<div
-  style="
-    color:#757575;
-    font-size:13px;
-    line-height:1.5;
-  "
->
-
-This code expires in
-<strong style="color:#212121;">
-5 minutes
-</strong>.
-
-</div>
-
-</td>
-
-</tr>
-
-</table>
-
-
-<!-- SECURITY CARD -->
-
-<table
-  width="100%"
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
-  style="
-    width:100%;
-    margin-top:22px;
-    background:#FFFFFF;
-    border:1px solid #DCDCDC;
-    border-radius:18px;
-  "
->
-
-<tr>
-
-<td
-  style="
-    padding:17px 18px;
-  "
->
-
-<table
-  cellpadding="0"
-  cellspacing="0"
-  border="0"
->
 
-<tr>
+        if (
+            req.method !== "POST"
+        ) {
 
-<td
-  valign="top"
-  style="
-    width:34px;
-    padding-right:12px;
-  "
->
+            return res
+                .status(405)
+                .json({
 
-<div
-  style="
-    width:32px;
-    height:32px;
-    line-height:32px;
-    text-align:center;
-    background:rgba(41,121,255,0.10);
-    border-radius:10px;
-    color:#2979FF;
-    font-size:15px;
-    font-weight:700;
-  "
->
+                    success:false,
 
-✓
+                    error:
+                        "Method not allowed."
 
-</div>
+                });
 
-</td>
+        }
 
 
-<td
-  valign="top"
->
+        try {
 
-<div
-  style="
-    color:#212121;
-    font-size:14px;
-    line-height:1.45;
-    font-weight:600;
-    margin-bottom:3px;
-  "
->
+            const body =
+                req.body || {};
 
-Keep your code private
 
-</div>
+            /*
+            ------------------------------------------------
+            USERNAME
+            ------------------------------------------------
 
+            Username is ONLY used to identify the existing
+            Appnetick account.
 
-<div
-  style="
-    color:#757575;
-    font-size:13px;
-    line-height:1.55;
-  "
->
+            UID is NEVER accepted from frontend.
 
-Appnetick will never ask you to share
-your verification code with anyone.
+            ------------------------------------------------
+            */
 
-</div>
+            const username =
+                normalizeUsername(
+                    body.username
+                );
 
-</td>
 
-</tr>
+            if (!username) {
 
-</table>
+                return res
+                    .status(400)
+                    .json({
 
-</td>
+                        success:false,
 
-</tr>
+                        error:
+                            "Username is required."
 
-</table>
+                    });
 
+            }
 
-<!-- NOT REQUESTED -->
 
-<div
-  style="
-    margin-top:22px;
-    color:#757575;
-    font-size:13px;
-    line-height:1.6;
-  "
->
+            if (
+                username.length > 50
+            ) {
 
-If you did not request this code,
-you can safely ignore this email.
+                return res
+                    .status(400)
+                    .json({
 
-</div>
+                        success:false,
 
+                        error:
+                            "Invalid username."
 
-</td>
+                    });
 
-</tr>
+            }
 
-</table>
 
-</td>
+            /*
+            ------------------------------------------------
+            FIND ACTUAL ACCOUNT
+            ------------------------------------------------
+            */
 
-</tr>
+            const actualUser =
+                await findUser(
+                    username
+                );
 
 
-<!-- FOOTER -->
+            if (!actualUser) {
 
-<tr>
+                return res
+                    .status(404)
+                    .json({
 
-<td
-  align="center"
-  style="
-    padding:24px 12px 0;
-  "
->
+                        success:false,
 
+                        code:
+                            "USERNAME_NOT_FOUND",
 
-<div
-  style="
-    color:#9E9E9E;
-    font-size:12px;
-    line-height:1.6;
-  "
->
+                        error:
+                            "Username not found."
 
-Appnetick
+                    });
 
-</div>
+            }
 
 
-<div
-  style="
-    margin-top:4px;
-    color:#9E9E9E;
-    font-size:11px;
-    line-height:1.6;
-  "
->
+            /*
+            =================================================
+            ACCOUNT EMAIL
+            =================================================
 
-This is an automated verification email.
-Please do not reply to this message.
+            The email stored in Users is used.
 
-</div>
+            We do NOT trust a frontend email for account
+            verification notifications.
 
+            =================================================
+            */
 
-<div
-  style="
-    margin-top:10px;
-    color:#B0B0B0;
-    font-size:11px;
-    line-height:1.6;
-  "
->
+            const accountEmail =
+                safeString(
+                    actualUser.email
+                )
+                .toLowerCase();
 
-© ${new Date().getFullYear()} Appnetick
 
-</div>
+            if (
+                !accountEmail ||
+                !isValidEmail(accountEmail)
+            ) {
 
+                return res
+                    .status(400)
+                    .json({
 
-</td>
+                        success:false,
 
-</tr>
+                        code:
+                            "ACCOUNT_EMAIL_NOT_FOUND",
 
+                        error:
+                            "The Appnetick account does not have a valid email address."
 
-</table>
+                    });
 
+            }
 
-</td>
 
-</tr>
+            /*
+            ------------------------------------------------
+            EXISTING REQUEST
+            ------------------------------------------------
+            */
 
-</table>
+            const existingSnapshot =
+                await dataDB
+                    .ref(
+                        `VerificationRequests/${actualUser.uid}`
+                    )
+                    .once("value");
 
 
-</body>
+            if (
+                existingSnapshot.exists()
+            ) {
 
-</html>
+                const existing =
+                    existingSnapshot.val() || {};
 
-      `
 
-    });
+                const existingStatus =
+                    String(
+                        existing.verification_status ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                /*
+                --------------------------------------------
+                ALREADY APPROVED
+                --------------------------------------------
+                */
+
+                if (
+                    existingStatus ===
+                    "approved"
+                ) {
+
+                    return res
+                        .status(409)
+                        .json({
+
+                            success:false,
+
+                            code:
+                                "ALREADY_VERIFIED",
+
+                            error:
+                                "This account is already verified."
+
+                        });
+
+                }
+
+
+                /*
+                --------------------------------------------
+                ALREADY PENDING
+                --------------------------------------------
+                */
+
+                if (
+                    existingStatus ===
+                    "pending"
+                ) {
+
+                    return res
+                        .status(409)
+                        .json({
+
+                            success:false,
+
+                            code:
+                                "ALREADY_PENDING",
+
+                            error:
+                                "A verification application is already under review."
+
+                        });
+
+                }
+
+            }
+
+
+            /*
+            =================================================
+            REQUIRED CONFIRMATIONS
+            =================================================
+            */
+
+            const authenticityConfirmed =
+                body.authenticity_confirmed === true;
+
+
+            const informationConfirmed =
+                body.information_confirmed === true;
+
+
+            const termsConfirmed =
+                body.terms_confirmed === true;
+
+
+            if (
+                !authenticityConfirmed ||
+                !informationConfirmed ||
+                !termsConfirmed
+            ) {
+
+                return res
+                    .status(400)
+                    .json({
+
+                        success:false,
+
+                        error:
+                            "All confirmations are required."
+
+                    });
+
+            }
+
+
+            /*
+            =================================================
+            REQUEST ID
+            =================================================
+            */
+
+            const requestId =
+                generateRequestId();
+
+
+            /*
+            =================================================
+            STATUS CODE
+            =================================================
+
+            RAW 12-digit code is only returned to the
+            applicant once.
+
+            Firebase stores only its SHA-256 hash.
+
+            =================================================
+            */
+
+            const statusCode =
+                generateStatusCode();
+
+
+            const statusCodeHash =
+                hashStatusCode(
+                    statusCode
+                );
+
+
+            /*
+            =================================================
+            VERIFICATION DATA
+            =================================================
+
+            Password / PIN are NEVER saved.
+
+            UID comes ONLY from username lookup.
+
+            =================================================
+            */
+
+            const verificationData = {
+
+                uid:
+                    actualUser.uid,
+
+                request_id:
+                    requestId,
+
+                username:
+                    actualUser.username,
+
+                full_name:
+                    actualUser.full_name,
+
+                legal_name:
+                    safeString(
+                        body.legal_name
+                    ),
+
+                email:
+                    accountEmail,
+
+                date_of_birth:
+                    safeString(
+                        body.date_of_birth
+                    ),
+
+                country:
+                    safeString(
+                        body.country
+                    ),
+
+                phone:
+                    safeString(
+                        body.phone
+                    ),
+
+                account_category:
+                    safeString(
+                        body.account_category
+                    ),
+
+                profession:
+                    safeString(
+                        body.profession
+                    ),
+
+                verification_reason:
+                    safeString(
+                        body.verification_reason
+                    ),
+
+                known_for:
+                    safeString(
+                        body.known_for
+                    ),
+
+                website:
+                    safeString(
+                        body.website
+                    ),
+
+                social_profile:
+                    safeString(
+                        body.social_profile
+                    ),
+
+                audience:
+                    safeString(
+                        body.audience
+                    ),
+
+                content_category:
+                    safeString(
+                        body.content_category
+                    ),
+
+                achievement:
+                    safeString(
+                        body.achievement
+                    ),
+
+                public_presence:
+                    safeString(
+                        body.public_presence
+                    ),
+
+                authenticity_confirmed:
+                    authenticityConfirmed,
+
+                information_confirmed:
+                    informationConfirmed,
+
+                terms_confirmed:
+                    termsConfirmed,
+
+                verification_status:
+                    "pending",
+
+                submitted_at:
+                    Date.now(),
+
+                reviewed_at:
+                    0,
+
+                reviewed_by:
+                    "",
+
+                rejection_reason:
+                    "",
+
+                verification_key_hash:
+                    "",
+
+                verification_key_created_at:
+                    0,
+
+                verification_key_redeemed:
+                    false,
+
+                verification_verified_at:
+                    0
+
+            };
+
+
+            /*
+            =================================================
+            SAVE APPLICATION + STATUS CODE
+            =================================================
+
+            We save both records.
+
+            If status-code mapping fails, application is
+            removed so we don't create an application whose
+            status code cannot be checked.
+
+            =================================================
+            */
+
+            const requestRef =
+                dataDB
+                    .ref(
+                        `VerificationRequests/${actualUser.uid}`
+                    );
+
+
+            const statusCodeRef =
+                dataDB
+                    .ref(
+                        `VerificationStatusCodes/${statusCodeHash}`
+                    );
+
+
+            await requestRef
+                .set(
+                    verificationData
+                );
+
+
+            try {
+
+                await statusCodeRef
+                    .set({
+
+                        uid:
+                            actualUser.uid,
+
+                        request_id:
+                            requestId,
+
+                        created_at:
+                            Date.now(),
+
+                        active:
+                            true
+
+                    });
+
+            } catch(error) {
+
+                /*
+                --------------------------------------------
+                ROLLBACK APPLICATION
+                --------------------------------------------
+                */
+
+                try {
+
+                    await requestRef.remove();
+
+                } catch (rollbackError) {
+
+                    console.error(
+                        "Verification rollback error:",
+                        rollbackError
+                    );
+
+                }
+
+
+                throw error;
+
+            }
+
+
+            /*
+            =================================================
+            SEND STATUS CODE EMAIL
+            =================================================
+            */
+
+            try {
+
+                await sendCustomEmail({
+
+                    email:
+                        accountEmail,
+
+                    subject:
+                        "Your Appnetick verification application status code",
+
+                    title:
+                        "Application received",
+
+                    message:
+                        "Your Appnetick verification application has been successfully submitted. Use the 12-digit status code below to check your application status.",
+
+                    details:
+                        "Status code: " +
+                        statusCode +
+                        "\n\nRequest ID: " +
+                        requestId,
+
+                    footerMessage:
+                        "Keep this status code safe. You will need it to check the status of your verification application. Appnetick will never ask you to share this code with anyone."
+
+                });
+
+            } catch(emailError) {
+
+                console.error(
+                    "Verification status email error:",
+                    emailError
+                );
+
+
+                /*
+                ------------------------------------------------
+                IMPORTANT
+                ------------------------------------------------
+
+                Application + status code already exist.
+
+                We do NOT delete the application just because
+                email delivery failed.
+
+                The code is returned to the frontend so the
+                application page can show/save it.
+
+                ------------------------------------------------
+                */
+
+            }
+
+
+            /*
+            =================================================
+            SUCCESS
+            =================================================
+
+            The raw status code is returned once.
+
+            It is NOT stored in Firebase.
+
+            =================================================
+            */
+
+            return res
+                .status(200)
+                .json({
+
+                    success:true,
+
+                    uid:
+                        actualUser.uid,
+
+                    username:
+                        actualUser.username,
+
+                    request_id:
+                        requestId,
+
+                    status_code:
+                        statusCode,
+
+                    verification_status:
+                        "pending",
+
+                    message:
+                        "Verification application submitted successfully."
+
+                });
+
+
+        } catch(error) {
+
+            console.error(
+                "verification submit:",
+                error
+            );
+
+
+            return res
+                .status(500)
+                .json({
+
+                    success:false,
+
+                    error:
+                        "Unable to submit verification application."
+
+                });
+
+        }
+
+    }
 
 
     /*
     ========================================================
-    OTP SUCCESS
+    UNKNOWN ACTION
     ========================================================
     */
 
-    return res.status(200).json({
+    return res
+        .status(400)
+        .json({
 
-      success:true,
+            success:false,
 
-      message:
-        "OTP sent successfully"
+            error:
+                "Invalid verification action."
 
-    });
+        });
 
-
-  } catch (error) {
-
-
-    console.error(
-      "Send OTP Error:",
-      error
-    );
-
-
-    return res.status(500).json({
-
-      success:false,
-
-      message:
-        "Failed to send email"
-
-    });
-
-  }
-
-}
+};
