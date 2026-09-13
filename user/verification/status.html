@@ -26,6 +26,10 @@
 
 <style>
 
+/* =========================================================
+   ROOT
+========================================================= */
+
 :root {
 
     --bg:#FFFFFF;
@@ -37,7 +41,6 @@
     --muted:#9E9E9E;
 
     --border:#DCDCDC;
-
     --input-bg:#F5F5F5;
 
     --primary:#2979FF;
@@ -55,6 +58,10 @@
 }
 
 
+/* =========================================================
+   DARK THEME
+========================================================= */
+
 html[data-theme="dark"] {
 
     --bg:#1E1E1E;
@@ -66,7 +73,6 @@ html[data-theme="dark"] {
     --muted:#777777;
 
     --border:#424242;
-
     --input-bg:#252525;
 
     --primary:#2979FF;
@@ -81,34 +87,40 @@ html[data-theme="dark"] {
 }
 
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
+
+    margin:0;
+    padding:0;
 
     box-sizing:border-box;
 
-    -webkit-tap-highlight-color:transparent;
+    font-family:'Inter',sans-serif;
 
+    -webkit-tap-highlight-color:transparent;
 }
 
 
-html,
+html {
+
+    scroll-behavior:smooth;
+}
+
+
 body {
 
     margin:0;
     padding:0;
 
     width:100%;
-    min-height:100%;
-
-}
-
-
-body {
+    min-height:100vh;
 
     background:var(--bg);
 
     color:var(--text);
-
-    font-family:Inter,sans-serif;
 
     overflow-x:hidden;
 
@@ -122,9 +134,12 @@ button,
 input {
 
     font-family:inherit;
-
 }
 
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
 .toolbar {
 
@@ -149,7 +164,6 @@ input {
     background:var(--surface);
 
     border-bottom:1px solid var(--border);
-
 }
 
 
@@ -160,7 +174,6 @@ input {
     align-items:center;
 
     gap:4px;
-
 }
 
 
@@ -171,7 +184,6 @@ input {
     font-weight:700;
 
     letter-spacing:-.4px;
-
 }
 
 
@@ -182,7 +194,6 @@ input {
     align-items:center;
 
     gap:4px;
-
 }
 
 
@@ -198,6 +209,7 @@ input {
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     background:transparent;
@@ -208,22 +220,39 @@ input {
 
     font-size:22px;
 
+    outline:none;
+
+    -webkit-appearance:none;
+
+    appearance:none;
+}
+
+
+.icon-btn:focus,
+.icon-btn:focus-visible {
+
+    outline:none;
+
+    box-shadow:none;
 }
 
 
 .icon-btn:active {
 
     transform:scale(.92);
-
 }
 
 
 #toolbarBack {
 
     visibility:hidden;
-
 }
 
+
+/* =========================================================
+   PAGE
+   SAME ALIGNMENT AS VERIFICATION PAGE
+========================================================= */
 
 .page {
 
@@ -240,17 +269,19 @@ input {
 
     min-height:
         calc(100vh - 64px);
-
 }
 
 
+/* =========================================================
+   HEADER
+========================================================= */
+
 .page-header {
 
-    text-align:center;
+    text-align:left;
 
     padding:
         8px 0 28px;
-
 }
 
 
@@ -262,11 +293,12 @@ input {
     border-radius:23px;
 
     margin:
-        0 auto 20px;
+        0 0 20px;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     background:var(--primary-soft);
@@ -274,7 +306,6 @@ input {
     color:var(--primary);
 
     font-size:38px;
-
 }
 
 
@@ -289,7 +320,6 @@ input {
     font-weight:700;
 
     letter-spacing:-.5px;
-
 }
 
 
@@ -302,9 +332,12 @@ input {
     font-size:14px;
 
     line-height:1.6;
-
 }
 
+
+/* =========================================================
+   SEARCH / CODE CARD
+========================================================= */
 
 .search-card {
 
@@ -315,7 +348,6 @@ input {
     background:var(--surface-secondary);
 
     border:1px solid var(--border);
-
 }
 
 
@@ -330,7 +362,19 @@ input {
     font-weight:600;
 
     color:var(--text);
+}
 
+
+.search-help {
+
+    margin:
+        -2px 0 14px;
+
+    color:var(--secondary);
+
+    font-size:12px;
+
+    line-height:1.5;
 }
 
 
@@ -339,7 +383,6 @@ input {
     position:relative;
 
     width:100%;
-
 }
 
 
@@ -358,7 +401,6 @@ input {
     font-size:21px;
 
     pointer-events:none;
-
 }
 
 
@@ -384,9 +426,15 @@ input {
 
     font-size:15px;
 
+    letter-spacing:1.5px;
+
     transition:
         border .2s ease,
         box-shadow .2s ease;
+
+    -webkit-appearance:none;
+
+    appearance:none;
 }
 
 
@@ -394,6 +442,7 @@ input {
 
     color:var(--muted);
 
+    letter-spacing:0;
 }
 
 
@@ -404,9 +453,12 @@ input {
     box-shadow:
         0 0 0 3px
         var(--primary-soft);
-
 }
 
+
+/* =========================================================
+   BUTTON
+========================================================= */
 
 .button-row {
 
@@ -415,7 +467,6 @@ input {
     gap:9px;
 
     margin-top:12px;
-
 }
 
 
@@ -447,6 +498,10 @@ input {
     transition:
         transform .15s ease,
         opacity .15s ease;
+
+    -webkit-appearance:none;
+
+    appearance:none;
 }
 
 
@@ -478,7 +533,6 @@ input {
     opacity:.88;
 
     transform:translateY(-1px);
-
 }
 
 
@@ -486,7 +540,6 @@ input {
 .secondary-button:active {
 
     transform:scale(.98);
-
 }
 
 
@@ -497,9 +550,12 @@ input {
     cursor:not-allowed;
 
     transform:none;
-
 }
 
+
+/* =========================================================
+   LOADING
+========================================================= */
 
 .loading-card {
 
@@ -518,7 +574,6 @@ input {
     align-items:center;
 
     gap:11px;
-
 }
 
 
@@ -538,306 +593,12 @@ input {
     color:var(--secondary);
 
     font-size:13px;
-
 }
 
 
-.result {
-
-    display:none;
-
-    margin-top:20px;
-
-}
-
-
-.user-card {
-
-    padding:16px;
-
-    border-radius:19px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-}
-
-
-.user-main {
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-
-.user-avatar {
-
-    width:54px;
-    height:54px;
-
-    flex:0 0 54px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    background:var(--input-bg);
-
-}
-
-
-.user-name {
-
-    font-size:16px;
-
-    font-weight:600;
-
-    color:var(--text);
-
-}
-
-
-.user-username {
-
-    margin-top:3px;
-
-    font-size:13px;
-
-    color:var(--secondary);
-
-}
-
-
-.status-card {
-
-    margin-top:12px;
-
-    padding:18px;
-
-    border-radius:19px;
-
-    border:1px solid var(--border);
-
-    background:var(--surface);
-
-}
-
-
-.status-top {
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-
-.status-icon {
-
-    width:46px;
-    height:46px;
-
-    flex:0 0 46px;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:var(--primary-soft);
-
-    color:var(--primary);
-
-    font-size:24px;
-
-}
-
-
-.status-title {
-
-    font-size:17px;
-
-    font-weight:700;
-
-    color:var(--text);
-
-}
-
-
-.status-subtitle {
-
-    margin-top:3px;
-
-    font-size:12px;
-
-    color:var(--secondary);
-
-    line-height:1.4;
-
-}
-
-
-.status-card.pending .status-icon {
-
-    background:
-        rgba(255,167,38,.12);
-
-    color:var(--warning);
-
-}
-
-
-.status-card.approved .status-icon {
-
-    background:
-        rgba(46,125,50,.12);
-
-    color:var(--success);
-
-}
-
-
-.status-card.rejected .status-icon {
-
-    background:
-        rgba(229,57,53,.10);
-
-    color:var(--danger);
-
-}
-
-
-.status-description {
-
-    margin:
-        16px 0 0;
-
-    padding-top:15px;
-
-    border-top:1px solid var(--border);
-
-    color:var(--secondary);
-
-    font-size:13px;
-
-    line-height:1.6;
-
-}
-
-
-.details-card {
-
-    margin-top:12px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    background:var(--surface);
-
-}
-
-
-.detail-row {
-
-    padding:
-        14px 15px;
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-
-.detail-row:last-child {
-
-    border-bottom:0;
-
-}
-
-
-.detail-label {
-
-    margin-bottom:4px;
-
-    font-size:11px;
-
-    font-weight:600;
-
-    color:var(--muted);
-
-    text-transform:uppercase;
-
-    letter-spacing:.5px;
-
-}
-
-
-.detail-value {
-
-    font-size:14px;
-
-    color:var(--text);
-
-    line-height:1.45;
-
-    word-break:break-word;
-
-}
-
-
-.info-card {
-
-    margin-top:12px;
-
-    padding:14px;
-
-    border-radius:16px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:10px;
-
-}
-
-
-.info-card i {
-
-    color:var(--primary);
-
-    font-size:19px;
-
-}
-
-
-.info-card span {
-
-    color:var(--secondary);
-
-    font-size:12px;
-
-    line-height:1.55;
-
-}
-
+/* =========================================================
+   MESSAGE
+========================================================= */
 
 .message-card {
 
@@ -856,7 +617,6 @@ input {
     align-items:flex-start;
 
     gap:11px;
-
 }
 
 
@@ -866,6 +626,7 @@ input {
 
     color:var(--danger);
 
+    flex:0 0 auto;
 }
 
 
@@ -876,16 +637,324 @@ input {
     font-size:13px;
 
     line-height:1.55;
-
 }
 
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.result {
+
+    display:none;
+
+    margin-top:20px;
+}
+
+
+/* =========================================================
+   USER CARD
+========================================================= */
+
+.user-card {
+
+    padding:16px;
+
+    border-radius:19px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+}
+
+
+.user-main {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+
+.user-avatar {
+
+    width:54px;
+    height:54px;
+
+    flex:0 0 54px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:var(--input-bg);
+}
+
+
+.user-name {
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:var(--text);
+}
+
+
+.user-username {
+
+    margin-top:3px;
+
+    font-size:13px;
+
+    color:var(--secondary);
+}
+
+
+/* =========================================================
+   STATUS CARD
+========================================================= */
+
+.status-card {
+
+    margin-top:12px;
+
+    padding:18px;
+
+    border-radius:19px;
+
+    border:1px solid var(--border);
+
+    background:var(--surface);
+}
+
+
+.status-top {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+
+.status-icon {
+
+    width:46px;
+    height:46px;
+
+    flex:0 0 46px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--primary-soft);
+
+    color:var(--primary);
+
+    font-size:24px;
+}
+
+
+.status-title {
+
+    font-size:17px;
+
+    font-weight:700;
+
+    color:var(--text);
+}
+
+
+.status-subtitle {
+
+    margin-top:3px;
+
+    font-size:12px;
+
+    color:var(--secondary);
+
+    line-height:1.4;
+}
+
+
+.status-card.pending .status-icon {
+
+    background:
+        rgba(255,167,38,.12);
+
+    color:var(--warning);
+}
+
+
+.status-card.approved .status-icon {
+
+    background:
+        rgba(46,125,50,.12);
+
+    color:var(--success);
+}
+
+
+.status-card.rejected .status-icon {
+
+    background:
+        rgba(229,57,53,.10);
+
+    color:var(--danger);
+}
+
+
+.status-card.not-found .status-icon {
+
+    background:
+        rgba(117,117,117,.10);
+
+    color:var(--muted);
+}
+
+
+.status-description {
+
+    margin:
+        16px 0 0;
+
+    padding-top:15px;
+
+    border-top:1px solid var(--border);
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details-card {
+
+    margin-top:12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:var(--surface);
+}
+
+
+.detail-row {
+
+    padding:
+        14px 15px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+.detail-row:last-child {
+
+    border-bottom:0;
+}
+
+
+.detail-label {
+
+    margin-bottom:4px;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    color:var(--muted);
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+}
+
+
+.detail-value {
+
+    font-size:14px;
+
+    color:var(--text);
+
+    line-height:1.45;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.info-card {
+
+    margin-top:12px;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    background:var(--surface-secondary);
+
+    border:1px solid var(--border);
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+}
+
+
+.info-card i {
+
+    color:var(--primary);
+
+    font-size:19px;
+
+    flex:0 0 auto;
+}
+
+
+.info-card span {
+
+    color:var(--secondary);
+
+    font-size:12px;
+
+    line-height:1.55;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer-action {
 
     margin-top:20px;
 
     text-align:center;
-
 }
 
 
@@ -898,28 +967,40 @@ input {
     font-size:13px;
 
     font-weight:600;
-
 }
 
+
+/* =========================================================
+   SPINNER
+========================================================= */
 
 @keyframes spin {
 
     from {
+
         transform:rotate(0deg);
+
     }
 
     to {
+
         transform:rotate(360deg);
+
     }
 
 }
 
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:400px) {
 
     .page {
 
         padding-left:16px;
+
         padding-right:16px;
 
     }
@@ -959,7 +1040,13 @@ input {
 
 </head>
 
+
 <body>
+
+
+<!-- =====================================================
+     TOOLBAR
+===================================================== -->
 
 <header class="toolbar">
 
@@ -977,11 +1064,15 @@ input {
 
         </button>
 
+
         <div class="brand">
+
             Appnetick.
+
         </div>
 
     </div>
+
 
     <div class="toolbar-actions">
 
@@ -999,6 +1090,7 @@ input {
 
         </button>
 
+
         <button
             class="icon-btn"
             type="button"
@@ -1014,7 +1106,17 @@ input {
 
 </header>
 
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
 <main class="page">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
 
     <section class="page-header">
 
@@ -1024,43 +1126,70 @@ input {
 
         </div>
 
+
         <h1 class="page-title">
+
             Verification Status
+
         </h1>
+
 
         <p class="page-description">
 
-            Enter your Appnetick username to check
-            the current status of your verification
-            application.
+            Enter the private status code you received
+            by email to check the current status of your
+            Appnetick verification application.
 
         </p>
 
     </section>
 
+
+    <!-- =================================================
+         STATUS CODE
+    ================================================== -->
+
     <section class="search-card">
 
         <label
             class="search-label"
-            for="usernameInput"
+            for="statusCodeInput"
         >
-            Appnetick username
+
+            Verification status code
+
         </label>
+
+
+        <p class="search-help">
+
+            Enter the 12-digit code from your
+            Appnetick verification email.
+
+        </p>
+
 
         <div class="input-wrap">
 
-            <i class="ph ph-at input-icon"></i>
+            <i
+                class="ph ph-key input-icon"
+            ></i>
+
 
             <input
-                id="usernameInput"
+                id="statusCodeInput"
                 class="form-input"
                 type="text"
-                placeholder="@username"
+                inputmode="numeric"
+                pattern="[0-9]*"
                 autocomplete="off"
-                maxlength="50"
+                maxlength="12"
+                placeholder="123456789012"
+                aria-label="12 digit verification status code"
             >
 
         </div>
+
 
         <div class="button-row">
 
@@ -1070,19 +1199,29 @@ input {
                 type="button"
                 onclick="checkStatus()"
             >
+
                 Check Status
+
             </button>
+
 
             <a
                 href="/user/verification"
                 class="secondary-button"
             >
+
                 Get Verified
+
             </a>
 
         </div>
 
     </section>
+
+
+    <!-- =================================================
+         LOADING
+    ================================================== -->
 
     <div
         class="loading-card"
@@ -1091,11 +1230,19 @@ input {
 
         <i class="ph ph-spinner"></i>
 
+
         <span>
+
             Checking verification status...
+
         </span>
 
     </div>
+
+
+    <!-- =================================================
+         MESSAGE
+    ================================================== -->
 
     <div
         class="message-card"
@@ -1107,9 +1254,17 @@ input {
             id="messageIcon"
         ></i>
 
-        <span id="messageText"></span>
+
+        <span
+            id="messageText"
+        ></span>
 
     </div>
+
+
+    <!-- =================================================
+         RESULT
+    ================================================== -->
 
     <section
         class="result"
@@ -1121,25 +1276,30 @@ input {
             id="userCard"
         ></div>
 
+
         <div
             class="status-card"
             id="statusCard"
         ></div>
+
 
         <div
             class="details-card"
             id="detailsCard"
         ></div>
 
+
         <div class="info-card">
 
             <i class="ph ph-shield-check"></i>
 
+
             <span>
 
-                Verification status is based on the
-                latest review information available
-                for this Appnetick account.
+                Your status code is linked to the
+                verification application associated
+                with your Appnetick account. Keep the
+                code private and do not share it publicly.
 
             </span>
 
@@ -1147,17 +1307,31 @@ input {
 
     </section>
 
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
     <div class="footer-action">
 
         <a href="/">
+
             Back to Appnetick
+
         </a>
 
     </div>
 
+
 </main>
 
+
 <script>
+
+
+/* =========================================================
+   API
+========================================================= */
 
 const API_BASE =
     "https://api-appnetick.vercel.app";
@@ -1171,6 +1345,7 @@ const savedTheme =
     localStorage.getItem(
         "appnetick-theme"
     );
+
 
 if (savedTheme === "dark") {
 
@@ -1191,12 +1366,14 @@ function updateThemeIcon() {
                 "themeIcon"
             );
 
+
     const dark =
         document.documentElement
             .getAttribute(
                 "data-theme"
             )
             === "dark";
+
 
     icon.className =
         dark
@@ -1224,12 +1401,14 @@ document
                     )
                     === "dark";
 
+
             if (dark) {
 
                 document.documentElement
                     .removeAttribute(
                         "data-theme"
                     );
+
 
                 localStorage.setItem(
                     "appnetick-theme",
@@ -1244,12 +1423,14 @@ document
                         "dark"
                     );
 
+
                 localStorage.setItem(
                     "appnetick-theme",
                     "dark"
                 );
 
             }
+
 
             updateThemeIcon();
 
@@ -1261,45 +1442,59 @@ document
    ELEMENTS
 ========================================================= */
 
-const usernameInput =
+const statusCodeInput =
     document.getElementById(
-        "usernameInput"
+        "statusCodeInput"
     );
+
 
 const checkButton =
     document.getElementById(
         "checkButton"
     );
 
+
 const loadingCard =
     document.getElementById(
         "loadingCard"
     );
+
 
 const messageCard =
     document.getElementById(
         "messageCard"
     );
 
+
+const messageIcon =
+    document.getElementById(
+        "messageIcon"
+    );
+
+
 const messageText =
     document.getElementById(
         "messageText"
     );
+
 
 const result =
     document.getElementById(
         "result"
     );
 
+
 const userCard =
     document.getElementById(
         "userCard"
     );
 
+
 const statusCard =
     document.getElementById(
         "statusCard"
     );
+
 
 const detailsCard =
     document.getElementById(
@@ -1307,69 +1502,126 @@ const detailsCard =
     );
 
 
-function normalizeUsername(value) {
+/* =========================================================
+   ONLY ALLOW NUMBERS
+========================================================= */
 
-    return String(value || "")
-        .trim()
-        .replace(/^@+/,"")
-        .toLowerCase();
+statusCodeInput.addEventListener(
+    "input",
+    function() {
 
-}
+        this.value =
+            this.value
+                .replace(/\D/g,"")
+                .slice(0,12);
+
+    }
+);
 
 
 /* =========================================================
    CHECK STATUS
-   MERGED ENDPOINT
 ========================================================= */
 
 async function checkStatus() {
 
-    const username =
-        normalizeUsername(
-            usernameInput.value
-        );
-
     hideMessage();
+
 
     result.style.display =
         "none";
 
-    if (!username) {
+
+    const code =
+        String(
+            statusCodeInput.value || ""
+        )
+        .replace(/\D/g,"")
+        .trim();
+
+
+    /*
+     * Client-side validation.
+     *
+     * Actual validity is checked by backend.
+     */
+
+    if (!code) {
 
         showMessage(
-            "Please enter your Appnetick username."
+            "Please enter your 12-digit verification status code."
         );
 
-        usernameInput.focus();
+        statusCodeInput.focus();
 
         return;
 
     }
 
+
+    if (code.length !== 12) {
+
+        showMessage(
+            "The verification status code must contain exactly 12 digits."
+        );
+
+        statusCodeInput.focus();
+
+        return;
+
+    }
+
+
     checkButton.disabled =
         true;
+
 
     loadingCard.style.display =
         "flex";
 
+
     try {
+
+
+        /*
+         * IMPORTANT:
+         *
+         * Status code is sent through POST.
+         *
+         * It is NOT placed in the URL.
+         */
 
         const response =
             await fetch(
-                `${API_BASE}/api/verification?action=status&username=${encodeURIComponent(username)}`,
+                `${API_BASE}/api/verification?action=status`,
                 {
 
-                    method:"GET",
+                    method:"POST",
 
                     headers:{
+
+                        "Content-Type":
+                            "application/json",
+
                         "Accept":
                             "application/json"
-                    }
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            status_code:
+                                code
+
+                        })
 
                 }
             );
 
+
         let data = {};
+
 
         try {
 
@@ -1384,6 +1636,40 @@ async function checkStatus() {
 
         }
 
+
+        /*
+         * Invalid / expired / unknown code.
+         */
+
+        if (
+            response.status === 404 ||
+            data.code === "INVALID_STATUS_CODE" ||
+            data.code === "STATUS_CODE_NOT_FOUND"
+        ) {
+
+            showMessage(
+                "This verification status code is invalid or does not exist. Please check the code in your email and try again."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            data.code ===
+            "STATUS_CODE_EXPIRED"
+        ) {
+
+            showMessage(
+                "This verification status code has expired. Please request a new status code if one is available."
+            );
+
+            return;
+
+        }
+
+
         if (!response.ok) {
 
             throw new Error(
@@ -1393,19 +1679,44 @@ async function checkStatus() {
 
         }
 
-        if (!data.exists) {
+
+        /*
+         * Backend should return:
+         *
+         * {
+         *   valid: true,
+         *   user: {...},
+         *   verification: {...}
+         * }
+         */
+
+        if (data.valid === false) {
 
             showMessage(
-                "We couldn't find an Appnetick account with this username. Please check the username and try again."
+                data.error ||
+                "The verification status code is invalid."
             );
 
             return;
 
         }
 
+
+        if (!data.valid && !data.verification) {
+
+            showMessage(
+                "We couldn't verify this status code. Please check your code and try again."
+            );
+
+            return;
+
+        }
+
+
         renderResult(
             data
         );
+
 
     } catch(error) {
 
@@ -1414,15 +1725,18 @@ async function checkStatus() {
             error
         );
 
+
         showMessage(
             error.message ||
             "Unable to check verification status. Please try again."
         );
 
+
     } finally {
 
         loadingCard.style.display =
             "none";
+
 
         checkButton.disabled =
             false;
@@ -1433,7 +1747,7 @@ async function checkStatus() {
 
 
 /* =========================================================
-   RESULT
+   RENDER RESULT
 ========================================================= */
 
 function renderResult(data) {
@@ -1441,13 +1755,33 @@ function renderResult(data) {
     const user =
         data.user || {};
 
-    const verification =
-        data.verification || null;
 
+    const verification =
+        data.verification ||
+        data.application ||
+        {};
+
+
+    /*
+     * User information comes from backend.
+     */
 
     const avatar =
         user.avatar ||
         "/20260313_121958.jpg";
+
+
+    const displayName =
+        user.full_name ||
+        user.name ||
+        verification.full_name ||
+        "Appnetick user";
+
+
+    const username =
+        user.username ||
+        verification.username ||
+        "";
 
 
     userCard.innerHTML = `
@@ -1463,27 +1797,31 @@ function renderResult(data) {
                 "
             >
 
+
             <div>
 
                 <div class="user-name">
 
                     ${escapeHTML(
-                        user.full_name ||
-                        user.name ||
-                        user.username ||
-                        "Appnetick user"
+                        displayName
                     )}
 
                 </div>
 
-                <div class="user-username">
 
-                    @${escapeHTML(
-                        user.username ||
-                        ""
-                    )}
+                ${
+                    username
+                        ? `
+                            <div class="user-username">
 
-                </div>
+                                @${escapeHTML(
+                                    username
+                                )}
+
+                            </div>
+                          `
+                        : ""
+                }
 
             </div>
 
@@ -1492,45 +1830,66 @@ function renderResult(data) {
     `;
 
 
+    /*
+     * Status
+     */
+
     const status =
         String(
-            verification?.verification_status ||
-            user.verification_status ||
-            "not_submitted"
+            verification.verification_status ||
+            verification.status ||
+            data.status ||
+            "pending"
         )
         .toLowerCase()
         .trim();
 
 
     let statusTitle =
-        "Not submitted";
+        "Application received";
+
 
     let statusSubtitle =
-        "No verification application found.";
+        "Your verification request has been received.";
+
 
     let statusDescription =
-        "This account does not currently have a verification application under review.";
+        "Your verification application has been received by Appnetick.";
+
 
     let statusIcon =
-        "ph-file-plus";
+        "ph-file-text";
+
 
     let statusClass =
         "";
 
 
-    if (status === "pending") {
+    /* =====================================================
+       PENDING
+    ================================================== */
+
+    if (
+        status === "pending" ||
+        status === "under_review" ||
+        status === "review"
+    ) {
 
         statusTitle =
             "Under review";
 
+
         statusSubtitle =
             "Your verification application is pending.";
 
+
         statusDescription =
-            "Your application has been submitted and is currently being reviewed by Appnetick. You don't need to submit another application while this request is under review.";
+            "Your application has been successfully submitted and is currently being reviewed by Appnetick. You do not need to submit another application while this request is under review.";
+
 
         statusIcon =
             "ph-hourglass";
+
 
         statusClass =
             "pending";
@@ -1538,19 +1897,30 @@ function renderResult(data) {
     }
 
 
-    if (status === "approved") {
+    /* =====================================================
+       APPROVED
+    ================================================== */
+
+    else if (
+        status === "approved" ||
+        status === "verified"
+    ) {
 
         statusTitle =
-            "Verified";
+            "Approved";
+
 
         statusSubtitle =
             "Your verification application was approved.";
 
+
         statusDescription =
-            "Your account has been approved for verification. The verification badge can be activated or displayed according to Appnetick's verification system.";
+            "Your verification application has been approved by Appnetick. If a private verification key was issued, it will be sent to the email address associated with the application.";
+
 
         statusIcon =
             "ph-seal-check";
+
 
         statusClass =
             "approved";
@@ -1558,22 +1928,57 @@ function renderResult(data) {
     }
 
 
-    if (status === "rejected") {
+    /* =====================================================
+       REJECTED
+    ================================================== */
+
+    else if (
+        status === "rejected" ||
+        status === "declined"
+    ) {
 
         statusTitle =
             "Not approved";
 
+
         statusSubtitle =
             "Your verification application was rejected.";
 
+
         statusDescription =
-            "Your previous verification request was not approved. Please review your information and Appnetick's verification requirements before submitting another request.";
+            "Your verification application was not approved. Please review the available information before submitting another request, if permitted.";
+
 
         statusIcon =
             "ph-x-circle";
 
+
         statusClass =
             "rejected";
+
+    }
+
+
+    /* =====================================================
+       UNKNOWN
+    ================================================== */
+
+    else {
+
+        statusTitle =
+            "Application received";
+
+
+        statusSubtitle =
+            "Your verification request exists.";
+
+
+        statusDescription =
+            "Your verification request is registered with Appnetick. The latest application status is shown below.";
+
+
+        statusIcon =
+            "ph-file-text";
 
     }
 
@@ -1593,94 +1998,137 @@ function renderResult(data) {
 
             </div>
 
+
             <div>
 
                 <div class="status-title">
-                    ${escapeHTML(statusTitle)}
+
+                    ${escapeHTML(
+                        statusTitle
+                    )}
+
                 </div>
 
+
                 <div class="status-subtitle">
-                    ${escapeHTML(statusSubtitle)}
+
+                    ${escapeHTML(
+                        statusSubtitle
+                    )}
+
                 </div>
 
             </div>
 
         </div>
 
+
         <p class="status-description">
 
-            ${escapeHTML(statusDescription)}
+            ${escapeHTML(
+                statusDescription
+            )}
 
         </p>
 
     `;
 
 
+    /* =====================================================
+       DETAILS
+    ================================================== */
+
     let details = "";
 
 
-    if (verification) {
+    details += detailRow(
+        "Application status",
+        formatStatus(status)
+    );
+
+
+    if (
+        verification.request_id ||
+        verification.application_id
+    ) {
 
         details += detailRow(
-            "Application status",
-            formatStatus(
-                verification.verification_status
+            "Application ID",
+            verification.request_id ||
+            verification.application_id
+        );
+
+    }
+
+
+    if (
+        verification.submitted_at
+    ) {
+
+        details += detailRow(
+            "Submitted",
+            formatDate(
+                verification.submitted_at
             )
         );
 
-
-        if (verification.submitted_at) {
-
-            details += detailRow(
-                "Submitted",
-                formatDate(
-                    verification.submitted_at
-                )
-            );
-
-        }
+    }
 
 
-        if (
-            verification.reviewed_at &&
-            Number(
+    if (
+        verification.reviewed_at &&
+        Number(
+            verification.reviewed_at
+        ) > 0
+    ) {
+
+        details += detailRow(
+            "Reviewed",
+            formatDate(
                 verification.reviewed_at
-            ) > 0
-        ) {
-
-            details += detailRow(
-                "Reviewed",
-                formatDate(
-                    verification.reviewed_at
-                )
-            );
-
-        }
-
-
-        if (verification.rejection_reason) {
-
-            details += detailRow(
-                "Review message",
-                verification.rejection_reason
-            );
-
-        }
-
-    } else {
-
-        details += detailRow(
-            "Account",
-            "@" +
-            (
-                user.username ||
-                usernameInput.value
             )
         );
 
+    }
+
+
+    /*
+     * Show email only if backend explicitly returns it.
+     *
+     * Backend may choose not to return it for privacy.
+     */
+
+    if (
+        verification.email
+    ) {
+
         details += detailRow(
-            "Verification",
-            "No application submitted"
+            "Contact email",
+            verification.email
+        );
+
+    }
+
+
+    if (
+        verification.rejection_reason
+    ) {
+
+        details += detailRow(
+            "Review message",
+            verification.rejection_reason
+        );
+
+    }
+
+
+    if (
+        verification.review_message
+    ) {
+
+        details += detailRow(
+            "Review message",
+            verification.review_message
         );
 
     }
@@ -1695,12 +2143,19 @@ function renderResult(data) {
 
 
     result.scrollIntoView({
+
         behavior:"smooth",
+
         block:"start"
+
     });
 
 }
 
+
+/* =========================================================
+   DETAIL ROW
+========================================================= */
 
 function detailRow(
     label,
@@ -1712,14 +2167,21 @@ function detailRow(
         <div class="detail-row">
 
             <div class="detail-label">
-                ${escapeHTML(label)}
+
+                ${escapeHTML(
+                    label
+                )}
+
             </div>
 
+
             <div class="detail-value">
+
                 ${escapeHTML(
                     value ||
                     "Not available"
                 )}
+
             </div>
 
         </div>
@@ -1728,6 +2190,10 @@ function detailRow(
 
 }
 
+
+/* =========================================================
+   FORMAT STATUS
+========================================================= */
 
 function formatStatus(status) {
 
@@ -1738,24 +2204,52 @@ function formatStatus(status) {
         .toLowerCase()
         .trim();
 
-    if (value === "pending")
+
+    if (
+        value === "pending" ||
+        value === "under_review" ||
+        value === "review"
+    ) {
+
         return "Under review";
 
-    if (value === "approved")
+    }
+
+
+    if (
+        value === "approved" ||
+        value === "verified"
+    ) {
+
         return "Approved";
 
-    if (value === "rejected")
+    }
+
+
+    if (
+        value === "rejected" ||
+        value === "declined"
+    ) {
+
         return "Rejected";
 
-    return "Not submitted";
+    }
+
+
+    return "Application received";
 
 }
 
+
+/* =========================================================
+   DATE
+========================================================= */
 
 function formatDate(value) {
 
     const number =
         Number(value);
+
 
     if (
         !number ||
@@ -1766,20 +2260,28 @@ function formatDate(value) {
 
     }
 
+
     try {
 
         return new Intl.DateTimeFormat(
             "en-IN",
             {
+
                 day:"numeric",
+
                 month:"short",
+
                 year:"numeric",
+
                 hour:"numeric",
+
                 minute:"2-digit"
+
             }
         ).format(
             new Date(number)
         );
+
 
     } catch(error) {
 
@@ -1790,10 +2292,19 @@ function formatDate(value) {
 }
 
 
+/* =========================================================
+   MESSAGE
+========================================================= */
+
 function showMessage(message) {
+
+    messageIcon.className =
+        "ph ph-warning-circle";
+
 
     messageText.textContent =
         message;
+
 
     messageCard.style.display =
         "flex";
@@ -1806,11 +2317,16 @@ function hideMessage() {
     messageCard.style.display =
         "none";
 
+
     messageText.textContent =
         "";
 
 }
 
+
+/* =========================================================
+   ESCAPE
+========================================================= */
 
 function escapeHTML(value) {
 
@@ -1818,14 +2334,60 @@ function escapeHTML(value) {
         value ?? ""
     )
 
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+statusCodeInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key ===
+            "Enter"
+        ) {
+
+            event.preventDefault();
+
+            checkStatus();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BACK
+========================================================= */
 
 function goBack() {
 
@@ -1845,6 +2407,10 @@ function goBack() {
 }
 
 
+/* =========================================================
+   HOME
+========================================================= */
+
 function goHome() {
 
     window.location.href =
@@ -1852,25 +2418,8 @@ function goHome() {
 
 }
 
-
-usernameInput.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            event.preventDefault();
-
-            checkStatus();
-
-        }
-
-    }
-);
-
 </script>
 
 </body>
+
 </html>
