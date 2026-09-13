@@ -749,6 +749,10 @@ select {
     margin:18px auto 0;
 
     display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
 }
 
 
@@ -829,6 +833,84 @@ select {
 .next-button:disabled {
 
     cursor:not-allowed;
+}
+
+
+/* =========================================================
+   GO TO LAST FIELD BUTTON
+========================================================= */
+
+.last-field-button {
+
+    width:100%;
+
+    min-height:42px;
+
+    height:42px;
+
+    padding:0 18px;
+
+    border:1px solid var(--border);
+
+    border-radius:30px;
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    font-size:13px;
+
+    font-weight:600;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    outline:none;
+
+    box-shadow:none;
+
+    -webkit-appearance:none;
+
+    appearance:none;
+
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        border-color .15s ease;
+}
+
+.last-field-button i {
+
+    font-size:18px;
+
+    color:var(--primary);
+}
+
+.last-field-button:hover {
+
+    background:var(--surface-secondary);
+
+    transform:translateY(-1px);
+}
+
+.last-field-button:active {
+
+    transform:scale(.985);
+}
+
+.last-field-button:focus,
+.last-field-button:focus-visible {
+
+    outline:none;
+
+    box-shadow:none;
 }
 
 
@@ -1194,7 +1276,8 @@ select {
         min-height:56px;
     }
 
-    .next-button {
+    .next-button,
+    .last-field-button {
 
         min-height:42px;
 
@@ -1447,6 +1530,22 @@ select {
 
         </button>
 
+
+        <button
+            class="last-field-button"
+            id="lastFieldButton"
+            type="button"
+            onclick="goToLastField()"
+        >
+
+            <i class="ph ph-arrow-up-right"></i>
+
+            <span id="lastFieldButtonText">
+                Go to last field
+            </span>
+
+        </button>
+
     </div>
 
 </main>
@@ -1540,21 +1639,6 @@ themeButton.addEventListener(
 
 const formData = {
 
-    /*
-     * IMPORTANT:
-     *
-     * This page is not logged into an Appnetick account.
-     *
-     * Therefore username is used only to identify the
-     * account on the backend.
-     *
-     * Backend will resolve:
-     *
-     * username -> Users/{uid}
-     *
-     * and then save the verification request against UID.
-     */
-
     username:"",
 
     fullName:"",
@@ -1601,17 +1685,13 @@ const steps = [
     },
 
 
-    /* 2 - ACCOUNT LINKING */
+    /* 2 */
 
     {
         type:"input",
-
         key:"username",
-
         title:"What is your Appnetick username?",
-
         help:"Enter the username of the Appnetick account you want to verify. This username is used only to identify and link this application to the correct Appnetick account.",
-
         placeholder:"Enter your Appnetick username"
     },
 
@@ -1620,13 +1700,9 @@ const steps = [
 
     {
         type:"input",
-
         key:"legalName",
-
         title:"What is your legal name?",
-
         help:"Enter your full legal name exactly as it appears on your official records.",
-
         placeholder:"Enter your legal name"
     },
 
@@ -1635,11 +1711,8 @@ const steps = [
 
     {
         type:"date",
-
         key:"dateOfBirth",
-
         title:"What is your date of birth?",
-
         help:"Your date of birth helps us establish that the account belongs to a real person."
     },
 
@@ -1648,13 +1721,9 @@ const steps = [
 
     {
         type:"chips",
-
         key:"country",
-
         title:"Where are you based?",
-
         help:"Select the country that best represents your current primary location.",
-
         options:[
             "India",
             "United States",
@@ -1671,15 +1740,10 @@ const steps = [
 
     {
         type:"input",
-
         key:"phone",
-
         title:"What is your phone number?",
-
         help:"Use a phone number that you control.",
-
         placeholder:"+91 XXXXX XXXXX",
-
         inputType:"tel"
     },
 
@@ -1688,13 +1752,9 @@ const steps = [
 
     {
         type:"chips",
-
         key:"accountCategory",
-
         title:"What best describes your account?",
-
         help:"Choose the category that most accurately represents your public presence.",
-
         options:[
             "Creator",
             "Public Figure",
@@ -1714,13 +1774,9 @@ const steps = [
 
     {
         type:"input",
-
         key:"profession",
-
         title:"What is your profession or role?",
-
         help:"Tell us what you currently do publicly or professionally.",
-
         placeholder:"Example: Photographer"
     },
 
@@ -1729,13 +1785,9 @@ const steps = [
 
     {
         type:"textarea",
-
         key:"verificationReason",
-
         title:"Why should this account be verified?",
-
         help:"Explain why people may search for or recognize you.",
-
         placeholder:"Tell us why this account deserves verification..."
     },
 
@@ -1744,13 +1796,9 @@ const steps = [
 
     {
         type:"textarea",
-
         key:"knownFor",
-
         title:"What are you known for?",
-
         help:"Describe your main work, public identity, achievements or contribution.",
-
         placeholder:"Example: I create educational technology content..."
     },
 
@@ -1759,17 +1807,11 @@ const steps = [
 
     {
         type:"input",
-
         key:"website",
-
         title:"Do you have an official website?",
-
         help:"Add a website that can help us confirm your public presence. This can be skipped.",
-
         placeholder:"https://example.com",
-
         inputType:"url",
-
         optional:true
     },
 
@@ -1778,13 +1820,9 @@ const steps = [
 
     {
         type:"input",
-
         key:"socialProfile",
-
         title:"Add another public profile",
-
         help:"Provide one public social profile or professional page.",
-
         placeholder:"https://..."
     },
 
@@ -1793,13 +1831,9 @@ const steps = [
 
     {
         type:"chips",
-
         key:"audience",
-
         title:"What is your approximate audience size?",
-
         help:"Choose the closest range.",
-
         options:[
             "Under 1K",
             "1K – 10K",
@@ -1816,13 +1850,9 @@ const steps = [
 
     {
         type:"chips",
-
         key:"contentCategory",
-
         title:"What type of content do you primarily share?",
-
         help:"Select the category that best describes your public activity.",
-
         options:[
             "Education",
             "Entertainment",
@@ -1842,13 +1872,9 @@ const steps = [
 
     {
         type:"textarea",
-
         key:"achievement",
-
         title:"Tell us about your notable achievements",
-
         help:"Mention awards, professional accomplishments, major projects or other meaningful achievements.",
-
         placeholder:"Describe your achievements..."
     },
 
@@ -1857,13 +1883,9 @@ const steps = [
 
     {
         type:"textarea",
-
         key:"publicPresence",
-
         title:"Where can your public presence be verified?",
-
         help:"Mention publications, interviews, websites, events or organizations.",
-
         placeholder:"Example: Featured by..., interviewed by..."
     },
 
@@ -1872,11 +1894,8 @@ const steps = [
 
     {
         type:"confirm",
-
         key:"authenticityConfirmed",
-
         title:"Confirm account authenticity",
-
         text:"I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
     },
 
@@ -1885,11 +1904,8 @@ const steps = [
 
     {
         type:"confirm",
-
         key:"informationConfirmed",
-
         title:"Confirm your information",
-
         text:"I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
     },
 
@@ -1898,11 +1914,8 @@ const steps = [
 
     {
         type:"confirm",
-
         key:"termsConfirmed",
-
         title:"Verification declaration",
-
         text:"I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
     },
 
@@ -1911,15 +1924,10 @@ const steps = [
 
     {
         type:"input",
-
         key:"email",
-
         title:"Where should we send your verification updates?",
-
-        help:"Enter an email address that you actively control. We'll send your application confirmation and status information to this address.",
-
+        help:"Enter an email address that you actively control. Appnetick will use this address for verification application updates.",
         placeholder:"Enter your email address",
-
         inputType:"email"
     },
 
@@ -1936,6 +1944,72 @@ const steps = [
 let currentStep = 0;
 
 let isAnimating = false;
+
+let isSubmitting = false;
+
+
+/* =========================================================
+   LAST FIELD MEMORY
+========================================================= */
+
+/*
+ * This remembers the last actual application field
+ * the user reached.
+ *
+ * Intro and Review are not stored as the last field.
+ */
+
+let lastReachedField = 1;
+
+
+/*
+ * Keep this value during the current page session.
+ *
+ * If the user reaches username -> legal name -> phone,
+ * then goes back to username, the button can take them
+ * directly to phone again.
+ */
+
+function updateLastReachedField() {
+
+    if (currentStep <= 0) return;
+
+    if (
+        currentStep >=
+        steps.length - 1
+    ) {
+
+        return;
+    }
+
+    lastReachedField =
+        currentStep;
+}
+
+
+function getLastFieldLabel() {
+
+    if (
+        lastReachedField <= 0 ||
+        lastReachedField >= steps.length - 1
+    ) {
+
+        return "last field";
+    }
+
+    const step =
+        steps[lastReachedField];
+
+    if (
+        step &&
+        step.title
+    ) {
+
+        return step.title;
+    }
+
+    return "last field";
+}
 
 
 /* =========================================================
@@ -1992,6 +2066,16 @@ const toolbarBack =
         "toolbarBack"
     );
 
+const lastFieldButton =
+    document.getElementById(
+        "lastFieldButton"
+    );
+
+const lastFieldButtonText =
+    document.getElementById(
+        "lastFieldButtonText"
+    );
+
 
 /* =========================================================
    RENDER
@@ -2035,6 +2119,8 @@ function renderStep(
     updateButtons();
 
     updateToolbar();
+
+    updateLastFieldButton();
 }
 
 
@@ -2575,10 +2661,6 @@ function validateCurrentStep() {
                 .toLowerCase();
 
 
-            /*
-             * Remove accidental @
-             */
-
             if (
                 username.startsWith("@")
             ) {
@@ -2587,13 +2669,6 @@ function validateCurrentStep() {
                     username.substring(1);
             }
 
-
-            /*
-             * Basic username validation.
-             *
-             * Backend MUST perform the real lookup
-             * and validation against Firebase Users.
-             */
 
             const usernamePattern =
                 /^[a-z0-9._]{3,50}$/;
@@ -2687,7 +2762,7 @@ function validateCurrentStep() {
 
 
 /* =========================================================
-   BUTTON 3 SECOND LOADING
+   BUTTON LOADER
 ========================================================= */
 
 function startButtonProgress() {
@@ -2773,6 +2848,8 @@ async function nextStep() {
 
     if (isAnimating) return;
 
+    if (isSubmitting) return;
+
 
     if (!validateCurrentStep()) {
 
@@ -2780,12 +2857,16 @@ async function nextStep() {
     }
 
 
+    /*
+     * Final review submit.
+     */
+
     if (
         currentStep >=
         steps.length - 1
     ) {
 
-        submitVerification();
+        await submitVerification();
 
         return;
     }
@@ -2798,10 +2879,34 @@ async function nextStep() {
     saveCurrentValue();
 
 
+    /*
+     * Remember this field as the latest
+     * field reached by the user.
+     */
+
+    updateLastReachedField();
+
+
     await startButtonProgress();
 
 
     currentStep++;
+
+
+    /*
+     * If we moved to the review page,
+     * don't change lastReachedField.
+     *
+     * Otherwise remember the new field.
+     */
+
+    if (
+        currentStep <
+        steps.length - 1
+    ) {
+
+        updateLastReachedField();
+    }
 
 
     renderStep(
@@ -2838,6 +2943,8 @@ async function nextStep() {
 function previousStep() {
 
     if (isAnimating) return;
+
+    if (isSubmitting) return;
 
 
     if (currentStep <= 0) {
@@ -2882,6 +2989,239 @@ function previousStep() {
         behavior:"smooth"
 
     });
+}
+
+
+/* =========================================================
+   GO TO LAST FIELD
+========================================================= */
+
+function goToLastField() {
+
+    if (isAnimating) return;
+
+    if (isSubmitting) return;
+
+
+    if (
+        lastReachedField <= 0 ||
+        lastReachedField >= steps.length - 1
+    ) {
+
+        return;
+    }
+
+
+    /*
+     * Save the field currently being edited
+     * before jumping.
+     */
+
+    saveCurrentValue();
+
+
+    if (
+        currentStep ===
+        lastReachedField
+    ) {
+
+        return;
+    }
+
+
+    const direction =
+        lastReachedField >
+        currentStep
+            ? "next"
+            : "back";
+
+
+    isAnimating =
+        true;
+
+
+    currentStep =
+        lastReachedField;
+
+
+    renderStep(
+        direction,
+        true
+    );
+
+
+    setTimeout(
+        () => {
+
+            isAnimating =
+                false;
+
+        },
+        320
+    );
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+}
+
+
+/* =========================================================
+   LAST FIELD BUTTON
+========================================================= */
+
+function updateLastFieldButton() {
+
+    if (!lastFieldButton) return;
+
+
+    /*
+     * Don't show on intro.
+     */
+
+    if (currentStep <= 0) {
+
+        lastFieldButton.style.display =
+            "none";
+
+        return;
+    }
+
+
+    /*
+     * Don't show on review.
+     *
+     * On review, user is already at the
+     * final stage.
+     */
+
+    if (
+        currentStep >=
+        steps.length - 1
+    ) {
+
+        lastFieldButton.style.display =
+            "none";
+
+        return;
+    }
+
+
+    /*
+     * Only show when there is a useful
+     * previously reached field ahead/behind.
+     */
+
+    if (
+        lastReachedField > 0 &&
+        lastReachedField !== currentStep
+    ) {
+
+        lastFieldButton.style.display =
+            "flex";
+
+
+        lastFieldButtonText.textContent =
+            "Go to " +
+            getLastFieldShortLabel();
+
+    } else {
+
+        lastFieldButton.style.display =
+            "none";
+    }
+}
+
+
+/* =========================================================
+   LAST FIELD LABEL
+========================================================= */
+
+function getLastFieldShortLabel() {
+
+    const step =
+        steps[lastReachedField];
+
+
+    if (!step) {
+
+        return "last field";
+    }
+
+
+    const key =
+        step.key;
+
+
+    const labels = {
+
+        username:
+            "username",
+
+        legalName:
+            "legal name",
+
+        dateOfBirth:
+            "date of birth",
+
+        country:
+            "country",
+
+        phone:
+            "phone number",
+
+        accountCategory:
+            "account category",
+
+        profession:
+            "profession",
+
+        verificationReason:
+            "verification reason",
+
+        knownFor:
+            "known for",
+
+        website:
+            "website",
+
+        socialProfile:
+            "public profile",
+
+        audience:
+            "audience",
+
+        contentCategory:
+            "content category",
+
+        achievement:
+            "achievements",
+
+        publicPresence:
+            "public presence",
+
+        authenticityConfirmed:
+            "authenticity",
+
+        informationConfirmed:
+            "information confirmation",
+
+        termsConfirmed:
+            "verification declaration",
+
+        email:
+            "email"
+
+    };
+
+
+    return labels[key] ||
+        "last field";
 }
 
 
@@ -3182,8 +3522,7 @@ function getReviewHTML() {
             <span>
 
                 After submitting your application, Appnetick
-                will send a confirmation email to the email
-                address provided above. The email will contain
+                will send a confirmation email containing
                 your private 12-digit status code. Keep this
                 code safe because it will be used later to
                 check the status of this verification request.
@@ -3201,9 +3540,10 @@ function getReviewHTML() {
 
                 If your application is approved, Appnetick
                 will send a separate 18-digit private
-                verification key to this email address.
-                That key will be used inside the Appnetick
-                app to activate the verification badge.
+                verification key. That key will be linked to
+                the Appnetick account identified by your
+                username and will be required to activate
+                the verification badge.
 
             </span>
 
@@ -3254,28 +3594,79 @@ function reviewRow(
 
 async function submitVerification() {
 
+    if (isSubmitting) return;
+
+
     if (isAnimating) return;
 
-
-    /*
-     * Save final email.
-     */
 
     saveCurrentValue();
 
 
     /*
-     * Final validation.
+     * Final review validation.
      */
 
-    if (!validateCurrentStep()) {
+    if (
+        !formData.username ||
+        !formData.legalName ||
+        !formData.dateOfBirth ||
+        !formData.country ||
+        !formData.phone ||
+        !formData.accountCategory ||
+        !formData.profession ||
+        !formData.verificationReason ||
+        !formData.knownFor ||
+        !formData.socialProfile ||
+        !formData.audience ||
+        !formData.contentCategory ||
+        !formData.achievement ||
+        !formData.publicPresence ||
+        !formData.authenticityConfirmed ||
+        !formData.informationConfirmed ||
+        !formData.termsConfirmed ||
+        !formData.email
+    ) {
+
+        showError(
+            "Please complete all required information before submitting."
+        );
 
         return;
     }
 
 
+    /*
+     * Normalize username/email one final time.
+     */
+
+    formData.username =
+        String(
+            formData.username || ""
+        )
+        .trim()
+        .replace(/^@/,"")
+        .toLowerCase();
+
+
+    formData.email =
+        String(
+            formData.email || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    isSubmitting =
+        true;
+
+
     nextButton.disabled =
         true;
+
+
+    lastFieldButton.style.display =
+        "none";
 
 
     nextText.textContent =
@@ -3285,26 +3676,18 @@ async function submitVerification() {
     /*
      * IMPORTANT
      *
-     * Username is intentionally sent here.
+     * No UID is accepted from the frontend.
      *
-     * The backend MUST:
+     * Backend receives username and resolves:
      *
-     * 1. Find Users where Username == username.
+     * username
+     *      ↓
+     * Users/{uid}
+     *      ↓
+     * VerificationRequests/{uid}
      *
-     * 2. Resolve the real UID.
-     *
-     * 3. Verify that account exists.
-     *
-     * 4. Create VerificationRequests/{uid}.
-     *
-     * 5. Generate a cryptographically secure
-     *    12-digit status code.
-     *
-     * 6. Link the status code to UID + request.
-     *
-     * 7. Send the status code to formData.email.
-     *
-     * 8. Never trust a UID supplied by this page.
+     * Backend also generates the secure
+     * 12-digit status code.
      */
 
     const payload = {
@@ -3312,115 +3695,59 @@ async function submitVerification() {
         username:
             formData.username,
 
-
         legal_name:
             formData.legalName,
-
 
         email:
             formData.email,
 
-
         date_of_birth:
             formData.dateOfBirth,
-
 
         country:
             formData.country,
 
-
         phone:
             formData.phone,
-
 
         account_category:
             formData.accountCategory,
 
-
         profession:
             formData.profession,
-
 
         verification_reason:
             formData.verificationReason,
 
-
         known_for:
             formData.knownFor,
-
 
         website:
             formData.website,
 
-
         social_profile:
             formData.socialProfile,
-
 
         audience:
             formData.audience,
 
-
         content_category:
             formData.contentCategory,
-
 
         achievement:
             formData.achievement,
 
-
         public_presence:
             formData.publicPresence,
-
 
         authenticity_confirmed:
             formData.authenticityConfirmed,
 
-
         information_confirmed:
             formData.informationConfirmed,
 
-
         terms_confirmed:
-            formData.termsConfirmed,
-
-
-        /*
-         * Generic email notification information.
-         *
-         * Backend handles the actual sending.
-         * No secret is exposed here.
-         */
-
-        email_notification: {
-
-            enabled:true,
-
-            type:
-                "verification_application_submitted",
-
-            template:
-                "verification",
-
-            recipient:
-                formData.email,
-
-            subject:
-                "Your Appnetick verification application has been received",
-
-            title:
-                "Verification application received",
-
-            message:
-                "Thank you for submitting your Appnetick verification application. We have successfully received your request and it is now ready for review. Our team will carefully review the information provided in your application. A private 12-digit status code has been generated for this verification request and has been sent to this email address. Keep that code safe because it will be required to check the status of this application later. If your application is approved, you will receive a separate email containing an 18-digit private verification key. That key will be linked to the Appnetick account identified by the username submitted with this application and will be required inside the Appnetick app to activate the verification badge.",
-
-            details_intro:
-                "Your verification request has been successfully registered.",
-
-            footer_message:
-                "Please keep this email for your records. Appnetick will use this email address to send important updates about your verification application."
-
-        }
+            formData.termsConfirmed
 
     };
 
@@ -3451,16 +3778,45 @@ async function submitVerification() {
             );
 
 
-        const data =
-            await response.json();
+        /*
+         * Backend should return JSON.
+         * Handle unexpected/non-JSON response safely.
+         */
+
+        let data = {};
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch(jsonError) {
+
+            throw new Error(
+                `Server returned an invalid response (${response.status}).`
+            );
+        }
 
 
         if (!response.ok) {
 
+            /*
+             * APPROVED
+             *
+             * Backend uses ALREADY_APPROVED.
+             *
+             * This was one of the previous frontend
+             * problems because frontend was checking
+             * ALREADY_VERIFIED.
+             */
+
             if (
                 data.code ===
-                "ALREADY_VERIFIED"
+                "ALREADY_APPROVED"
             ) {
+
+                isSubmitting =
+                    false;
 
                 showExistingVerification(
                     "approved"
@@ -3470,10 +3826,38 @@ async function submitVerification() {
             }
 
 
+            /*
+             * Backward compatibility in case an older
+             * backend still returns ALREADY_VERIFIED.
+             */
+
+            if (
+                data.code ===
+                "ALREADY_VERIFIED"
+            ) {
+
+                isSubmitting =
+                    false;
+
+                showExistingVerification(
+                    "approved"
+                );
+
+                return;
+            }
+
+
+            /*
+             * PENDING
+             */
+
             if (
                 data.code ===
                 "ALREADY_PENDING"
             ) {
+
+                isSubmitting =
+                    false;
 
                 showExistingVerification(
                     "pending"
@@ -3482,6 +3866,10 @@ async function submitVerification() {
                 return;
             }
 
+
+            /*
+             * USERNAME NOT FOUND
+             */
 
             if (
                 data.code ===
@@ -3494,6 +3882,10 @@ async function submitVerification() {
             }
 
 
+            /*
+             * INVALID USERNAME
+             */
+
             if (
                 data.code ===
                 "INVALID_USERNAME"
@@ -3505,12 +3897,43 @@ async function submitVerification() {
             }
 
 
+            /*
+             * Existing application / rejected state.
+             */
+
+            if (
+                data.code ===
+                "ALREADY_REJECTED"
+            ) {
+
+                isSubmitting =
+                    false;
+
+                showExistingVerification(
+                    "rejected"
+                );
+
+                return;
+            }
+
+
+            /*
+             * Backend error.
+             *
+             * Prefer backend error message.
+             */
+
             throw new Error(
                 data.error ||
-                "Unable to submit application."
+                data.message ||
+                `Unable to submit verification application (${response.status}).`
             );
         }
 
+
+        /*
+         * SUCCESS
+         */
 
         showSuccess(
             data
@@ -3525,6 +3948,10 @@ async function submitVerification() {
         );
 
 
+        isSubmitting =
+            false;
+
+
         nextButton.disabled =
             false;
 
@@ -3533,9 +3960,30 @@ async function submitVerification() {
             "Submit application";
 
 
+        /*
+         * Make sure button state is restored.
+         */
+
+        nextButton.classList.remove(
+            "loading"
+        );
+
+
+        buttonLoaderSvg
+            .classList.remove(
+                "animate"
+            );
+
+
+        buttonLoaderProgress
+            .classList.remove(
+                "animate"
+            );
+
+
         showError(
             error.message ||
-            "Something went wrong. Please try again."
+            "Unable to submit verification application. Please try again."
         );
     }
 }
@@ -3576,7 +4024,7 @@ function showExistingVerification(
 
 
     let description =
-        "This account already has a completed verification status.";
+        "This account already has an approved verification application.";
 
 
     let icon =
@@ -3681,6 +4129,10 @@ function showExistingVerification(
 
 function showSuccess(data) {
 
+    isSubmitting =
+        false;
+
+
     document.getElementById(
         "bottomActions"
     ).style.display =
@@ -3701,6 +4153,22 @@ function showSuccess(data) {
 
     progressFill.style.width =
         "100%";
+
+
+    /*
+     * Backend may return:
+     *
+     * status_code
+     * email_sent
+     *
+     * Never display the status code directly here.
+     *
+     * It is sent through the email.
+     */
+
+    const recipient =
+        data.email ||
+        formData.email;
 
 
     viewport.replaceChildren(
@@ -3758,7 +4226,7 @@ function showSuccess(data) {
 
                         <strong>
                             ${escapeHTML(
-                                formData.email
+                                recipient
                             )}
                         </strong>
 
@@ -3766,15 +4234,16 @@ function showSuccess(data) {
 
                         The email contains your private
                         12-digit status code. Keep this code
-                        safe because it will be used to check
-                        the status of this verification request.
+                        safe because it will be required to
+                        check the status of this verification
+                        request later.
 
                         <br><br>
 
-                        If the application is approved,
-                        Appnetick will send an 18-digit private
-                        verification key to the same email
-                        address.
+                        If your application is approved,
+                        Appnetick will send a separate email
+                        containing an 18-digit private
+                        verification key.
 
                     </p>
 
@@ -3861,7 +4330,7 @@ function showError(message) {
             }
 
         },
-        3500
+        4500
     );
 }
 
