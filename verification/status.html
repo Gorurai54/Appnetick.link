@@ -182,7 +182,7 @@ input {
 
 
 /* =========================================================
-   TOOLBAR BUTTON
+   ICON BUTTON
 ========================================================= */
 
 .icon-btn {
@@ -236,7 +236,7 @@ input {
 
 
 /* =========================================================
-   QUESTION HEADER
+   HEADER
 ========================================================= */
 
 .question-header {
@@ -321,8 +321,7 @@ input {
 
     min-height:52px;
 
-    padding:
-        0 16px;
+    padding:0 16px;
 
     border:
         1px solid var(--border);
@@ -362,8 +361,6 @@ input {
 
 /* =========================================================
    BUTTON
-   SAME HEIGHT AS HOMEPAGE
-   NO ICON
 ========================================================= */
 
 .primary-button {
@@ -429,6 +426,38 @@ input {
 
 
 /* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.secondary-button {
+
+    width:100%;
+
+    height:48px;
+
+    margin-top:10px;
+
+    padding:0 20px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:30px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================================================
    LOADING
 ========================================================= */
 
@@ -486,9 +515,15 @@ input {
 
 }
 
+.message.success {
+
+    color:var(--success);
+
+}
+
 
 /* =========================================================
-   STATUS RESULT
+   RESULT
 ========================================================= */
 
 .result {
@@ -595,24 +630,76 @@ input {
 
 
 /* =========================================================
-   USERNAME
+   ACTIVATION SECTION
 ========================================================= */
 
-.account-name {
+.activation {
 
-    margin-bottom:5px;
+    display:none;
 
-    font-size:16px;
+    margin-top:28px;
+
+    padding-top:24px;
+
+    border-top:1px solid var(--border);
+
+}
+
+.activation-title {
+
+    margin:0 0 8px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    letter-spacing:-.3px;
+
+}
+
+.activation-description {
+
+    margin:0 0 18px;
+
+    color:var(--secondary);
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+
+.key-input {
+
+    text-align:center;
+
+    letter-spacing:2px;
+
+    font-size:17px;
 
     font-weight:600;
 
 }
 
-.account-username {
+.activation-success {
 
-    color:var(--secondary);
+    display:none;
+
+    margin-top:18px;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    background:var(--primary-soft);
+
+    color:var(--success);
 
     font-size:13px;
+
+    line-height:1.6;
+
+    text-align:center;
 
 }
 
@@ -784,7 +871,7 @@ input {
 
 
     <!-- =================================================
-         QUESTION HEADER
+         HEADER
     ================================================== -->
 
     <section class="question-header">
@@ -801,8 +888,8 @@ input {
 
         <p class="page-description">
 
-            Enter your Appnetick username below to
-            check the current status of your
+            Enter the 12-digit status code sent to your
+            email after submitting your Appnetick
             verification application.
 
         </p>
@@ -811,31 +898,29 @@ input {
 
 
     <!-- =================================================
-         INPUT
+         STATUS CODE INPUT
     ================================================== -->
 
     <section class="form-section">
 
         <label
             class="input-label"
-            for="usernameInput"
+            for="statusCodeInput"
         >
 
-            Appnetick username
+            12-digit status code
 
         </label>
 
 
         <input
-            id="usernameInput"
+            id="statusCodeInput"
             class="form-input"
             type="text"
-            inputmode="text"
+            inputmode="numeric"
             autocomplete="off"
-            autocapitalize="none"
-            spellcheck="false"
-            maxlength="50"
-            placeholder="@username"
+            maxlength="12"
+            placeholder="Enter status code"
         >
 
 
@@ -891,6 +976,8 @@ input {
         ></p>
 
 
+        <!-- ACCOUNT -->
+
         <div
             class="status-line"
             id="accountLine"
@@ -908,6 +995,8 @@ input {
         </div>
 
 
+        <!-- STATUS -->
+
         <div
             class="status-line"
             id="statusLine"
@@ -924,6 +1013,8 @@ input {
 
         </div>
 
+
+        <!-- SUBMITTED -->
 
         <div
             class="status-line"
@@ -943,6 +1034,8 @@ input {
         </div>
 
 
+        <!-- REVIEWED -->
+
         <div
             class="status-line"
             id="reviewedLine"
@@ -961,6 +1054,8 @@ input {
         </div>
 
 
+        <!-- REVIEW MESSAGE -->
+
         <div
             class="status-line"
             id="messageLine"
@@ -977,6 +1072,83 @@ input {
             ></div>
 
         </div>
+
+
+        <!-- =================================================
+             PRIVATE KEY ACTIVATION
+        ================================================== -->
+
+        <section
+            class="activation"
+            id="activationSection"
+        >
+
+            <h3 class="activation-title">
+
+                Activate your verification
+
+            </h3>
+
+
+            <p class="activation-description">
+
+                Your application has been approved.
+                Enter the 18-digit private verification
+                key sent to your email to activate your
+                verified badge.
+
+            </p>
+
+
+            <label
+                class="input-label"
+                for="privateKeyInput"
+            >
+
+                18-digit private verification key
+
+            </label>
+
+
+            <input
+                id="privateKeyInput"
+                class="form-input key-input"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="18"
+                placeholder="18-digit key"
+            >
+
+
+            <button
+                id="activateButton"
+                class="primary-button"
+                type="button"
+                onclick="activateVerification()"
+            >
+
+                Activate Verification
+
+            </button>
+
+
+            <div
+                class="activation-success"
+                id="activationSuccess"
+            >
+
+                <i class="ph ph-seal-check"></i>
+
+                <br>
+
+                Your verification has been activated
+                successfully. Your Appnetick account is
+                now verified.
+
+            </div>
+
+        </section>
 
     </section>
 
@@ -1122,70 +1294,95 @@ document
    ELEMENTS
 ========================================================= */
 
-const usernameInput =
+const statusCodeInput =
     document.getElementById(
-        "usernameInput"
+        "statusCodeInput"
     );
+
+
+const privateKeyInput =
+    document.getElementById(
+        "privateKeyInput"
+    );
+
 
 const checkButton =
     document.getElementById(
         "checkButton"
     );
 
+
+const activateButton =
+    document.getElementById(
+        "activateButton"
+    );
+
+
 const loading =
     document.getElementById(
         "loading"
     );
+
 
 const message =
     document.getElementById(
         "message"
     );
 
+
 const result =
     document.getElementById(
         "result"
     );
+
 
 const resultDescription =
     document.getElementById(
         "resultDescription"
     );
 
+
 const accountValue =
     document.getElementById(
         "accountValue"
     );
+
 
 const statusValue =
     document.getElementById(
         "statusValue"
     );
 
+
 const submittedLine =
     document.getElementById(
         "submittedLine"
     );
+
 
 const submittedValue =
     document.getElementById(
         "submittedValue"
     );
 
+
 const reviewedLine =
     document.getElementById(
         "reviewedLine"
     );
+
 
 const reviewedValue =
     document.getElementById(
         "reviewedValue"
     );
 
+
 const messageLine =
     document.getElementById(
         "messageLine"
     );
+
 
 const reviewMessage =
     document.getElementById(
@@ -1193,21 +1390,63 @@ const reviewMessage =
     );
 
 
+const activationSection =
+    document.getElementById(
+        "activationSection"
+    );
+
+
+const activationSuccess =
+    document.getElementById(
+        "activationSuccess"
+    );
+
+
 /* =========================================================
-   NORMALIZE USERNAME
+   CURRENT STATUS CODE
 ========================================================= */
 
-function normalizeUsername(value) {
+let currentStatusCode = "";
+
+
+/* =========================================================
+   NORMALIZE STATUS CODE
+========================================================= */
+
+function normalizeStatusCode(value) {
 
     return String(
         value || ""
     )
-    .trim()
     .replace(
-        /^@+/,
+        /\D/g,
         ""
     )
-    .toLowerCase();
+    .slice(
+        0,
+        12
+    );
+
+}
+
+
+/* =========================================================
+   NORMALIZE PRIVATE KEY
+========================================================= */
+
+function normalizePrivateKey(value) {
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /\D/g,
+        ""
+    )
+    .slice(
+        0,
+        18
+    );
 
 }
 
@@ -1218,9 +1457,9 @@ function normalizeUsername(value) {
 
 async function checkStatus() {
 
-    const username =
-        normalizeUsername(
-            usernameInput.value
+    const statusCode =
+        normalizeStatusCode(
+            statusCodeInput.value
         );
 
 
@@ -1229,19 +1468,31 @@ async function checkStatus() {
     result.style.display =
         "none";
 
+    activationSection.style.display =
+        "none";
 
-    if (!username) {
+    activationSuccess.style.display =
+        "none";
+
+
+    if (
+        statusCode.length !== 12
+    ) {
 
         showMessage(
-            "Please enter your Appnetick username.",
+            "Please enter the complete 12-digit status code.",
             true
         );
 
-        usernameInput.focus();
+        statusCodeInput.focus();
 
         return;
 
     }
+
+
+    currentStatusCode =
+        statusCode;
 
 
     checkButton.disabled =
@@ -1256,10 +1507,13 @@ async function checkStatus() {
         const response =
             await fetch(
                 API_BASE +
-                "/api/verification/status?username=" +
-                encodeURIComponent(username),
+                "/api/verification/status?status_code=" +
+                encodeURIComponent(
+                    statusCode
+                ),
                 {
                     method:"GET",
+
                     headers:{
                         "Accept":
                             "application/json"
@@ -1296,11 +1550,11 @@ async function checkStatus() {
 
 
         if (
-            !data.exists
+            data.exists === false
         ) {
 
             throw new Error(
-                "We couldn't find an Appnetick account with this username."
+                "We couldn't find a verification application with this status code."
             );
 
         }
@@ -1347,6 +1601,7 @@ function renderStatus(data) {
     const user =
         data.user || {};
 
+
     const verification =
         data.verification || null;
 
@@ -1354,15 +1609,29 @@ function renderStatus(data) {
     const username =
         user.username ||
         data.username ||
-        usernameInput.value;
+        "";
 
 
-    accountValue.textContent =
+    if (
         user.full_name
-            ? user.full_name +
-              "  @" +
-              username
-            : "@" + username;
+    ) {
+
+        accountValue.textContent =
+            user.full_name +
+            (
+                username
+                    ? "  @" + username
+                    : ""
+            );
+
+    } else {
+
+        accountValue.textContent =
+            username
+                ? "@" + username
+                : "Appnetick account";
+
+    }
 
 
     let status =
@@ -1388,6 +1657,10 @@ function renderStatus(data) {
         "status-value";
 
 
+    /* =====================================================
+       PENDING
+    ===================================================== */
+
     if (
         status === "pending"
     ) {
@@ -1405,6 +1678,10 @@ function renderStatus(data) {
     }
 
 
+    /* =====================================================
+       APPROVED
+    ===================================================== */
+
     else if (
         status === "approved"
     ) {
@@ -1417,10 +1694,17 @@ function renderStatus(data) {
         );
 
         resultDescription.textContent =
-            "Your verification application has been approved by Appnetick.";
+            "Your verification application has been approved. Enter the 18-digit private verification key sent to your email to activate your verified badge.";
+
+        activationSection.style.display =
+            "block";
 
     }
 
+
+    /* =====================================================
+       REJECTED
+    ===================================================== */
 
     else if (
         status === "rejected"
@@ -1439,13 +1723,17 @@ function renderStatus(data) {
     }
 
 
+    /* =====================================================
+       OTHER
+    ===================================================== */
+
     else {
 
         statusValue.textContent =
             "Not submitted";
 
         resultDescription.textContent =
-            "There is currently no verification application submitted for this account.";
+            "There is currently no verification application submitted for this status code.";
 
     }
 
@@ -1456,6 +1744,7 @@ function renderStatus(data) {
 
     submittedLine.style.display =
         "none";
+
 
     if (
         verification &&
@@ -1487,6 +1776,7 @@ function renderStatus(data) {
 
     reviewedLine.style.display =
         "none";
+
 
     if (
         verification &&
@@ -1540,6 +1830,41 @@ function renderStatus(data) {
     }
 
 
+    /* =====================================================
+       ALREADY VERIFIED
+    ===================================================== */
+
+    const alreadyVerified =
+        data.verified === true ||
+        user.verified === true ||
+        (
+            verification &&
+            verification.verification_key_redeemed === true
+        );
+
+
+    if (
+        alreadyVerified
+    ) {
+
+        activationSection.style.display =
+            "block";
+
+        privateKeyInput.style.display =
+            "none";
+
+        activateButton.style.display =
+            "none";
+
+        activationSuccess.style.display =
+            "block";
+
+        resultDescription.textContent =
+            "Your Appnetick verification has already been activated successfully.";
+
+    }
+
+
     result.style.display =
         "block";
 
@@ -1548,6 +1873,201 @@ function renderStatus(data) {
         behavior:"smooth",
         block:"start"
     });
+
+}
+
+
+/* =========================================================
+   ACTIVATE VERIFICATION
+========================================================= */
+
+async function activateVerification() {
+
+    const privateKey =
+        normalizePrivateKey(
+            privateKeyInput.value
+        );
+
+
+    hideMessage();
+
+
+    if (
+        currentStatusCode.length !== 12
+    ) {
+
+        showMessage(
+            "Please check your verification status first.",
+            true
+        );
+
+        return;
+
+    }
+
+
+    if (
+        privateKey.length !== 18
+    ) {
+
+        showMessage(
+            "Please enter the complete 18-digit private verification key.",
+            true
+        );
+
+        privateKeyInput.focus();
+
+        return;
+
+    }
+
+
+    activateButton.disabled =
+        true;
+
+    activateButton.textContent =
+        "Activating...";
+
+
+    try {
+
+        /*
+         * IMPORTANT:
+         *
+         * This uses the SAME verification/status API.
+         * No separate API file is required.
+         */
+
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/verification/status",
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            action:
+                                "activate",
+
+                            status_code:
+                                currentStatusCode,
+
+                            verification_key:
+                                privateKey
+
+                        })
+
+                }
+            );
+
+
+        let data;
+
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch(error) {
+
+            throw new Error(
+                "The server returned an invalid response."
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to activate verification."
+            );
+
+        }
+
+
+        /*
+         * SUCCESS
+         */
+
+        activationSuccess.style.display =
+            "block";
+
+
+        privateKeyInput.value =
+            "";
+
+        privateKeyInput.style.display =
+            "none";
+
+        activateButton.style.display =
+            "none";
+
+
+        resultDescription.textContent =
+            "Your Appnetick verification has been activated successfully. Your account is now verified.";
+
+
+        statusValue.textContent =
+            "Verified";
+
+
+        statusValue.className =
+            "status-value approved";
+
+
+        showMessage(
+            "Verification activated successfully.",
+            false
+        );
+
+
+    } catch(error) {
+
+        console.error(
+            "Verification activation error:",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "Unable to activate verification. Please try again.",
+            true
+        );
+
+
+    } finally {
+
+        if (
+            activateButton.style.display !==
+            "none"
+        ) {
+
+            activateButton.disabled =
+                false;
+
+            activateButton.textContent =
+                "Activate Verification";
+
+        }
+
+    }
 
 }
 
@@ -1611,7 +2131,7 @@ function showMessage(
     message.className =
         isError
             ? "message error"
-            : "message";
+            : "message success";
 
     message.style.display =
         "block";
@@ -1661,10 +2181,50 @@ function goHome() {
 
 
 /* =========================================================
-   ENTER
+   STATUS CODE INPUT
 ========================================================= */
 
-usernameInput.addEventListener(
+statusCodeInput.addEventListener(
+    "input",
+    function() {
+
+        const value =
+            normalizeStatusCode(
+                this.value
+            );
+
+        this.value =
+            value;
+
+    }
+);
+
+
+/* =========================================================
+   PRIVATE KEY INPUT
+========================================================= */
+
+privateKeyInput.addEventListener(
+    "input",
+    function() {
+
+        const value =
+            normalizePrivateKey(
+                this.value
+            );
+
+        this.value =
+            value;
+
+    }
+);
+
+
+/* =========================================================
+   ENTER — STATUS CODE
+========================================================= */
+
+statusCodeInput.addEventListener(
     "keydown",
     function(event) {
 
@@ -1683,12 +2243,34 @@ usernameInput.addEventListener(
 
 
 /* =========================================================
-   AUTO USERNAME FROM URL
-   Example:
-   /verification/status?username=test
+   ENTER — PRIVATE KEY
 ========================================================= */
 
-(function loadUsernameFromURL() {
+privateKeyInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            activateVerification();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AUTO STATUS CODE FROM URL
+   Example:
+   /verification/status?status_code=123456789012
+========================================================= */
+
+(function loadStatusCodeFromURL() {
 
     const params =
         new URLSearchParams(
@@ -1696,18 +2278,20 @@ usernameInput.addEventListener(
         );
 
 
-    const username =
-        params.get(
-            "username"
+    const statusCode =
+        normalizeStatusCode(
+            params.get(
+                "status_code"
+            )
         );
 
 
-    if (username) {
+    if (
+        statusCode.length === 12
+    ) {
 
-        usernameInput.value =
-            "@" + normalizeUsername(
-                username
-            );
+        statusCodeInput.value =
+            statusCode;
 
         checkStatus();
 
