@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Custom Email — Appnetick</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+
+    background: #ffffff;
+
+    color: #212121;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+}
+
+.page {
+
+    width: 100%;
+
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding:
+        28px
+        16px
+        50px;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 24px;
+
+}
+
+.logo {
+
+    width: 46px;
+
+    height: 46px;
+
+    border-radius: 14px;
+
+    object-fit: contain;
+
+    background: #f7f7f7;
+
+    border: 1px solid #e0e0e0;
+
+}
+
+.header-text {
+
+    min-width: 0;
+
+}
+
+.header-title {
+
+    margin: 0;
+
+    font-size: 22px;
+
+    line-height: 1.25;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+
+}
+
+.header-subtitle {
+
+    margin-top: 4px;
+
+    color: #757575;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+
+    width: 100%;
+
+    background: #f7f7f7;
+
+    border:
+        1px solid
+        #dedede;
+
+    border-radius: 24px;
+
+    padding: 24px;
+
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding:
+        8px
+        13px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(41, 121, 255, 0.10);
+
+    color: #2979ff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+h1 {
+
+    margin: 0;
+
+    font-size: 27px;
+
+    line-height: 1.25;
+
+    letter-spacing: -0.7px;
+
+}
+
+.description {
+
+    margin-top: 9px;
+
+    color: #757575;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form {
+
+    margin-top: 25px;
+
+}
+
+.field {
+
+    margin-bottom: 17px;
+
+}
+
+.label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #424242;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.input,
+.textarea {
+
+    display: block;
+
+    width: 100%;
+
+    border:
+        1px solid
+        #d7d7d7;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    color: #212121;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
+
+}
+
+.input {
+
+    height: 50px;
+
+    padding:
+        0
+        15px;
+
+}
+
+.textarea {
+
+    min-height: 120px;
+
+    resize: vertical;
+
+    padding:
+        13px
+        15px;
+
+    line-height: 1.55;
+
+}
+
+.input:focus,
+.textarea:focus {
+
+    border-color: #2979ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(41, 121, 255, 0.10);
+
+}
+
+
+/* =========================================================
+   SECRET
+========================================================= */
+
+.secret-box {
+
+    margin-top: 8px;
+
+    padding: 16px;
+
+    border:
+        1px solid
+        #dedede;
+
+    border-radius: 17px;
+
+    background: #ffffff;
+
+}
+
+.secret-title {
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    color: #212121;
+
+}
+
+.secret-description {
+
+    margin-top: 4px;
+
+    margin-bottom: 11px;
+
+    color: #757575;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+.send-button {
+
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 8px;
+
+    border: 0;
+
+    border-radius: 15px;
+
+    background: #2979ff;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        transform .08s ease,
+        opacity .15s ease;
+
+}
+
+.send-button:active {
+
+    transform: scale(.985);
+
+}
+
+.send-button:disabled {
+
+    opacity: .6;
+
+    cursor: default;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    display: none;
+
+    margin-top: 18px;
+
+    padding: 14px 15px;
+
+    border-radius: 14px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+}
+
+.status.success {
+
+    display: block;
+
+    background:
+        rgba(46, 125, 50, .09);
+
+    color: #2e7d32;
+
+    border:
+        1px solid
+        rgba(46, 125, 50, .18);
+
+}
+
+.status.error {
+
+    display: block;
+
+    background:
+        rgba(211, 47, 47, .08);
+
+    color: #c62828;
+
+    border:
+        1px solid
+        rgba(211, 47, 47, .16);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    margin-top: 22px;
+
+    text-align: center;
+
+    color: #9e9e9e;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+@media (prefers-color-scheme: dark) {
+
+    body {
+
+        background: #1e1e1e;
+
+        color: #ffffff;
+
+    }
+
+    .logo {
+
+        background: #252525;
+
+        border-color: #424242;
+
+    }
+
+    .header-subtitle,
+    .description {
+
+        color: #a0a0a0;
+
+    }
+
+    .card {
+
+        background: #252525;
+
+        border-color: #424242;
+
+    }
+
+    .label {
+
+        color: #d0d0d0;
+
+    }
+
+    .input,
+    .textarea,
+    .secret-box {
+
+        background: #1e1e1e;
+
+        color: #ffffff;
+
+        border-color: #424242;
+
+    }
+
+    .input:focus,
+    .textarea:focus {
+
+        border-color: #2979ff;
+
+    }
+
+    .secret-title {
+
+        color: #ffffff;
+
+    }
+
+    .secret-description {
+
+        color: #a0a0a0;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .page {
+
+        padding:
+            20px
+            12px
+            40px;
+
+    }
+
+    .card {
+
+        padding: 20px;
+
+        border-radius: 21px;
+
+    }
+
+    h1 {
+
+        font-size: 24px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="header">
+
+        <img
+            class="logo"
+            src="/20260313_121958.jpg"
+            alt="Appnetick"
+        >
+
+        <div class="header-text">
+
+            <h2 class="header-title">
+                Appnetick
+            </h2>
+
+            <div class="header-subtitle">
+                Custom email sender
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CARD
+    ====================================================== -->
+
+    <div class="card">
+
+
+        <div class="badge">
+            Custom Email
+        </div>
+
+
+        <h1>
+            Send a custom email
+        </h1>
+
+
+        <div class="description">
+
+            Send a custom plain-text email using
+            Appnetick's email server.
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+            id="emailForm"
+            class="form"
+        >
+
+
+            <!-- EMAIL -->
+
+            <div class="field">
+
+                <label
+                    class="label"
+                    for="email"
+                >
+                    Recipient email
+                </label>
+
+                <input
+                    id="email"
+                    class="input"
+                    type="email"
+                    placeholder="user@gmail.com"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SUBJECT -->
+
+            <div class="field">
+
+                <label
+                    class="label"
+                    for="subject"
+                >
+                    Subject
+                </label>
+
+                <input
+                    id="subject"
+                    class="input"
+                    type="text"
+                    placeholder="Your Appnetick Verification Update"
+                    required
+                >
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <div class="field">
+
+                <label
+                    class="label"
+                    for="title"
+                >
+                    Title
+                </label>
+
+                <input
+                    id="title"
+                    class="input"
+                    type="text"
+                    placeholder="Verification Application Update"
+                    required
+                >
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="field">
+
+                <label
+                    class="label"
+                    for="message"
+                >
+                    Message
+                </label>
+
+                <textarea
+                    id="message"
+                    class="textarea"
+                    placeholder="Write your message here..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="field">
+
+                <label
+                    class="label"
+                    for="details"
+                >
+                    Details
+                    <span
+                        style="
+                            color:#9e9e9e;
+                            font-weight:400;
+                        "
+                    >
+                        (optional)
+                    </span>
+                </label>
+
+                <textarea
+                    id="details"
+                    class="textarea"
+                    style="min-height:90px;"
+                    placeholder="Status code: 123456789012"
+                ></textarea>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="field">
+
+                <label
+                    class="label"
+                    for="footerMessage"
+                >
+                    Footer message
+                    <span
+                        style="
+                            color:#9e9e9e;
+                            font-weight:400;
+                        "
+                    >
+                        (optional)
+                    </span>
+                </label>
+
+                <textarea
+                    id="footerMessage"
+                    class="textarea"
+                    style="min-height:90px;"
+                    placeholder="Please keep this information safe."
+                ></textarea>
+
+            </div>
+
+
+            <!-- =================================================
+                 ADMIN SECRET
+            ================================================== -->
+
+            <div class="secret-box">
+
+                <div class="secret-title">
+                    Admin authorization
+                </div>
+
+                <div class="secret-description">
+
+                    Enter your server-side
+                    EMAIL_ADMIN_SECRET to authorize
+                    this email.
+
+                </div>
+
+                <input
+                    id="adminSecret"
+                    class="input"
+                    type="password"
+                    placeholder="EMAIL_ADMIN_SECRET"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SEND -->
+
+            <button
+                id="sendButton"
+                class="send-button"
+                type="submit"
+            >
+                Send email
+            </button>
+
+
+            <!-- STATUS -->
+
+            <div
+                id="status"
+                class="status"
+            ></div>
+
+
+        </form>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <div class="footer">
+
+        Appnetick · Custom Email
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/*
+============================================================
+CONFIG
+============================================================
+*/
+
+const API_URL =
+    "https://appnetick-link.vercel.app/api/send-otp";
+
+
+/*
+============================================================
+ELEMENTS
+============================================================
+*/
+
+const form =
+    document.getElementById(
+        "emailForm"
+    );
+
+const sendButton =
+    document.getElementById(
+        "sendButton"
+    );
+
+const statusBox =
+    document.getElementById(
+        "status"
+    );
+
+
+/*
+============================================================
+SHOW STATUS
+============================================================
+*/
+
+function showStatus(
+    message,
+    type
+) {
+
+    statusBox.textContent =
+        message;
+
+    statusBox.className =
+        "status " + type;
+
+}
+
+
+/*
+============================================================
+HIDE STATUS
+============================================================
+*/
+
+function hideStatus() {
+
+    statusBox.textContent = "";
+
+    statusBox.className =
+        "status";
+
+}
+
+
+/*
+============================================================
+SUBMIT
+============================================================
+*/
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        hideStatus();
+
+
+        /*
+        ----------------------------------------------------
+        VALUES
+        ----------------------------------------------------
+        */
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const subject =
+            document
+                .getElementById("subject")
+                .value
+                .trim();
+
+
+        const title =
+            document
+                .getElementById("title")
+                .value
+                .trim();
+
+
+        const message =
+            document
+                .getElementById("message")
+                .value
+                .trim();
+
+
+        const details =
+            document
+                .getElementById("details")
+                .value
+                .trim();
+
+
+        const footerMessage =
+            document
+                .getElementById("footerMessage")
+                .value
+                .trim();
+
+
+        const adminSecret =
+            document
+                .getElementById("adminSecret")
+                .value;
+
+
+        /*
+        ----------------------------------------------------
+        BUTTON
+        ----------------------------------------------------
+        */
+
+        sendButton.disabled =
+            true;
+
+        sendButton.textContent =
+            "Sending...";
+
+
+        try {
+
+
+            /*
+            ================================================
+            REQUEST
+            ================================================
+            */
+
+            const response =
+                await fetch(
+                    API_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                type:
+                                    "custom",
+
+                                admin_secret:
+                                    adminSecret,
+
+                                email:
+                                    email,
+
+                                subject:
+                                    subject,
+
+                                title:
+                                    title,
+
+                                message:
+                                    message,
+
+                                details:
+                                    details,
+
+                                footer_message:
+                                    footerMessage
+
+                            })
+
+                    }
+                );
+
+
+            /*
+            ================================================
+            RESPONSE
+            ================================================
+            */
+
+            let data = {};
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch (e) {
+
+                data = {};
+
+            }
+
+
+            /*
+            ================================================
+            ERROR
+            ================================================
+            */
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+
+                    data.message ||
+                    "Failed to send email"
+
+                );
+
+            }
+
+
+            /*
+            ================================================
+            SUCCESS
+            ================================================
+            */
+
+            showStatus(
+
+                "Email sent successfully to " +
+                email,
+
+                "success"
+
+            );
+
+
+            /*
+            ------------------------------------------------
+            CLEAR FORM
+            ------------------------------------------------
+            */
+
+            document
+                .getElementById("subject")
+                .value = "";
+
+            document
+                .getElementById("title")
+                .value = "";
+
+            document
+                .getElementById("message")
+                .value = "";
+
+            document
+                .getElementById("details")
+                .value = "";
+
+            document
+                .getElementById("footerMessage")
+                .value = "";
+
+
+        } catch (error) {
+
+
+            /*
+            ================================================
+            ERROR MESSAGE
+            ================================================
+            */
+
+            showStatus(
+
+                error.message ||
+                "Failed to send email.",
+
+                "error"
+
+            );
+
+        }
+
+
+        /*
+        ----------------------------------------------------
+        RESTORE BUTTON
+        ----------------------------------------------------
+        */
+
+        sendButton.disabled =
+            false;
+
+        sendButton.textContent =
+            "Send email";
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
