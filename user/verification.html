@@ -1,1436 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<title>Appnetick Verification</title>
 
-<title>Get Verified • Appnetick</title>
-
-<link
-    rel="icon"
-    href="/20260313_121958.jpg"
->
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
->
-
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-/* =========================================================
-   ROOT
-========================================================= */
-
 :root {
-
-    --bg:#FFFFFF;
-    --surface:#FFFFFF;
-    --surface-secondary:#F7F7F7;
-
-    --text:#212121;
-    --secondary:#757575;
-    --muted:#9E9E9E;
-
-    --border:#DCDCDC;
-    --input-bg:#F5F5F5;
-
-    --primary:#2979FF;
-    --primary-soft:rgba(41,121,255,0.10);
-
-    --danger:#E53935;
-    --success:#2E7D32;
-
-    --shadow:
-        0 8px 30px rgba(0,0,0,0.06);
-
-    --radius:18px;
-    --button-radius:30px;
+    --blue: #2979ff;
+    --blue-soft: #eaf2ff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --radius: 16px;
 }
-
-
-/* =========================================================
-   DARK THEME
-========================================================= */
-
-html[data-theme="dark"] {
-
-    --bg:#1E1E1E;
-    --surface:#1E1E1E;
-    --surface-secondary:#252525;
-
-    --text:#FFFFFF;
-    --secondary:#A0A0A0;
-    --muted:#777777;
-
-    --border:#424242;
-    --input-bg:#252525;
-
-    --primary:#2979FF;
-    --primary-soft:rgba(41,121,255,0.14);
-
-    --danger:#EF5350;
-    --success:#66BB6A;
-
-    --shadow:
-        0 8px 30px rgba(0,0,0,0.22);
-}
-
-
-/* =========================================================
-   GLOBAL
-========================================================= */
 
 * {
-
-    margin:0;
-    padding:0;
-
-    box-sizing:border-box;
-
-    font-family:'Inter',sans-serif;
-
-    -webkit-tap-highlight-color:transparent;
+    box-sizing: border-box;
 }
 
-html {
-
-    scroll-behavior:smooth;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
 body {
-
-    margin:0;
-    padding:0;
-
-    width:100%;
-    min-height:100vh;
-
-    background:var(--bg);
-
-    color:var(--text);
-
-    overflow-x:hidden;
-
-    transition:
-        background .25s ease,
-        color .25s ease;
+    font-family: Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
 }
 
 button,
 input,
-textarea,
-select {
-
-    font-family:inherit;
+textarea {
+    font: inherit;
 }
 
+button {
+    cursor: pointer;
+}
 
-/* =========================================================
-   TOOLBAR
-========================================================= */
+/* ================= TOOLBAR ================= */
 
 .toolbar {
-
-    height:64px;
-    width:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 12px 0 8px;
-
-    position:sticky;
-    top:0;
-
-    z-index:1000;
-
-    background:var(--surface);
-
-    border-bottom:1px solid var(--border);
+    height: 64px;
+    background: rgba(255,255,255,.94);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
 }
 
 .toolbar-left {
-
-    display:flex;
-    align-items:center;
-
-    gap:4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
 }
 
 .brand {
-
-    font-size:20px;
-    font-weight:700;
-
-    letter-spacing:-.4px;
+    font-size: 17px;
+    font-weight: 700;
+    margin-right: 8px;
 }
 
-.toolbar-actions {
-
-    display:flex;
-    align-items:center;
-
-    gap:4px;
+.back-btn {
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-size: 21px;
 }
 
-.icon-btn {
-
-    width:44px;
-    height:44px;
-
-    border:0;
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:transparent;
-
-    color:var(--text);
-
-    cursor:pointer;
-
-    font-size:22px;
-
-    outline:none;
-
-    -webkit-appearance:none;
-    appearance:none;
-
-    box-shadow:none;
+.back-btn:hover {
+    background: #f1f3f5;
 }
 
-.icon-btn:focus,
-.icon-btn:focus-visible {
-
-    outline:none;
-    box-shadow:none;
+.back-btn.hidden {
+    visibility: hidden;
 }
 
-.icon-btn:active {
+/* progress next to back button */
 
-    transform:scale(.92);
-}
-
-#toolbarBack {
-
-    visibility:hidden;
-}
-
-
-/* =========================================================
-   PAGE
-========================================================= */
-
-.page {
-
-    width:100%;
-
-    max-width:900px;
-
-    margin:0 auto;
-
-    padding:24px 20px 40px;
-
-    min-height:
-        calc(100vh - 64px);
-
-    display:flex;
-
-    flex-direction:column;
-}
-
-
-/* =========================================================
-   FORM AREA
-========================================================= */
-
-.progress-area {
-
-    width:100%;
-
-    max-width:430px;
-
-    margin:0 auto 28px;
-}
-
-.progress-top {
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    margin-bottom:10px;
-}
-
-.progress-label {
-
-    font-size:13px;
-
-    font-weight:600;
-
-    color:var(--secondary);
+.toolbar-progress {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 150px;
 }
 
 .progress-number {
-
-    font-size:13px;
-
-    color:var(--muted);
-
-    font-weight:500;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
 }
 
-.progress-track {
-
-    width:100%;
-
-    height:5px;
-
-    border-radius:999px;
-
-    overflow:hidden;
-
-    background:var(--surface-secondary);
+.toolbar-progress-track {
+    width: 90px;
+    height: 5px;
+    background: #e9edf3;
+    border-radius: 99px;
+    overflow: hidden;
 }
 
-.progress-fill {
-
-    height:100%;
-
-    width:4.76%;
-
-    border-radius:999px;
-
-    background:var(--primary);
-
-    transition:width .3s ease;
+.toolbar-progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--blue);
+    border-radius: inherit;
+    transition: width .25s ease;
 }
 
-.step-viewport {
-
-    width:100%;
-
-    max-width:430px;
-
-    margin:0 auto;
-
-    position:relative;
-
-    overflow:hidden;
-
-    flex:none;
+.toolbar-right {
+    margin-left: auto;
+    display: flex;
+    gap: 7px;
 }
 
-.step {
-
-    width:100%;
+.icon-btn {
+    width: 38px;
+    height: 38px;
+    border: 0;
+    background: transparent;
+    border-radius: 10px;
+    font-size: 18px;
 }
 
-.slide-next-enter {
-
-    animation:
-        slideNextEnter .30s
-        cubic-bezier(.22,1,.36,1)
-        both;
+.icon-btn:hover {
+    background: #f1f3f5;
 }
 
-.slide-back-enter {
+/* ================= PAGE ================= */
 
-    animation:
-        slideBackEnter .30s
-        cubic-bezier(.22,1,.36,1)
-        both;
+.page {
+    width: min(680px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 42px 0 100px;
 }
 
-@keyframes slideNextEnter {
-
-    from {
-
-        opacity:0;
-
-        transform:
-            translate3d(100%,0,0);
-    }
-
-    to {
-
-        opacity:1;
-
-        transform:
-            translate3d(0,0,0);
-    }
-}
-
-@keyframes slideBackEnter {
-
-    from {
-
-        opacity:0;
-
-        transform:
-            translate3d(-100%,0,0);
-    }
-
-    to {
-
-        opacity:1;
-
-        transform:
-            translate3d(0,0,0);
-    }
-}
-
-
-/* =========================================================
-   INTRO
-========================================================= */
-
-.intro-icon {
-
-    width:82px;
-    height:82px;
-
-    border-radius:25px;
-
-    margin:8px auto 24px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:var(--primary-soft);
-
-    color:var(--primary);
-
-    font-size:42px;
+.step-header {
+    margin-bottom: 26px;
 }
 
 .step-title {
-
-    margin:0 0 10px;
-
-    font-size:25px;
-
-    line-height:1.22;
-
-    font-weight:700;
-
-    letter-spacing:-.5px;
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -.5px;
 }
 
 .step-description {
-
-    margin:0;
-
-    color:var(--secondary);
-
-    font-size:15px;
-
-    line-height:1.65;
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
 }
 
-.intro-points {
+/* ================= FIELDS ================= */
 
-    margin-top:26px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:11px;
+.field {
+    margin-bottom: 22px;
 }
 
-.intro-point {
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:12px;
-
-    padding:14px;
-
-    border-radius:16px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
+.field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 9px;
 }
 
-.intro-point-icon {
-
-    width:36px;
-    height:36px;
-
-    flex:0 0 36px;
-
-    border-radius:11px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:var(--primary-soft);
-
-    font-size:19px;
+.input,
+.textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 13px;
+    padding: 14px 15px;
+    outline: none;
+    transition: .2s;
 }
 
-.intro-point-text {
-
-    font-size:13px;
-
-    line-height:1.5;
-
-    color:var(--secondary);
+.input {
+    height: 50px;
 }
 
-.intro-point-text strong {
-
-    display:block;
-
-    color:var(--text);
-
-    margin-bottom:3px;
-
-    font-size:14px;
+.textarea {
+    min-height: 130px;
+    resize: vertical;
 }
 
-
-/* =========================================================
-   QUESTIONS
-========================================================= */
-
-.question-label {
-
-    display:block;
-
-    margin:5px 0 9px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    line-height:1.35;
+.input:focus,
+.textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(41,121,255,.10);
 }
 
-.question-help {
-
-    margin:0 0 20px;
-
-    color:var(--secondary);
-
-    font-size:14px;
-
-    line-height:1.55;
+.optional {
+    color: #9ca3af;
+    font-weight: 400;
 }
 
+/* ================= RADIO CARDS ================= */
 
-/* =========================================================
-   INPUTS
-========================================================= */
-
-.input-wrap {
-
-    position:relative;
-
-    width:100%;
+.option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
 }
 
-.form-input,
-.form-textarea {
-
-    width:100%;
-
-    border:1px solid var(--border);
-
-    outline:none;
-
-    color:var(--text);
-
-    background:var(--input-bg);
-
-    border-radius:16px;
-
-    font-size:15px;
-
-    transition:
-        border .2s ease,
-        box-shadow .2s ease;
-
-    -webkit-appearance:none;
-    appearance:none;
+.option-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 66px;
+    padding: 13px 15px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: border-color .18s, background .18s, box-shadow .18s;
+    cursor: pointer;
 }
 
-.form-input {
-
-    min-height:54px;
-
-    padding:0 16px;
+.option-card:hover {
+    border-color: #b9c7dc;
 }
 
-.form-textarea {
-
-    min-height:135px;
-
-    padding:16px;
-
-    resize:none;
-
-    line-height:1.55;
+.option-card.selected {
+    border-color: var(--blue);
+    background: var(--blue-soft);
+    box-shadow: 0 0 0 1px var(--blue);
 }
 
-.form-input:focus,
-.form-textarea:focus {
-
-    border-color:var(--primary);
-
-    box-shadow:
-        0 0 0 3px
-        var(--primary-soft);
+.option-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.form-input::placeholder,
-.form-textarea::placeholder {
-
-    color:var(--muted);
+.option-indicator {
+    width: 21px;
+    height: 21px;
+    flex: 0 0 21px;
+    border: 2px solid #c8ced8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.radio .option-indicator {
+    border-radius: 50%;
+}
 
-/* =========================================================
-   CHIPS
-========================================================= */
+.radio .option-card.selected .option-indicator {
+    border-color: var(--blue);
+}
+
+.radio .option-card.selected .option-indicator::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--blue);
+}
+
+.checkbox .option-indicator {
+    border-radius: 6px;
+}
+
+.checkbox .option-card.selected .option-indicator {
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+.checkbox .option-card.selected .option-indicator::after {
+    content: "✓";
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.option-content {
+    min-width: 0;
+}
+
+.option-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.option-description {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* ================= CHIPS ================= */
 
 .chips {
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:9px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .chip {
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--text);
+    padding: 11px 15px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: .18s;
+}
 
-    border:1px solid var(--border);
-
-    background:var(--surface);
-
-    color:var(--secondary);
-
-    border-radius:999px;
-
-    padding:11px 15px;
-
-    font-size:13px;
-
-    font-weight:500;
-
-    cursor:pointer;
-
-    outline:none;
-
-    -webkit-appearance:none;
-
-    appearance:none;
+.chip:hover {
+    border-color: #b9c7dc;
 }
 
 .chip.selected {
-
-    background:var(--primary-soft);
-
-    color:var(--primary);
-
-    border-color:var(--primary);
+    background: var(--blue-soft);
+    border-color: var(--blue);
+    color: #1459c7;
 }
 
+/* ================= ERROR ================= */
 
-/* =========================================================
-   CONFIRM
-========================================================= */
-
-.confirm-box {
-
-    padding:17px;
-
-    border-radius:17px;
-
-    border:1px solid var(--border);
-
-    background:var(--surface-secondary);
-
-    cursor:pointer;
+.error {
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: 8px;
 }
 
-.confirm-row {
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:12px;
-}
-
-.custom-check {
-
-    width:22px;
-    height:22px;
-
-    flex:0 0 22px;
-
-    border-radius:7px;
-
-    border:1.5px solid var(--muted);
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:#FFFFFF;
-
-    font-size:15px;
-}
-
-.custom-check i {
-
-    opacity:0;
-}
-
-.confirm-box.checked .custom-check {
-
-    border-color:var(--primary);
-
-    background:var(--primary);
-}
-
-.confirm-box.checked .custom-check i {
-
-    opacity:1;
-}
-
-.confirm-text {
-
-    color:var(--secondary);
-
-    font-size:13px;
-
-    line-height:1.55;
-}
-
-
-/* =========================================================
-   BOTTOM ACTIONS
-========================================================= */
+/* ================= BOTTOM BUTTON ================= */
 
 .bottom-actions {
-
-    width:100%;
-
-    max-width:430px;
-
-    margin:18px auto 0;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
+    margin-top: 32px;
 }
 
-
-/* =========================================================
-   PRIMARY BUTTON
-========================================================= */
-
-.next-button {
-
-    width:100%;
-
-    min-height:42px;
-
-    height:42px;
-
-    padding:0 18px;
-
-    border:0;
-
-    border-radius:30px;
-
-    background:#2979FF;
-
-    color:#FFFFFF;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    position:relative;
-
-    cursor:pointer;
-
-    outline:none;
-
-    box-shadow:none;
-
-    -webkit-appearance:none;
-
-    appearance:none;
-
-    overflow:hidden;
-
-    -webkit-tap-highlight-color:transparent;
-
-    transition:
-        transform .15s ease,
-        opacity .15s ease;
+.primary-btn {
+    width: 100%;
+    height: 52px;
+    border: 0;
+    border-radius: 13px;
+    background: var(--blue);
+    color: white;
+    font-weight: 600;
+    transition: .2s;
 }
 
-.next-button:hover {
-
-    opacity:.88;
-
-    transform:translateY(-1px);
+.primary-btn:hover {
+    filter: brightness(.95);
 }
 
-.next-button:active {
-
-    transform:scale(.985);
+.primary-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
 }
 
-.next-button:focus,
-.next-button:focus-visible,
-.next-button:active {
-
-    outline:none;
-
-    box-shadow:none;
-}
-
-.next-button:disabled {
-
-    cursor:not-allowed;
-}
-
-
-/* =========================================================
-   GO TO LAST FIELD BUTTON
-========================================================= */
-
-.last-field-button {
-
-    width:100%;
-
-    min-height:42px;
-
-    height:42px;
-
-    padding:0 18px;
-
-    border:1px solid var(--border);
-
-    border-radius:30px;
-
-    background:var(--surface);
-
-    color:var(--text);
-
-    font-size:13px;
-
-    font-weight:600;
-
-    display:none;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:8px;
-
-    cursor:pointer;
-
-    outline:none;
-
-    box-shadow:none;
-
-    -webkit-appearance:none;
-
-    appearance:none;
-
-    transition:
-        transform .15s ease,
-        background .15s ease,
-        border-color .15s ease;
-}
-
-.last-field-button i {
-
-    font-size:18px;
-
-    color:var(--primary);
-}
-
-.last-field-button:hover {
-
-    background:var(--surface-secondary);
-
-    transform:translateY(-1px);
-}
-
-.last-field-button:active {
-
-    transform:scale(.985);
-}
-
-.last-field-button:focus,
-.last-field-button:focus-visible {
-
-    outline:none;
-
-    box-shadow:none;
-}
-
-
-/* =========================================================
-   BUTTON TEXT
-========================================================= */
-
-#nextText {
-
-    display:block;
-
-    line-height:1;
-
-    position:relative;
-
-    z-index:2;
-}
-
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-.button-loader {
-
-    display:none;
-
-    width:26px;
-
-    height:26px;
-
-    position:relative;
-
-    flex:0 0 26px;
-
-    z-index:3;
-}
-
-.button-loader svg {
-
-    width:26px;
-
-    height:26px;
-
-    display:block;
-
-    overflow:visible;
-
-    transform-origin:50% 50%;
-}
-
-.button-loader-track {
-
-    fill:none;
-
-    stroke:rgba(255,255,255,.28);
-
-    stroke-width:2;
-}
-
-.button-loader-progress {
-
-    fill:none;
-
-    stroke:#FFFFFF;
-
-    stroke-width:2;
-
-    stroke-linecap:round;
-
-    stroke-linejoin:round;
-
-    stroke-dasharray:8 70.54;
-
-    stroke-dashoffset:0;
-
-    transform-origin:50% 50%;
-
-    transform:rotate(-90deg);
-}
-
-.button-loader svg.animate {
-
-    animation:
-        telegramRotate
-        2s
-        linear
-        infinite;
-}
-
-.button-loader-progress.animate {
-
-    animation:
-        telegramArc
-        1.15s
-        cubic-bezier(.4,0,.2,1)
-        infinite;
-}
-
-.next-button.loading {
-
-    pointer-events:none;
-
-    opacity:1;
-
-    transform:none;
-}
-
-.next-button.loading #nextText {
-
-    display:none;
-}
-
-.next-button.loading .button-loader {
-
-    display:block;
-}
-
-@keyframes telegramRotate {
-
-    0% {
-        transform:rotate(0deg);
-    }
-
-    100% {
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes telegramArc {
-
-    0% {
-        stroke-dasharray:7 62.12;
-        stroke-dashoffset:0;
-    }
-
-    20% {
-        stroke-dasharray:18 51.12;
-        stroke-dashoffset:-2;
-    }
-
-    40% {
-        stroke-dasharray:36 33.12;
-        stroke-dashoffset:-8;
-    }
-
-    55% {
-        stroke-dasharray:47 22.12;
-        stroke-dashoffset:-17;
-    }
-
-    70% {
-        stroke-dasharray:32 37.12;
-        stroke-dashoffset:-34;
-    }
-
-    85% {
-        stroke-dasharray:16 53.12;
-        stroke-dashoffset:-48;
-    }
-
-    100% {
-        stroke-dasharray:7 62.12;
-        stroke-dashoffset:-69.12;
-    }
-}
-
-
-/* =========================================================
-   REVIEW
-========================================================= */
-
-.review-card {
-
-    border:1px solid var(--border);
-
-    background:var(--surface-secondary);
-
-    border-radius:18px;
-
-    overflow:hidden;
+/* ================= REVIEW ================= */
+
+.review {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .review-row {
-
-    padding:13px 15px;
-
-    border-bottom:1px solid var(--border);
-}
-
-.review-row:last-child {
-
-    border-bottom:0;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 14px;
 }
 
 .review-label {
-
-    font-size:11px;
-
-    color:var(--muted);
-
-    margin-bottom:4px;
-
-    text-transform:uppercase;
-
-    letter-spacing:.5px;
-
-    font-weight:600;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 5px;
 }
 
 .review-value {
-
-    font-size:14px;
-
-    color:var(--text);
-
-    line-height:1.45;
-
-    word-break:break-word;
+    font-size: 14px;
+    font-weight: 500;
+    word-break: break-word;
 }
 
-.info-card {
-
-    margin-top:16px;
-
-    padding:14px;
-
-    border-radius:16px;
-
-    background:var(--surface-secondary);
-
-    border:1px solid var(--border);
-
-    display:flex;
-
-    gap:10px;
-
-    align-items:flex-start;
-}
-
-.info-card i {
-
-    color:var(--primary);
-
-    font-size:19px;
-}
-
-.info-card span {
-
-    color:var(--secondary);
-
-    font-size:12px;
-
-    line-height:1.55;
-}
-
-
-/* =========================================================
-   SUCCESS
-========================================================= */
+/* ================= SUCCESS ================= */
 
 .success {
-
-    text-align:center;
-
-    padding-top:35px;
+    text-align: center;
+    padding: 60px 0;
 }
 
 .success-icon {
-
-    width:86px;
-    height:86px;
-
-    margin:0 auto 24px;
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:var(--primary);
-
-    background:var(--primary-soft);
-
-    font-size:44px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin: 0 auto 20px;
 }
 
-.success h2 {
-
-    margin:0 0 10px;
-
-    font-size:25px;
+.success h1 {
+    margin: 0;
+    font-size: 28px;
 }
 
 .success p {
-
-    margin:0;
-
-    color:var(--secondary);
-
-    font-size:14px;
-
-    line-height:1.65;
+    color: var(--muted);
+    line-height: 1.6;
 }
 
+/* ================= MOBILE ================= */
 
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width:701px) {
+@media (max-width: 600px) {
 
     .toolbar {
-
-        height:68px;
-
-        padding:0 24px;
-    }
-
-    .page {
-
-        max-width:900px;
-
-        padding:
-            34px
-            32px
-            50px;
-    }
-
-    .progress-area {
-
-        max-width:560px;
-
-        margin-bottom:34px;
-    }
-
-    .step-viewport {
-
-        max-width:560px;
-    }
-
-    .bottom-actions {
-
-        max-width:560px;
-
-        margin-top:26px;
-    }
-
-    .step-title {
-
-        font-size:28px;
-    }
-
-    .question-label {
-
-        font-size:22px;
-    }
-
-    .form-input {
-
-        min-height:56px;
-    }
-
-    .next-button,
-    .last-field-button {
-
-        min-height:42px;
-
-        height:42px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width:700px) {
-
-    .toolbar {
-
-        height:62px;
-
-        padding:0 14px;
+        padding: 0 12px;
     }
 
     .brand {
+        display: none;
+    }
 
-        font-size:21px;
+    .toolbar-progress {
+        min-width: 0;
+    }
+
+    .toolbar-progress-track {
+        width: 65px;
     }
 
     .page {
-
-        max-width:430px;
-
-        padding:
-            24px
-            14px
-            30px;
-    }
-
-    .progress-area {
-
-        margin-bottom:28px;
-    }
-
-    .step-viewport {
-
-        max-width:430px;
-    }
-
-    .bottom-actions {
-
-        max-width:430px;
+        width: min(100% - 24px, 680px);
+        padding-top: 28px;
     }
 
     .step-title {
+        font-size: 26px;
+    }
 
-        font-size:25px;
+    .option-card {
+        min-height: 62px;
     }
 }
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width:400px) {
-
-    .page {
-
-        padding-left:16px;
-
-        padding-right:16px;
-    }
-
-    .step-title {
-
-        font-size:23px;
-    }
-
-    .question-label {
-
-        font-size:19px;
-    }
-
-    .button-loader {
-
-        width:26px;
-
-        height:26px;
-
-        flex-basis:26px;
-    }
-
-    .button-loader svg {
-
-        width:26px;
-
-        height:26px;
-    }
-}
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <header class="toolbar">
 
     <div class="toolbar-left">
 
         <button
-            class="icon-btn"
-            id="toolbarBack"
-            type="button"
+            class="back-btn hidden"
+            id="backBtn"
             onclick="previousStep()"
-            aria-label="Back"
-        >
-
-            <i class="ph ph-arrow-left"></i>
-
+            aria-label="Back">
+            ←
         </button>
 
+        <div class="brand">Appnetick</div>
 
-        <div class="brand">
-            Appnetick.
+        <div class="toolbar-progress">
+            <span class="progress-number" id="progressNumber">
+                1 / 21
+            </span>
+
+            <div class="toolbar-progress-track">
+                <div
+                    class="toolbar-progress-fill"
+                    id="progressFill">
+                </div>
+            </div>
         </div>
 
     </div>
 
-
-    <div class="toolbar-actions">
+    <div class="toolbar-right">
 
         <button
             class="icon-btn"
-            id="themeButton"
-            type="button"
-            aria-label="Change theme"
-        >
-
-            <i class="ph ph-moon"></i>
-
+            onclick="toggleTheme()"
+            aria-label="Theme">
+            ◐
         </button>
 
-
         <button
             class="icon-btn"
-            type="button"
             onclick="goHome()"
-            aria-label="Home"
-        >
-
-            <i class="ph ph-house"></i>
-
+            aria-label="Home">
+            ⌂
         </button>
 
     </div>
@@ -1440,112 +529,20 @@ select {
 
 <main class="page">
 
-
-    <div class="progress-area">
-
-        <div class="progress-top">
-
-            <span
-                class="progress-label"
-                id="progressLabel"
-            >
-                Verification
-            </span>
-
-
-            <span
-                class="progress-number"
-                id="progressNumber"
-            >
-                1 of 21
-            </span>
-
-        </div>
-
-
-        <div class="progress-track">
-
-            <div
-                class="progress-fill"
-                id="progressFill"
-            ></div>
-
-        </div>
-
+    <div class="step-header">
+        <h1 class="step-title" id="stepTitle"></h1>
+        <p class="step-description" id="stepDescription"></p>
     </div>
 
+    <div id="stepContent"></div>
 
-    <div
-        class="step-viewport"
-        id="stepViewport"
-    ></div>
-
-
-    <div
-        class="bottom-actions"
-        id="bottomActions"
-    >
-
+    <div class="bottom-actions">
         <button
-            class="next-button"
-            id="nextButton"
-            type="button"
-            onclick="nextStep()"
-        >
-
-            <span id="nextText">
-                Get started
-            </span>
-
-
-            <div
-                class="button-loader"
-                id="buttonLoader"
-            >
-
-                <svg
-                    viewBox="0 0 26 26"
-                    aria-hidden="true"
-                >
-
-                    <circle
-                        class="button-loader-track"
-                        cx="13"
-                        cy="13"
-                        r="11"
-                    ></circle>
-
-
-                    <circle
-                        class="button-loader-progress"
-                        id="buttonLoaderProgress"
-                        cx="13"
-                        cy="13"
-                        r="11"
-                    ></circle>
-
-                </svg>
-
-            </div>
-
+            class="primary-btn"
+            id="continueBtn"
+            onclick="nextStep()">
+            Continue
         </button>
-
-
-        <button
-            class="last-field-button"
-            id="lastFieldButton"
-            type="button"
-            onclick="goToLastField()"
-        >
-
-            <i class="ph ph-arrow-up-right"></i>
-
-            <span id="lastFieldButtonText">
-                Go to last field
-            </span>
-
-        </button>
-
     </div>
 
 </main>
@@ -1553,751 +550,541 @@ select {
 
 <script>
 
-/* =========================================================
-   API
-========================================================= */
-
-const API_BASE =
-    "https://api-appnetick.vercel.app";
+const API_BASE = "https://api-appnetick.vercel.app";
 
 
-/* =========================================================
-   THEME
-========================================================= */
-
-const themeButton =
-    document.getElementById("themeButton");
-
-const themeIcon =
-    themeButton.querySelector("i");
-
-const systemDark =
-    window.matchMedia &&
-    window.matchMedia(
-        "(prefers-color-scheme: dark)"
-    ).matches;
-
-let savedTheme =
-    localStorage.getItem(
-        "appnetick-theme"
-    );
-
-if (!savedTheme) {
-
-    savedTheme =
-        systemDark
-            ? "dark"
-            : "light";
-}
-
-applyTheme(savedTheme);
-
-
-function applyTheme(theme) {
-
-    document.documentElement
-        .setAttribute(
-            "data-theme",
-            theme
-        );
-
-    localStorage.setItem(
-        "appnetick-theme",
-        theme
-    );
-
-    themeIcon.className =
-        theme === "dark"
-            ? "ph ph-sun"
-            : "ph ph-moon";
-}
-
-
-themeButton.addEventListener(
-    "click",
-    function() {
-
-        const current =
-            document.documentElement
-                .getAttribute(
-                    "data-theme"
-                );
-
-        applyTheme(
-            current === "dark"
-                ? "light"
-                : "dark"
-        );
-
-    }
-);
-
-
-/* =========================================================
-   FORM DATA
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| FORM DATA
+|--------------------------------------------------------------------------
+*/
 
 const formData = {
 
-    username:"",
+    username: "",
 
-    fullName:"",
+    legalName: "",
 
-    legalName:"",
-    dateOfBirth:"",
+    dateOfBirth: "",
 
-    country:"",
-    phone:"",
+    country: "",
 
-    accountCategory:"",
-    profession:"",
+    phone: "",
 
-    verificationReason:"",
-    knownFor:"",
+    accountCategory: "",
 
-    website:"",
-    socialProfile:"",
+    profession: "",
 
-    audience:"",
-    contentCategory:"",
+    verificationReason: "",
 
-    achievement:"",
-    publicPresence:"",
+    knownFor: "",
 
-    authenticityConfirmed:false,
-    informationConfirmed:false,
-    termsConfirmed:false,
+    website: "",
 
-    email:""
+    socialProfile: "",
+
+    audience: [],
+
+    contentCategory: [],
+
+    achievement: "",
+
+    publicPresence: [],
+
+    authenticityConfirmed: false,
+
+    informationConfirmed: false,
+
+    termsConfirmed: false,
+
+    email: ""
+
 };
 
 
-/* =========================================================
-   STEPS
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| STEP DEFINITIONS
+|--------------------------------------------------------------------------
+|
+| type:
+|
+| text
+| date
+| textarea
+| radio       = one selection
+| checkbox    = multiple selections
+| chips       = multiple selections
+|
+*/
 
 const steps = [
 
-    /* 1 */
-
     {
-        type:"intro"
+        type: "intro",
+        title: "Request verification",
+        description:
+            "Tell us about yourself and your public presence. This application only takes a few minutes."
     },
 
-
-    /* 2 */
-
     {
-        type:"input",
-        key:"username",
-        title:"What is your Appnetick username?",
-        help:"Enter the username of the Appnetick account you want to verify. This username is used only to identify and link this application to the correct Appnetick account.",
-        placeholder:"Enter your Appnetick username"
+        type: "text",
+        key: "username",
+        title: "What is your username?",
+        description:
+            "Enter the username of the account you want to verify.",
+        placeholder: "@username",
+        required: true
     },
 
-
-    /* 3 */
-
     {
-        type:"input",
-        key:"legalName",
-        title:"What is your legal name?",
-        help:"Enter your full legal name exactly as it appears on your official records.",
-        placeholder:"Enter your legal name"
+        type: "text",
+        key: "legalName",
+        title: "What is your legal name?",
+        description:
+            "Use the name shown on your identification document.",
+        placeholder: "Full legal name",
+        required: true
     },
 
-
-    /* 4 */
-
     {
-        type:"date",
-        key:"dateOfBirth",
-        title:"What is your date of birth?",
-        help:"Your date of birth helps us establish that the account belongs to a real person."
+        type: "date",
+        key: "dateOfBirth",
+        title: "What is your date of birth?",
+        description:
+            "This information is used for verification purposes.",
+        required: true
     },
 
-
-    /* 5 */
+    /*
+     * RADIO
+     */
 
     {
-        type:"chips",
-        key:"country",
-        title:"Where are you based?",
-        help:"Select the country that best represents your current primary location.",
-        options:[
+        type: "radio",
+        key: "country",
+        title: "Where are you based?",
+        description:
+            "Select one country.",
+        required: true,
+
+        options: [
             "India",
             "United States",
             "United Kingdom",
             "Canada",
             "Australia",
-            "UAE",
+            "United Arab Emirates",
+            "Singapore",
             "Other"
         ]
     },
 
-
-    /* 6 */
-
     {
-        type:"input",
-        key:"phone",
-        title:"What is your phone number?",
-        help:"Use a phone number that you control.",
-        placeholder:"+91 XXXXX XXXXX",
-        inputType:"tel"
+        type: "text",
+        key: "phone",
+        title: "What is your phone number?",
+        description:
+            "Add a phone number where we can contact you if required.",
+        placeholder: "+91 98765 43210",
+        required: true
     },
 
-
-    /* 7 */
+    /*
+     * RADIO
+     */
 
     {
-        type:"chips",
-        key:"accountCategory",
-        title:"What best describes your account?",
-        help:"Choose the category that most accurately represents your public presence.",
-        options:[
-            "Creator",
-            "Public Figure",
-            "Artist",
-            "Musician",
-            "Business",
-            "Brand",
-            "Professional",
-            "Organization",
-            "Community",
-            "Other"
+        type: "radio",
+        key: "accountCategory",
+        title: "What type of account is this?",
+        description:
+            "Select the category that best describes your account.",
+        required: true,
+
+        options: [
+            {
+                title: "Creator",
+                description: "Individual creator or public personality",
+                value: "creator"
+            },
+            {
+                title: "Business",
+                description: "Company, brand or commercial account",
+                value: "business"
+            },
+            {
+                title: "Organization",
+                description: "Organization, institution or community",
+                value: "organization"
+            },
+            {
+                title: "Public Figure",
+                description: "Recognized public-facing individual",
+                value: "public_figure"
+            },
+            {
+                title: "Media",
+                description: "News, publication or media account",
+                value: "media"
+            }
         ]
     },
 
-
-    /* 8 */
-
     {
-        type:"input",
-        key:"profession",
-        title:"What is your profession or role?",
-        help:"Tell us what you currently do publicly or professionally.",
-        placeholder:"Example: Photographer"
+        type: "text",
+        key: "profession",
+        title: "What do you do?",
+        description:
+            "Tell us your primary profession or role.",
+        placeholder: "e.g. Entrepreneur, Artist, Developer",
+        required: true
     },
 
-
-    /* 9 */
-
     {
-        type:"textarea",
-        key:"verificationReason",
-        title:"Why should this account be verified?",
-        help:"Explain why people may search for or recognize you.",
-        placeholder:"Tell us why this account deserves verification..."
+        type: "textarea",
+        key: "verificationReason",
+        title: "Why should this account be verified?",
+        description:
+            "Explain why verification is important for your account.",
+        placeholder:
+            "Tell us why you believe your account should be verified.",
+        required: true
     },
 
-
-    /* 10 */
-
     {
-        type:"textarea",
-        key:"knownFor",
-        title:"What are you known for?",
-        help:"Describe your main work, public identity, achievements or contribution.",
-        placeholder:"Example: I create educational technology content..."
+        type: "textarea",
+        key: "knownFor",
+        title: "What are you known for?",
+        description:
+            "Briefly describe your public work or recognition.",
+        placeholder:
+            "Describe your work, achievements or public recognition.",
+        required: true
     },
 
-
-    /* 11 */
-
     {
-        type:"input",
-        key:"website",
-        title:"Do you have an official website?",
-        help:"Add a website that can help us confirm your public presence. This can be skipped.",
-        placeholder:"https://example.com",
-        inputType:"url",
-        optional:true
+        type: "text",
+        key: "website",
+        title: "Do you have an official website?",
+        description:
+            "This helps us establish your public presence.",
+        placeholder: "https://example.com",
+        required: false
     },
 
-
-    /* 12 */
-
     {
-        type:"input",
-        key:"socialProfile",
-        title:"Add another public profile",
-        help:"Provide one public social profile or professional page.",
-        placeholder:"https://..."
+        type: "text",
+        key: "socialProfile",
+        title: "Add another public profile",
+        description:
+            "Provide another social or public profile connected to you.",
+        placeholder: "https://...",
+        required: true
     },
 
-
-    /* 13 */
+    /*
+     * CHIPS - MULTIPLE
+     */
 
     {
-        type:"chips",
-        key:"audience",
-        title:"What is your approximate audience size?",
-        help:"Choose the closest range.",
-        options:[
-            "Under 1K",
-            "1K – 10K",
-            "10K – 50K",
-            "50K – 100K",
-            "100K – 500K",
-            "500K – 1M",
-            "1M+"
+        type: "chips",
+        key: "audience",
+        title: "Who is your audience?",
+        description:
+            "Select all audiences that apply.",
+        required: true,
+
+        options: [
+            "General public",
+            "Fans",
+            "Professionals",
+            "Businesses",
+            "Students",
+            "Creators",
+            "Customers",
+            "Community"
         ]
     },
 
-
-    /* 14 */
+    /*
+     * CHECKBOX CARDS - MULTIPLE
+     */
 
     {
-        type:"chips",
-        key:"contentCategory",
-        title:"What type of content do you primarily share?",
-        help:"Select the category that best describes your public activity.",
-        options:[
-            "Education",
-            "Entertainment",
-            "Technology",
-            "Music",
-            "Fashion",
-            "Sports",
+        type: "checkbox",
+        key: "contentCategory",
+        title: "What type of content do you create?",
+        description:
+            "Select all categories that describe your content.",
+        required: true,
+
+        options: [
+            {
+                title: "Entertainment",
+                description: "Entertainment, comedy or lifestyle",
+                value: "entertainment"
+            },
+            {
+                title: "Education",
+                description: "Educational or informational content",
+                value: "education"
+            },
+            {
+                title: "Business",
+                description: "Business, entrepreneurship or finance",
+                value: "business"
+            },
+            {
+                title: "Technology",
+                description: "Technology, software or innovation",
+                value: "technology"
+            },
+            {
+                title: "News & Media",
+                description: "News, journalism or media",
+                value: "news_media"
+            },
+            {
+                title: "Arts & Culture",
+                description: "Art, music, culture or creative work",
+                value: "arts_culture"
+            },
+            {
+                title: "Sports",
+                description: "Sports, fitness or athletics",
+                value: "sports"
+            },
+            {
+                title: "Other",
+                description: "Another type of public content",
+                value: "other"
+            }
+        ]
+    },
+
+    {
+        type: "textarea",
+        key: "achievement",
+        title: "What are your main achievements?",
+        description:
+            "Mention awards, publications, milestones or other notable achievements.",
+        placeholder:
+            "List your most relevant achievements.",
+        required: true
+    },
+
+    /*
+     * CHIPS - MULTIPLE
+     */
+
+    {
+        type: "chips",
+        key: "publicPresence",
+        title: "Where have you been publicly featured?",
+        description:
+            "Select all that apply.",
+        required: true,
+
+        options: [
             "News",
-            "Business",
-            "Lifestyle",
-            "Other"
+            "Magazines",
+            "Television",
+            "Podcasts",
+            "YouTube",
+            "Events",
+            "Publications",
+            "Interviews",
+            "None"
         ]
     },
 
-
-    /* 15 */
+    /*
+     * CHECKBOX
+     */
 
     {
-        type:"textarea",
-        key:"achievement",
-        title:"Tell us about your notable achievements",
-        help:"Mention awards, professional accomplishments, major projects or other meaningful achievements.",
-        placeholder:"Describe your achievements..."
+        type: "singleCheckbox",
+        key: "authenticityConfirmed",
+        title: "Confirm account authenticity",
+        description:
+            "Confirm that this account represents you, your organization or the entity you claim to represent.",
+        required: true
     },
 
-
-    /* 16 */
-
     {
-        type:"textarea",
-        key:"publicPresence",
-        title:"Where can your public presence be verified?",
-        help:"Mention publications, interviews, websites, events or organizations.",
-        placeholder:"Example: Featured by..., interviewed by..."
+        type: "singleCheckbox",
+        key: "informationConfirmed",
+        title: "Confirm your information",
+        description:
+            "Confirm that the information provided in this application is accurate and complete.",
+        required: true
     },
 
-
-    /* 17 */
-
     {
-        type:"confirm",
-        key:"authenticityConfirmed",
-        title:"Confirm account authenticity",
-        text:"I confirm that this Appnetick account represents me, my organization, brand or entity described in this application."
+        type: "singleCheckbox",
+        key: "termsConfirmed",
+        title: "Accept verification terms",
+        description:
+            "Confirm that you understand the verification application process and agree to the applicable terms.",
+        required: true
     },
 
-
-    /* 18 */
-
     {
-        type:"confirm",
-        key:"informationConfirmed",
-        title:"Confirm your information",
-        text:"I confirm that the information submitted in this verification application is accurate and complete to the best of my knowledge."
+        type: "text",
+        key: "email",
+        title: "Where should we send the verification update?",
+        description:
+            "A confirmation email must be successfully sent to this address before the application is shown as submitted.",
+        placeholder: "you@example.com",
+        required: true,
+        email: true
     },
 
-
-    /* 19 */
-
     {
-        type:"confirm",
-        key:"termsConfirmed",
-        title:"Verification declaration",
-        text:"I understand that submitting this application does not guarantee verification. Appnetick may approve or reject the request after review."
-    },
-
-
-    /* 20 */
-
-    {
-        type:"input",
-        key:"email",
-        title:"Where should we send your verification updates?",
-        help:"Enter an email address that you actively control. Appnetick will use this address for verification application updates.",
-        placeholder:"Enter your email address",
-        inputType:"email"
-    },
-
-
-    /* 21 */
-
-    {
-        type:"review"
+        type: "review",
+        title: "Review your application",
+        description:
+            "Check your information before submitting the verification application."
     }
 
 ];
 
 
 let currentStep = 0;
-
-let isAnimating = false;
-
 let isSubmitting = false;
 
 
-/* =========================================================
-   LAST FIELD MEMORY
-========================================================= */
-
 /*
- * This remembers the last actual application field
- * the user reached.
- *
- * Intro and Review are not stored as the last field.
- */
+|--------------------------------------------------------------------------
+| HELPERS
+|--------------------------------------------------------------------------
+*/
 
-let lastReachedField = 1;
+function escapeHTML(value) {
 
-
-/*
- * Keep this value during the current page session.
- *
- * If the user reaches username -> legal name -> phone,
- * then goes back to username, the button can take them
- * directly to phone again.
- */
-
-function updateLastReachedField() {
-
-    if (currentStep <= 0) return;
-
-    if (
-        currentStep >=
-        steps.length - 1
-    ) {
-
-        return;
-    }
-
-    lastReachedField =
-        currentStep;
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
-function getLastFieldLabel() {
+function getOptionValue(option) {
 
-    if (
-        lastReachedField <= 0 ||
-        lastReachedField >= steps.length - 1
-    ) {
-
-        return "last field";
+    if (typeof option === "string") {
+        return option;
     }
 
-    const step =
-        steps[lastReachedField];
-
-    if (
-        step &&
-        step.title
-    ) {
-
-        return step.title;
-    }
-
-    return "last field";
+    return option.value;
 }
 
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+function getOptionTitle(option) {
 
-const viewport =
-    document.getElementById(
-        "stepViewport"
-    );
+    if (typeof option === "string") {
+        return option;
+    }
 
-const progressFill =
-    document.getElementById(
-        "progressFill"
-    );
-
-const progressNumber =
-    document.getElementById(
-        "progressNumber"
-    );
-
-const progressLabel =
-    document.getElementById(
-        "progressLabel"
-    );
-
-const nextButton =
-    document.getElementById(
-        "nextButton"
-    );
-
-const nextText =
-    document.getElementById(
-        "nextText"
-    );
-
-const buttonLoader =
-    document.getElementById(
-        "buttonLoader"
-    );
-
-const buttonLoaderProgress =
-    document.getElementById(
-        "buttonLoaderProgress"
-    );
-
-const buttonLoaderSvg =
-    buttonLoader.querySelector(
-        "svg"
-    );
-
-const toolbarBack =
-    document.getElementById(
-        "toolbarBack"
-    );
-
-const lastFieldButton =
-    document.getElementById(
-        "lastFieldButton"
-    );
-
-const lastFieldButtonText =
-    document.getElementById(
-        "lastFieldButtonText"
-    );
+    return option.title;
+}
 
 
-/* =========================================================
-   RENDER
-========================================================= */
+function getOptionDescription(option) {
 
-function renderStep(
-    direction="next",
-    animate=false
-) {
+    if (typeof option === "string") {
+        return "";
+    }
 
-    const step =
-        steps[currentStep];
+    return option.description || "";
+}
 
-    const element =
-        document.createElement("div");
 
-    element.className =
-        "step";
+/*
+|--------------------------------------------------------------------------
+| RENDER
+|--------------------------------------------------------------------------
+*/
 
-    element.innerHTML =
+function renderStep() {
+
+    const step = steps[currentStep];
+
+    document.getElementById("stepTitle").textContent =
+        step.title || "";
+
+    document.getElementById("stepDescription").textContent =
+        step.description || "";
+
+    document.getElementById("stepContent").innerHTML =
         getStepHTML(step);
-
-    if (animate) {
-
-        element.classList.add(
-
-            direction === "next"
-                ? "slide-next-enter"
-                : "slide-back-enter"
-        );
-    }
-
-    viewport.replaceChildren(
-        element
-    );
-
-    restoreFieldValue();
 
     updateProgress();
 
-    updateButtons();
-
     updateToolbar();
 
-    updateLastFieldButton();
+    updateButton();
+
+    restoreSelections();
+
 }
 
 
-/* =========================================================
-   STEP HTML
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| STEP HTML
+|--------------------------------------------------------------------------
+*/
 
 function getStepHTML(step) {
 
     if (step.type === "intro") {
 
         return `
-
-            <div class="intro-icon">
-
-                <i class="ph ph-seal-check"></i>
-
+            <div class="field">
+                <p>
+                    Complete the questions below. Most questions use
+                    selections so the application can be completed quickly.
+                </p>
             </div>
-
-
-            <h1 class="step-title">
-
-                Get the Appnetick verification badge
-
-            </h1>
-
-
-            <p class="step-description">
-
-                Verification helps people recognize authentic
-                accounts and identify the real person, creator,
-                organization or brand behind an account.
-
-            </p>
-
-
-            <div class="intro-points">
-
-
-                <div class="intro-point">
-
-                    <div class="intro-point-icon">
-
-                        <i class="ph ph-shield-check"></i>
-
-                    </div>
-
-
-                    <div class="intro-point-text">
-
-                        <strong>
-                            Authenticity
-                        </strong>
-
-                        We'll review information that helps
-                        establish the identity behind the account.
-
-                    </div>
-
-                </div>
-
-
-                <div class="intro-point">
-
-                    <div class="intro-point-icon">
-
-                        <i class="ph ph-magnifying-glass"></i>
-
-                    </div>
-
-
-                    <div class="intro-point-text">
-
-                        <strong>
-                            Public presence
-                        </strong>
-
-                        We'll consider information that helps
-                        establish your public presence.
-
-                    </div>
-
-                </div>
-
-
-                <div class="intro-point">
-
-                    <div class="intro-point-icon">
-
-                        <i class="ph ph-lock-key"></i>
-
-                    </div>
-
-
-                    <div class="intro-point-text">
-
-                        <strong>
-                            Secure review
-                        </strong>
-
-                        Verification information is stored
-                        separately from your normal account information.
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
         `;
     }
 
 
-    if (step.type === "input") {
+    if (
+        step.type === "text" ||
+        step.type === "date"
+    ) {
 
         return `
+            <div class="field">
 
-            <label class="question-label">
-
-                ${escapeHTML(step.title)}
-
-            </label>
-
-
-            <p class="question-help">
-
-                ${escapeHTML(step.help)}
-
-            </p>
-
-
-            <div class="input-wrap">
+                <label class="field-label">
+                    ${escapeHTML(step.title)}
+                    ${
+                        step.required
+                            ? ""
+                            : `<span class="optional"> (optional)</span>`
+                    }
+                </label>
 
                 <input
-                    class="form-input"
                     id="currentInput"
-                    type="${step.inputType || "text"}"
+                    class="input"
+                    type="${step.type === "date" ? "date" : step.email ? "email" : "text"}"
                     placeholder="${escapeHTML(step.placeholder || "")}"
-                    autocomplete="off"
-                    ${step.optional ? "" : "required"}
+                    value="${escapeHTML(formData[step.key] || "")}"
+                    oninput="saveInput('${step.key}', this.value)"
                 >
 
-            </div>
-
-        `;
-    }
-
-
-    if (step.type === "date") {
-
-        return `
-
-            <label class="question-label">
-
-                ${escapeHTML(step.title)}
-
-            </label>
-
-
-            <p class="question-help">
-
-                ${escapeHTML(step.help)}
-
-            </p>
-
-
-            <div class="input-wrap">
-
-                <input
-                    class="form-input"
-                    id="currentInput"
-                    type="date"
-                >
+                <div
+                    id="fieldError"
+                    class="error">
+                </div>
 
             </div>
-
         `;
     }
 
@@ -2305,129 +1092,316 @@ function getStepHTML(step) {
     if (step.type === "textarea") {
 
         return `
+            <div class="field">
 
-            <label class="question-label">
+                <label class="field-label">
+                    ${escapeHTML(step.title)}
+                    ${
+                        step.required
+                            ? ""
+                            : `<span class="optional"> (optional)</span>`
+                    }
+                </label>
 
-                ${escapeHTML(step.title)}
+                <textarea
+                    class="textarea"
+                    placeholder="${escapeHTML(step.placeholder || "")}"
+                    oninput="saveInput('${step.key}', this.value)"
+                >${escapeHTML(formData[step.key] || "")}</textarea>
 
-            </label>
+                <div
+                    id="fieldError"
+                    class="error">
+                </div>
 
-
-            <p class="question-help">
-
-                ${escapeHTML(step.help)}
-
-            </p>
-
-
-            <textarea
-                class="form-textarea"
-                id="currentInput"
-                maxlength="1000"
-                placeholder="${escapeHTML(step.placeholder || "")}"
-            ></textarea>
-
+            </div>
         `;
     }
 
+
+    /*
+     * RADIO
+     */
+
+    if (step.type === "radio") {
+
+        return `
+            <div
+                class="field option-list radio"
+                role="radiogroup">
+
+                ${step.options.map((option, index) => {
+
+                    const value = getOptionValue(option);
+                    const title = getOptionTitle(option);
+                    const description = getOptionDescription(option);
+
+                    return `
+                        <label
+                            class="option-card"
+                            data-radio="${escapeHTML(value)}">
+
+                            <input
+                                type="radio"
+                                name="${escapeHTML(step.key)}"
+                                value="${escapeHTML(value)}"
+                                onchange="selectRadio(
+                                    '${escapeHTML(step.key)}',
+                                    '${escapeHTML(value)}'
+                                )"
+                            >
+
+                            <span class="option-indicator"></span>
+
+                            <span class="option-content">
+
+                                <span class="option-title">
+                                    ${escapeHTML(title)}
+                                </span>
+
+                                ${
+                                    description
+                                        ? `
+                                        <span class="option-description">
+                                            ${escapeHTML(description)}
+                                        </span>
+                                        `
+                                        : ""
+                                }
+
+                            </span>
+
+                        </label>
+                    `;
+
+                }).join("")}
+
+                <div id="fieldError" class="error"></div>
+
+            </div>
+        `;
+    }
+
+
+    /*
+     * CHECKBOX MULTIPLE
+     */
+
+    if (step.type === "checkbox") {
+
+        return `
+            <div class="field option-list checkbox">
+
+                ${step.options.map(option => {
+
+                    const value = getOptionValue(option);
+                    const title = getOptionTitle(option);
+                    const description = getOptionDescription(option);
+
+                    return `
+                        <label
+                            class="option-card"
+                            data-checkbox="${escapeHTML(value)}">
+
+                            <input
+                                type="checkbox"
+                                value="${escapeHTML(value)}"
+                                onchange="toggleCheckbox(
+                                    '${escapeHTML(step.key)}',
+                                    '${escapeHTML(value)}'
+                                )"
+                            >
+
+                            <span class="option-indicator"></span>
+
+                            <span class="option-content">
+
+                                <span class="option-title">
+                                    ${escapeHTML(title)}
+                                </span>
+
+                                ${
+                                    description
+                                        ? `
+                                        <span class="option-description">
+                                            ${escapeHTML(description)}
+                                        </span>
+                                        `
+                                        : ""
+                                }
+
+                            </span>
+
+                        </label>
+                    `;
+
+                }).join("")}
+
+                <div id="fieldError" class="error"></div>
+
+            </div>
+        `;
+    }
+
+
+    /*
+     * CHIPS MULTIPLE
+     */
 
     if (step.type === "chips") {
 
         return `
+            <div class="field">
 
-            <label class="question-label">
+                <div class="chips">
 
-                ${escapeHTML(step.title)}
+                    ${step.options.map(option => {
 
-            </label>
+                        const value =
+                            getOptionValue(option);
 
+                        return `
+                            <button
+                                type="button"
+                                class="chip"
+                                data-chip="${escapeHTML(value)}"
+                                onclick="toggleChip(
+                                    '${escapeHTML(step.key)}',
+                                    '${escapeHTML(value)}',
+                                    this
+                                )">
 
-            <p class="question-help">
+                                ${escapeHTML(
+                                    getOptionTitle(option)
+                                )}
 
-                ${escapeHTML(step.help)}
+                            </button>
+                        `;
 
-            </p>
-
-
-            <div class="chips">
-
-                ${step.options.map(
-
-                    option => `
-
-                        <button
-                            type="button"
-                            class="chip"
-                            data-value="${escapeHTML(option)}"
-                            onclick="selectChip(this)"
-                        >
-
-                            ${escapeHTML(option)}
-
-                        </button>
-
-                    `
-                ).join("")}
-
-            </div>
-
-        `;
-    }
-
-
-    if (step.type === "confirm") {
-
-        return `
-
-            <label class="question-label">
-
-                ${escapeHTML(step.title)}
-
-            </label>
-
-
-            <p class="question-help">
-
-                Please read this confirmation carefully.
-
-            </p>
-
-
-            <div
-                class="confirm-box"
-                id="confirmBox"
-                onclick="toggleConfirm()"
-            >
-
-                <div class="confirm-row">
-
-                    <div
-                        class="custom-check"
-                        id="customCheck"
-                    >
-
-                        <i class="ph ph-check"></i>
-
-                    </div>
-
-
-                    <div class="confirm-text">
-
-                        ${escapeHTML(step.text)}
-
-                    </div>
+                    }).join("")}
 
                 </div>
 
-            </div>
+                <div id="fieldError" class="error"></div>
 
+            </div>
         `;
     }
 
 
+    /*
+     * SINGLE CHECKBOX
+     */
+
+    if (step.type === "singleCheckbox") {
+
+        return `
+            <div class="field checkbox">
+
+                <label
+                    class="option-card"
+                    data-single-checkbox>
+
+                    <input
+                        type="checkbox"
+                        onchange="toggleSingleCheckbox(
+                            '${escapeHTML(step.key)}'
+                        )"
+                    >
+
+                    <span class="option-indicator"></span>
+
+                    <span class="option-content">
+
+                        <span class="option-title">
+                            I confirm this
+                        </span>
+
+                        <span class="option-description">
+                            ${escapeHTML(step.description)}
+                        </span>
+
+                    </span>
+
+                </label>
+
+                <div id="fieldError" class="error"></div>
+
+            </div>
+        `;
+    }
+
+
+    /*
+     * REVIEW
+     */
+
     if (step.type === "review") {
 
-        return getReviewHTML();
+        return `
+            <div class="review">
+
+                ${reviewRow("Username", formData.username)}
+
+                ${reviewRow("Legal name", formData.legalName)}
+
+                ${reviewRow("Date of birth", formData.dateOfBirth)}
+
+                ${reviewRow("Country", formData.country)}
+
+                ${reviewRow("Phone", formData.phone)}
+
+                ${reviewRow("Account type", formData.accountCategory)}
+
+                ${reviewRow("Profession", formData.profession)}
+
+                ${reviewRow(
+                    "Verification reason",
+                    formData.verificationReason
+                )}
+
+                ${reviewRow(
+                    "Known for",
+                    formData.knownFor
+                )}
+
+                ${reviewRow(
+                    "Website",
+                    formData.website || "Not provided"
+                )}
+
+                ${reviewRow(
+                    "Social profile",
+                    formData.socialProfile
+                )}
+
+                ${reviewRow(
+                    "Audience",
+                    formData.audience.join(", ")
+                )}
+
+                ${reviewRow(
+                    "Content",
+                    formData.contentCategory.join(", ")
+                )}
+
+                ${reviewRow(
+                    "Achievements",
+                    formData.achievement
+                )}
+
+                ${reviewRow(
+                    "Public presence",
+                    formData.publicPresence.join(", ")
+                )}
+
+                ${reviewRow(
+                    "Email",
+                    formData.email
+                )}
+
+            </div>
+        `;
     }
 
 
@@ -2435,308 +1409,341 @@ function getStepHTML(step) {
 }
 
 
-/* =========================================================
-   CHIP
-========================================================= */
+function reviewRow(label, value) {
 
-function selectChip(element) {
+    return `
+        <div class="review-row">
 
-    document
-        .querySelectorAll(".chip")
-        .forEach(
-            chip =>
-                chip.classList.remove(
-                    "selected"
-                )
-        );
+            <div class="review-label">
+                ${escapeHTML(label)}
+            </div>
 
+            <div class="review-value">
+                ${escapeHTML(value || "—")}
+            </div>
 
-    element.classList.add(
-        "selected"
-    );
-
-
-    formData[
-        steps[currentStep].key
-    ] =
-        element.dataset.value;
-
-
-    updateButtons();
+        </div>
+    `;
 }
 
 
-/* =========================================================
-   CONFIRM
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| SAVE TEXT INPUT
+|--------------------------------------------------------------------------
+*/
 
-function toggleConfirm() {
+function saveInput(key, value) {
 
-    const box =
-        document.getElementById(
-            "confirmBox"
+    formData[key] = value;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RADIO - ONE SELECTABLE
+|--------------------------------------------------------------------------
+*/
+
+function selectRadio(key, value) {
+
+    formData[key] = value;
+
+    document
+        .querySelectorAll("[data-radio]")
+        .forEach(card => {
+
+            card.classList.toggle(
+                "selected",
+                card.dataset.radio === value
+            );
+
+        });
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CHECKBOX - MULTIPLE SELECTABLE
+|--------------------------------------------------------------------------
+*/
+
+function toggleCheckbox(key, value) {
+
+    if (!Array.isArray(formData[key])) {
+        formData[key] = [];
+    }
+
+    const index =
+        formData[key].indexOf(value);
+
+    if (index === -1) {
+
+        formData[key].push(value);
+
+    } else {
+
+        formData[key].splice(index, 1);
+
+    }
+
+    const card =
+        document.querySelector(
+            `[data-checkbox="${CSS.escape(value)}"]`
         );
 
-    if (!box) return;
+    if (card) {
+
+        card.classList.toggle(
+            "selected",
+            formData[key].includes(value)
+        );
+
+    }
+}
 
 
-    const key =
-        steps[currentStep].key;
+/*
+|--------------------------------------------------------------------------
+| CHIPS - MULTIPLE SELECTABLE
+|--------------------------------------------------------------------------
+*/
 
+function toggleChip(key, value, button) {
+
+    if (!Array.isArray(formData[key])) {
+        formData[key] = [];
+    }
+
+    const index =
+        formData[key].indexOf(value);
+
+    if (index === -1) {
+
+        formData[key].push(value);
+
+    } else {
+
+        formData[key].splice(index, 1);
+
+    }
+
+    button.classList.toggle(
+        "selected",
+        formData[key].includes(value)
+    );
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SINGLE CHECKBOX
+|--------------------------------------------------------------------------
+*/
+
+function toggleSingleCheckbox(key) {
 
     formData[key] =
         !formData[key];
 
+    const card =
+        document.querySelector(
+            "[data-single-checkbox]"
+        );
 
-    box.classList.toggle(
-        "checked",
-        formData[key]
-    );
+    if (card) {
 
+        card.classList.toggle(
+            "selected",
+            formData[key]
+        );
 
-    updateButtons();
-}
-
-
-/* =========================================================
-   SAVE CURRENT VALUE
-========================================================= */
-
-function saveCurrentValue() {
-
-    const step =
-        steps[currentStep];
-
-
-    if (
-        step.type === "input" ||
-        step.type === "date" ||
-        step.type === "textarea"
-    ) {
-
-        const input =
-            document.getElementById(
-                "currentInput"
-            );
-
-
-        if (input) {
-
-            formData[step.key] =
-                input.value.trim();
-        }
     }
 }
 
 
-/* =========================================================
-   RESTORE
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| RESTORE SELECTED STATE
+|--------------------------------------------------------------------------
+*/
 
-function restoreFieldValue() {
+function restoreSelections() {
 
-    const step =
-        steps[currentStep];
+    const step = steps[currentStep];
 
-
-    if (
-        step.type === "input" ||
-        step.type === "date" ||
-        step.type === "textarea"
-    ) {
-
-        const input =
-            document.getElementById(
-                "currentInput"
-            );
+    if (!step.key) return;
 
 
-        if (input) {
+    /*
+     * RADIO
+     */
 
-            input.value =
-                formData[step.key] || "";
-        }
+    if (step.type === "radio") {
+
+        document
+            .querySelectorAll("[data-radio]")
+            .forEach(card => {
+
+                const value =
+                    card.dataset.radio;
+
+                const selected =
+                    formData[step.key] === value;
+
+                card.classList.toggle(
+                    "selected",
+                    selected
+                );
+
+                const input =
+                    card.querySelector("input");
+
+                if (input) {
+                    input.checked = selected;
+                }
+
+            });
     }
 
+
+    /*
+     * CHECKBOX
+     */
+
+    if (step.type === "checkbox") {
+
+        const selected =
+            Array.isArray(formData[step.key])
+                ? formData[step.key]
+                : [];
+
+        document
+            .querySelectorAll("[data-checkbox]")
+            .forEach(card => {
+
+                const value =
+                    card.dataset.checkbox;
+
+                const active =
+                    selected.includes(value);
+
+                card.classList.toggle(
+                    "selected",
+                    active
+                );
+
+                const input =
+                    card.querySelector("input");
+
+                if (input) {
+                    input.checked = active;
+                }
+
+            });
+    }
+
+
+    /*
+     * CHIPS
+     */
 
     if (step.type === "chips") {
 
         const selected =
-            formData[step.key];
-
-
-        if (!selected) return;
-
+            Array.isArray(formData[step.key])
+                ? formData[step.key]
+                : [];
 
         document
-            .querySelectorAll(".chip")
-            .forEach(
-                chip => {
+            .querySelectorAll("[data-chip]")
+            .forEach(chip => {
 
-                    if (
-                        chip.dataset.value ===
-                        selected
-                    ) {
+                chip.classList.toggle(
+                    "selected",
+                    selected.includes(chip.dataset.chip)
+                );
 
-                        chip.classList.add(
-                            "selected"
-                        );
-                    }
-
-                }
-            );
+            });
     }
 
 
-    if (step.type === "confirm") {
+    /*
+     * SINGLE CHECKBOX
+     */
 
-        const box =
-            document.getElementById(
-                "confirmBox"
+    if (step.type === "singleCheckbox") {
+
+        const card =
+            document.querySelector(
+                "[data-single-checkbox]"
             );
 
+        if (card) {
 
-        if (
-            box &&
-            formData[step.key]
-        ) {
-
-            box.classList.add(
-                "checked"
+            card.classList.toggle(
+                "selected",
+                Boolean(formData[step.key])
             );
+
+            const input =
+                card.querySelector("input");
+
+            if (input) {
+                input.checked =
+                    Boolean(formData[step.key]);
+            }
+
         }
     }
 }
 
 
-/* =========================================================
-   VALIDATION
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| VALIDATION
+|--------------------------------------------------------------------------
+*/
 
-function validateCurrentStep() {
+function validateStep() {
 
-    const step =
-        steps[currentStep];
+    const step = steps[currentStep];
 
-
-    if (step.type === "intro") {
-
+    if (!step.required) {
         return true;
     }
 
 
+    /*
+     * TEXT
+     */
+
     if (
-        step.type === "input" ||
+        step.type === "text" ||
         step.type === "date" ||
         step.type === "textarea"
     ) {
 
-        saveCurrentValue();
+        const value =
+            String(formData[step.key] || "")
+                .trim();
 
+        if (!value) {
+
+            showFieldError(
+                "Please complete this field."
+            );
+
+            return false;
+        }
 
         if (
-            !formData[step.key] &&
-            !step.optional
+            step.email &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
         ) {
 
-            showError(
-                "Please enter this information before continuing."
-            );
-
-            return false;
-        }
-
-
-        /* -----------------------------------------------
-           USERNAME
-        ------------------------------------------------ */
-
-        if (step.key === "username") {
-
-            let username =
-                String(
-                    formData.username || ""
-                )
-                .trim()
-                .toLowerCase();
-
-
-            if (
-                username.startsWith("@")
-            ) {
-
-                username =
-                    username.substring(1);
-            }
-
-
-            const usernamePattern =
-                /^[a-z0-9._]{3,50}$/;
-
-
-            if (
-                !usernamePattern.test(
-                    username
-                )
-            ) {
-
-                showError(
-                    "Please enter a valid Appnetick username."
-                );
-
-                return false;
-            }
-
-
-            formData.username =
-                username;
-        }
-
-
-        /* -----------------------------------------------
-           EMAIL
-        ------------------------------------------------ */
-
-        if (step.key === "email") {
-
-            const email =
-                String(
-                    formData.email || ""
-                )
-                .trim()
-                .toLowerCase();
-
-
-            const emailPattern =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-            if (
-                !emailPattern.test(
-                    email
-                )
-            ) {
-
-                showError(
-                    "Please enter a valid email address."
-                );
-
-                return false;
-            }
-
-
-            formData.email =
-                email;
-        }
-    }
-
-
-    if (step.type === "chips") {
-
-        if (!formData[step.key]) {
-
-            showError(
-                "Please select one option to continue."
+            showFieldError(
+                "Please enter a valid email address."
             );
 
             return false;
@@ -2744,12 +1751,56 @@ function validateCurrentStep() {
     }
 
 
-    if (step.type === "confirm") {
+    /*
+     * RADIO
+     */
+
+    if (step.type === "radio") {
 
         if (!formData[step.key]) {
 
-            showError(
-                "Please confirm this before continuing."
+            showFieldError(
+                "Please select one option."
+            );
+
+            return false;
+        }
+    }
+
+
+    /*
+     * MULTI CHECKBOX / CHIPS
+     */
+
+    if (
+        step.type === "checkbox" ||
+        step.type === "chips"
+    ) {
+
+        if (
+            !Array.isArray(formData[step.key]) ||
+            formData[step.key].length === 0
+        ) {
+
+            showFieldError(
+                "Please select at least one option."
+            );
+
+            return false;
+        }
+    }
+
+
+    /*
+     * SINGLE CHECKBOX
+     */
+
+    if (step.type === "singleCheckbox") {
+
+        if (!formData[step.key]) {
+
+            showFieldError(
+                "You must confirm this before continuing."
             );
 
             return false;
@@ -2761,974 +1812,205 @@ function validateCurrentStep() {
 }
 
 
-/* =========================================================
-   BUTTON LOADER
-========================================================= */
+function showFieldError(message) {
 
-function startButtonProgress() {
+    const error =
+        document.getElementById("fieldError");
 
-    return new Promise(
-        resolve => {
-
-            nextButton.classList.add(
-                "loading"
-            );
-
-            nextButton.disabled =
-                true;
-
-
-            buttonLoaderSvg
-                .classList.remove(
-                    "animate"
-                );
-
-            buttonLoaderProgress
-                .classList.remove(
-                    "animate"
-                );
-
-
-            void buttonLoaderSvg.offsetWidth;
-
-            void buttonLoaderProgress.offsetWidth;
-
-
-            buttonLoaderSvg
-                .classList.add(
-                    "animate"
-                );
-
-            buttonLoaderProgress
-                .classList.add(
-                    "animate"
-                );
-
-
-            setTimeout(
-                () => {
-
-                    nextButton.classList.remove(
-                        "loading"
-                    );
-
-
-                    buttonLoaderSvg
-                        .classList.remove(
-                            "animate"
-                        );
-
-
-                    buttonLoaderProgress
-                        .classList.remove(
-                            "animate"
-                        );
-
-
-                    nextButton.disabled =
-                        false;
-
-
-                    resolve();
-
-                },
-                3000
-            );
-
-        }
-    );
+    if (error) {
+        error.textContent = message;
+    }
 }
 
 
-/* =========================================================
-   NEXT
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| NAVIGATION
+|--------------------------------------------------------------------------
+*/
 
-async function nextStep() {
+function nextStep() {
 
-    if (isAnimating) return;
+    if (isSubmitting) {
+        return;
+    }
 
-    if (isSubmitting) return;
-
-
-    if (!validateCurrentStep()) {
-
+    if (!validateStep()) {
         return;
     }
 
 
     /*
-     * Final review submit.
+     * REVIEW = SUBMIT
      */
 
-    if (
-        currentStep >=
-        steps.length - 1
-    ) {
+    if (currentStep === steps.length - 1) {
 
-        await submitVerification();
+        submitVerification();
 
         return;
     }
-
-
-    isAnimating =
-        true;
-
-
-    saveCurrentValue();
-
-
-    /*
-     * Remember this field as the latest
-     * field reached by the user.
-     */
-
-    updateLastReachedField();
-
-
-    await startButtonProgress();
 
 
     currentStep++;
 
-
-    /*
-     * If we moved to the review page,
-     * don't change lastReachedField.
-     *
-     * Otherwise remember the new field.
-     */
-
-    if (
-        currentStep <
-        steps.length - 1
-    ) {
-
-        updateLastReachedField();
-    }
-
-
-    renderStep(
-        "next",
-        true
-    );
-
-
-    setTimeout(
-        () => {
-
-            isAnimating =
-                false;
-
-        },
-        320
-    );
-
+    renderStep();
 
     window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
+        top: 0,
+        behavior: "smooth"
     });
 }
 
-
-/* =========================================================
-   PREVIOUS
-========================================================= */
 
 function previousStep() {
 
-    if (isAnimating) return;
-
-    if (isSubmitting) return;
-
-
     if (currentStep <= 0) {
-
-        goHome();
-
         return;
     }
-
-
-    saveCurrentValue();
-
-
-    isAnimating =
-        true;
-
 
     currentStep--;
 
-
-    renderStep(
-        "back",
-        true
-    );
-
-
-    setTimeout(
-        () => {
-
-            isAnimating =
-                false;
-
-        },
-        320
-    );
-
+    renderStep();
 
     window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
+        top: 0,
+        behavior: "smooth"
     });
 }
 
 
-/* =========================================================
-   GO TO LAST FIELD
-========================================================= */
-
-function goToLastField() {
-
-    if (isAnimating) return;
-
-    if (isSubmitting) return;
-
-
-    if (
-        lastReachedField <= 0 ||
-        lastReachedField >= steps.length - 1
-    ) {
-
-        return;
-    }
-
-
-    /*
-     * Save the field currently being edited
-     * before jumping.
-     */
-
-    saveCurrentValue();
-
-
-    if (
-        currentStep ===
-        lastReachedField
-    ) {
-
-        return;
-    }
-
-
-    const direction =
-        lastReachedField >
-        currentStep
-            ? "next"
-            : "back";
-
-
-    isAnimating =
-        true;
-
-
-    currentStep =
-        lastReachedField;
-
-
-    renderStep(
-        direction,
-        true
-    );
-
-
-    setTimeout(
-        () => {
-
-            isAnimating =
-                false;
-
-        },
-        320
-    );
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-}
-
-
-/* =========================================================
-   LAST FIELD BUTTON
-========================================================= */
-
-function updateLastFieldButton() {
-
-    if (!lastFieldButton) return;
-
-
-    /*
-     * Don't show on intro.
-     */
-
-    if (currentStep <= 0) {
-
-        lastFieldButton.style.display =
-            "none";
-
-        return;
-    }
-
-
-    /*
-     * Don't show on review.
-     *
-     * On review, user is already at the
-     * final stage.
-     */
-
-    if (
-        currentStep >=
-        steps.length - 1
-    ) {
-
-        lastFieldButton.style.display =
-            "none";
-
-        return;
-    }
-
-
-    /*
-     * Only show when there is a useful
-     * previously reached field ahead/behind.
-     */
-
-    if (
-        lastReachedField > 0 &&
-        lastReachedField !== currentStep
-    ) {
-
-        lastFieldButton.style.display =
-            "flex";
-
-
-        lastFieldButtonText.textContent =
-            "Go to " +
-            getLastFieldShortLabel();
-
-    } else {
-
-        lastFieldButton.style.display =
-            "none";
-    }
-}
-
-
-/* =========================================================
-   LAST FIELD LABEL
-========================================================= */
-
-function getLastFieldShortLabel() {
-
-    const step =
-        steps[lastReachedField];
-
-
-    if (!step) {
-
-        return "last field";
-    }
-
-
-    const key =
-        step.key;
-
-
-    const labels = {
-
-        username:
-            "username",
-
-        legalName:
-            "legal name",
-
-        dateOfBirth:
-            "date of birth",
-
-        country:
-            "country",
-
-        phone:
-            "phone number",
-
-        accountCategory:
-            "account category",
-
-        profession:
-            "profession",
-
-        verificationReason:
-            "verification reason",
-
-        knownFor:
-            "known for",
-
-        website:
-            "website",
-
-        socialProfile:
-            "public profile",
-
-        audience:
-            "audience",
-
-        contentCategory:
-            "content category",
-
-        achievement:
-            "achievements",
-
-        publicPresence:
-            "public presence",
-
-        authenticityConfirmed:
-            "authenticity",
-
-        informationConfirmed:
-            "information confirmation",
-
-        termsConfirmed:
-            "verification declaration",
-
-        email:
-            "email"
-
-    };
-
-
-    return labels[key] ||
-        "last field";
-}
-
-
-/* =========================================================
-   TOOLBAR
-========================================================= */
-
-function updateToolbar() {
-
-    toolbarBack.style.visibility =
-        "visible";
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| TOOLBAR PROGRESS
+|--------------------------------------------------------------------------
+*/
 
 function updateProgress() {
 
     const total =
         steps.length;
 
-
     const number =
         currentStep + 1;
 
-
-    const percentage =
+    const percent =
         (number / total) * 100;
 
+    document.getElementById(
+        "progressNumber"
+    ).textContent =
+        `${number} / ${total}`;
 
-    progressNumber.textContent =
-        `${number} of ${total}`;
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        `${percent}%`;
+}
 
 
-    progressFill.style.width =
-        `${percentage}%`;
+function updateToolbar() {
 
+    const back =
+        document.getElementById("backBtn");
 
     if (currentStep === 0) {
 
-        progressLabel.textContent =
-            "Verification";
-
-    } else if (
-        currentStep === total - 1
-    ) {
-
-        progressLabel.textContent =
-            "Review";
-
-    } else if (
-        steps[currentStep].key === "username"
-    ) {
-
-        progressLabel.textContent =
-            "Account";
-
-    } else if (
-        steps[currentStep].key === "email"
-    ) {
-
-        progressLabel.textContent =
-            "Contact";
+        back.classList.add("hidden");
 
     } else {
 
-        progressLabel.textContent =
-            "Application";
+        back.classList.remove("hidden");
+
     }
 }
 
 
-/* =========================================================
-   BUTTON STATE
-========================================================= */
+function updateButton() {
 
-function updateButtons() {
+    const button =
+        document.getElementById("continueBtn");
 
-    nextButton.style.display =
-        "flex";
+    if (currentStep === steps.length - 1) {
 
-
-    nextButton.disabled =
-        false;
-
-
-    nextButton.classList.remove(
-        "loading"
-    );
-
-
-    buttonLoaderSvg
-        .classList.remove(
-            "animate"
-        );
-
-
-    buttonLoaderProgress
-        .classList.remove(
-            "animate"
-        );
-
-
-    if (currentStep === 0) {
-
-        nextText.textContent =
-            "Get started";
-
-        return;
-    }
-
-
-    if (
-        currentStep ===
-        steps.length - 1
-    ) {
-
-        nextText.textContent =
+        button.textContent =
             "Submit application";
 
-        return;
+    } else if (currentStep === 0) {
+
+        button.textContent =
+            "Start application";
+
+    } else {
+
+        button.textContent =
+            "Continue";
     }
-
-
-    nextText.textContent =
-        "Continue";
 }
 
 
-/* =========================================================
-   REVIEW
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| SUBMIT
+|--------------------------------------------------------------------------
+|
+| IMPORTANT:
+|
+| The UI does NOT show success merely because the API
+| returned HTTP 200.
+|
+| Backend must explicitly return:
+|
+| {
+|    "email_sent": true
+| }
+|
+| Only then will the application be shown as successfully
+| submitted.
+|
+|--------------------------------------------------------------------------
+*/
 
-function getReviewHTML() {
-
-    return `
-
-        <div
-            class="success-icon"
-            style="
-                width:72px;
-                height:72px;
-                font-size:34px;
-                margin-bottom:20px;
-            "
-        >
-
-            <i class="ph ph-seal-check"></i>
-
-        </div>
-
-
-        <h1 class="step-title">
-
-            Review your application
-
-        </h1>
-
-
-        <p
-            class="step-description"
-            style="margin-bottom:22px;"
-        >
-
-            Please check the information below.
-            Once submitted, your verification request
-            will be reviewed by Appnetick.
-
-        </p>
-
-
-        <div class="review-card">
-
-
-            ${reviewRow(
-                "Appnetick username",
-                "@" + formData.username
-            )}
-
-
-            ${reviewRow(
-                "Legal name",
-                formData.legalName
-            )}
-
-
-            ${reviewRow(
-                "Date of birth",
-                formData.dateOfBirth
-            )}
-
-
-            ${reviewRow(
-                "Country",
-                formData.country
-            )}
-
-
-            ${reviewRow(
-                "Phone",
-                formData.phone
-            )}
-
-
-            ${reviewRow(
-                "Account category",
-                formData.accountCategory
-            )}
-
-
-            ${reviewRow(
-                "Profession",
-                formData.profession
-            )}
-
-
-            ${reviewRow(
-                "Verification reason",
-                formData.verificationReason
-            )}
-
-
-            ${reviewRow(
-                "Known for",
-                formData.knownFor
-            )}
-
-
-            ${reviewRow(
-                "Website",
-                formData.website ||
-                "Not provided"
-            )}
-
-
-            ${reviewRow(
-                "Public profile",
-                formData.socialProfile
-            )}
-
-
-            ${reviewRow(
-                "Audience",
-                formData.audience
-            )}
-
-
-            ${reviewRow(
-                "Content category",
-                formData.contentCategory
-            )}
-
-
-            ${reviewRow(
-                "Achievements",
-                formData.achievement
-            )}
-
-
-            ${reviewRow(
-                "Public presence",
-                formData.publicPresence
-            )}
-
-
-            ${reviewRow(
-                "Email",
-                formData.email
-            )}
-
-        </div>
-
-
-        <div class="info-card">
-
-            <i class="ph ph-link"></i>
-
-            <span>
-
-                Your username is used to identify the
-                Appnetick account associated with this
-                verification application. The verification
-                request, status code and future private
-                verification key will be linked to that
-                account.
-
-            </span>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <i class="ph ph-envelope-simple"></i>
-
-            <span>
-
-                After submitting your application, Appnetick
-                will send a confirmation email containing
-                your private 12-digit status code. Keep this
-                code safe because it will be used later to
-                check the status of this verification request.
-
-            </span>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <i class="ph ph-shield-check"></i>
-
-            <span>
-
-                If your application is approved, Appnetick
-                will send a separate 18-digit private
-                verification key. That key will be linked to
-                the Appnetick account identified by your
-                username and will be required to activate
-                the verification badge.
-
-            </span>
-
-        </div>
-
-    `;
-}
-
-
-/* =========================================================
-   REVIEW ROW
-========================================================= */
-
-function reviewRow(
-    label,
-    value
-) {
-
-    return `
-
-        <div class="review-row">
-
-            <div class="review-label">
-
-                ${escapeHTML(label)}
-
-            </div>
-
-
-            <div class="review-value">
-
-                ${escapeHTML(
-                    value ||
-                    "Not provided"
-                )}
-
-            </div>
-
-        </div>
-
-    `;
-}
-
-
-/* =========================================================
-   SUBMIT
-========================================================= */
-
-        
-            
 async function submitVerification() {
-
-    if (isSubmitting) return;
-    if (isAnimating) return;
-
-    saveCurrentValue();
-
-    if (
-        !formData.username ||
-        !formData.legalName ||
-        !formData.dateOfBirth ||
-        !formData.country ||
-        !formData.phone ||
-        !formData.accountCategory ||
-        !formData.profession ||
-        !formData.verificationReason ||
-        !formData.knownFor ||
-        !formData.socialProfile ||
-        !formData.audience ||
-        !formData.contentCategory ||
-        !formData.achievement ||
-        !formData.publicPresence ||
-        !formData.authenticityConfirmed ||
-        !formData.informationConfirmed ||
-        !formData.termsConfirmed ||
-        !formData.email
-    ) {
-
-        showError(
-            "Please complete all required information before submitting."
-        );
-
-        return;
-    }
-
-    formData.username =
-        String(formData.username || "")
-            .trim()
-            .replace(/^@/, "")
-            .toLowerCase();
-
-    formData.email =
-        String(formData.email || "")
-            .trim()
-            .toLowerCase();
 
     isSubmitting = true;
 
-    nextButton.disabled = true;
+    const button =
+        document.getElementById("continueBtn");
 
-    lastFieldButton.style.display = "none";
+    button.disabled = true;
 
-    nextText.textContent = "Submitting...";
-
-    const payload = {
-
-        username: formData.username,
-
-        legal_name: formData.legalName,
-
-        email: formData.email,
-
-        date_of_birth: formData.dateOfBirth,
-
-        country: formData.country,
-
-        phone: formData.phone,
-
-        account_category: formData.accountCategory,
-
-        profession: formData.profession,
-
-        verification_reason:
-            formData.verificationReason,
-
-        known_for:
-            formData.knownFor,
-
-        website:
-            formData.website,
-
-        social_profile:
-            formData.socialProfile,
-
-        audience:
-            formData.audience,
-
-        content_category:
-            formData.contentCategory,
-
-        achievement:
-            formData.achievement,
-
-        public_presence:
-            formData.publicPresence,
-
-        authenticity_confirmed:
-            formData.authenticityConfirmed,
-
-        information_confirmed:
-            formData.informationConfirmed,
-
-        terms_confirmed:
-            formData.termsConfirmed
-    };
-
-
-    console.log(
-        "VERIFICATION PAYLOAD:",
-        payload
-    );
+    button.textContent =
+        "Submitting...";
 
 
     try {
 
-        const url =
-            `${API_BASE}/api/verification?action=submit`;
+        const payload = {
 
-        console.log(
-            "VERIFICATION URL:",
-            url
-        );
+            ...formData,
+
+            username:
+                String(formData.username || "")
+                    .trim()
+                    .replace(/^@/, ""),
+
+            email:
+                String(formData.email || "")
+                    .trim()
+                    .toLowerCase()
+
+        };
 
 
         const response =
             await fetch(
-                url,
+                `${API_BASE}/api/verification?action=submit`,
                 {
                     method: "POST",
 
                     headers: {
                         "Content-Type":
-                            "application/json",
-
-                        "Accept":
                             "application/json"
                     },
 
@@ -3738,592 +2020,304 @@ async function submitVerification() {
             );
 
 
-        console.log(
-            "VERIFICATION HTTP STATUS:",
-            response.status
-        );
-
-
-        console.log(
-            "VERIFICATION OK:",
-            response.ok
-        );
-
-
-        const rawResponse =
+        const raw =
             await response.text();
-
-
-        console.log(
-            "VERIFICATION RAW RESPONSE:",
-            rawResponse
-        );
 
 
         let data = {};
 
-        if (rawResponse) {
+        try {
 
-            try {
+            data =
+                raw
+                    ? JSON.parse(raw)
+                    : {};
 
-                data =
-                    JSON.parse(rawResponse);
+        } catch {
 
-            } catch (jsonError) {
+            data = {
+                message: raw
+            };
 
-                throw new Error(
-                    "Server returned non-JSON response. HTTP " +
-                    response.status +
-                    ": " +
-                    rawResponse.substring(0, 500)
-                );
-            }
         }
 
 
-        console.log(
-            "VERIFICATION JSON:",
-            data
-        );
+        /*
+         * Existing verification states
+         */
 
+        if (
+            data.code === "ALREADY_APPROVED" ||
+            data.code === "VERIFIED"
+        ) {
+
+            showExistingVerification(
+                "This account is already verified."
+            );
+
+            return;
+        }
+
+
+        if (data.code === "PENDING") {
+
+            showExistingVerification(
+                "A verification application is already pending."
+            );
+
+            return;
+        }
+
+
+        if (data.code === "REJECTED") {
+
+            showError(
+                data.message ||
+                "This application cannot be submitted at this time."
+            );
+
+            return;
+        }
+
+
+        if (
+            data.code === "USERNAME_NOT_FOUND" ||
+            data.code === "INVALID_USERNAME"
+        ) {
+
+            showError(
+                data.message ||
+                "The username could not be verified."
+            );
+
+            return;
+        }
+
+
+        /*
+         * HTTP failure
+         */
 
         if (!response.ok) {
 
-            if (
-                data.code ===
-                "ALREADY_APPROVED"
-            ) {
-
-                isSubmitting = false;
-
-                showExistingVerification(
-                    "approved"
-                );
-
-                return;
-            }
-
-
-            if (
-                data.code ===
-                "ALREADY_VERIFIED"
-            ) {
-
-                isSubmitting = false;
-
-                showExistingVerification(
-                    "approved"
-                );
-
-                return;
-            }
-
-
-            if (
-                data.code ===
-                "ALREADY_PENDING"
-            ) {
-
-                isSubmitting = false;
-
-                showExistingVerification(
-                    "pending"
-                );
-
-                return;
-            }
-
-
-            if (
-                data.code ===
-                "ALREADY_REJECTED"
-            ) {
-
-                isSubmitting = false;
-
-                showExistingVerification(
-                    "rejected"
-                );
-
-                return;
-            }
-
-
-            if (
-                data.code ===
-                "USERNAME_NOT_FOUND"
-            ) {
-
-                throw new Error(
-                    "No Appnetick account was found with this username."
-                );
-            }
-
-
-            if (
-                data.code ===
-                "INVALID_USERNAME"
-            ) {
-
-                throw new Error(
-                    "The Appnetick username is invalid."
-                );
-            }
-
-
             throw new Error(
-
-                data.error ||
-
                 data.message ||
-
-                data.code ||
-
-                `Verification API returned HTTP ${response.status}.`
+                "Unable to submit application."
             );
         }
 
 
         /*
-         * SUCCESS
+         * CRITICAL EMAIL CHECK
+         *
+         * Do NOT show success unless backend explicitly
+         * confirms that the email was sent.
+         */
+
+        if (data.email_sent !== true) {
+
+            throw new Error(
+                data.message ||
+                "The application was not confirmed because the verification email was not successfully sent."
+            );
+        }
+
+
+        /*
+         * ONLY HERE = SUCCESS
          */
 
         showSuccess(data);
 
-
-    } catch(error) {
-
-        console.error(
-            "Verification submit error:",
-            error
-        );
-
-
-        isSubmitting = false;
-
-        nextButton.disabled = false;
-
-        nextText.textContent =
-            "Submit application";
-
-
-        nextButton.classList.remove(
-            "loading"
-        );
-
-
-        buttonLoaderSvg
-            .classList.remove(
-                "animate"
-            );
-
-
-        buttonLoaderProgress
-            .classList.remove(
-                "animate"
-            );
-
+    } catch (error) {
 
         showError(
             error.message ||
-            "Unable to submit verification application."
+            "Something went wrong while submitting the application."
         );
+
+    } finally {
+
+        isSubmitting = false;
+
+        button.disabled = false;
+
+        button.textContent =
+            "Submit application";
     }
 }
 
-            
 
-
-/* =========================================================
-   EXISTING APPLICATION
-========================================================= */
-
-function showExistingVerification(
-    status
-) {
-
-    document.getElementById(
-        "bottomActions"
-    ).style.display =
-        "none";
-
-
-    toolbarBack.style.visibility =
-        "visible";
-
-
-    progressLabel.textContent =
-        "Verification status";
-
-
-    progressNumber.textContent =
-        "Complete";
-
-
-    progressFill.style.width =
-        "100%";
-
-
-    let title =
-        "Verification already completed";
-
-
-    let description =
-        "This account already has an approved verification application.";
-
-
-    let icon =
-        "ph-seal-check";
-
-
-    if (status === "pending") {
-
-        title =
-            "Application already under review";
-
-
-        description =
-            "A verification application for this account is already being reviewed by Appnetick.";
-
-
-        icon =
-            "ph-hourglass";
-    }
-
-
-    if (status === "rejected") {
-
-        title =
-            "Previous application was rejected";
-
-
-        description =
-            "A previous verification application was rejected. You may be able to submit another application after the applicable review period.";
-
-
-        icon =
-            "ph-x-circle";
-    }
-
-
-    viewport.replaceChildren(
-
-        (() => {
-
-            const div =
-                document.createElement("div");
-
-            div.className =
-                "step";
-
-            div.innerHTML = `
-
-                <div class="success">
-
-                    <div class="success-icon">
-
-                        <i class="ph ${icon}"></i>
-
-                    </div>
-
-
-                    <h2>
-
-                        ${escapeHTML(title)}
-
-                    </h2>
-
-
-                    <p>
-
-                        ${escapeHTML(description)}
-
-                    </p>
-
-
-                    <div class="info-card">
-
-                        <i class="ph ph-envelope-simple"></i>
-
-                        <span>
-
-                            Please check the email address
-                            associated with your verification
-                            application for any available
-                            verification updates.
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-            `;
-
-            return div;
-
-        })()
-
-    );
-}
-
-
-/* =========================================================
-   SUCCESS
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| SUCCESS
+|--------------------------------------------------------------------------
+*/
 
 function showSuccess(data) {
 
-    isSubmitting =
-        false;
+    document.querySelector(".page").innerHTML = `
 
+        <div class="success">
 
-    document.getElementById(
-        "bottomActions"
-    ).style.display =
-        "none";
+            <div class="success-icon">
+                ✓
+            </div>
 
+            <h1>
+                Application submitted
+            </h1>
 
-    toolbarBack.style.visibility =
-        "visible";
+            <p>
+                Your verification application has been
+                submitted successfully.
+            </p>
 
+            <p>
+                A confirmation email has been sent to
+                <strong>
+                    ${escapeHTML(formData.email)}
+                </strong>.
+            </p>
 
-    progressLabel.textContent =
-        "Submitted";
+            <button
+                class="primary-btn"
+                onclick="goHome()">
+                Done
+            </button>
 
-
-    progressNumber.textContent =
-        "Complete";
-
-
-    progressFill.style.width =
-        "100%";
-
-
-    /*
-     * Backend may return:
-     *
-     * status_code
-     * email_sent
-     *
-     * Never display the status code directly here.
-     *
-     * It is sent through the email.
-     */
-
-    const recipient =
-        data.email ||
-        formData.email;
-
-
-    viewport.replaceChildren(
-
-        (() => {
-
-            const div =
-                document.createElement("div");
-
-
-            div.className =
-                "step";
-
-
-            div.innerHTML = `
-
-                <div class="success">
-
-                    <div class="success-icon">
-
-                        <i class="ph ph-check"></i>
-
-                    </div>
-
-
-                    <h2>
-
-                        Application submitted
-
-                    </h2>
-
-
-                    <p>
-
-                        Your verification request has been
-                        submitted successfully.
-
-                        <br><br>
-
-                        The application has been linked to:
-
-                        <br>
-
-                        <strong>
-                            @${escapeHTML(
-                                formData.username
-                            )}
-                        </strong>
-
-                        <br><br>
-
-                        A confirmation email has been sent to:
-
-                        <br>
-
-                        <strong>
-                            ${escapeHTML(
-                                recipient
-                            )}
-                        </strong>
-
-                        <br><br>
-
-                        The email contains your private
-                        12-digit status code. Keep this code
-                        safe because it will be required to
-                        check the status of this verification
-                        request later.
-
-                        <br><br>
-
-                        If your application is approved,
-                        Appnetick will send a separate email
-                        containing an 18-digit private
-                        verification key.
-
-                    </p>
-
-                </div>
-
-            `;
-
-
-            return div;
-
-        })()
-
-    );
+        </div>
+    `;
 }
 
 
-/* =========================================================
-   ERROR
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| EXISTING VERIFICATION
+|--------------------------------------------------------------------------
+*/
+
+function showExistingVerification(message) {
+
+    document.querySelector(".page").innerHTML = `
+
+        <div class="success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>
+                Verification status
+            </h1>
+
+            <p>
+                ${escapeHTML(message)}
+            </p>
+
+            <button
+                class="primary-btn"
+                onclick="goHome()">
+                Done
+            </button>
+
+        </div>
+    `;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ERROR
+|--------------------------------------------------------------------------
+*/
 
 function showError(message) {
 
-    let existing =
-        document.getElementById(
-            "formError"
-        );
+    document.querySelector(".page").innerHTML = `
+
+        <div class="success">
+
+            <div class="success-icon"
+                 style="background:#fee2e2;color:#dc2626">
+                !
+            </div>
+
+            <h1>
+                Unable to submit
+            </h1>
+
+            <p>
+                ${escapeHTML(message)}
+            </p>
+
+            <button
+                class="primary-btn"
+                onclick="location.reload()">
+                Try again
+            </button>
+
+        </div>
+    `;
+}
 
 
-    if (existing) {
+/*
+|--------------------------------------------------------------------------
+| THEME
+|--------------------------------------------------------------------------
+*/
 
-        existing.remove();
+function toggleTheme() {
+
+    const dark =
+        document.documentElement.dataset.theme === "dark";
+
+    if (dark) {
+
+        delete document.documentElement.dataset.theme;
+
+        document.body.style.background =
+            "#f7f8fa";
+
+        document.body.style.color =
+            "#111827";
+
+    } else {
+
+        document.documentElement.dataset.theme =
+            "dark";
+
+        document.body.style.background =
+            "#0f1115";
+
+        document.body.style.color =
+            "#f5f7fa";
     }
-
-
-    const error =
-        document.createElement("div");
-
-
-    error.id =
-        "formError";
-
-
-    error.style.cssText = `
-
-        margin-top:14px;
-
-        padding:12px 14px;
-
-        border-radius:14px;
-
-        background:rgba(229,57,53,0.10);
-
-        border:1px solid rgba(229,57,53,0.25);
-
-        color:var(--danger);
-
-        font-size:13px;
-
-        line-height:1.45;
-
-    `;
-
-
-    error.innerHTML = `
-
-        <i class="ph ph-warning-circle"></i>
-
-        ${escapeHTML(message)}
-
-    `;
-
-
-    viewport
-        .firstElementChild
-        ?.appendChild(error);
-
-
-    setTimeout(
-        () => {
-
-            if (error.parentNode) {
-
-                error.remove();
-            }
-
-        },
-        4500
-    );
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value) {
-
-    return String(
-        value ?? ""
-    )
-
-    .replace(/&/g,"&amp;")
-
-    .replace(/</g,"&lt;")
-
-    .replace(/>/g,"&gt;")
-
-    .replace(/"/g,"&quot;")
-
-    .replace(/'/g,"&#039;");
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
 
 function goHome() {
 
-    window.location.href =
-        "/";
+    window.location.href = "/";
 }
 
 
-/* =========================================================
-   INITIAL RENDER
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| INITIAL RENDER
+|--------------------------------------------------------------------------
+*/
 
-renderStep(
-    "next",
-    false
-);
+renderStep();
 
 </script>
 
 </body>
-
 </html>
