@@ -3592,20 +3592,14 @@ function reviewRow(
    SUBMIT
 ========================================================= */
 
+        
+            
 async function submitVerification() {
 
     if (isSubmitting) return;
-
-
     if (isAnimating) return;
 
-
     saveCurrentValue();
-
-
-    /*
-     * Final review validation.
-     */
 
     if (
         !formData.username ||
@@ -3635,86 +3629,42 @@ async function submitVerification() {
         return;
     }
 
-
-    /*
-     * Normalize username/email one final time.
-     */
-
     formData.username =
-        String(
-            formData.username || ""
-        )
-        .trim()
-        .replace(/^@/,"")
-        .toLowerCase();
-
+        String(formData.username || "")
+            .trim()
+            .replace(/^@/, "")
+            .toLowerCase();
 
     formData.email =
-        String(
-            formData.email || ""
-        )
-        .trim()
-        .toLowerCase();
+        String(formData.email || "")
+            .trim()
+            .toLowerCase();
 
+    isSubmitting = true;
 
-    isSubmitting =
-        true;
+    nextButton.disabled = true;
 
+    lastFieldButton.style.display = "none";
 
-    nextButton.disabled =
-        true;
-
-
-    lastFieldButton.style.display =
-        "none";
-
-
-    nextText.textContent =
-        "Submitting...";
-
-
-    /*
-     * IMPORTANT
-     *
-     * No UID is accepted from the frontend.
-     *
-     * Backend receives username and resolves:
-     *
-     * username
-     *      ↓
-     * Users/{uid}
-     *      ↓
-     * VerificationRequests/{uid}
-     *
-     * Backend also generates the secure
-     * 12-digit status code.
-     */
+    nextText.textContent = "Submitting...";
 
     const payload = {
 
-        username:
-            formData.username,
+        username: formData.username,
 
-        legal_name:
-            formData.legalName,
+        legal_name: formData.legalName,
 
-        email:
-            formData.email,
+        email: formData.email,
 
-        date_of_birth:
-            formData.dateOfBirth,
+        date_of_birth: formData.dateOfBirth,
 
-        country:
-            formData.country,
+        country: formData.country,
 
-        phone:
-            formData.phone,
+        phone: formData.phone,
 
-        account_category:
-            formData.accountCategory,
+        account_category: formData.accountCategory,
 
-        profession:
-            formData.profession,
+        profession: formData.profession,
 
         verification_reason:
             formData.verificationReason,
@@ -3748,21 +3698,33 @@ async function submitVerification() {
 
         terms_confirmed:
             formData.termsConfirmed
-
     };
+
+
+    console.log(
+        "VERIFICATION PAYLOAD:",
+        payload
+    );
 
 
     try {
 
+        const url =
+            `${API_BASE}/api/verification?action=submit`;
+
+        console.log(
+            "VERIFICATION URL:",
+            url
+        );
+
+
         const response =
             await fetch(
-                `${API_BASE}/api/verification?action=submit`,
+                url,
                 {
+                    method: "POST",
 
-                    method:"POST",
-
-                    headers:{
-
+                    headers: {
                         "Content-Type":
                             "application/json",
 
@@ -3771,52 +3733,68 @@ async function submitVerification() {
                     },
 
                     body:
-                        JSON.stringify(
-                            payload
-                        )
+                        JSON.stringify(payload)
                 }
             );
 
 
-        /*
-         * Backend should return JSON.
-         * Handle unexpected/non-JSON response safely.
-         */
+        console.log(
+            "VERIFICATION HTTP STATUS:",
+            response.status
+        );
+
+
+        console.log(
+            "VERIFICATION OK:",
+            response.ok
+        );
+
+
+        const rawResponse =
+            await response.text();
+
+
+        console.log(
+            "VERIFICATION RAW RESPONSE:",
+            rawResponse
+        );
+
 
         let data = {};
 
-        try {
+        if (rawResponse) {
 
-            data =
-                await response.json();
+            try {
 
-        } catch(jsonError) {
+                data =
+                    JSON.parse(rawResponse);
 
-            throw new Error(
-                `Server returned an invalid response (${response.status}).`
-            );
+            } catch (jsonError) {
+
+                throw new Error(
+                    "Server returned non-JSON response. HTTP " +
+                    response.status +
+                    ": " +
+                    rawResponse.substring(0, 500)
+                );
+            }
         }
 
 
-        if (!response.ok) {
+        console.log(
+            "VERIFICATION JSON:",
+            data
+        );
 
-            /*
-             * APPROVED
-             *
-             * Backend uses ALREADY_APPROVED.
-             *
-             * This was one of the previous frontend
-             * problems because frontend was checking
-             * ALREADY_VERIFIED.
-             */
+
+        if (!response.ok) {
 
             if (
                 data.code ===
                 "ALREADY_APPROVED"
             ) {
 
-                isSubmitting =
-                    false;
+                isSubmitting = false;
 
                 showExistingVerification(
                     "approved"
@@ -3825,19 +3803,13 @@ async function submitVerification() {
                 return;
             }
 
-
-            /*
-             * Backward compatibility in case an older
-             * backend still returns ALREADY_VERIFIED.
-             */
 
             if (
                 data.code ===
                 "ALREADY_VERIFIED"
             ) {
 
-                isSubmitting =
-                    false;
+                isSubmitting = false;
 
                 showExistingVerification(
                     "approved"
@@ -3847,17 +3819,12 @@ async function submitVerification() {
             }
 
 
-            /*
-             * PENDING
-             */
-
             if (
                 data.code ===
                 "ALREADY_PENDING"
             ) {
 
-                isSubmitting =
-                    false;
+                isSubmitting = false;
 
                 showExistingVerification(
                     "pending"
@@ -3867,9 +3834,20 @@ async function submitVerification() {
             }
 
 
-            /*
-             * USERNAME NOT FOUND
-             */
+            if (
+                data.code ===
+                "ALREADY_REJECTED"
+            ) {
+
+                isSubmitting = false;
+
+                showExistingVerification(
+                    "rejected"
+                );
+
+                return;
+            }
+
 
             if (
                 data.code ===
@@ -3882,10 +3860,6 @@ async function submitVerification() {
             }
 
 
-            /*
-             * INVALID USERNAME
-             */
-
             if (
                 data.code ===
                 "INVALID_USERNAME"
@@ -3897,36 +3871,15 @@ async function submitVerification() {
             }
 
 
-            /*
-             * Existing application / rejected state.
-             */
-
-            if (
-                data.code ===
-                "ALREADY_REJECTED"
-            ) {
-
-                isSubmitting =
-                    false;
-
-                showExistingVerification(
-                    "rejected"
-                );
-
-                return;
-            }
-
-
-            /*
-             * Backend error.
-             *
-             * Prefer backend error message.
-             */
-
             throw new Error(
+
                 data.error ||
+
                 data.message ||
-                `Unable to submit verification application (${response.status}).`
+
+                data.code ||
+
+                `Verification API returned HTTP ${response.status}.`
             );
         }
 
@@ -3935,34 +3888,24 @@ async function submitVerification() {
          * SUCCESS
          */
 
-        showSuccess(
-            data
-        );
+        showSuccess(data);
 
 
     } catch(error) {
 
         console.error(
-            "Verification submit:",
+            "Verification submit error:",
             error
         );
 
 
-        isSubmitting =
-            false;
+        isSubmitting = false;
 
-
-        nextButton.disabled =
-            false;
-
+        nextButton.disabled = false;
 
         nextText.textContent =
             "Submit application";
 
-
-        /*
-         * Make sure button state is restored.
-         */
 
         nextButton.classList.remove(
             "loading"
@@ -3983,10 +3926,12 @@ async function submitVerification() {
 
         showError(
             error.message ||
-            "Unable to submit verification application. Please try again."
+            "Unable to submit verification application."
         );
     }
 }
+
+            
 
 
 /* =========================================================
