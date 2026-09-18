@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Appnetick - Custom Email Tester</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background: #111111;
+            color: #ffffff;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+
+            display: inline-block;
+
+            background: #ffffff;
+            color: #000000;
+
+            padding: 8px 12px;
+
+            font-size: 27px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #999999;
+            font-size: 14px;
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            color: #dddddd;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            background: #1c1c1c;
+            color: #ffffff;
+
+            border: 1px solid #333333;
+            border-radius: 10px;
+
+            padding: 13px 14px;
+
+            font-size: 15px;
+            font-family: inherit;
+
+            outline: none;
+
+            margin-bottom: 18px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #666666;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .button {
+            width: 100%;
+
+            border: 0;
+            border-radius: 10px;
+
+            background: #ffffff;
+            color: #000000;
+
+            padding: 14px;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 18px;
+
+            padding: 13px 14px;
+
+            border-radius: 10px;
+
+            background: #1c1c1c;
+
+            font-size: 14px;
+            line-height: 1.5;
+
+            display: none;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.success {
+            border: 1px solid #315c3b;
+            color: #9be2ad;
+        }
+
+        .status.error {
+            border: 1px solid #673535;
+            color: #ff9b9b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="logo">
+        Appnetick
+    </div>
+
+
+    <div class="title">
+        Custom Email Tester
+    </div>
+
+
+    <div class="description">
+        Send a test custom verification email using the
+        existing Appnetick email API.
+    </div>
+
+
+    <form id="emailForm">
+
+
+        <!-- ADMIN SECRET -->
+
+        <label for="adminSecret">
+            Admin Secret
+        </label>
+
+        <input
+            id="adminSecret"
+            type="password"
+            placeholder="Enter EMAIL_ADMIN_SECRET"
+            required
+        >
+
+
+        <!-- EMAIL -->
+
+        <label for="email">
+            Recipient Email
+        </label>
+
+        <input
+            id="email"
+            type="email"
+            placeholder="user@gmail.com"
+            required
+        >
+
+
+        <!-- SUBJECT -->
+
+        <label for="subject">
+            Subject
+        </label>
+
+        <input
+            id="subject"
+            type="text"
+            value="Appnetick verification application"
+            required
+        >
+
+
+        <!-- TITLE -->
+
+        <label for="title">
+            Title
+        </label>
+
+        <input
+            id="title"
+            type="text"
+            value="Verification application received"
+            required
+        >
+
+
+        <!-- MESSAGE -->
+
+        <label for="message">
+            Message
+        </label>
+
+        <textarea
+            id="message"
+            placeholder="Enter your message..."
+            required
+        >Your verification application has been received successfully.</textarea>
+
+
+        <!-- DETAILS -->
+
+        <label for="details">
+            Details
+        </label>
+
+        <textarea
+            id="details"
+            placeholder="Optional details..."
+        >Your application is currently being reviewed.</textarea>
+
+
+        <!-- FOOTER -->
+
+        <label for="footerMessage">
+            Footer Message
+        </label>
+
+        <textarea
+            id="footerMessage"
+            placeholder="Optional footer message..."
+        >You will receive another email when your verification status is updated.</textarea>
+
+
+        <button
+            id="sendButton"
+            class="button"
+            type="submit"
+        >
+            Send Test Email
+        </button>
+
+
+    </form>
+
+
+    <div
+        id="status"
+        class="status"
+    ></div>
+
+
+</div>
+
+
+<script>
+
+const form =
+    document.getElementById("emailForm");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const statusBox =
+    document.getElementById("status");
+
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        /*
+        ----------------------------------------------------
+        VALUES
+        ----------------------------------------------------
+        */
+
+        const adminSecret =
+            document
+                .getElementById("adminSecret")
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+        const subject =
+            document
+                .getElementById("subject")
+                .value
+                .trim();
+
+
+        const title =
+            document
+                .getElementById("title")
+                .value
+                .trim();
+
+
+        const message =
+            document
+                .getElementById("message")
+                .value
+                .trim();
+
+
+        const details =
+            document
+                .getElementById("details")
+                .value
+                .trim();
+
+
+        const footerMessage =
+            document
+                .getElementById("footerMessage")
+                .value
+                .trim();
+
+
+        /*
+        ----------------------------------------------------
+        LOADING
+        ----------------------------------------------------
+        */
+
+        sendButton.disabled = true;
+
+        sendButton.textContent =
+            "Sending...";
+
+
+        statusBox.className =
+            "status";
+
+        statusBox.textContent = "";
+
+
+        try {
+
+
+            /*
+            ------------------------------------------------
+            API REQUEST
+            ------------------------------------------------
+            */
+
+            const response =
+                await fetch(
+                    "/api/send-otp.js",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                type:
+                                    "custom",
+
+                                admin_secret:
+                                    adminSecret,
+
+                                email:
+                                    email,
+
+                                subject:
+                                    subject,
+
+                                title:
+                                    title,
+
+                                message:
+                                    message,
+
+                                details:
+                                    details,
+
+                                footer_message:
+                                    footerMessage
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            /*
+            ------------------------------------------------
+            RESPONSE
+            ------------------------------------------------
+            */
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.message ||
+                    "Failed to send email"
+                );
+
+            }
+
+
+            /*
+            ------------------------------------------------
+            SUCCESS
+            ------------------------------------------------
+            */
+
+            statusBox.className =
+                "status show success";
+
+            statusBox.textContent =
+                "✓ Custom email sent successfully.";
+
+
+        } catch (error) {
+
+
+            /*
+            ------------------------------------------------
+            ERROR
+            ------------------------------------------------
+            */
+
+            statusBox.className =
+                "status show error";
+
+            statusBox.textContent =
+                "✕ " +
+                (
+                    error.message ||
+                    "Failed to send email."
+                );
+
+
+        } finally {
+
+
+            sendButton.disabled = false;
+
+            sendButton.textContent =
+                "Send Test Email";
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
