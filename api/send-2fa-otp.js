@@ -33,6 +33,12 @@ const OTP_MAX_ATTEMPTS = 5;
 |
 */
 
+
+console.log("Firebase Project:", process.env.FIREBASE_PROJECT_ID);
+console.log("Firebase Client Email exists:", !!process.env.FIREBASE_CLIENT_EMAIL);
+console.log("Firebase Private Key exists:", !!process.env.FIREBASE_PRIVATE_KEY);
+console.log("Firebase Database URL:", process.env.FIREBASE_DATABASE_URL);
+
 if (!admin.apps.length) {
     const privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
