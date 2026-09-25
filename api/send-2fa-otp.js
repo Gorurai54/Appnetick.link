@@ -1,4 +1,8 @@
-// /api/send-2fa-otp.js
+/*
+|--------------------------------------------------------------------------
+| /api/send-2fa-otp.js
+|--------------------------------------------------------------------------
+*/
 
 import { Redis } from "@upstash/redis";
 import admin from "firebase-admin";
@@ -11,13 +15,18 @@ import crypto from "crypto";
 |--------------------------------------------------------------------------
 */
 
-const OTP_EXPIRY = 5 * 60; // 5 minutes
+const OTP_EXPIRY =
+    5 * 60;
 
-const RESEND_COOLDOWN = 30; // 30 seconds
+const RESEND_COOLDOWN =
+    30;
 
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS =
+    5;
 
-const OTP_UID = "UJ1G3C70YMT59RUGB";
+const OTP_UID =
+    "UJ1G3C70YMT59RUGB";
+
 
 const SECURE_NOTIFICATION_URL =
     "https://chat-notification-server.onrender.com/secure-notification";
@@ -29,48 +38,52 @@ const SECURE_NOTIFICATION_URL =
 |--------------------------------------------------------------------------
 */
 
-const redis = new Redis({
+const redis =
+    new Redis({
 
-    url:
-        process.env.UPSTASH_REDIS_REST_URL,
+        url:
+            process.env.UPSTASH_REDIS_REST_URL,
 
-    token:
-        process.env.UPSTASH_REDIS_REST_TOKEN
+        token:
+            process.env.UPSTASH_REDIS_REST_TOKEN
 
-});
+    });
 
 
 /*
 |--------------------------------------------------------------------------
 | FIREBASE ADMIN
 |--------------------------------------------------------------------------
-|
-| This is the MAIN Appnetick Firebase project.
-|
-| It is NOT the appnetic1000 chat project.
-|
-|--------------------------------------------------------------------------
 */
 
 let firebaseApp;
 
+
 try {
 
     firebaseApp =
-        admin.app("appnetick-2fa");
+        admin.app(
+            "appnetick-2fa"
+        );
 
 } catch (error) {
 
     const privateKey =
         String(
-            process.env.FIREBASE_PRIVATE_KEY || ""
+            process.env.FIREBASE_PRIVATE_KEY ||
+            ""
         )
-        .replace(/\\n/g, "\n");
+        .replace(
+            /\\n/g,
+            "\n"
+        );
 
 
     firebaseApp =
         admin.initializeApp(
+
             {
+
                 credential:
                     admin.credential.cert({
 
@@ -89,14 +102,18 @@ try {
                     process.env.FIREBASE_DATABASE_URL
 
             },
+
             "appnetick-2fa"
+
         );
 
 }
 
 
 const firebaseDb =
-    admin.database(firebaseApp);
+    admin.database(
+        firebaseApp
+    );
 
 
 /*
@@ -118,10 +135,6 @@ function safeString(value) {
 |--------------------------------------------------------------------------
 | HASH OTP
 |--------------------------------------------------------------------------
-|
-| Plain OTP is NEVER stored in Redis.
-|
-|--------------------------------------------------------------------------
 */
 
 function hashOtp(otp) {
@@ -138,7 +151,7 @@ function hashOtp(otp) {
 
 /*
 |--------------------------------------------------------------------------
-| GENERATE SECURE OTP
+| GENERATE OTP
 |--------------------------------------------------------------------------
 */
 
@@ -162,8 +175,10 @@ function generateOtp() {
 
 function normalizeEmail(email) {
 
-    return safeString(email)
-        .toLowerCase();
+    return safeString(
+        email
+    )
+    .toLowerCase();
 
 }
 
@@ -184,7 +199,7 @@ function isValidEmail(email) {
 
 /*
 |--------------------------------------------------------------------------
-| FIREBASE USER DEVICE INFORMATION
+| GET SIGNUP DEVICE
 |--------------------------------------------------------------------------
 */
 
@@ -232,10 +247,6 @@ async function getSignupDevice(uid) {
 /*
 |--------------------------------------------------------------------------
 | SEND SECURE LOGIN OTP NOTIFICATION
-|--------------------------------------------------------------------------
-|
-| This is your EXISTING secure notification system.
-|
 |--------------------------------------------------------------------------
 */
 
@@ -288,12 +299,6 @@ async function sendSecureNotification({
     };
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Optional secure secret
-    |--------------------------------------------------------------------------
-    */
-
     const secret =
         safeString(
             process.env.SECURE_NOTIFICATION_SECRET
@@ -337,9 +342,7 @@ async function sendSecureNotification({
     if (!response.ok) {
 
         throw new Error(
-
             `Secure notification failed: HTTP ${response.status} ${responseText}`
-
         );
 
     }
@@ -347,11 +350,14 @@ async function sendSecureNotification({
 
     let responseData = {};
 
+
     try {
 
         responseData =
             responseText
-                ? JSON.parse(responseText)
+                ? JSON.parse(
+                    responseText
+                )
                 : {};
 
     } catch (error) {
@@ -375,15 +381,6 @@ async function sendSecureNotification({
 |--------------------------------------------------------------------------
 | SEND OTP AS NORMAL CHAT MESSAGE
 |--------------------------------------------------------------------------
-|
-| IMPORTANT:
-|
-| This is intentionally SAFE.
-|
-| If this request fails, the actual 2FA OTP flow
-| DOES NOT fail.
-|
-|--------------------------------------------------------------------------
 */
 
 async function sendOtpChatMessage({
@@ -394,48 +391,36 @@ async function sendOtpChatMessage({
 
 }) {
 
+
     /*
     |--------------------------------------------------------------------------
-    | Build this Vercel API's own URL
+    | PUBLIC MESSAGE API URL
+    |--------------------------------------------------------------------------
+    |
+    | IMPORTANT:
+    |
+    | This MUST point to the separate public
+    | Message API deployment.
+    |
     |--------------------------------------------------------------------------
     */
 
-    const appBaseUrl =
+    const messageApiBaseUrl =
         safeString(
-            process.env.APP_BASE_URL
+            process.env.MESSAGE_API_BASE_URL
         )
-        .replace(/\/+$/, "");
+        .replace(
+            /\/+$/,
+            ""
+        );
 
 
-    let endpoint = "";
-
-
-    if (appBaseUrl) {
-
-        endpoint =
-            `${appBaseUrl}/api/send-message`;
-
-    } else if (
-        process.env.VERCEL_URL
-    ) {
-
-        endpoint =
-            `https://${process.env.VERCEL_URL}/api/send-message`;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | If URL is not configured, simply skip chat message.
-    |--------------------------------------------------------------------------
-    */
-
-    if (!endpoint) {
+    if (!messageApiBaseUrl) {
 
         console.error(
-            "OTP chat message skipped: APP_BASE_URL / VERCEL_URL not configured."
+            "OTP chat message skipped: MESSAGE_API_BASE_URL not configured."
         );
+
 
         return {
 
@@ -443,7 +428,7 @@ async function sendOtpChatMessage({
                 false,
 
             reason:
-                "Message API URL not configured"
+                "MESSAGE_API_BASE_URL not configured"
 
         };
 
@@ -452,7 +437,43 @@ async function sendOtpChatMessage({
 
     /*
     |--------------------------------------------------------------------------
-    | OTP message
+    | MESSAGE API SECRET
+    |--------------------------------------------------------------------------
+    */
+
+    const messageApiSecret =
+        safeString(
+            process.env.MESSAGE_API_SECRET
+        );
+
+
+    if (!messageApiSecret) {
+
+        console.error(
+            "OTP chat message skipped: MESSAGE_API_SECRET not configured."
+        );
+
+
+        return {
+
+            sent:
+                false,
+
+            reason:
+                "MESSAGE_API_SECRET not configured"
+
+        };
+
+    }
+
+
+    const endpoint =
+        `${messageApiBaseUrl}/api/send-message`;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | OTP MESSAGE
     |--------------------------------------------------------------------------
     */
 
@@ -462,17 +483,7 @@ async function sendOtpChatMessage({
 
     /*
     |--------------------------------------------------------------------------
-    | IMPORTANT
-    |--------------------------------------------------------------------------
-    |
-    | We do NOT send fromUid here.
-    |
-    | send-message.js automatically uses:
-    |
-    | UJ1G3C70YMT59RUGB
-    |
-    | when mode = otp.
-    |
+    | OTP API PAYLOAD
     |--------------------------------------------------------------------------
     */
 
@@ -506,7 +517,10 @@ async function sendOtpChatMessage({
                             "application/json",
 
                         "Accept":
-                            "application/json"
+                            "application/json",
+
+                        "X-Message-API-Secret":
+                            messageApiSecret
 
                     },
 
@@ -525,35 +539,45 @@ async function sendOtpChatMessage({
 
         /*
         |--------------------------------------------------------------------------
-        | DO NOT expose OTP in logs
+        | ERROR
+        |--------------------------------------------------------------------------
+        |
+        | Do NOT log OTP.
+        |
         |--------------------------------------------------------------------------
         */
 
         if (!response.ok) {
 
-    console.error(
-        "OTP chat message failed:",
-        `HTTP ${response.status}`,
-        responseText
-    );
+            console.error(
 
-    return {
+                "OTP chat message failed:",
 
-        sent:
-            false,
+                `HTTP ${response.status}`,
 
-        reason:
-            `Message API returned HTTP ${response.status}`,
+                responseText
 
-        response:
-            responseText
+            );
 
-    };
 
-}
+            return {
+
+                sent:
+                    false,
+
+                reason:
+                    `Message API returned HTTP ${response.status}`,
+
+                response:
+                    responseText
+
+            };
+
+        }
 
 
         let responseData = {};
+
 
         try {
 
@@ -572,12 +596,14 @@ async function sendOtpChatMessage({
 
 
         if (
-            responseData.success !== true
+            responseData.success !==
+            true
         ) {
 
             console.error(
                 "OTP chat message API returned unsuccessful response."
             );
+
 
             return {
 
@@ -598,7 +624,8 @@ async function sendOtpChatMessage({
                 true,
 
             messageKey:
-                responseData.messageKey || "",
+                responseData.messageKey ||
+                "",
 
             response:
                 responseData
@@ -607,19 +634,6 @@ async function sendOtpChatMessage({
 
 
     } catch (error) {
-
-        /*
-        |--------------------------------------------------------------------------
-        | IMPORTANT
-        |--------------------------------------------------------------------------
-        |
-        | Do NOT throw.
-        |
-        | OTP notification has already been / will be handled
-        | independently.
-        |
-        |--------------------------------------------------------------------------
-        */
 
         console.error(
             "OTP chat message request failed:",
@@ -688,7 +702,8 @@ export default async function handler(
     */
 
     if (
-        req.method === "OPTIONS"
+        req.method ===
+        "OPTIONS"
     ) {
 
         return res
@@ -705,7 +720,8 @@ export default async function handler(
     */
 
     if (
-        req.method !== "POST"
+        req.method !==
+        "POST"
     ) {
 
         return res
@@ -724,7 +740,6 @@ export default async function handler(
 
 
     try {
-
 
         /*
         ======================================================================
@@ -829,21 +844,9 @@ export default async function handler(
         }
 
 
-        /*
-        ======================================================================
-        ORIGINAL DEVICE ID
-        ======================================================================
-        */
-
         const originalDeviceId =
             signupDevice.deviceId;
 
-
-        /*
-        ======================================================================
-        ORIGINAL FCM TOKEN
-        ======================================================================
-        */
 
         const originalFcmToken =
             signupDevice.fcmToken;
@@ -851,7 +854,7 @@ export default async function handler(
 
         /*
         ======================================================================
-        CHECK ORIGINAL DEVICE ID
+        ORIGINAL DEVICE ID REQUIRED
         ======================================================================
         */
 
@@ -937,7 +940,7 @@ export default async function handler(
 
         /*
         ======================================================================
-        CHECK RESEND COOLDOWN
+        CHECK COOLDOWN
         ======================================================================
         */
 
@@ -967,7 +970,8 @@ export default async function handler(
 
                     retryAfter:
                         Math.max(
-                            Number(ttl) || RESEND_COOLDOWN,
+                            Number(ttl) ||
+                            RESEND_COOLDOWN,
                             0
                         )
 
@@ -1001,12 +1005,6 @@ export default async function handler(
         /*
         ======================================================================
         SAVE OTP HASH
-        ======================================================================
-        |
-        | IMPORTANT:
-        |
-        | Plain OTP is NOT saved.
-        |
         ======================================================================
         */
 
@@ -1045,7 +1043,7 @@ export default async function handler(
 
         /*
         ======================================================================
-        SET RESEND COOLDOWN
+        SET COOLDOWN
         ======================================================================
         */
 
@@ -1067,7 +1065,7 @@ export default async function handler(
 
         /*
         ======================================================================
-        SEND EXISTING SECURE NOTIFICATION
+        SEND SECURE OTP NOTIFICATION
         ======================================================================
         */
 
@@ -1097,18 +1095,6 @@ export default async function handler(
         } catch (
             notificationError
         ) {
-
-
-            /*
-            ==================================================================
-            SECURE NOTIFICATION FAILED
-            ==================================================================
-            |
-            | Since the user did NOT receive the OTP notification,
-            | remove the OTP and cooldown.
-            |
-            ==================================================================
-            */
 
             await redis.del(
                 otpKey
@@ -1142,19 +1128,7 @@ export default async function handler(
 
         /*
         ======================================================================
-        SEND OTP AS CHAT MESSAGE
-        ======================================================================
-        |
-        | IMPORTANT:
-        |
-        | This is intentionally AFTER the secure notification.
-        |
-        | If chat message fails:
-        |
-        | - OTP notification still works
-        | - Redis OTP still exists
-        | - login verification still works
-        |
+        SEND OTP CHAT MESSAGE
         ======================================================================
         */
 
@@ -1172,11 +1146,7 @@ export default async function handler(
 
         /*
         ======================================================================
-        FINAL SUCCESS
-        ======================================================================
-        |
-        | NEVER RETURN THE OTP.
-        |
+        FINAL RESPONSE
         ======================================================================
         */
 
@@ -1196,40 +1166,28 @@ export default async function handler(
                 resendAfter:
                     RESEND_COOLDOWN,
 
-                notification:
-                    {
+                notification: {
 
-                        sent:
-                            true
+                    sent:
+                        true
 
-                    },
+                },
 
-                chatMessage:
-                    {
+                chatMessage: {
 
-                        sent:
-                            chatMessageResult.sent,
+                    sent:
+                        chatMessageResult.sent,
 
-                        /*
-                        | Message key is safe to return.
-                        | OTP itself is never returned.
-                        */
-                        messageKey:
-                            chatMessageResult.messageKey || ""
+                    messageKey:
+                        chatMessageResult.messageKey ||
+                        ""
 
-                    }
+                }
 
             });
 
 
     } catch (error) {
-
-
-        /*
-        ======================================================================
-        UNEXPECTED ERROR
-        ======================================================================
-        */
 
         console.error(
             "SEND 2FA OTP ERROR:",
