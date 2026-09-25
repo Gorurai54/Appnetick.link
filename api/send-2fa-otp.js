@@ -531,24 +531,26 @@ async function sendOtpChatMessage({
 
         if (!response.ok) {
 
-            console.error(
+    console.error(
+        "OTP chat message failed:",
+        `HTTP ${response.status}`,
+        responseText
+    );
 
-                "OTP chat message failed:",
-                `HTTP ${response.status}`
+    return {
 
-            );
+        sent:
+            false,
 
-            return {
+        reason:
+            `Message API returned HTTP ${response.status}`,
 
-                sent:
-                    false,
+        response:
+            responseText
 
-                reason:
-                    `Message API returned HTTP ${response.status}`
+    };
 
-            };
-
-        }
+}
 
 
         let responseData = {};
