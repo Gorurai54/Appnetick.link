@@ -90,56 +90,59 @@ console.log(
 | named app exists without databaseURL.
 |
 */
+/*
+|--------------------------------------------------------------------------
+| Firebase Admin Initialization
+|--------------------------------------------------------------------------
+*/
+
+const FIREBASE_APP_NAME = "appnetick-2fa";
 
 let firebaseApp;
 
-/*
- * Find default Firebase Admin app.
- */
 try {
-    firebaseApp = admin.app();
+    firebaseApp = admin.app(FIREBASE_APP_NAME);
 
     console.log(
-        "Existing default Firebase Admin app found."
+        "Existing Firebase Admin app found:",
+        FIREBASE_APP_NAME
     );
 
-    /*
-     * If the existing app does not have the expected
-     * database URL, log it for debugging.
-     */
     console.log(
-        "Existing Firebase Database URL:",
+        "Firebase Database URL:",
         firebaseApp.options?.databaseURL
     );
 
 } catch (_) {
 
-    /*
-     * No default Firebase Admin app exists.
-     * Create one with databaseURL explicitly supplied.
-     */
+    firebaseApp = admin.initializeApp(
+        {
+            credential: admin.credential.cert({
+                projectId: FIREBASE_PROJECT_ID,
 
-    firebaseApp = admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId:
-                FIREBASE_PROJECT_ID,
+                clientEmail: FIREBASE_CLIENT_EMAIL,
 
-            clientEmail:
-                FIREBASE_CLIENT_EMAIL,
+                privateKey:
+                    FIREBASE_PRIVATE_KEY.replace(
+                        /\\n/g,
+                        "\n"
+                    )
+            }),
 
-            privateKey:
-                FIREBASE_PRIVATE_KEY.replace(
-                    /\\n/g,
-                    "\n"
-                )
-        }),
-
-        databaseURL:
-            FIREBASE_DATABASE_URL
-    });
+            databaseURL:
+                FIREBASE_DATABASE_URL
+        },
+        FIREBASE_APP_NAME
+    );
 
     console.log(
-        "Firebase Admin default app initialized."
+        "Firebase Admin app initialized:",
+        FIREBASE_APP_NAME
+    );
+
+    console.log(
+        "Firebase Database URL:",
+        firebaseApp.options?.databaseURL
     );
 }
 
@@ -151,6 +154,7 @@ try {
 
 const firebaseDb =
     admin.database(firebaseApp);
+
 
 /*
 |--------------------------------------------------------------------------
