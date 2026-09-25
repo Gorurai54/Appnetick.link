@@ -1,17 +1,66 @@
+/*
+|--------------------------------------------------------------------------
+| /api/send-message.js
+|--------------------------------------------------------------------------
+| Reusable message API
+|
+| Modes:
+|
+| 1. user
+|    Any user -> Any user
+|
+| 2. otp
+|    OTP Verification account -> User
+|
+| OTP UID:
+|    UJ1G3C70YMT59RUGB
+|
+|--------------------------------------------------------------------------
+*/
+
 const DATABASE_URL =
     "https://appnetic1000-default-rtdb.firebaseio.com";
 
-const OTP_UID = "UJ1G3C70YMT59RUGB";
+const OTP_UID =
+    "UJ1G3C70YMT59RUGB";
 
 
-function clean(value) {
-    if (value === undefined || value === null) {
+/*
+|--------------------------------------------------------------------------
+| Existing notification server
+|--------------------------------------------------------------------------
+*/
+
+const NOTIFICATION_URL =
+    "https://chat-notification-server.onrender.com/send";
+
+
+/*
+|--------------------------------------------------------------------------
+| Helpers
+|--------------------------------------------------------------------------
+*/
+
+function clean(value, maxLength = 1000) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
         return "";
     }
 
-    return String(value).trim();
+    return String(value)
+        .trim()
+        .slice(0, maxLength);
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| Firebase REST GET
+|--------------------------------------------------------------------------
+*/
 
 async function firebaseGet(path) {
 
@@ -20,14 +69,21 @@ async function firebaseGet(path) {
     );
 
     if (!response.ok) {
+
         throw new Error(
-            `Firebase GET failed: ${response.status}`
+            `Firebase GET failed: HTTP ${response.status}`
         );
     }
 
     return await response.json();
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| Firebase REST PUT
+|--------------------------------------------------------------------------
+*/
 
 async function firebasePut(path, data) {
 
@@ -37,22 +93,34 @@ async function firebasePut(path, data) {
             method: "PUT",
 
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type":
+                    "application/json"
             },
 
-            body: JSON.stringify(data)
+            body:
+                JSON.stringify(data)
         }
     );
 
     if (!response.ok) {
+
+        const text =
+            await response.text();
+
         throw new Error(
-            `Firebase PUT failed: ${response.status}`
+            `Firebase PUT failed: HTTP ${response.status} ${text}`
         );
     }
 
     return await response.json();
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| Firebase REST PATCH
+|--------------------------------------------------------------------------
+*/
 
 async function firebasePatch(path, data) {
 
@@ -62,16 +130,22 @@ async function firebasePatch(path, data) {
             method: "PATCH",
 
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type":
+                    "application/json"
             },
 
-            body: JSON.stringify(data)
+            body:
+                JSON.stringify(data)
         }
     );
 
     if (!response.ok) {
+
+        const text =
+            await response.text();
+
         throw new Error(
-            `Firebase PATCH failed: ${response.status}`
+            `Firebase PATCH failed: HTTP ${response.status} ${text}`
         );
     }
 
@@ -79,193 +153,578 @@ async function firebasePatch(path, data) {
 }
 
 
-function generateKey() {
+/*
+|--------------------------------------------------------------------------
+| Generate Firebase-style push key
+|--------------------------------------------------------------------------
+|
+| For now we generate a unique key locally.
+|
+*/
+
+function generatePushKey() {
 
     const chars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    let result = "-";
+    let key = "-";
 
     for (let i = 0; i < 19; i++) {
-        result += chars.charAt(
-            Math.floor(Math.random() * chars.length)
+
+        key += chars.charAt(
+            Math.floor(
+                Math.random() * chars.length
+            )
         );
     }
 
-    return result;
+    return key;
 }
 
 
-export default async function handler(req, res) {
+/*
+|--------------------------------------------------------------------------
+| Generate a unique numeric value for unread increment
+|--------------------------------------------------------------------------
+|
+| Firebase REST does not accept:
+|
+| ServerValue.increment(1)
+|
+| as the final value.
+|
+| Therefore we first read the existing unreadCount and
+| calculate the next value.
+|
+*/
+
+function getUnreadCount(value) {
+
+    if (
+        typeof value === "number" &&
+        Number.isFinite(value)
+    ) {
+        return value;
+    }
+
+    const parsed =
+        Number(value);
+
+    if (
+        Number.isFinite(parsed) &&
+        parsed >= 0
+    ) {
+        return parsed;
+    }
+
+    return 0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Get user information
+|--------------------------------------------------------------------------
+*/
+
+async function getUser(uid) {
+
+    const data =
+        await firebaseGet(
+            `Users/${encodeURIComponent(uid)}`
+        );
+
+
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
+
+        return null;
+    }
+
+
+    return {
+
+        uid,
+
+        username:
+            clean(data.Username) ||
+            clean(data.username),
+
+        avatar:
+            clean(data.avatar) ||
+            clean(data.Avatar) ||
+            clean(data.logo) ||
+            clean(data.profilePicture),
+
+        fcmToken:
+            clean(data.fcmToken)
+    };
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Send normal chat notification
+|--------------------------------------------------------------------------
+*/
+
+async function sendChatNotification({
+
+    receiverToken,
+
+    sender,
+
+    receiverUid,
+
+    message,
+
+    messageKey
+}) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | No FCM token
+    |--------------------------------------------------------------------------
+    */
+
+    if (!receiverToken) {
+
+        return {
+
+            sent: false,
+
+            reason:
+                "Receiver FCM token not found"
+        };
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Same structure as existing Android code
+    |--------------------------------------------------------------------------
+    */
+
+    const body = {
+
+        token:
+            receiverToken,
+
+        title:
+            sender.username,
+
+        body:
+            message,
+
+        username:
+            sender.username,
+
+        subtext:
+            sender.username,
+
+        image:
+            sender.avatar,
+
+        /*
+        | Existing Android code sends senderToken.
+        |
+        | For server-generated messages we don't need the
+        | sender's current token for Firebase delivery,
+        | but we preserve the field for your notification
+        | server / existing notification logic.
+        */
+        senderToken:
+            sender.fcmToken || "",
+
+        senderUid:
+            sender.uid,
+
+        type:
+            "chat",
+
+        receiverUid:
+            receiverUid,
+
+        messageKey:
+            messageKey
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                NOTIFICATION_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(body)
+                }
+            );
+
+
+        const responseText =
+            await response.text();
+
+
+        if (!response.ok) {
+
+            return {
+
+                sent: false,
+
+                reason:
+                    `Notification server returned HTTP ${response.status}`,
+
+                response:
+                    responseText
+            };
+        }
+
+
+        return {
+
+            sent: true,
+
+            response:
+                responseText
+        };
+
+
+    } catch (error) {
+
+        return {
+
+            sent: false,
+
+            reason:
+                error.message
+        };
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Main API
+|--------------------------------------------------------------------------
+*/
+
+export default async function handler(
+    req,
+    res
+) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | CORS
+    |--------------------------------------------------------------------------
+    */
+
+    res.setHeader(
+        "Access-Control-Allow-Origin",
+        "*"
+    );
+
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "POST, OPTIONS"
+    );
+
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type"
+    );
+
+    res.setHeader(
+        "Cache-Control",
+        "no-store"
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | OPTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    if (req.method === "OPTIONS") {
+
+        return res
+            .status(204)
+            .end();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | POST ONLY
+    |--------------------------------------------------------------------------
+    */
 
     if (req.method !== "POST") {
 
-        return res.status(405).json({
-            success: false,
-            error: "POST method required"
-        });
+        return res
+            .status(405)
+            .json({
+
+                success: false,
+
+                error:
+                    "POST method required"
+            });
     }
 
 
     try {
 
-        const body = req.body || {};
-
-        const mode = clean(body.mode).toLowerCase();
-
-        const toUid = clean(body.toUid);
-
-        const message = clean(body.message);
+        const body =
+            req.body || {};
 
 
-        if (mode !== "user" && mode !== "otp") {
+        /*
+        |--------------------------------------------------------------------------
+        | Request values
+        |--------------------------------------------------------------------------
+        */
 
-            return res.status(400).json({
-                success: false,
-                error: "mode must be 'user' or 'otp'"
-            });
-        }
-
-
-        if (!toUid) {
-
-            return res.status(400).json({
-                success: false,
-                error: "toUid is required"
-            });
-        }
+        const mode =
+            clean(
+                body.mode,
+                20
+            ).toLowerCase();
 
 
-        if (!message) {
+        const toUid =
+            clean(
+                body.toUid,
+                128
+            );
 
-            return res.status(400).json({
-                success: false,
-                error: "message is required"
-            });
+
+        const message =
+            clean(
+                body.message,
+                5000
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate mode
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            mode !== "user" &&
+            mode !== "otp"
+        ) {
+
+            return res
+                .status(400)
+                .json({
+
+                    success: false,
+
+                    error:
+                        "mode must be 'user' or 'otp'"
+                });
         }
 
 
         /*
         |--------------------------------------------------------------------------
-        | DETERMINE SENDER
+        | Validate receiver
+        |--------------------------------------------------------------------------
+        */
+
+        if (!toUid) {
+
+            return res
+                .status(400)
+                .json({
+
+                    success: false,
+
+                    error:
+                        "toUid is required"
+                });
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate message
+        |--------------------------------------------------------------------------
+        */
+
+        if (!message) {
+
+            return res
+                .status(400)
+                .json({
+
+                    success: false,
+
+                    error:
+                        "message is required"
+                });
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Determine sender
         |--------------------------------------------------------------------------
         */
 
         let fromUid;
 
+
         if (mode === "otp") {
 
-            fromUid = OTP_UID;
+            /*
+            | OTP sender is always fixed.
+            */
+
+            fromUid =
+                OTP_UID;
 
         } else {
 
-            fromUid = clean(body.fromUid);
+            fromUid =
+                clean(
+                    body.fromUid,
+                    128
+                );
+
 
             if (!fromUid) {
 
-                return res.status(400).json({
-                    success: false,
-                    error: "fromUid is required in user mode"
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success: false,
+
+                        error:
+                            "fromUid is required in user mode"
+                    });
             }
         }
 
 
-        if (fromUid === toUid) {
+        /*
+        |--------------------------------------------------------------------------
+        | Prevent self message
+        |--------------------------------------------------------------------------
+        */
 
-            return res.status(400).json({
-                success: false,
-                error: "Sender and receiver cannot be same"
-            });
+        if (
+            fromUid ===
+            toUid
+        ) {
+
+            return res
+                .status(400)
+                .json({
+
+                    success: false,
+
+                    error:
+                        "Sender and receiver cannot be the same"
+                });
         }
 
 
         /*
         |--------------------------------------------------------------------------
-        | GET SENDER
+        | Load sender
         |--------------------------------------------------------------------------
         */
 
-        const sender = await firebaseGet(
-            `Users/${encodeURIComponent(fromUid)}`
-        );
+        const sender =
+            await getUser(
+                fromUid
+            );
 
 
         if (!sender) {
 
-            return res.status(404).json({
-                success: false,
-                error: "Sender account not found"
-            });
+            return res
+                .status(404)
+                .json({
+
+                    success: false,
+
+                    error:
+                        "Sender account not found"
+                });
         }
 
 
         /*
         |--------------------------------------------------------------------------
-        | GET RECEIVER
+        | Load receiver
         |--------------------------------------------------------------------------
         */
 
-        const receiver = await firebaseGet(
-            `Users/${encodeURIComponent(toUid)}`
-        );
+        const receiver =
+            await getUser(
+                toUid
+            );
 
 
         if (!receiver) {
 
-            return res.status(404).json({
-                success: false,
-                error: "Receiver account not found"
-            });
+            return res
+                .status(404)
+                .json({
+
+                    success: false,
+
+                    error:
+                        "Receiver account not found"
+                });
         }
 
 
         /*
         |--------------------------------------------------------------------------
-        | USER INFORMATION
+        | OTP fallback username
         |--------------------------------------------------------------------------
         */
 
-        let senderUsername =
-            clean(sender.Username) ||
-            clean(sender.username);
+        if (
+            mode === "otp" &&
+            !sender.username
+        ) {
 
-        let senderAvatar =
-            clean(sender.avatar) ||
-            clean(sender.Avatar) ||
-            clean(sender.logo);
-
-
-        let receiverUsername =
-            clean(receiver.Username) ||
-            clean(receiver.username);
-
-        let receiverAvatar =
-            clean(receiver.avatar) ||
-            clean(receiver.Avatar) ||
-            clean(receiver.logo);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | OTP ACCOUNT FALLBACK
-        |--------------------------------------------------------------------------
-        */
-
-        if (mode === "otp" && !senderUsername) {
-            senderUsername = "OTP Verification";
+            sender.username =
+                "OTP Verification";
         }
 
 
         /*
         |--------------------------------------------------------------------------
-        | MESSAGE KEY
+        | Generate message key
         |--------------------------------------------------------------------------
         */
 
-        const pushKey = generateKey();
+        const pushKey =
+            generatePushKey();
 
-        const time = Date.now();
+
+        const time =
+            Date.now();
 
 
         /*
@@ -276,23 +735,32 @@ export default async function handler(req, res) {
 
         const messageMap = {
 
-            typ: "txt",
+            typ:
+                "txt",
 
-            txt: message,
+            txt:
+                message,
 
-            From: fromUid,
+            From:
+                fromUid,
 
-            to: toUid,
+            to:
+                toUid,
 
-            usrnm: senderUsername,
+            usrnm:
+                sender.username,
 
-            pp: senderAvatar,
+            pp:
+                sender.avatar,
 
-            timestamp: String(time),
+            timestamp:
+                String(time),
 
-            key: pushKey,
+            key:
+                pushKey,
 
-            stts: "Sent"
+            stts:
+                "Sent"
         };
 
 
@@ -306,7 +774,8 @@ export default async function handler(req, res) {
 
             ...messageMap,
 
-            stts: "Delivered"
+            stts:
+                "Delivered"
         };
 
 
@@ -318,22 +787,59 @@ export default async function handler(req, res) {
 
         const senderInbox = {
 
-            lastMsg: message,
+            lastMsg:
+                message,
 
-            msgType: "txt",
+            msgType:
+                "txt",
 
-            lastMsgTime: time,
+            lastMsgTime:
+                time,
 
-            from: fromUid,
+            from:
+                fromUid,
 
-            to: toUid,
+            to:
+                toUid,
 
-            chatUserName: receiverUsername,
+            chatUserName:
+                receiver.username,
 
-            chatUserPP: receiverAvatar,
+            chatUserPP:
+                receiver.avatar,
 
-            stts: "Sent"
+            stts:
+                "Sent"
         };
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | READ CURRENT RECEIVER INBOX
+        |--------------------------------------------------------------------------
+        |
+        | This is required because your Android code uses:
+        |
+        | ServerValue.increment(1)
+        |
+        | We reproduce that behavior here.
+        |
+        */
+
+        const existingReceiverInbox =
+            await firebaseGet(
+                `InboxList/${encodeURIComponent(toUid)}/${encodeURIComponent(fromUid)}`
+            );
+
+
+        const currentUnread =
+            getUnreadCount(
+                existingReceiverInbox?.unreadCount
+            );
+
+
+        const newUnreadCount =
+            currentUnread + 1;
 
 
         /*
@@ -344,40 +850,59 @@ export default async function handler(req, res) {
 
         const receiverInbox = {
 
-            lastMsg: message,
+            lastMsg:
+                message,
 
-            msgType: "txt",
+            msgType:
+                "txt",
 
-            lastMsgTime: time,
+            lastMsgTime:
+                time,
 
-            from: fromUid,
+            from:
+                fromUid,
 
-            to: toUid,
+            to:
+                toUid,
 
-            chatUserName: senderUsername,
+            chatUserName:
+                sender.username,
 
-            chatUserPP: senderAvatar,
+            chatUserPP:
+                sender.avatar,
 
-            stts: "Delivered",
+            stts:
+                "Delivered",
 
-            unreadCount: 1
+            unreadCount:
+                newUnreadCount
         };
 
 
         /*
         |--------------------------------------------------------------------------
-        | WRITE CHAT
+        | WRITE SENDER CHAT
         |--------------------------------------------------------------------------
         */
 
         await firebasePut(
+
             `chat/${encodeURIComponent(fromUid)}/${encodeURIComponent(toUid)}/${encodeURIComponent(pushKey)}`,
+
             messageMap
         );
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | WRITE RECEIVER CHAT
+        |--------------------------------------------------------------------------
+        */
+
         await firebasePut(
+
             `chat/${encodeURIComponent(toUid)}/${encodeURIComponent(fromUid)}/${encodeURIComponent(pushKey)}`,
+
             receiverMessageMap
         );
 
@@ -389,7 +914,9 @@ export default async function handler(req, res) {
         */
 
         await firebasePatch(
+
             `InboxList/${encodeURIComponent(fromUid)}/${encodeURIComponent(toUid)}`,
+
             senderInbox
         );
 
@@ -401,48 +928,120 @@ export default async function handler(req, res) {
         */
 
         await firebasePatch(
+
             `InboxList/${encodeURIComponent(toUid)}/${encodeURIComponent(fromUid)}`,
+
             receiverInbox
         );
 
 
         /*
         |--------------------------------------------------------------------------
-        | SUCCESS
+        | SEND NOTIFICATION
         |--------------------------------------------------------------------------
         */
 
-        return res.status(200).json({
+        const notification =
+            await sendChatNotification({
 
-            success: true,
+                receiverToken:
+                    receiver.fcmToken,
 
-            mode: mode,
+                sender:
+                    sender,
 
-            messageKey: pushKey,
+                receiverUid:
+                    toUid,
 
-            fromUid: fromUid,
+                message:
+                    message,
 
-            toUid: toUid,
+                messageKey:
+                    pushKey
+            });
 
-            timestamp: time,
 
-            message: "Message created successfully"
-        });
+        /*
+        |--------------------------------------------------------------------------
+        | SUCCESS
+        |--------------------------------------------------------------------------
+        |
+        | IMPORTANT:
+        |
+        | Database message is already created even if
+        | notification fails.
+        |
+        */
+
+        return res
+            .status(200)
+            .json({
+
+                success:
+                    true,
+
+                mode:
+                    mode,
+
+                message:
+                    "Message sent successfully",
+
+                messageKey:
+                    pushKey,
+
+                fromUid:
+                    fromUid,
+
+                toUid:
+                    toUid,
+
+                timestamp:
+                    time,
+
+                chat: {
+
+                    sender:
+                        true,
+
+                    receiver:
+                        true
+                },
+
+                inbox: {
+
+                    sender:
+                        true,
+
+                    receiver:
+                        true,
+
+                    unreadCount:
+                        newUnreadCount
+                },
+
+                notification:
+                    notification
+            });
 
 
     } catch (error) {
 
         console.error(
-            "SEND MESSAGE ERROR:",
+            "SEND MESSAGE API ERROR:",
             error
         );
 
-        return res.status(500).json({
 
-            success: false,
+        return res
+            .status(500)
+            .json({
 
-            error: error.message ||
-                "Internal server error"
-        });
+                success:
+                    false,
+
+                error:
+                    error.message ||
+                    "Internal server error"
+            });
     }
 }
