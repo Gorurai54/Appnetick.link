@@ -19,24 +19,7 @@ const OTP_MAX_ATTEMPTS = 5;
 
 /*
 |--------------------------------------------------------------------------
-| Firebase Admin initialization
-|--------------------------------------------------------------------------
-|
-| Required environment variables:
-|
-| FIREBASE_PROJECT_ID
-| FIREBASE_CLIENT_EMAIL
-| FIREBASE_PRIVATE_KEY
-|
-| FIREBASE_PRIVATE_KEY must contain the escaped newlines:
-| -----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n
-|
-*/
-
-
-/*
-|--------------------------------------------------------------------------
-| Firebase Admin initialization
+| Firebase Admin Configuration
 |--------------------------------------------------------------------------
 */
 
@@ -52,6 +35,12 @@ const FIREBASE_PRIVATE_KEY =
 const FIREBASE_DATABASE_URL =
     process.env.FIREBASE_DATABASE_URL;
 
+/*
+|--------------------------------------------------------------------------
+| Validate Firebase Environment Variables
+|--------------------------------------------------------------------------
+*/
+
 if (
     !FIREBASE_PROJECT_ID ||
     !FIREBASE_CLIENT_EMAIL ||
@@ -63,38 +52,102 @@ if (
     );
 }
 
-const FIREBASE_APP_NAME = "appnetick-2fa";
+/*
+|--------------------------------------------------------------------------
+| Debug Logs
+|--------------------------------------------------------------------------
+*/
+
+console.log(
+    "Firebase Project:",
+    FIREBASE_PROJECT_ID
+);
+
+console.log(
+    "Firebase Client Email exists:",
+    !!FIREBASE_CLIENT_EMAIL
+);
+
+console.log(
+    "Firebase Private Key exists:",
+    !!FIREBASE_PRIVATE_KEY
+);
+
+console.log(
+    "Firebase Database URL:",
+    FIREBASE_DATABASE_URL
+);
+
+/*
+|--------------------------------------------------------------------------
+| Firebase Admin Initialization
+|--------------------------------------------------------------------------
+|
+| IMPORTANT:
+| We use the DEFAULT Firebase Admin app here.
+|
+| This avoids the problem where a previously-created
+| named app exists without databaseURL.
+|
+*/
 
 let firebaseApp;
 
+/*
+ * Find default Firebase Admin app.
+ */
 try {
+    firebaseApp = admin.app();
+
+    console.log(
+        "Existing default Firebase Admin app found."
+    );
+
     /*
-     * Reuse our dedicated named app if it already exists.
+     * If the existing app does not have the expected
+     * database URL, log it for debugging.
      */
-    firebaseApp = admin.app(FIREBASE_APP_NAME);
+    console.log(
+        "Existing Firebase Database URL:",
+        firebaseApp.options?.databaseURL
+    );
 
 } catch (_) {
-    /*
-     * Create the dedicated Firebase Admin app.
-     */
-    firebaseApp = admin.initializeApp(
-        {
-            credential: admin.credential.cert({
-                projectId: FIREBASE_PROJECT_ID,
-                clientEmail: FIREBASE_CLIENT_EMAIL,
-                privateKey:
-                    FIREBASE_PRIVATE_KEY.replace(
-                        /\\n/g,
-                        "\n"
-                    )
-            }),
 
-            databaseURL:
-                FIREBASE_DATABASE_URL
-        },
-        FIREBASE_APP_NAME
+    /*
+     * No default Firebase Admin app exists.
+     * Create one with databaseURL explicitly supplied.
+     */
+
+    firebaseApp = admin.initializeApp({
+        credential: admin.credential.cert({
+            projectId:
+                FIREBASE_PROJECT_ID,
+
+            clientEmail:
+                FIREBASE_CLIENT_EMAIL,
+
+            privateKey:
+                FIREBASE_PRIVATE_KEY.replace(
+                    /\\n/g,
+                    "\n"
+                )
+        }),
+
+        databaseURL:
+            FIREBASE_DATABASE_URL
+    });
+
+    console.log(
+        "Firebase Admin default app initialized."
     );
 }
+
+/*
+|--------------------------------------------------------------------------
+| Firebase Database
+|--------------------------------------------------------------------------
+*/
 
 const firebaseDb =
     admin.database(firebaseApp);
@@ -113,13 +166,6 @@ const SECURE_NOTIFICATION_URL =
 |--------------------------------------------------------------------------
 | Optional internal secret
 |--------------------------------------------------------------------------
-|
-| Recommended:
-|
-| SECURE_NOTIFICATION_SECRET
-|
-| Your /secure-notification endpoint should validate this secret.
-|
 */
 
 const SECURE_NOTIFICATION_SECRET =
@@ -132,7 +178,11 @@ const SECURE_NOTIFICATION_SECRET =
 */
 
 function safeString(value, maxLength = 500) {
-    if (value === undefined || value === null) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
         return "";
     }
 
@@ -142,24 +192,19 @@ function safeString(value, maxLength = 500) {
 }
 
 function isValidUid(uid) {
-    /*
-     * Firebase UIDs commonly support letters, numbers,
-     * hyphens and underscores.
-     *
-     * We keep this validation reasonably strict.
-     */
+
     return /^[A-Za-z0-9_-]{1,128}$/.test(uid);
 }
 
 function isValidDeviceId(deviceId) {
-    /*
-     * Android device IDs generated by the application
-     * may vary, so allow common safe characters.
-     */
-    return /^[A-Za-z0-9._:-]{1,256}$/.test(deviceId);
+
+    return /^[A-Za-z0-9._:-]{1,256}$/.test(
+        deviceId
+    );
 }
 
 function hashOtp(otp) {
+
     return crypto
         .createHash("sha256")
         .update(otp)
@@ -167,9 +212,7 @@ function hashOtp(otp) {
 }
 
 function hashDeviceId(deviceId) {
-    /*
-     * Do not put the raw device ID into the Redis key.
-     */
+
     return crypto
         .createHash("sha256")
         .update(deviceId)
@@ -177,24 +220,31 @@ function hashDeviceId(deviceId) {
 }
 
 function getRedisKey(uid, deviceId) {
-    return `appnetick:2fa:otp:${uid}:${hashDeviceId(deviceId)}`;
+
+    return (
+        `appnetick:2fa:otp:${uid}:${hashDeviceId(deviceId)}`
+    );
 }
 
 function getCooldownKey(uid, deviceId) {
-    return `appnetick:2fa:otp:cooldown:${uid}:${hashDeviceId(deviceId)}`;
+
+    return (
+        `appnetick:2fa:otp:cooldown:${uid}:${hashDeviceId(deviceId)}`
+    );
 }
 
 function generateOtp() {
-    /*
-     * crypto.randomInt is preferable to Math.random()
-     * for security-sensitive OTP generation.
-     */
+
     return String(
-        crypto.randomInt(100000, 1000000)
+        crypto.randomInt(
+            100000,
+            1000000
+        )
     );
 }
 
 function normalizeFirebaseValue(value) {
+
     if (typeof value === "string") {
         return value.trim();
     }
@@ -209,6 +259,7 @@ function normalizeFirebaseValue(value) {
 */
 
 function setCorsHeaders(res) {
+
     res.setHeader(
         "Access-Control-Allow-Origin",
         "*"
@@ -232,17 +283,19 @@ function setCorsHeaders(res) {
 
 /*
 |--------------------------------------------------------------------------
-| Get original signup device
+| Get Original Signup Device
 |--------------------------------------------------------------------------
 */
 
 async function getSignupDevice(uid) {
-    const snapshot = await firebaseDb
-        .ref("Users")
-        .child(uid)
-        .child("deviceInformation")
-        .child("signupDevice")
-        .once("value");
+
+    const snapshot =
+        await firebaseDb
+            .ref("Users")
+            .child(uid)
+            .child("deviceInformation")
+            .child("signupDevice")
+            .once("value");
 
     if (!snapshot.exists()) {
         return null;
@@ -250,25 +303,35 @@ async function getSignupDevice(uid) {
 
     const data = snapshot.val();
 
-    if (!data || typeof data !== "object") {
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
         return null;
     }
 
     const originalDeviceId =
-        normalizeFirebaseValue(data.device_id);
+        normalizeFirebaseValue(
+            data.device_id
+        );
 
     const fcmToken =
-        normalizeFirebaseValue(data.fcmToken);
+        normalizeFirebaseValue(
+            data.fcmToken
+        );
 
     return {
-        deviceId: originalDeviceId || "",
-        fcmToken: fcmToken || ""
+        deviceId:
+            originalDeviceId || "",
+
+        fcmToken:
+            fcmToken || ""
     };
 }
 
 /*
 |--------------------------------------------------------------------------
-| Send FCM notification
+| Send FCM Notification
 |--------------------------------------------------------------------------
 */
 
@@ -278,62 +341,90 @@ async function sendSecureNotification({
     newDeviceId,
     otp
 }) {
+
     const notificationBody = {
+
         notificationToken,
-        notificationTitle: "Login Verification",
+
+        notificationTitle:
+            "Login Verification",
+
         notificationBody:
             "A login attempt was made from a new device. Enter the OTP to continue.",
-        notificationType: "login_otp",
+
+        notificationType:
+            "login_otp",
+
         notificationSubtext:
             "New device login verification",
-        notificationUid: uid,
-        notificationDeviceId: newDeviceId,
+
+        notificationUid:
+            uid,
+
+        notificationDeviceId:
+            newDeviceId,
+
         otp
     };
 
     const headers = {
-        "Content-Type": "application/json"
+        "Content-Type":
+            "application/json"
     };
 
     /*
-     * If your secure-notification server supports
-     * an internal secret, send it.
+     * Send internal secret if configured.
      */
     if (SECURE_NOTIFICATION_SECRET) {
+
         headers["x-internal-secret"] =
             SECURE_NOTIFICATION_SECRET;
     }
 
-    const response = await fetch(
-        SECURE_NOTIFICATION_URL,
-        {
-            method: "POST",
-            headers,
-            body: JSON.stringify(notificationBody)
-        }
-    );
+    const response =
+        await fetch(
+            SECURE_NOTIFICATION_URL,
+            {
+                method: "POST",
+
+                headers,
+
+                body:
+                    JSON.stringify(
+                        notificationBody
+                    )
+            }
+        );
 
     let responseData = null;
 
     try {
-        responseData = await response.json();
+
+        responseData =
+            await response.json();
+
     } catch (_) {
+
         responseData = null;
     }
 
     if (!response.ok) {
+
         const errorMessage =
             responseData?.error ||
             responseData?.message ||
             `Notification server returned HTTP ${response.status}`;
 
-        throw new Error(errorMessage);
+        throw new Error(
+            errorMessage
+        );
     }
 
     if (
         !responseData ||
         responseData.success !== true
     ) {
+
         throw new Error(
             responseData?.error ||
             responseData?.message ||
@@ -350,114 +441,178 @@ async function sendSecureNotification({
 |--------------------------------------------------------------------------
 */
 
-export default async function handler(req, res) {
+export default async function handler(
+    req,
+    res
+) {
+
     setCorsHeaders(res);
 
     /*
-     * Preflight
+     * OPTIONS / CORS preflight
      */
     if (req.method === "OPTIONS") {
-        return res.status(204).end();
+
+        return res
+            .status(204)
+            .end();
     }
 
     /*
      * Only POST
      */
     if (req.method !== "POST") {
-        return res.status(405).json({
-            success: false,
-            message: "POST only allowed"
-        });
+
+        return res
+            .status(405)
+            .json({
+                success: false,
+                message:
+                    "POST only allowed"
+            });
     }
 
-    /*
-     * Parse request
-     */
     try {
-        const body = req.body || {};
-
-        const uid = safeString(body.uid, 128);
-        const newDeviceId =
-            safeString(body.newDeviceId, 256);
 
         /*
-         * Basic validation
+         * Parse request body
+         */
+        const body =
+            req.body || {};
+
+        const uid =
+            safeString(
+                body.uid,
+                128
+            );
+
+        const newDeviceId =
+            safeString(
+                body.newDeviceId,
+                256
+            );
+
+        /*
+         * Validate UID
          */
         if (!uid) {
-            return res.status(400).json({
-                success: false,
-                message: "UID is required"
-            });
+
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message:
+                        "UID is required"
+                });
         }
 
         if (!isValidUid(uid)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid UID"
-            });
-        }
 
-        if (!newDeviceId) {
-            return res.status(400).json({
-                success: false,
-                message: "newDeviceId is required"
-            });
-        }
-
-        if (!isValidDeviceId(newDeviceId)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid device ID"
-            });
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message:
+                        "Invalid UID"
+                });
         }
 
         /*
-         * Never allow the new device to request OTP
-         * for the original signup device itself.
-         *
-         * This is an additional safety check.
+         * Validate device ID
+         */
+        if (!newDeviceId) {
+
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message:
+                        "newDeviceId is required"
+                });
+        }
+
+        if (
+            !isValidDeviceId(
+                newDeviceId
+            )
+        ) {
+
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message:
+                        "Invalid device ID"
+                });
+        }
+
+        /*
+         * Redis keys
          */
         const redisKey =
-            getRedisKey(uid, newDeviceId);
+            getRedisKey(
+                uid,
+                newDeviceId
+            );
 
         const cooldownKey =
-            getCooldownKey(uid, newDeviceId);
+            getCooldownKey(
+                uid,
+                newDeviceId
+            );
 
         /*
          * Check resend cooldown
          */
         const cooldownExists =
-            await redis.exists(cooldownKey);
+            await redis.exists(
+                cooldownKey
+            );
 
         if (cooldownExists) {
-            const ttl =
-                await redis.ttl(cooldownKey);
 
-            return res.status(429).json({
-                success: false,
-                message:
-                    "Please wait before requesting another OTP.",
-                retryAfter:
-                    ttl > 0 ? ttl : RESEND_COOLDOWN
-            });
+            const ttl =
+                await redis.ttl(
+                    cooldownKey
+                );
+
+            return res
+                .status(429)
+                .json({
+                    success: false,
+
+                    message:
+                        "Please wait before requesting another OTP.",
+
+                    retryAfter:
+                        ttl > 0
+                            ? ttl
+                            : RESEND_COOLDOWN
+                });
         }
 
         /*
-         * Get original signup device from Firebase.
+         * Get original signup device
          *
          * IMPORTANT:
-         * We intentionally do NOT accept the FCM token
-         * from the Android client.
+         * FCM token is never accepted from
+         * the Android client.
          */
         const signupDevice =
-            await getSignupDevice(uid);
+            await getSignupDevice(
+                uid
+            );
 
         if (!signupDevice) {
-            return res.status(404).json({
-                success: false,
-                message:
-                    "Original signup device not found"
-            });
+
+            return res
+                .status(404)
+                .json({
+                    success: false,
+
+                    message:
+                        "Original signup device not found"
+                });
         }
 
         const originalDeviceId =
@@ -466,7 +621,11 @@ export default async function handler(req, res) {
         const originalFcmToken =
             signupDevice.fcmToken;
 
+        /*
+         * Validate original device ID
+         */
         if (!originalDeviceId) {
+
             console.error(
                 "2FA OTP: Original device ID missing",
                 {
@@ -474,14 +633,21 @@ export default async function handler(req, res) {
                 }
             );
 
-            return res.status(404).json({
-                success: false,
-                message:
-                    "Original signup device ID not found"
-            });
+            return res
+                .status(404)
+                .json({
+                    success: false,
+
+                    message:
+                        "Original signup device ID not found"
+                });
         }
 
+        /*
+         * Validate original FCM token
+         */
         if (!originalFcmToken) {
+
             console.error(
                 "2FA OTP: Original FCM token missing",
                 {
@@ -490,122 +656,175 @@ export default async function handler(req, res) {
                 }
             );
 
-            return res.status(404).json({
-                success: false,
-                message:
-                    "Original device notification token not found"
-            });
+            return res
+                .status(404)
+                .json({
+                    success: false,
+
+                    message:
+                        "Original device notification token not found"
+                });
         }
 
         /*
-         * If the requesting device is already the
-         * original signup device, OTP should not be
-         * treated as a new-device login.
+         * Do not send new-device OTP to
+         * the original signup device.
          */
-        if (newDeviceId === originalDeviceId) {
-            return res.status(400).json({
-                success: false,
-                message:
-                    "This device is already the original signup device"
-            });
+        if (
+            newDeviceId ===
+            originalDeviceId
+        ) {
+
+            return res
+                .status(400)
+                .json({
+                    success: false,
+
+                    message:
+                        "This device is already the original signup device"
+                });
         }
 
         /*
          * Generate secure OTP
          */
-        const otp = generateOtp();
+        const otp =
+            generateOtp();
 
         /*
-         * Store only OTP hash in Redis.
-         *
-         * The actual OTP is never stored as plaintext.
+         * Store only OTP hash.
          */
-        const otpHash = hashOtp(otp);
+        const otpHash =
+            hashOtp(otp);
 
         const otpData = {
+
             otpHash,
+
             uid,
-            deviceIdHash: hashDeviceId(newDeviceId),
+
+            deviceIdHash:
+                hashDeviceId(
+                    newDeviceId
+                ),
+
             attempts: 0,
-            createdAt: Date.now()
+
+            createdAt:
+                Date.now()
         };
 
+        /*
+         * Save OTP
+         */
         await redis.set(
             redisKey,
-            JSON.stringify(otpData),
+            JSON.stringify(
+                otpData
+            ),
             {
                 ex: OTP_EXPIRY
             }
         );
 
         /*
-         * Create resend cooldown.
-         *
-         * This prevents notification spam.
+         * Resend cooldown
          */
         await redis.set(
             cooldownKey,
             "1",
             {
-                ex: RESEND_COOLDOWN
+                ex:
+                    RESEND_COOLDOWN
             }
         );
 
         /*
-         * Send OTP to original signup device.
+         * Send OTP to original device
          */
         try {
+
             await sendSecureNotification({
+
                 notificationToken:
                     originalFcmToken,
+
                 uid,
+
                 newDeviceId,
+
                 otp
             });
-        } catch (notificationError) {
+
+        } catch (
+            notificationError
+        ) {
+
             /*
              * Notification failed.
              *
-             * Do not leave a valid OTP behind.
+             * Remove OTP and cooldown so
+             * the user can retry.
              */
-            await redis.del(redisKey);
-            await redis.del(cooldownKey);
+            await redis.del(
+                redisKey
+            );
+
+            await redis.del(
+                cooldownKey
+            );
 
             console.error(
                 "2FA OTP notification failed:",
                 notificationError
             );
 
-            return res.status(502).json({
-                success: false,
-                message:
-                    "Failed to send login verification OTP"
-            });
+            return res
+                .status(502)
+                .json({
+                    success: false,
+
+                    message:
+                        "Failed to send login verification OTP"
+                });
         }
 
         /*
          * SUCCESS
          *
-         * Never return the OTP itself.
+         * Never return the OTP.
          */
-        return res.status(200).json({
-            success: true,
-            message:
-                "Login verification OTP sent successfully",
-            expiresIn: OTP_EXPIRY,
-            retryAfter: RESEND_COOLDOWN
-        });
+        return res
+            .status(200)
+            .json({
+
+                success: true,
+
+                message:
+                    "Login verification OTP sent successfully",
+
+                expiresIn:
+                    OTP_EXPIRY,
+
+                retryAfter:
+                    RESEND_COOLDOWN
+            });
 
     } catch (error) {
+
         console.error(
             "Send 2FA OTP Error:",
             error
         );
 
-        return res.status(500).json({
-            success: false,
-            message:
-                "Failed to send login verification OTP"
-        });
+        return res
+            .status(500)
+            .json({
+
+                success: false,
+
+                message:
+                    "Failed to send login verification OTP"
+            });
     }
 }
