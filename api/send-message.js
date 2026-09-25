@@ -2,19 +2,21 @@
 |--------------------------------------------------------------------------
 | /api/send-message.js
 |--------------------------------------------------------------------------
-| Reusable message API
+| Reusable server-to-server message API
 |
 | Modes:
 |
 | 1. user
-|    Any user -> Any user
+|    Any authorized server -> Any user
 |
 | 2. otp
 |    OTP Verification account -> User
 |
-| OTP UID:
-|    UJ1G3C70YMT59RUGB
+| IMPORTANT:
+| This endpoint must be protected with MESSAGE_API_SECRET.
 |
+| OTP UID:
+| UJ1G3C70YMT59RUGB
 |--------------------------------------------------------------------------
 */
 
@@ -23,6 +25,18 @@ const DATABASE_URL =
 
 const OTP_UID =
     "UJ1G3C70YMT59RUGB";
+
+
+/*
+|--------------------------------------------------------------------------
+| API SECRET
+|--------------------------------------------------------------------------
+*/
+
+const MESSAGE_API_SECRET =
+    String(
+        process.env.MESSAGE_API_SECRET || ""
+    ).trim();
 
 
 /*
@@ -58,20 +72,67 @@ function clean(value, maxLength = 1000) {
 
 /*
 |--------------------------------------------------------------------------
+| Constant-time secret comparison
+|--------------------------------------------------------------------------
+*/
+
+function safeSecretCompare(a, b) {
+
+    const first =
+        Buffer.from(
+            String(a || ""),
+            "utf8"
+        );
+
+    const second =
+        Buffer.from(
+            String(b || ""),
+            "utf8"
+        );
+
+    if (
+        first.length !==
+        second.length
+    ) {
+        return false;
+    }
+
+    let result = 0;
+
+    for (
+        let i = 0;
+        i < first.length;
+        i++
+    ) {
+        result |=
+            first[i] ^
+            second[i];
+    }
+
+    return result === 0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
 | Firebase REST GET
 |--------------------------------------------------------------------------
 */
 
 async function firebaseGet(path) {
 
-    const response = await fetch(
-        `${DATABASE_URL}/${path}.json`
-    );
+    const response =
+        await fetch(
+            `${DATABASE_URL}/${path}.json`
+        );
 
     if (!response.ok) {
 
+        const text =
+            await response.text();
+
         throw new Error(
-            `Firebase GET failed: HTTP ${response.status}`
+            `Firebase GET failed: HTTP ${response.status} ${text}`
         );
     }
 
@@ -85,22 +146,30 @@ async function firebaseGet(path) {
 |--------------------------------------------------------------------------
 */
 
-async function firebasePut(path, data) {
+async function firebasePut(
+    path,
+    data
+) {
 
-    const response = await fetch(
-        `${DATABASE_URL}/${path}.json`,
-        {
-            method: "PUT",
+    const response =
+        await fetch(
+            `${DATABASE_URL}/${path}.json`,
+            {
 
-            headers: {
-                "Content-Type":
-                    "application/json"
-            },
+                method:
+                    "PUT",
 
-            body:
-                JSON.stringify(data)
-        }
-    );
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(data)
+
+            }
+        );
+
 
     if (!response.ok) {
 
@@ -112,6 +181,7 @@ async function firebasePut(path, data) {
         );
     }
 
+
     return await response.json();
 }
 
@@ -122,22 +192,30 @@ async function firebasePut(path, data) {
 |--------------------------------------------------------------------------
 */
 
-async function firebasePatch(path, data) {
+async function firebasePatch(
+    path,
+    data
+) {
 
-    const response = await fetch(
-        `${DATABASE_URL}/${path}.json`,
-        {
-            method: "PATCH",
+    const response =
+        await fetch(
+            `${DATABASE_URL}/${path}.json`,
+            {
 
-            headers: {
-                "Content-Type":
-                    "application/json"
-            },
+                method:
+                    "PATCH",
 
-            body:
-                JSON.stringify(data)
-        }
-    );
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(data)
+
+            }
+        );
+
 
     if (!response.ok) {
 
@@ -149,6 +227,7 @@ async function firebasePatch(path, data) {
         );
     }
 
+
     return await response.json();
 }
 
@@ -157,9 +236,6 @@ async function firebasePatch(path, data) {
 |--------------------------------------------------------------------------
 | Generate Firebase-style push key
 |--------------------------------------------------------------------------
-|
-| For now we generate a unique key locally.
-|
 */
 
 function generatePushKey() {
@@ -169,14 +245,23 @@ function generatePushKey() {
 
     let key = "-";
 
-    for (let i = 0; i < 19; i++) {
 
-        key += chars.charAt(
-            Math.floor(
-                Math.random() * chars.length
-            )
-        );
+    for (
+        let i = 0;
+        i < 19;
+        i++
+    ) {
+
+        key +=
+            chars.charAt(
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            );
+
     }
+
 
     return key;
 }
@@ -184,18 +269,8 @@ function generatePushKey() {
 
 /*
 |--------------------------------------------------------------------------
-| Generate a unique numeric value for unread increment
+| Get unread count
 |--------------------------------------------------------------------------
-|
-| Firebase REST does not accept:
-|
-| ServerValue.increment(1)
-|
-| as the final value.
-|
-| Therefore we first read the existing unreadCount and
-| calculate the next value.
-|
 */
 
 function getUnreadCount(value) {
@@ -204,18 +279,25 @@ function getUnreadCount(value) {
         typeof value === "number" &&
         Number.isFinite(value)
     ) {
+
         return value;
+
     }
+
 
     const parsed =
         Number(value);
+
 
     if (
         Number.isFinite(parsed) &&
         parsed >= 0
     ) {
+
         return parsed;
+
     }
+
 
     return 0;
 }
@@ -241,6 +323,7 @@ async function getUser(uid) {
     ) {
 
         return null;
+
     }
 
 
@@ -260,7 +343,9 @@ async function getUser(uid) {
 
         fcmToken:
             clean(data.fcmToken)
+
     };
+
 }
 
 
@@ -281,31 +366,23 @@ async function sendChatNotification({
     message,
 
     messageKey
-}) {
 
-    /*
-    |--------------------------------------------------------------------------
-    | No FCM token
-    |--------------------------------------------------------------------------
-    */
+}) {
 
     if (!receiverToken) {
 
         return {
 
-            sent: false,
+            sent:
+                false,
 
             reason:
                 "Receiver FCM token not found"
+
         };
+
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Same structure as existing Android code
-    |--------------------------------------------------------------------------
-    */
 
     const body = {
 
@@ -327,14 +404,6 @@ async function sendChatNotification({
         image:
             sender.avatar,
 
-        /*
-        | Existing Android code sends senderToken.
-        |
-        | For server-generated messages we don't need the
-        | sender's current token for Firebase delivery,
-        | but we preserve the field for your notification
-        | server / existing notification logic.
-        */
         senderToken:
             sender.fcmToken || "",
 
@@ -349,6 +418,7 @@ async function sendChatNotification({
 
         messageKey:
             messageKey
+
     };
 
 
@@ -358,7 +428,9 @@ async function sendChatNotification({
             await fetch(
                 NOTIFICATION_URL,
                 {
-                    method: "POST",
+
+                    method:
+                        "POST",
 
                     headers: {
                         "Content-Type":
@@ -367,6 +439,7 @@ async function sendChatNotification({
 
                     body:
                         JSON.stringify(body)
+
                 }
             );
 
@@ -379,23 +452,28 @@ async function sendChatNotification({
 
             return {
 
-                sent: false,
+                sent:
+                    false,
 
                 reason:
                     `Notification server returned HTTP ${response.status}`,
 
                 response:
                     responseText
+
             };
+
         }
 
 
         return {
 
-            sent: true,
+            sent:
+                true,
 
             response:
                 responseText
+
         };
 
 
@@ -403,12 +481,16 @@ async function sendChatNotification({
 
         return {
 
-            sent: false,
+            sent:
+                false,
 
             reason:
                 error.message
+
         };
+
     }
+
 }
 
 
@@ -422,6 +504,7 @@ export default async function handler(
     req,
     res
 ) {
+
 
     /*
     |--------------------------------------------------------------------------
@@ -441,7 +524,7 @@ export default async function handler(
 
     res.setHeader(
         "Access-Control-Allow-Headers",
-        "Content-Type"
+        "Content-Type, X-Message-API-Secret"
     );
 
     res.setHeader(
@@ -456,11 +539,14 @@ export default async function handler(
     |--------------------------------------------------------------------------
     */
 
-    if (req.method === "OPTIONS") {
+    if (
+        req.method === "OPTIONS"
+    ) {
 
         return res
             .status(204)
             .end();
+
     }
 
 
@@ -470,17 +556,80 @@ export default async function handler(
     |--------------------------------------------------------------------------
     */
 
-    if (req.method !== "POST") {
+    if (
+        req.method !== "POST"
+    ) {
 
         return res
             .status(405)
             .json({
 
-                success: false,
+                success:
+                    false,
 
                 error:
                     "POST method required"
+
             });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | API SECRET CHECK
+    |--------------------------------------------------------------------------
+    */
+
+    if (!MESSAGE_API_SECRET) {
+
+        console.error(
+            "MESSAGE_API_SECRET is not configured"
+        );
+
+        return res
+            .status(500)
+            .json({
+
+                success:
+                    false,
+
+                error:
+                    "Message API secret is not configured"
+
+            });
+
+    }
+
+
+    const providedSecret =
+        clean(
+            req.headers[
+                "x-message-api-secret"
+            ],
+            500
+        );
+
+
+    if (
+        !safeSecretCompare(
+            providedSecret,
+            MESSAGE_API_SECRET
+        )
+    ) {
+
+        return res
+            .status(401)
+            .json({
+
+                success:
+                    false,
+
+                error:
+                    "Unauthorized"
+
+            });
+
     }
 
 
@@ -532,11 +681,14 @@ export default async function handler(
                 .status(400)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     error:
                         "mode must be 'user' or 'otp'"
+
                 });
+
         }
 
 
@@ -552,11 +704,14 @@ export default async function handler(
                 .status(400)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     error:
                         "toUid is required"
+
                 });
+
         }
 
 
@@ -572,11 +727,14 @@ export default async function handler(
                 .status(400)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     error:
                         "message is required"
+
                 });
+
         }
 
 
@@ -589,10 +747,12 @@ export default async function handler(
         let fromUid;
 
 
-        if (mode === "otp") {
+        if (
+            mode === "otp"
+        ) {
 
             /*
-            | OTP sender is always fixed.
+            | OTP sender CANNOT be changed by request.
             */
 
             fromUid =
@@ -613,12 +773,16 @@ export default async function handler(
                     .status(400)
                     .json({
 
-                        success: false,
+                        success:
+                            false,
 
                         error:
                             "fromUid is required in user mode"
+
                     });
+
             }
+
         }
 
 
@@ -637,11 +801,14 @@ export default async function handler(
                 .status(400)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     error:
                         "Sender and receiver cannot be the same"
+
                 });
+
         }
 
 
@@ -663,11 +830,14 @@ export default async function handler(
                 .status(404)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     error:
                         "Sender account not found"
+
                 });
+
         }
 
 
@@ -689,11 +859,14 @@ export default async function handler(
                 .status(404)
                 .json({
 
-                    success: false,
+                    success:
+                        false,
 
                     error:
                         "Receiver account not found"
+
                 });
+
         }
 
 
@@ -710,6 +883,7 @@ export default async function handler(
 
             sender.username =
                 "OTP Verification";
+
         }
 
 
@@ -761,6 +935,7 @@ export default async function handler(
 
             stts:
                 "Sent"
+
         };
 
 
@@ -776,6 +951,7 @@ export default async function handler(
 
             stts:
                 "Delivered"
+
         };
 
 
@@ -810,6 +986,7 @@ export default async function handler(
 
             stts:
                 "Sent"
+
         };
 
 
@@ -817,13 +994,6 @@ export default async function handler(
         |--------------------------------------------------------------------------
         | READ CURRENT RECEIVER INBOX
         |--------------------------------------------------------------------------
-        |
-        | This is required because your Android code uses:
-        |
-        | ServerValue.increment(1)
-        |
-        | We reproduce that behavior here.
-        |
         */
 
         const existingReceiverInbox =
@@ -876,6 +1046,7 @@ export default async function handler(
 
             unreadCount:
                 newUnreadCount
+
         };
 
 
@@ -890,6 +1061,7 @@ export default async function handler(
             `chat/${encodeURIComponent(fromUid)}/${encodeURIComponent(toUid)}/${encodeURIComponent(pushKey)}`,
 
             messageMap
+
         );
 
 
@@ -904,6 +1076,7 @@ export default async function handler(
             `chat/${encodeURIComponent(toUid)}/${encodeURIComponent(fromUid)}/${encodeURIComponent(pushKey)}`,
 
             receiverMessageMap
+
         );
 
 
@@ -918,6 +1091,7 @@ export default async function handler(
             `InboxList/${encodeURIComponent(fromUid)}/${encodeURIComponent(toUid)}`,
 
             senderInbox
+
         );
 
 
@@ -932,12 +1106,13 @@ export default async function handler(
             `InboxList/${encodeURIComponent(toUid)}/${encodeURIComponent(fromUid)}`,
 
             receiverInbox
+
         );
 
 
         /*
         |--------------------------------------------------------------------------
-        | SEND NOTIFICATION
+        | SEND NORMAL NOTIFICATION
         |--------------------------------------------------------------------------
         */
 
@@ -958,6 +1133,7 @@ export default async function handler(
 
                 messageKey:
                     pushKey
+
             });
 
 
@@ -965,12 +1141,6 @@ export default async function handler(
         |--------------------------------------------------------------------------
         | SUCCESS
         |--------------------------------------------------------------------------
-        |
-        | IMPORTANT:
-        |
-        | Database message is already created even if
-        | notification fails.
-        |
         */
 
         return res
@@ -1005,6 +1175,7 @@ export default async function handler(
 
                     receiver:
                         true
+
                 },
 
                 inbox: {
@@ -1017,10 +1188,12 @@ export default async function handler(
 
                     unreadCount:
                         newUnreadCount
+
                 },
 
                 notification:
                     notification
+
             });
 
 
@@ -1042,6 +1215,9 @@ export default async function handler(
                 error:
                     error.message ||
                     "Internal server error"
+
             });
+
     }
+
 }
