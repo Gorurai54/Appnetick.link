@@ -34,35 +34,70 @@ const OTP_MAX_ATTEMPTS = 5;
 */
 
 
-console.log("Firebase Project:", process.env.FIREBASE_PROJECT_ID);
-console.log("Firebase Client Email exists:", !!process.env.FIREBASE_CLIENT_EMAIL);
-console.log("Firebase Private Key exists:", !!process.env.FIREBASE_PRIVATE_KEY);
-console.log("Firebase Database URL:", process.env.FIREBASE_DATABASE_URL);
+/*
+|--------------------------------------------------------------------------
+| Firebase Admin initialization
+|--------------------------------------------------------------------------
+*/
 
-if (!admin.apps.length) {
-    const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+const FIREBASE_PROJECT_ID =
+    process.env.FIREBASE_PROJECT_ID;
 
-    if (
-        !process.env.FIREBASE_PROJECT_ID ||
-        !process.env.FIREBASE_CLIENT_EMAIL ||
-        !privateKey
-    ) {
-        throw new Error(
-            "Missing Firebase Admin environment variables"
-        );
-    }
+const FIREBASE_CLIENT_EMAIL =
+    process.env.FIREBASE_CLIENT_EMAIL;
 
-    admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId: process.env.FIREBASE_PROJECT_ID,
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            privateKey: privateKey.replace(/\\n/g, "\n"),
-            databaseURL: process.env.FIREBASE_DATABASE_URL
-        })
-    });
+const FIREBASE_PRIVATE_KEY =
+    process.env.FIREBASE_PRIVATE_KEY;
+
+const FIREBASE_DATABASE_URL =
+    process.env.FIREBASE_DATABASE_URL;
+
+if (
+    !FIREBASE_PROJECT_ID ||
+    !FIREBASE_CLIENT_EMAIL ||
+    !FIREBASE_PRIVATE_KEY ||
+    !FIREBASE_DATABASE_URL
+) {
+    throw new Error(
+        "Missing Firebase Admin environment variables"
+    );
 }
 
-const firebaseDb = admin.database();
+const FIREBASE_APP_NAME = "appnetick-2fa";
+
+let firebaseApp;
+
+try {
+    /*
+     * Reuse our dedicated named app if it already exists.
+     */
+    firebaseApp = admin.app(FIREBASE_APP_NAME);
+
+} catch (_) {
+    /*
+     * Create the dedicated Firebase Admin app.
+     */
+    firebaseApp = admin.initializeApp(
+        {
+            credential: admin.credential.cert({
+                projectId: FIREBASE_PROJECT_ID,
+                clientEmail: FIREBASE_CLIENT_EMAIL,
+                privateKey:
+                    FIREBASE_PRIVATE_KEY.replace(
+                        /\\n/g,
+                        "\n"
+                    )
+            }),
+
+            databaseURL:
+                FIREBASE_DATABASE_URL
+        },
+        FIREBASE_APP_NAME
+    );
+}
+
+const firebaseDb =
+    admin.database(firebaseApp);
 
 /*
 |--------------------------------------------------------------------------
