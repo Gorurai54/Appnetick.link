@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -7,6 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
+
     const body = req.body || {};
 
     const identity = String(body.identity || "").trim();
@@ -21,7 +23,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Keep identities predictable and safe.
     if (!/^[A-Za-z0-9_-]{1,64}$/.test(identity)) {
       return res.status(400).json({
         success: false,
@@ -32,53 +33,80 @@ export default async function handler(req, res) {
     const apiKey = process.env.INFOBIP_API_KEY;
     const baseUrl = process.env.INFOBIP_BASE_URL;
 
-    if (!apiKey || !baseUrl) {
-      console.error("Infobip environment variables are missing");
-
+    if (!apiKey) {
       return res.status(500).json({
         success: false,
-        error: "Infobip server configuration is missing"
+        error: "INFOBIP_API_KEY is missing"
       });
     }
 
-    const response = await fetch(
-      `${baseUrl.replace(/\/+$/, "")}/webrtc/1/token`,
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `App ${apiKey}`,
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          identity: identity,
-          displayName: displayName
-        })
-      }
+    if (!baseUrl) {
+      return res.status(500).json({
+        success: false,
+        error: "INFOBIP_BASE_URL is missing"
+      });
+    }
+
+    const endpoint =
+      `${baseUrl.replace(/\/+$/, "")}/webrtc/1/token`;
+
+    console.log("Infobip endpoint:", endpoint);
+    console.log("Identity:", identity);
+
+    const response = await fetch(endpoint, {
+
+      method: "POST",
+
+      headers: {
+        "Authorization": `App ${apiKey}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+
+      body: JSON.stringify({
+        identity: identity,
+        displayName: displayName
+      })
+    });
+
+    const responseText = await response.text();
+
+    console.log(
+      "Infobip HTTP status:",
+      response.status
     );
 
-    const data = await response.json().catch(() => null);
+    console.log(
+      "Infobip response:",
+      responseText
+    );
+
+    let data;
+
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      data = {
+        raw: responseText
+      };
+    }
 
     if (!response.ok) {
-      console.error(
-        "Infobip token request failed:",
-        response.status,
-        data
-      );
 
-      return res.status(response.status).json({
+      return res.status(502).json({
         success: false,
-        error: "Infobip token request failed",
-        details: data
+        error: "Infobip rejected the request",
+        infobipStatus: response.status,
+        infobipResponse: data
       });
     }
 
     if (!data || !data.token) {
-      console.error("Infobip returned no token:", data);
 
       return res.status(502).json({
         success: false,
-        error: "Infobip did not return a token"
+        error: "Infobip returned no token",
+        infobipResponse: data
       });
     }
 
@@ -89,11 +117,17 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error("Infobip token API error:", error);
+
+    console.error(
+      "Infobip token exception:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
-      error: "Internal server error"
+      error: "Infobip request exception",
+      message: error.message,
+      name: error.name
     });
   }
 }
